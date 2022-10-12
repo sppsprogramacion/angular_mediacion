@@ -28,6 +28,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ErrorComponent } from './components/error/error.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AccessComponent } from './components/access/access.component';
+import { CiudadanosComponent } from './pages/ciudadanos/ciudadanos.component';
 @NgModule({
     imports: [
         RouterModule.forRoot([
@@ -35,28 +36,8 @@ import { AccessComponent } from './components/access/access.component';
                 path: '', component: AppMainComponent,
                 children: [
                     {path: '', component: DashboardComponent},
-                    {path: 'uikit/formlayout', component: FormLayoutComponent},
-                    {path: 'uikit/input', component: InputComponent},
-                    {path: 'uikit/floatlabel', component: FloatLabelComponent},
-                    {path: 'uikit/invalidstate', component: InvalidStateComponent},
-                    {path: 'uikit/button', component: ButtonComponent},
-                    {path: 'uikit/table', component: TableComponent},
-                    {path: 'uikit/list', component: ListComponent},
-                    {path: 'uikit/tree', component: TreeComponent},
-                    {path: 'uikit/panel', component: PanelsComponent},
-                    {path: 'uikit/overlay', component: OverlaysComponent},
-                    {path: 'uikit/media', component: MediaComponent},
-                    {path: 'uikit/menu', loadChildren: () => import('./components/menus/menus.module').then(m => m.MenusModule)},
-                    {path: 'uikit/message', component: MessagesComponent},
-                    {path: 'uikit/misc', component: MiscComponent},
-                    {path: 'uikit/charts', component: ChartsComponent},
-                    {path: 'uikit/file', component: FileComponent},
-                    {path: 'pages/crud', component: CrudComponent},
-                    {path: 'pages/timeline', component: TimelineComponent},
-                    {path: 'pages/empty', component: EmptyComponent},
-                    {path: 'icons', component: IconsComponent},
-                    {path: 'blocks', component: BlocksComponent},
-                    {path: 'documentation', component: DocumentationComponent}
+                    {path: 'ciudadanos/mantenimiento', component: CiudadanosComponent},
+                    
                 ],
             },
             {path:'pages/landing', component: LandingComponent},
