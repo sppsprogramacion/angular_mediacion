@@ -43,45 +43,21 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Tramites',
                 items: [
-                    {label: 'Ver tramites', icon: 'pi pi-fw pi-id-card', routerLink: ['/tramites/formlayout']},
-                    {label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input']},
-                    {label: 'Float Label', icon: 'pi pi-fw pi-bookmark', routerLink: ['/uikit/floatlabel']},
-                    {label: 'Invalid State', icon: 'pi pi-fw pi-exclamation-circle', routerLink: ['/uikit/invalidstate']},
-                    {label: 'Button', icon: 'pi pi-fw pi-mobile', routerLink: ['/uikit/button'], class: 'rotated-icon'},
-                    {label: 'Table', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/table']},
-                    {label: 'List', icon: 'pi pi-fw pi-list', routerLink: ['/uikit/list']},
-                    {label: 'Tree', icon: 'pi pi-fw pi-share-alt', routerLink: ['/uikit/tree']},
-                    {label: 'Panel', icon: 'pi pi-fw pi-tablet', routerLink: ['/uikit/panel']},
-                    {label: 'Overlay', icon: 'pi pi-fw pi-clone', routerLink: ['/uikit/overlay']},
-                    {label: 'Media', icon: 'pi pi-fw pi-image', routerLink: ['/uikit/media']},
-                    {label: 'Menu', icon: 'pi pi-fw pi-bars', routerLink: ['/uikit/menu'], preventExact: true},
-                    {label: 'Message', icon: 'pi pi-fw pi-comment', routerLink: ['/uikit/message']},
-                    {label: 'File', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/file']},
-                    {label: 'Chart', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/uikit/charts']},
-                    {label: 'Misc', icon: 'pi pi-fw pi-circle', routerLink: ['/uikit/misc']}
+                    {label: 'Nuevos', icon: 'pi pi-fw pi-bookmark', routerLink: ['/tramites/formlayout']},
+                    {label: 'Derivados', icon: 'pi pi-fw pi-send', routerLink: ['/uikit/input']},
+                    {label: 'Finalizados', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/floatlabel']},
+                    
                 ]
             },
             {
-                label: 'UI Components',
+                label: 'Usuarios',
                 items: [
-                    {label: 'Form Layout', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout']},
-                    {label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input']},
-                    {label: 'Float Label', icon: 'pi pi-fw pi-bookmark', routerLink: ['/uikit/floatlabel']},
-                    {label: 'Invalid State', icon: 'pi pi-fw pi-exclamation-circle', routerLink: ['/uikit/invalidstate']},
-                    {label: 'Button', icon: 'pi pi-fw pi-mobile', routerLink: ['/uikit/button'], class: 'rotated-icon'},
-                    {label: 'Table', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/table']},
-                    {label: 'List', icon: 'pi pi-fw pi-list', routerLink: ['/uikit/list']},
-                    {label: 'Tree', icon: 'pi pi-fw pi-share-alt', routerLink: ['/uikit/tree']},
-                    {label: 'Panel', icon: 'pi pi-fw pi-tablet', routerLink: ['/uikit/panel']},
-                    {label: 'Overlay', icon: 'pi pi-fw pi-clone', routerLink: ['/uikit/overlay']},
-                    {label: 'Media', icon: 'pi pi-fw pi-image', routerLink: ['/uikit/media']},
-                    {label: 'Menu', icon: 'pi pi-fw pi-bars', routerLink: ['/uikit/menu'], preventExact: true},
-                    {label: 'Message', icon: 'pi pi-fw pi-comment', routerLink: ['/uikit/message']},
-                    {label: 'File', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/file']},
-                    {label: 'Chart', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/uikit/charts']},
-                    {label: 'Misc', icon: 'pi pi-fw pi-circle', routerLink: ['/uikit/misc']}
+                    {label: 'Mediadores', icon: 'pi pi-fw pi-id-card', routerLink: ['/ciudadanos/mantenimiento']},
+                    {label: 'Administradores', icon: 'pi pi-fw pi-id-card', routerLink: ['/ciudadanos/mantenimiento']}
+                    
                 ]
             },
+            
             {
                 label:'Prime Blocks',
                 items:[
@@ -89,7 +65,8 @@ export class AppMenuComponent implements OnInit {
                     {label: 'All Blocks', icon: 'pi pi-fw pi-globe', url: ['https://www.primefaces.org/primeblocks-ng'], target: '_blank'},
                 ]
             },
-            {label:'Utilities',
+            {
+                label:'Utilities',
                 items:[
                     {label: 'PrimeIcons', icon: 'pi pi-fw pi-prime', routerLink: ['/icons']},
                     {label: 'PrimeFlex', icon: 'pi pi-fw pi-desktop', url: ['https://www.primefaces.org/primeflex/'], target: '_blank'},
