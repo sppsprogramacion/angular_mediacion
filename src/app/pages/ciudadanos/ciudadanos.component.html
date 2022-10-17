@@ -22,7 +22,7 @@
                 </ng-template>
 
             </p-toolbar>
-            <!-- TABLA DE TRAMITES -->
+            <!-- TABLA DE CIUDADANOS -->
             <p-table #dt1 [value]="listCiudadanos" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-between flex-column sm:flex-row">
@@ -166,9 +166,9 @@
                     </tr>
                 </ng-template>
             </p-table>
-            <!-- FIN TABLA DE TRAMITES -->
+            <!-- FIN TABLA DE CIUDADANOS -->
 
-            <!-- DIALOG FORMULARIO TRAMITE -->
+            <!-- DIALOG FORMULARIO CIUDADANOS -->
             <p-dialog id="formTramiteDialog" [(visible)]="ciudadanoDialog" [style]="{width: '450px'}" header="Nuevo Tramite" [closable]="false" [modal]="true" class="p-fluid">
                 <ng-template pTemplate="content">
                     <!-- FORMULARIO TRAMITES -->
@@ -238,7 +238,7 @@
                     <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormTramite()"></button>
                 </ng-template>
             </p-dialog>
-            <!-- FIN DIALOG FORMULARIO  TRAMITE -->
+            <!-- FIN DIALOG FORMULARIO  CIUDADANOS -->
 
 
         </div>

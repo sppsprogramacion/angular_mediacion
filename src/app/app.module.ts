@@ -141,6 +141,7 @@ import { ErrorComponent } from './components/error/error.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AccessComponent } from './components/access/access.component';
 import { PagesModule } from './pages/pages.module';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
     imports: [
@@ -232,6 +233,7 @@ import { PagesModule } from './pages/pages.module';
         AppCodeModule,
         StyleClassModule,
         
+        AuthModule,
         PagesModule
     ],
     declarations: [
