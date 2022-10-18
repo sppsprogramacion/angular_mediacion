@@ -1,1 +1,81 @@
-<p>registro works!</p>
+<div class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+    <div class="grid justify-content-center p-2 lg:p-0" style="min-width:80%">
+        <div class="col-12 mt-5 xl:mt-0 text-center">
+            <img src="assets/layout/images/{{config.dark ? 'logo-white' : 'logo-dark'}}.svg" alt="Sakai logo" class="mb-5" style="width:81px; height:60px;">
+        </div>
+        <div class="col-12 xl:col-6" style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
+            <div class="h-full w-full m-0 py-7 px-4" style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
+                <div class="text-center mb-5">
+                    <img src="assets/layout/images/logo_spps.jpeg" alt="Image" height="50" class="mb-3">
+                    <div class="text-900 text-3xl font-medium mb-3">Registro</div>
+                    <span class="text-600 font-medium">Alta de Usuario</span>
+                </div>
+                <div class="grid">
+                    <div class="col-12">
+                        <div class="card">
+                            <form [formGroup]="formaRegistro" class="p-fluid p-formgrid grid">
+                                <div class="field col-12 md:col-6">
+                                    <label htmlFor="name">Nombre</label>
+                                    <input pInputText id="name" formControlName="nombre" type="text" />
+                                    <small *ngIf="isValid('nombre')" class="p-error">El nombre es obligatorio</small>
+                                </div>
+                                <div class="field col-12 md:col-6">
+                                    <label htmlFor="apel">Apellido</label>
+                                    <input pInputText id="apel" formControlName="apellido" type="text" />
+                                    <small *ngIf="isValid('apellido')" class="p-error">El Apellido es obligatorio</small>
+                                </div>
+                                <div class="field col-12 md:col-6">
+                                    <label htmlFor="correo_usu">Correo</label>
+                                    <input pInputText id="correo_usu" formControlName="correo" type="email" />
+                                    <small *ngIf="isValid('correo')" class="p-error">El correo ingresado no es válido</small>
+                                </div>
+                                <!-- <div class="field col-12 md:col-6">
+                                <label htmlFor="sector">Sector</label>
+                                <p-dropdown formControlName="sector_id" id="sector" [options]="dropdownItems" optionLabel="name"  [(ngModel)]="selectedState"></p-dropdown>
+                            </div> -->
+                                <div class="field col-12 md:col-6">
+                                    <label htmlFor="leg">Legajo</label>
+                                    <input pInputText id="leg" formControlName="legajo" type="number" />
+                                    <small *ngIf="isValid('legajo')" class="p-error">El legajo ingresado no es válido</small>
+                                </div>
+                                <div class="field col-12 md:col-6">
+                                    <label htmlFor="user">Usuario</label>
+                                    <input pInputText id="user" formControlName="usuario" type="text" />
+                                    <small *ngIf="isValid('usuario')" class="p-error">El usuario ingresado no es válido</small>
+                                </div>
+                                <div class="field col-12 md:col-6">
+                                    <label htmlFor="clave">Clave</label>
+                                    <input pInputText id="clave" formControlName="clave1" type="password" />
+                                    <small *ngIf="isValid('clave1')" class="p-error">la clave ingresada no es válida</small>
+                                </div>
+                                <div class="field col-12 md:col-6">
+                                    <label htmlFor="clave_repit">Repite Clave</label>
+                                    <input pInputText id="clave_repit" formControlName="clave2" type="password" />
+                                    <small *ngIf="clavesValidation()" class="p-error">La verificación de clave ha fallado</small>
+                                </div>
+
+
+                                <button pButton pRipple label="Guardar" class="w-full p-3 text-xl"></button>
+                                <div class="field col-12 md:col-6">
+                                    <p> VOLVER A PAGINA DE ACCESO: <a routerLink="/login">LOGIN</a></p>
+                                </div>
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+<pre>
+Estado del Formulario: {{formaRegistro.valid}}
+<br>
+Status: {{formaRegistro.status}}
+</pre>
+<pre>
+{{formaRegistro.value | json}}
+</pre>

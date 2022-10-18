@@ -14,6 +14,10 @@ export class CiudadanosService {
     private readonly http: HttpClient
   ) { }
 
+  guardarCiudadano(data: Partial<CiudadanoModel>){    
+    this.ciudadano={...data};
+    return this.http.post(`${base_url}/ciudadanos`, this.ciudadano);
+  }
 
   listarCiudadanosTodos(){
     return this.http.get<[ciudadano:CiudadanoModel[], total: number]>(`${base_url}/ciudadanos`)

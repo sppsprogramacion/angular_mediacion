@@ -29,6 +29,7 @@ import { ErrorComponent } from './components/error/error.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AccessComponent } from './components/access/access.component';
 import { CiudadanosComponent } from './pages/ciudadanos/ciudadanos.component';
+import { RegistroComponent } from './auth/registro/registro.component';
 @NgModule({
     imports: [
         RouterModule.forRoot([
@@ -42,6 +43,7 @@ import { CiudadanosComponent } from './pages/ciudadanos/ciudadanos.component';
             },
             {path:'pages/landing', component: LandingComponent},
             {path:'pages/login', component: LoginComponent},
+            {path:'register', component: RegistroComponent},
             {path:'pages/error', component: ErrorComponent},
             {path:'pages/notfound', component: NotfoundComponent},
             {path:'pages/access', component: AccessComponent},

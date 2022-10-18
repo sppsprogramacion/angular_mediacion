@@ -21,10 +21,11 @@ export class CiudadanoModel{
         public calle?: string,
         public departamento_dom?: string,
         public piso?: string,
-        public numero_dom?: string,
+        public numero_dom?: number,
         public telefono?: string,
         public fecha_nac?: Date,
         public email?: string,
+        public clave?: string,
         //public clave?: string
 
     ){}
