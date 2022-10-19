@@ -1,17 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Message, MessageService } from 'primeng/api';
+import { ConfirmationService, Message, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { AppConfig } from 'src/app/api/appconfig';
 import { CiudadanosService } from '../../service/ciudadanos.service';
 import { CiudadanoModel } from '../../models/ciudadano.model';
 import Swal from 'sweetalert2';
+import { ConfigService } from 'src/app/service/app.config.service';
 
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
+  providers: [MessageService, ConfirmationService],
   styleUrls: ['./registro.component.scss']
+ 
+
 })
+
 export class RegistroComponent implements OnInit {
 
   config: AppConfig;  
@@ -26,6 +31,7 @@ export class RegistroComponent implements OnInit {
 
   constructor(    
     private fb: FormBuilder,
+    public configService: ConfigService,
     private serviceMensajes: MessageService,
     private ciudadanoService: CiudadanosService
     ){ 
@@ -51,17 +57,17 @@ export class RegistroComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    // this.config = this.configService.config;
-    // this.subscription = this.configService.configUpdate$.subscribe(config => {
-    //   this.config = config;
-    // });
+    this.config = this.configService.config;
+    this.subscription = this.configService.configUpdate$.subscribe(config => {
+      this.config = config;
+    });
   }
 
-  ngOnDestroy(): void {
-    if(this.subscription){
-      this.subscription.unsubscribe();
-    }
-  }
+  // ngOnDestroy(): void {
+  //   if(this.subscription){
+  //     this.subscription.unsubscribe();
+  //   }
+  // }
 
  
 

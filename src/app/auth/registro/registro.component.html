@@ -13,7 +13,9 @@
                 <div class="grid">
                     <div class="col-12">
                         <div class="card">
+
                             <form [formGroup]="formaRegistro" class="p-fluid p-formgrid grid">
+
                                 <div class="field col-12 md:col-6">
                                     <label htmlFor="name">Nombre</label>
                                     <input pInputText id="name" formControlName="nombre" type="text" />
@@ -29,10 +31,10 @@
                                     <input pInputText id="correo_usu" formControlName="correo" type="email" />
                                     <small *ngIf="isValid('correo')" class="p-error">El correo ingresado no es válido</small>
                                 </div>
-                                <!-- <div class="field col-12 md:col-6">
-                                <label htmlFor="sector">Sector</label>
-                                <p-dropdown formControlName="sector_id" id="sector" [options]="dropdownItems" optionLabel="name"  [(ngModel)]="selectedState"></p-dropdown>
-                            </div> -->
+                                <div class="field col-12 md:col-6">
+                                    <label htmlFor="sector">Sector</label>
+                                    <p-dropdown formControlName="sector_id" id="sector" [options]="" optionLabel="name" [(ngModel)]="selectedState"></p-dropdown>
+                                </div>
                                 <div class="field col-12 md:col-6">
                                     <label htmlFor="leg">Legajo</label>
                                     <input pInputText id="leg" formControlName="legajo" type="number" />
@@ -57,7 +59,7 @@
 
                                 <button pButton pRipple label="Guardar" class="w-full p-3 text-xl"></button>
                                 <div class="field col-12 md:col-6">
-                                    <p> VOLVER A PAGINA DE ACCESO: <a routerLink="/login">LOGIN</a></p>
+                                    <p> VOLVER A PAGINA DE ACCESO: <a routerLink="/pages/login">LOGIN</a></p>
                                 </div>
                             </form>
 
@@ -69,13 +71,3 @@
         </div>
     </div>
 </div>
-
-<hr>
-<pre>
-Estado del Formulario: {{formaRegistro.valid}}
-<br>
-Status: {{formaRegistro.status}}
-</pre>
-<pre>
-{{formaRegistro.value | json}}
-</pre>
