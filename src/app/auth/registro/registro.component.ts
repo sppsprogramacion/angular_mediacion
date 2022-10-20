@@ -7,6 +7,7 @@ import { CiudadanosService } from '../../service/ciudadanos.service';
 import { CiudadanoModel } from '../../models/ciudadano.model';
 import Swal from 'sweetalert2';
 import { ConfigService } from 'src/app/service/app.config.service';
+import { DepartamentoModel } from '../../models/departamento.model';
 
 @Component({
   selector: 'app-registro',
@@ -24,6 +25,12 @@ export class RegistroComponent implements OnInit {
   selectedState:any;
 
   msgs: Message[] = []; 
+
+  //listas
+  listaDepartamentos: DepartamentoModel[] = [];
+
+  //variables registro  
+  formRegistroDialog: boolean= false;
 
   //FORMULARIOS
   formaRegistro: FormGroup;  
@@ -43,9 +50,7 @@ export class RegistroComponent implements OnInit {
         departamento_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
         municipio_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
         localidad_barrio: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
-        calle: [,[Validators.required, Validators.maxLength(100)]],
-        departamento_dom: [,[Validators.required, Validators.maxLength(50)]],
-        piso: [,[Validators.required, Validators.maxLength(10)]],
+        calle_direccion: [,[Validators.required, Validators.maxLength(100)]],        
         numero_dom: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
         telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
         fecha_nac: [,[Validators.required, Validators.maxLength(100)]],  
@@ -74,33 +79,46 @@ export class RegistroComponent implements OnInit {
   //GUARDAR CIUDADANO  
   submitFormRegistro(){
     if(this.formaRegistro.invalid){                        
-        this.msgs = [];
-        this.msgs.push({ severity: 'warn', summary: 'Errores en formulario', detail: 'Cargue correctamente los datos' });
-        this.serviceMensajes.add({key: 'tst', severity: 'warn', summary: 'Errores en formulario', detail: 'Cargue correctamente los dato'});
+        // this.msgs = [];
+        // this.msgs.push({ severity: 'warn', summary: 'Errores en formulario', detail: 'Cargue correctamente los datos' });
+        // this.serviceMensajes.add({key: 'tst', severity: 'warn', summary: 'Errores en formulario', detail: 'Cargue correctamente los dato'});
         // Swal.fire(
             
         //     {target: document.getElementById('form-modal')},
         //     'Formulario Tramite con errores','Complete correctamente todos los campos del formulario',"warning"
         //     );
+        console.log("errores formulario");
         return Object.values(this.formaRegistro.controls).forEach(control => control.markAsTouched());
     }
 
     let dataRegistro: Partial<CiudadanoModel>;
     dataRegistro = {
 
+      // dni: parseInt(this.formaRegistro.get('dni')?.value),
+      // apellido: this.formaRegistro.get('apellido')?.value,
+      // nombre:   this.formaRegistro.get('nombre')?.value,
+      // sexo_id: parseInt(this.formaRegistro.get('sexo_id')?.value),
+      // departamento_id: parseInt(this.formaRegistro.get('departamento_id')?.value),
+      // municipio_id: parseInt(this.formaRegistro.get('municipio_id')?.value),
+      // localidad_barrio: this.formaRegistro.get('localidad_barrio')?.value,
+      // calle_direccion: this.formaRegistro.get('calle_direccion')?.value,
+      // numero_dom: parseInt(this.formaRegistro.get('numero_dom')?.value),
+      // telefono: this.formaRegistro.get('telefono')?.value,
+      // fecha_nac: new Date('2005-12-02'),  
+      // email: this.formaRegistro.get('email')?.value,    
+      // clave: this.formaRegistro.get('clave1')?.value,
       dni: parseInt(this.formaRegistro.get('dni')?.value),
       apellido: this.formaRegistro.get('apellido')?.value,
       nombre:   this.formaRegistro.get('nombre')?.value,
-      sexo_id: parseInt(this.formaRegistro.get('dni')?.value),
-      departamento_id: parseInt(this.formaRegistro.get('dni')?.value),
-      municipio_id: parseInt(this.formaRegistro.get('dni')?.value),
-      localidad_barrio: this.formaRegistro.get('apellido')?.value,
-      calle: this.formaRegistro.get('apellido')?.value,
-      departamento_dom: this.formaRegistro.get('apellido')?.value,
-      piso: this.formaRegistro.get('piso')?.value,
+      sexo_id: 2,
+      provincia_id: 18,
+      departamento_id: 5,
+      municipio_id: 10,
+      localidad_barrio: this.formaRegistro.get('localidad_barrio')?.value,
+      calle_direccion: this.formaRegistro.get('calle_direccion')?.value,
       numero_dom: parseInt(this.formaRegistro.get('numero_dom')?.value),
       telefono: this.formaRegistro.get('telefono')?.value,
-      fecha_nac: new Date('2005-12-02'),  
+      fecha_nac: new Date(),  
       email: this.formaRegistro.get('email')?.value,    
       clave: this.formaRegistro.get('clave1')?.value,
        
@@ -135,6 +153,14 @@ export class RegistroComponent implements OnInit {
   clavesValidation(): boolean{
     return ((this.formaRegistro.get('clave1').value === this.formaRegistro.get('clave2').value))?  false: true;
         
+  }
+
+  mostrarRegistroDialog(){
+    this.formRegistroDialog= true;
+  }
+
+  hideDialogTramite(){
+    this.formRegistroDialog= false;
   }
 
 }
