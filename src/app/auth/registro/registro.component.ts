@@ -8,6 +8,9 @@ import { CiudadanoModel } from '../../models/ciudadano.model';
 import Swal from 'sweetalert2';
 import { ConfigService } from 'src/app/service/app.config.service';
 import { DepartamentoModel } from '../../models/departamento.model';
+import { departamentos } from 'src/app/common/data-mokeada';
+import { MunicipioModel } from 'src/app/models/municipio.model';
+import { municipios } from '../../common/data-mokeada';
 
 @Component({
   selector: 'app-registro',
@@ -28,6 +31,7 @@ export class RegistroComponent implements OnInit {
 
   //listas
   listaDepartamentos: DepartamentoModel[] = [];
+  listaMunicipios: MunicipioModel[] = [];
 
   //variables registro  
   formRegistroDialog: boolean= false;
@@ -66,6 +70,9 @@ export class RegistroComponent implements OnInit {
     this.subscription = this.configService.configUpdate$.subscribe(config => {
       this.config = config;
     });
+
+    this.listaDepartamentos = departamentos;
+    this.cargarMunicipios(1);
   }
 
   // ngOnDestroy(): void {
@@ -162,5 +169,21 @@ export class RegistroComponent implements OnInit {
   hideDialogTramite(){
     this.formRegistroDialog= false;
   }
+
+  cargarMunicipios(id_departamento: number){
+    this.listaMunicipios=municipios.filter(municipio => {      
+      return municipio.id_municipio == 1 || municipio.departamento_id == id_departamento;
+    });    
+  }
+
+  onChangeDepartamento(){
+    const id = this.formaRegistro.get('departamento_id')?.value;
+    if(id != null){               
+        this.cargarMunicipios(parseInt(id.toString()));
+        this.formaRegistro.get('municipio_id')?.setValue(1);               
+        this.formaRegistro.get('municipio_id')?.markAsUntouched();
+        
+    }
+}
 
 }

@@ -41,12 +41,12 @@
                     <div class="formgrid grid">
                         <div class="field col">
                             <label for="departamento_id">Departamento</label>
-                            <p-dropdown id="departamento_id" [options]="listaDepartamentos" optionLabel="departamento" optionValue="id_departamento" formControlName="departamento_id" placeholder="Seleccionar...">
+                            <p-dropdown id="departamento_id" [options]="listaDepartamentos" optionLabel="departamento" optionValue="id_departamento" formControlName="departamento_id" placeholder="Seleccionar..." (onChange)="onChangeDepartamento()">
                             </p-dropdown>
                         </div>
                         <div class="field col">
                             <label for="municipio_id">Municipio</label>
-                            <p-dropdown id="municipio_id" [options]="listaDepartamentos" optionLabel="municipio" optionValue="id_municipio" formControlName="departamento_id" placeholder="Seleccionar...">
+                            <p-dropdown id="municipio_id" [options]="listaMunicipios" optionLabel="municipio" optionValue="id_municipio" formControlName="departamento_id" placeholder="Seleccionar...">
                             </p-dropdown>
                         </div>
                     </div>
