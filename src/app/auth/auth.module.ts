@@ -16,6 +16,7 @@ import { PasswordModule } from 'primeng/password';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { AppRoutingModule } from '../app-routing.module';
 import { CheckboxModule } from 'primeng/checkbox';
+import { CalendarModule } from 'primeng/calendar';
 
 
 
@@ -27,6 +28,8 @@ import { CheckboxModule } from 'primeng/checkbox';
   imports: [
     AppRoutingModule,
     CommonModule,
+
+    CalendarModule,
     BrowserAnimationsModule,
     ButtonModule,
     CheckboxModule,

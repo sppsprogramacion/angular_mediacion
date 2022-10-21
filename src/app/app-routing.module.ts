@@ -44,7 +44,7 @@ import { RegistroComponent } from './auth/registro/registro.component';
             },
             {path:'pages/landing', component: LandingComponent},
             {path:'pages/login', component: LoginComponent},
-            {path:'pages/registrar', component: RegistroComponent },
+            {path:'registrar', component: RegistroComponent },
             {path:'pages/error', component: ErrorComponent},
             {path:'pages/notfound', component: NotfoundComponent},
             {path:'pages/access', component: AccessComponent},

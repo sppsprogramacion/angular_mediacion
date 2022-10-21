@@ -1,5 +1,20 @@
 
 
+export const sexo = [
+    {
+        "id_sexo": 1,
+        "sexo": "femenino"
+    },
+    {
+        "id_sexo": 2,
+        "sexo": "masculino"
+    },
+    {
+        "id_sexo": 3,
+        "sexo": "no binario"
+    }
+];
+
 
 export const provincias = [
     {

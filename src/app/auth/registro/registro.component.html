@@ -29,12 +29,13 @@
                     <div class="formgrid grid">
                         <div class="field col">
                             <label for="sexo_id">Sexo</label>
-                            <p-dropdown id="sexo_id" [options]="listaDepartamentos" optionLabel="sexo" optionValue="id_sexo" formControlName="sexo_id" placeholder="Seleccionar...">
+                            <p-dropdown id="sexo_id" [options]="listaSexo" optionLabel="sexo" optionValue="id_sexo" formControlName="sexo_id" placeholder="Seleccionar...">
                             </p-dropdown>
                         </div>
                         <div class="field col">
                             <label for="fecha_nac">Fecha Nacimiento</label>
-                            <input type="text" pInputText id="fecha_nac" formControlName="fecha_nac" />
+                            <p-calendar formControlName="fecha_nac" dateFormat="dd/mm/yy"></p-calendar>
+                            <!-- <input type="text" pInputText id="fecha_nac" formControlName="fecha_nac" /> -->
                         </div>
                     </div>
 
@@ -46,7 +47,7 @@
                         </div>
                         <div class="field col">
                             <label for="municipio_id">Municipio</label>
-                            <p-dropdown id="municipio_id" [options]="listaMunicipios" optionLabel="municipio" optionValue="id_municipio" formControlName="departamento_id" placeholder="Seleccionar...">
+                            <p-dropdown id="municipio_id" [options]="listaMunicipios" optionLabel="municipio" optionValue="id_municipio" formControlName="municipio_id" placeholder="Seleccionar...">
                             </p-dropdown>
                         </div>
                     </div>
@@ -80,7 +81,7 @@
                     </div>
                     <div class="formgrid grid">
 
-                        <div class="field col-3">
+                        <div class="field col-6">
                             <label for="dni">DNI usuario</label>
                             <input type="text" pInputText id="dni" formControlName="dni" />
                         </div>
@@ -98,7 +99,7 @@
                 </form>
                 <!--  FIN FORMULARIO TRAMITES -->
                 <div class="col-12">
-                    <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormRegistro()"></button>
+                    <button pButton pRipple type="button" label="Guardar" class="p-button-success mr-2 mb-2" (click)="submitFormRegistro()"></button>
                 </div>
             </div>
         </div>

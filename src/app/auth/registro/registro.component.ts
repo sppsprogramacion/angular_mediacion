@@ -8,14 +8,16 @@ import { CiudadanoModel } from '../../models/ciudadano.model';
 import Swal from 'sweetalert2';
 import { ConfigService } from 'src/app/service/app.config.service';
 import { DepartamentoModel } from '../../models/departamento.model';
-import { departamentos } from 'src/app/common/data-mokeada';
+import { departamentos, sexo } from 'src/app/common/data-mokeada';
 import { MunicipioModel } from 'src/app/models/municipio.model';
 import { municipios } from '../../common/data-mokeada';
+import { SexoModel } from 'src/app/models/sexo.model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
-  providers: [MessageService, ConfirmationService],
+  providers: [MessageService, ConfirmationService,DatePipe],
   styleUrls: ['./registro.component.scss']
  
 
@@ -26,12 +28,15 @@ export class RegistroComponent implements OnInit {
   config: AppConfig;  
   subscription: Subscription;
   selectedState:any;
+  
 
   msgs: Message[] = []; 
 
   //listas
-  listaDepartamentos: DepartamentoModel[] = [];
+  listaSexo: SexoModel[] = [];
   listaMunicipios: MunicipioModel[] = [];
+  listaDepartamentos: DepartamentoModel[] = [];
+  
 
   //variables registro  
   formRegistroDialog: boolean= false;
@@ -43,6 +48,7 @@ export class RegistroComponent implements OnInit {
   constructor(    
     private fb: FormBuilder,
     public configService: ConfigService,
+    private readonly datePipe: DatePipe,
     private serviceMensajes: MessageService,
     private ciudadanoService: CiudadanosService
     ){ 
@@ -71,8 +77,11 @@ export class RegistroComponent implements OnInit {
       this.config = config;
     });
 
+    //CARGA DE LISTADOS DESDE DATA MOKEADA
+    this.listaSexo = sexo;
     this.listaDepartamentos = departamentos;
     this.cargarMunicipios(1);
+    
   }
 
   // ngOnDestroy(): void {
@@ -94,6 +103,9 @@ export class RegistroComponent implements OnInit {
         //     {target: document.getElementById('form-modal')},
         //     'Formulario Tramite con errores','Complete correctamente todos los campos del formulario',"warning"
         //     );
+        let fechaAuxiliar = this.datePipe.transform(this.formaRegistro.get('fecha_nac')?.value,"yyyy-MM-dd")!;
+        console.log("fecha", this.formaRegistro.get('fecha_nac')?.value);
+        console.log("fecha aux", fechaAuxiliar);
         console.log("errores formulario");
         return Object.values(this.formaRegistro.controls).forEach(control => control.markAsTouched());
     }
@@ -119,17 +131,18 @@ export class RegistroComponent implements OnInit {
       nombre:   this.formaRegistro.get('nombre')?.value,
       sexo_id: 2,
       provincia_id: 18,
-      departamento_id: 5,
-      municipio_id: 10,
+      departamento_id: parseInt(this.formaRegistro.get('departamento_id')?.value),
+      municipio_id: parseInt(this.formaRegistro.get('municipio_id')?.value),
       localidad_barrio: this.formaRegistro.get('localidad_barrio')?.value,
       calle_direccion: this.formaRegistro.get('calle_direccion')?.value,
       numero_dom: parseInt(this.formaRegistro.get('numero_dom')?.value),
       telefono: this.formaRegistro.get('telefono')?.value,
-      fecha_nac: new Date(),  
+      fecha_nac: this.changeFormatoFechaGuardar(this.formaRegistro.get('fecha_nac')?.value),  
       email: this.formaRegistro.get('email')?.value,    
       clave: this.formaRegistro.get('clave1')?.value,
        
     };
+    
     
     //GUARDAR NUEVO CIUDADANO
     this.ciudadanoService.guardarCiudadano(dataRegistro)
@@ -184,6 +197,15 @@ export class RegistroComponent implements OnInit {
         this.formaRegistro.get('municipio_id')?.markAsUntouched();
         
     }
-}
+  }
+
+  changeFormatoFechaGuardar(nuevaFecha: Date){
+    let fechaAuxiliar:any = null;
+    if(nuevaFecha != null){
+      fechaAuxiliar = this.datePipe.transform(nuevaFecha,"yyyy-MM-dd")!;
+      
+    }
+    return fechaAuxiliar;
+  }
 
 }
