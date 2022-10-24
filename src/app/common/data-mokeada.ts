@@ -1,4 +1,48 @@
 
+export const opcionSiNo = [
+    {
+        "id_opcion_sino": false,
+        "respuesta_sino": "NO"
+    },
+    {
+        "id_opcion_sino": true,
+        "respuesta_sino": "SI"
+    },
+];
+
+export const modalidad = [
+    {
+        "id_modalidad": 2,
+        "modalidad": "conjunta"
+    },
+    {
+        "id_modalidad": 3,
+        "modalidad": "separado"
+    },
+    {
+        "id_modalidad": 1,
+        "modalidad": "sin especificar"
+    }
+];
+
+export const objetos = [
+    {
+        "id_objeto": 1,
+        "objeto": "alimentos"
+    },
+    {
+        "id_objeto": 4,
+        "objeto": "Cobro de pesos"
+    },
+    {
+        "id_objeto": 2,
+        "objeto": "Cuidado personal"
+    },
+    {
+        "id_objeto": 3,
+        "objeto": "División de bienes"
+    }
+];
 
 export const sexo = [
     {

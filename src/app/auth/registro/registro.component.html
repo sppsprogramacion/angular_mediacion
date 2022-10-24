@@ -4,6 +4,7 @@
             <h5>
                 <!-- <span class="text-orange-600"><b>{{(sector != null)?sector.organismo.organismo : "Sin organismo"}}</b></span>
                 <span class="text-orange-500"> - {{(sector != null)?sector.sector : "sin sector"}}</span> -->
+
             </h5>
         </div>
     </div>
@@ -15,13 +16,13 @@
                 <form [formGroup]="formaRegistro">
                     <div class="formgrid grid">
                         <div class="field col">
-                            <label for="name">Apellido</label>
-                            <input type="text" pInputText id="expediente_nota" formControlName="apellido" />
+                            <label for="apellido">Apellido</label>
+                            <input type="text" pInputText id="apellido" formControlName="apellido" />
 
                         </div>
                         <div class="field col">
-                            <label for="name">Nombre</label>
-                            <input type="text" pInputText id="asunto" formControlName="nombre" />
+                            <label for="nombre">Nombre</label>
+                            <input type="text" pInputText id="nombre" formControlName="nombre" />
 
                         </div>
                     </div>

@@ -31,19 +31,39 @@ import { AccessComponent } from './components/access/access.component';
 import { CiudadanosComponent } from './pages/ciudadanos/ciudadanos.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegistroComponent } from './auth/registro/registro.component';
+import { TramitesPrincipalComponent } from './pages/tramites-principal/tramites-principal.component';
+import { TramitesNuevoComponent } from './pages/tramites-nuevo/tramites-nuevo.component';
+import { TramitesAsignadosComponent } from './pages/tramites-asignados/tramites-asignados.component';
+import { TramitesFinalizadosComponent } from './pages/tramites-finalizados/tramites-finalizados.component';
+import { TramitesNuevoslisComponent } from './pages/tramites-nuevoslis/tramites-nuevoslis.component';
+import { TramitesCiudadanoNuevoComponent } from './pages/tramites-ciudadano/tramites-ciudadano-nuevo/tramites-ciudadano-nuevo.component';
+import { TramitesCiudadanoNuevoslisComponent } from './pages/tramites-ciudadano/tramites-ciudadano-nuevoslis/tramites-ciudadano-nuevoslis.component';
+import { TramitesCiudadanoAsignadosComponent } from './pages/tramites-ciudadano/tramites-ciudadano-asignados/tramites-ciudadano-asignados.component';
+import { TramitesCiudadanoFinalizadosComponent } from './pages/tramites-ciudadano/tramites-ciudadano-finalizados/tramites-ciudadano-finalizados.component';
+import { TramitesCiudadanoPrincipalComponent } from './pages/tramites-ciudadano/tramites-ciudadano-principal/tramites-ciudadano-principal.component';
 @NgModule({
     imports: [
         RouterModule.forRoot([
             {
                 path: '', component: AppMainComponent,
                 children: [
-                    {path: '', component: DashboardComponent},
+                    {path: '', component: TramitesPrincipalComponent},
+                    {path: 'home/principal', component: TramitesPrincipalComponent},
                     {path: 'ciudadanos/mantenimiento', component: CiudadanosComponent},
+                    {path: 'tramites/nuevo', component: TramitesNuevoComponent},
+                    {path: 'tramites/nuevoslis', component: TramitesNuevoslisComponent},
+                    {path: 'tramites/asignados', component: TramitesAsignadosComponent},
+                    {path: 'tramites/finalizados', component: TramitesFinalizadosComponent},
+                    {path: 'tramites/ciudadano/principal', component: TramitesCiudadanoPrincipalComponent},
+                    {path: 'tramites/ciudadano/nuevo', component: TramitesCiudadanoNuevoComponent},
+                    {path: 'tramites/ciudadano/nuevoslis', component: TramitesCiudadanoNuevoslisComponent},
+                    {path: 'tramites/ciudadano/asignados', component: TramitesCiudadanoAsignadosComponent},
+                    {path: 'tramites/ciudadano/finalizados', component: TramitesCiudadanoFinalizadosComponent}
                     
                 ],
             },
             {path:'pages/landing', component: LandingComponent},
-            {path:'pages/login', component: LoginComponent},
+            {path:'login', component: LoginComponent},
             {path:'registrar', component: RegistroComponent },
             {path:'pages/error', component: ErrorComponent},
             {path:'pages/notfound', component: NotfoundComponent},

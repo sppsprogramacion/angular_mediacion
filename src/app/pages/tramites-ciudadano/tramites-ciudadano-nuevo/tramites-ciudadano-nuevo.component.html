@@ -1,0 +1,84 @@
+<div class="grid mt-2 justify-content-center">
+    <div class="col-12">
+        <div class="card p-fluid">
+            <h5>Solicitud nueva</h5>
+            <div class="p-formgrid grid">
+                <!-- FORMULARIO TRAMITES -->
+                <div class="col-12">
+                    <form [formGroup]="formaTramite">
+                        <div class="formgrid grid">
+                            <div class="field col-4">
+                                <label for="id_opcion_sino">¿Está asesorado?</label>
+                                <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="esta_asesorado" placeholder="Seleccionar...">
+                                </p-dropdown>
+                            </div>
+                        </div>
+
+                        <div class="formgrid grid">
+                            <div class="field col-6">
+                                <label for="objeto_id">Motivo de la mediación (según Ley 732, Art. 10)</label>
+                                <p-dropdown id="objeto_id" [options]="listObjetos" optionLabel="objeto" optionValue="id_objeto" formControlName="objeto_id" placeholder="Seleccionar...">
+                                </p-dropdown>
+                            </div>
+                        </div>
+
+                        <div class="formgrid grid">
+                            <div class="field col-6">
+                                <label for="id_opcion_sino">¿Existe violencia entre las partes?</label>
+                                <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="violencia_partes">
+                                </p-dropdown>
+                            </div>
+                            <div class="field col-6">
+                                <label for="id_opcion_sino">¿Existe violencia de genero?</label>
+                                <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="violencia_genero" (onChange)="onChangeViolenciaGenero()">
+                                </p-dropdown>
+                            </div>
+                        </div>
+
+                        <div *ngIf="existe_violencia_genero" class="formgrid grid">
+                            <div class="col-12 mb-1">
+                                <label for="id_opcion_sino">En caso de violencia de egenero</label><br>
+                            </div>
+                            <div class="field col-6">
+                                <label for="id_opcion_sino">¿Existe denuncia?</label>
+                                <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="existe_denuncia" placeholder="Seleccionar...">
+                                </p-dropdown>
+                            </div>
+                            <div class="field col-6">
+                                <label for="id_opcion_sino">¿Existe una medida cautelar?</label>
+                                <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="medida_cautelar" placeholder="Seleccionar...">
+                                </p-dropdown>
+                            </div>
+                        </div>
+
+                        <div class="formgrid grid">
+                            <div class="field col-4">
+                                <label for="id_opcion_sino">pdf denuncia</label>
+                                <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="pdf_denuncia">
+                                </p-dropdown>
+                            </div>
+                            <div class="field col-4">
+                                <label for="id_opcion_sino">pdf cautelar</label>
+                                <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="pdf_cautelar">
+                                </p-dropdown>
+                            </div>
+                            <div class="field col-4">
+                                <label for="id_opcion_sino">pdf ingresos</label>
+                                <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="pdf_ingresos">
+                                </p-dropdown>
+                            </div>
+
+                        </div>
+
+
+                    </form>
+                </div>
+                <!--  FIN FORMULARIO TRAMITES -->
+                <div class="col-12">
+                    <button pButton pRipple type="button" label="Guardar" class="p-button-success mr-2 mb-2" (click)="submitFormTramite()"></button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

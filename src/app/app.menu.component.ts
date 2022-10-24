@@ -30,30 +30,38 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Home',
                 items:[
-                    {label: 'Dashboard',icon: 'pi pi-fw pi-home', routerLink: ['/']}
-                ]
-            },
-            {
-                label: 'Ciudadanos',
-                items: [
-                    {label: 'Mantenimiento', icon: 'pi pi-fw pi-id-card', routerLink: ['/ciudadanos/mantenimiento']}
-                    
+                    {label: 'Principal',icon: 'pi pi-fw pi-home', routerLink: ['/']}
                 ]
             },
             {
                 label: 'Tramites',
                 items: [
-                    {label: 'Nuevos', icon: 'pi pi-fw pi-bookmark', routerLink: ['/tramites/formlayout']},
-                    {label: 'Derivados', icon: 'pi pi-fw pi-send', routerLink: ['/uikit/input']},
-                    {label: 'Finalizados', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/floatlabel']},
-                    
+                    {label: 'Nuevos', icon: 'pi pi-fw pi-bookmark', routerLink: ['/tramites/nuevoslis']},
+                    {label: 'Asignados mediador', icon: 'pi pi-fw pi-send', routerLink: ['/tramites/asignados']},
+                    {label: 'Finalizados', icon: 'pi pi-fw pi-check-square', routerLink: ['/tramites/finalizados']},                    
                 ]
             },
+            {
+                label: 'Ciudadanos admin',
+                items: [
+                    {label: 'Ver ciudadanos', icon: 'pi pi-fw pi-id-card', routerLink: ['/ciudadanos/mantenimiento']}
+                    
+                ]
+            },            
             {
                 label: 'Usuarios',
                 items: [
                     {label: 'Mediadores', icon: 'pi pi-fw pi-id-card', routerLink: ['/ciudadanos/mantenimiento']},
-                    {label: 'Administradores', icon: 'pi pi-fw pi-id-card', routerLink: ['/ciudadanos/mantenimiento']}
+                    {label: 'Administradores', icon: 'pi pi-fw pi-id-card', routerLink: ['/ciudadanos/mantenimiento']}                    
+                ]
+            },
+            {
+                label: 'Ciudadanos opciones',
+                items: [
+                    {label: 'Tramites principal', icon: 'pi pi-fw pi-clone', routerLink: ['/tramites/ciudadano/principal']},
+                    {label: 'Tramites nuevos', icon: 'pi pi-fw pi-bookmark', routerLink: ['/tramites/ciudadano/nuevoslis']},
+                    {label: 'Tramites con mediador', icon: 'pi pi-fw pi-send', routerLink: ['/tramites/ciudadano/asignados']},
+                    {label: 'Tramites finalizados', icon: 'pi pi-fw pi-check-square', routerLink: ['/tramites/ciudadano/finalizados']}
                     
                 ]
             },
