@@ -29,7 +29,13 @@
                         <div class="field col">
                             <label for="nombre">Nombre</label>
                             <input type="text" pInputText id="nombre" formControlName="nombre" />
-
+                            <small *ngIf="isValid" class="p-error">
+                                <div *ngFor="let validation of user_validation_messages.nombre" >
+                                    <div  *ngIf="formaRegistro.get('nombre')?.hasError(validation.type)">
+                                        {{validation.message}}
+                                    </div>
+                                </div>
+                            </small>
                         </div>
                     </div>
 

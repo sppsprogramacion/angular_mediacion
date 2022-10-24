@@ -104,12 +104,12 @@ export class RegistroComponent implements OnInit {
         { type: 'pattern', message: 'Solo se pueden ingresar números.' }
       ],
       'localidad_barrio': [
-          { type: 'required', message: 'La persona de referencia es requerido' },
+          { type: 'required', message: 'La localidad/barrio es requerido.' },
           { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
           { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
       ],
       'calle_direccion': [
-          { type: 'required', message: 'La descripción es requerida' },
+          { type: 'required', message: 'La calle/direccion es requerida' },
           { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
           { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
       ],
@@ -140,11 +140,15 @@ export class RegistroComponent implements OnInit {
     //VALIDACIONES DE FORMULARIO
     isValid(campo: string): boolean{
       // if (this.formaRegistro.get(campo).invalid && this.form_submitted) {
-      if (this.formaRegistro.get(campo).invalid && this.formaRegistro.get(campo)?.touched) {
-        return true;
-      }else{
-        return false;
-      }
+      // if (this.formaRegistro.get(campo).invalid && this.formaRegistro.get(campo)?.touched) {
+      //   return true; this.forma.get('sector_id')?.touched;
+      // }else{
+      //   return false;
+      // }
+      console.log("valido",this.formaRegistro.get(campo)?.valid && this.formaRegistro.get(campo)?.touched);
+      
+      return this.formaRegistro.get(campo)?.invalid && this.formaRegistro.get(campo)?.touched;
+      
     }
   
     clavesValidation(): boolean{
