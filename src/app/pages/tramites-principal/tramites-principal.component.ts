@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
 import { MunicipioModel } from 'src/app/models/municipio.model';
 import { SexoModel } from 'src/app/models/sexo.model';
+import { DataService } from 'src/app/service/data.service';
 import { TramiteModel } from '../../models/tramite.model';
 import { TramitesService } from '../../service/tramites.service';
 
@@ -19,6 +21,7 @@ export class TramitesPrincipalComponent implements OnInit {
   tramiteDialog: boolean;
   nuevoTramite: boolean;
   submitted: boolean;
+  urlTramite: string = 'tramites/administrar';
 
   //LISTAS    
   listTramites: TramiteModel[]=[];
@@ -27,7 +30,9 @@ export class TramitesPrincipalComponent implements OnInit {
   listSexo: SexoModel[]=[];
 
   constructor(
-    private tramitesService: TramitesService
+    private tramitesService: TramitesService,
+    public dataService: DataService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -36,16 +41,22 @@ export class TramitesPrincipalComponent implements OnInit {
   }
 
 
-  //LISTADO DE CIUDADANOS
+  //LISTADO DE TRAMITES
   listarTramites(){    
     this.tramitesService.listarTramitesTodos().
         subscribe(respuesta => {
         this.listTramites= respuesta[0];
-        console.log("tramites", this.listTramites);
         this.loading = false;  
     
     });
-}
-//FIN LISTADO DE CIUDADANOS....................................................... 
+  }
+  //FIN LISTADO DE TRAMITES............................
+
+  //ACCEDER A DATA SERVICE
+  administrarTramite(data: TramiteModel){
+    this.dataService.tramiteData = data;
+    this.router.navigateByUrl("tramites/administrar");
+  }
+  //FIN ACCEDER A DATA SERVICE
 
 }

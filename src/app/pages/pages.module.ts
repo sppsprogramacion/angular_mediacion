@@ -21,6 +21,9 @@ import { TramitesAsignadosComponent } from './tramites-asignados/tramites-asigna
 import { TramitesNuevoslisComponent } from './tramites-nuevoslis/tramites-nuevoslis.component';
 import { TramitesCiudadanoNuevoslisComponent } from './tramites-ciudadano/tramites-ciudadano-nuevoslis/tramites-ciudadano-nuevoslis.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { TramitesUsuarioAsignadosComponent } from './tramites-usuario/tramites-usuario-asignados/tramites-usuario-asignados.component';
+import { TramitesUsuarioFinalizadosComponent } from './tramites-usuario/tramites-usuario-finalizados/tramites-usuario-finalizados.component';
+import { TramitesAdministrarComponent } from './tramites-administrar/tramites-administrar.component';
 
 
 
@@ -50,7 +53,10 @@ import { DropdownModule } from 'primeng/dropdown';
     TramitesNuevoComponent,
     TramitesAsignadosComponent,
     TramitesNuevoslisComponent,
-    TramitesCiudadanoNuevoslisComponent
+    TramitesCiudadanoNuevoslisComponent,
+    TramitesUsuarioAsignadosComponent,
+    TramitesUsuarioFinalizadosComponent,
+    TramitesAdministrarComponent
     
   ],
   

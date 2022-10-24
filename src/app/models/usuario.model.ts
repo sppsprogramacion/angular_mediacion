@@ -1,0 +1,17 @@
+import { SexoModel } from './sexo.model';
+import { ProvinciaModel } from './provincia.model';
+import { DepartamentoModel } from './departamento.model';
+import { MunicipioModel } from './municipio.model';
+
+
+export class UsuarioModel{
+    constructor(
+        public dni?: number,
+        public apellido?: string,
+        public nombre?: string,       
+        public telefono?: string,
+        public email?: string,
+        public clave?: string,
+
+    ){}
+}

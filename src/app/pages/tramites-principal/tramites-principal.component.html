@@ -135,7 +135,7 @@
                 <ng-template pTemplate="body" let-tramite>
                     <tr>
                         <td>
-                            <button type="button" pButton pRipple [pRowToggler]="tramite" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" (click)="expanded ?listarHistorialTramite(null):listarHistorialTramite(tramite)"></button>
+                            <button pButton pRipple type="button" icon="pi pi-search-plus" class="p-button-rounded p-button-secondary mr-2 mb-2" (click)="administrarTramite(tramite)"></button>
                         </td>
                         <td style="min-width: 10rem;">
                             {{tramite.numero_tramite}}

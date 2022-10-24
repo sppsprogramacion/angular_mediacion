@@ -23,4 +23,8 @@ export class TramitesService {
   listarTramitesTodos(){
     return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites`)
   }
+
+  listarTramitesNuevos(){
+    return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/nuevos`)
+  }
 }
