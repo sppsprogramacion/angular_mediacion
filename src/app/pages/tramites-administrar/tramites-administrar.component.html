@@ -3,54 +3,43 @@
     <span class="block text-white  font-bold font-medium mb-3">DATOS DEL TRAMITE</span>
     <div class="col-12 border-bottom-1 surface-border">
         <div class="grid">
-            <div class="col-12 lg:col-6 xl:col-6">
-                <span class="text-teal-900 font-medium text-1xl">Tramite N°:<span class="text-white ml-2 font-medium"> {{dataTramite.numero_tramite}} </span></span>
+            <div class="col-12 lg:col-4 xl:col-4">
+                <span class="text-white font-medium text-1xl">Tramite N°:<span class="text-white ml-2 font-medium"> {{dataTramite.numero_tramite}} </span></span>
             </div>
-            <div class="col-12 lg:col-6 xl:col-6">
-                <span class="text-teal-900 font-medium text-1xl">Solicitante:<span class="text-white ml-1 font-medium"> {{dataTramite.ciudadano?.apellido}} {{dataTramite.ciudadano?.apellido}}</span></span>
+            <div class="col-12 lg:col-4 xl:col-4">
+                <span class="text-white font-medium text-1xl">Solicitante:<span class="text-white ml-1 font-medium"> {{dataTramite.ciudadano?.apellido}} {{dataTramite.ciudadano?.nombre}}</span></span>
             </div>
-        </div>
-    </div>
-    <!-- <div class="col-12 border-bottom-1 surface-border">
-        <div class="grid">
-            <div class="col-12 lg:col-6 xl:col-6 py-2">
-                <span class="text-teal-900 font-medium text-1xl">Fecha inicia:<span class="text-white ml-1 font-medium"> {{movimientoTramiteRecibir.tramite?.fecha| date: 'dd/MM/yyyy'}}</span></span>
-            </div>
-            <div class="col-12 lg:col-6 xl:col-6 py-2">
-                <span class="text-teal-900 font-medium text-1xl">Expediente/Nota:<span class="text-white ml-1 font-medium"> {{movimientoTramiteRecibir.tramite?.expediente_nota}}</span></span>
+            <div class="col-12 lg:col-4 xl:col-4">
+                <span class="text-white font-medium text-1xl">DNI:<span class="text-white ml-1 font-medium"> {{dataTramite.ciudadano?.dni}}</span></span>
             </div>
         </div>
     </div>
     <div class="col-12 border-bottom-1 surface-border">
         <div class="grid">
             <div class="col-12 lg:col-6 xl:col-6 py-2">
-                <span class="text-teal-900 font-medium text-1xl">Asunto:<br><span class="text-white ml-1 font-medium"> {{movimientoTramiteRecibir.tramite?.asunto}}</span></span>
+                <span class="text-white font-medium text-1xl">Mootivo de la solicitud:<span class="text-white ml-1 font-medium"> {{dataTramite.objeto?.objeto}}</span></span>
             </div>
-            <div class="col-12 lg:col-6 xl:col-6 py-2">
-                <span class="text-teal-900 font-medium text-1xl">Descripción:<br><span class="text-white ml-1 font-medium"> {{movimientoTramiteRecibir.tramite?.descripcion}}</span></span>
+            <div class="col-12 lg:col-3 xl:col-3 py-2">
+                <span class="text-white font-medium text-1xl">Fecha inicia:<span class="text-white ml-1 font-medium"> {{dataTramite.fecha_tramite| date: 'dd/MM/yyyy'}}</span></span>
+            </div>
+            <div class="col-12 lg:col-3 xl:col-3 py-2">
+                <span class="text-white font-medium text-1xl">Numero expediente:<span class="text-white ml-1 font-medium"> {{dataTramite.expediente}}</span></span>
             </div>
         </div>
     </div>
-    <div class="col-12 border-bottom-1 surface-border">
-        <div class="grid">
-            <div class="col-12 lg:col-6 xl:col-6 py-2">
-                <span class="text-teal-900 font-medium text-1xl">Persona referencia:<br><span class="text-white ml-1 font-medium"> {{movimientoTramiteRecibir.tramite?.persona_referencia}}</span></span>
-            </div>
-            <div class="col-12 lg:col-6 xl:col-6 py-2">
-                <span class="text-teal-900 font-medium text-1xl">Sector inicia:<br><span class="text-white ml-1 font-medium"> {{movimientoTramiteRecibir.tramite?.sector?.organismo?.organismo}}<br>{{movimientoTramiteRecibir.tramite?.sector?.sector}}</span></span>
-            </div>
-        </div>
-    </div> -->
+
 </div>
 <!-- FIN Card Tramite -->
 
 <!-- Card Tramite -->
-<div class="card mb-0 bg-teal-600 mt-2">
+
+<div class="card p-fluid mb-0 bg-cyan-600 mt-2">
     <span class="block text-white  font-bold font-medium mb-3">ASIGNAR EL TRAMITE A UN MEDIADOR</span>
+
     <div class="col-12 border-bottom-1 surface-border">
         <div class="grid">
             <div class="col-12 lg:col-6 xl:col-6">
-                <span class="text-teal-900 font-medium text-1xl">Mediador Actual:<span class="text-white ml-2 font-medium"> {{dataTramite.numero_tramite}} </span></span>
+                <span class="text-white font-bold font-medium text-1xl">Mediador Actual:<span class="text-white ml-2 font-medium"> {{dataTramite.numero_tramite}} </span></span>
             </div>
 
         </div>
@@ -63,27 +52,24 @@
                 <form [formGroup]="formaMediadorAsignado">
                     <div class="formgrid grid">
                         <div class="field col-6">
-                            <label for="dni">Seleccionar un usuario</label>
+                            <label for="dni" class="text-white font-medium">Seleccionar un usuario</label>
                             <p-dropdown id="dni" [options]="listUsuarios" optionLabel="apellido" optionValue="dni" formControlName="dni_usuario">
                             </p-dropdown>
 
                         </div>
                         <div class="field col-6">
-                            <label for="funcion_tramite_id">Funcion en el tramite</label>
-                            <p-dropdown id="funcion_tramite_id" [options]="listUsuarios" optionLabel="funcion_tramite" optionValue="id_funcion_tramite" formControlName="funcion_tramite_id">
+                            <label for="funcion_tramite_id" class="text-white font-medium">Funcion en el tramite</label>
+                            <p-dropdown id="funcion_tramite_id" [options]="listFuncionTramite" optionLabel="funcion_tramite" optionValue="id_funcion_tramite" formControlName="funcion_tramite_id">
                             </p-dropdown>
                         </div>
                     </div>
 
                     <div class="formgrid grid">
                         <div class="field col-6">
-                            <label for="detalles">Detalles</label>
+                            <label for="detalles" class="text-white font-medium">Detalles</label>
                             <input type="text" pInputText id="detalles" formControlName="detalles" />
-
                         </div>
                     </div>
-
-
                 </form>
             </div>
             <!--  FIN FORMULARIO TRAMITES -->
@@ -91,19 +77,7 @@
                 <button pButton pRipple type="button" label="Guardar" class="p-button-success mr-2 mb-2" (click)="submitFormUsuarioTramite()"></button>
             </div>
         </div>
-
-
-
-        <div class="field col-6">
-            <label for="dni">¿Existe violencia de genero?</label>
-            <p-dropdown id="dni" [options]="listUsuarios" optionLabel="apellido" optionValue="dni" formControlName="violencia_genero">
-            </p-dropdown>
-        </div>
-
-
     </div>
-
-
-
 </div>
+
 <!-- FIN Card Tramite -->

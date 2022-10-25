@@ -17,11 +17,11 @@ export class FuncionTramiteService {
 
   guardarFuncionTramite(data: Partial<FuncionTtramiteModel>){    
     this.funcionTramite={...data};
-    return this.http.post(`${base_url}/tramites/prueba-crear`, this.funcionTramite);
+    return this.http.post(`${base_url}/funcion-tramite`, this.funcionTramite);
   }
 
-  listarTramitesTodos(){
-    return this.http.get<[tramite:FuncionTtramiteModel[], total: number]>(`${base_url}/funcion-tramite`)
+  listarFuncionTramitesTodos(){
+    return this.http.get<[funcionTramite:FuncionTtramiteModel[], total: number]>(`${base_url}/funcion-tramite`)
   }
 
   

@@ -4,10 +4,17 @@ import { AppComponent } from './app.component';
 import { ConfigService } from './service/app.config.service';
 import { AppConfig } from './api/appconfig';
 import { Subscription } from 'rxjs';
+import { CiudadanosService } from './service/ciudadanos.service';
+import { UsuariosService } from './service/usuarios.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CiudadanoModel } from './models/ciudadano.model';
+import { UsuarioModel } from './models/usuario.model';
+import { globalConstants } from './common/global-constants';
 
 @Component({
     selector: 'app-main',
     templateUrl: './app.main.component.html',
+    providers: [CiudadanosService, UsuariosService] ,
     animations: [
         trigger('submenu', [
             state('hidden', style({
@@ -22,6 +29,18 @@ import { Subscription } from 'rxjs';
     ]
 })
 export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
+    //temporal
+    ciudadano: CiudadanoModel=new CiudadanoModel;
+    listCiudadanos: CiudadanoModel[]=[];
+    listUsuarios: UsuarioModel[]=[];
+
+
+    //FORMULARIOS
+    formaCiudadano: FormGroup;
+    formaUsuario: FormGroup;
+
+    //fin temporal
+
 
     public menuInactiveDesktop: boolean;
 
@@ -53,11 +72,37 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
 
     subscription: Subscription;
     
-    constructor(public renderer: Renderer2, public app: AppComponent, public configService: ConfigService) { }
+    constructor(public renderer: Renderer2, public app: AppComponent, public configService: ConfigService,
+        private ciudadanoService: CiudadanosService,
+        private usuarioService: UsuariosService,
+        private fb: FormBuilder
+        ) { 
+
+            //FORMULARIO CIUDADANOE    
+            this.formaCiudadano = this.fb.group({
+                dni_ciudadano: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]]               
+               
+            });
+            //FIN FORMULARIO CIUDADANO
+
+            //FORMULARIO CIUDADANOE    
+            this.formaUsuario = this.fb.group({
+                dni_usuario: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]]               
+               
+            });
+            //FIN FORMULARIO CIUDADANO
+        }
 
     ngOnInit() {
         this.config = this.configService.config;
         this.subscription = this.configService.configUpdate$.subscribe(config => this.config = config);
+
+        //temporal
+        // this.listarCiudadanos();
+        // this.listarUsuarios();
+
+        console.log("lista ciudadanos menu", this.listCiudadanos);
+        console.log("lista usuarios menu", this.listUsuarios);
     }
 
     ngAfterViewInit() {
@@ -178,5 +223,33 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
+    }
+
+
+    //TEMPORAL
+    //CARGA DE LISTADOS DROP
+    async listarCiudadanos(){    
+        await this.ciudadanoService.listarCiudadanosTodos().
+            subscribe(respuesta => {
+            this.listCiudadanos= respuesta[0];
+        });
+    }
+
+    listarUsuarios(){    
+        this.ciudadanoService.listarCiudadanosTodos().
+            subscribe(respuesta => {
+            this.listCiudadanos= respuesta[0];
+        });
+    }
+
+    guardarCiudadano(){
+        //TEMPORAL BUSQUEDA DEL CIUDADANO
+        this.ciudadanoService.buscarXDni(this.formaCiudadano.get('dni_ciudadano')?.value).
+            subscribe(respuesta => {
+            globalConstants.ciudadano = respuesta[0];
+            
+        
+        });
+        //FIN TEMPORAL BUSQUEDA DEL CIUDADANO
     }
 }

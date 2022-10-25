@@ -13,6 +13,7 @@ import { TramitesService } from 'src/app/service/tramites.service';
 import Swal from 'sweetalert2';
 import { TramiteModel } from '../../../models/tramite.model';
 import { ObjetoModel } from '../../../models/objeto.model';
+import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 
 @Component({
   selector: 'app-tramites-ciudadano-nuevo',
@@ -36,7 +37,7 @@ export class TramitesCiudadanoNuevoComponent implements OnInit {
   listObjetos: ObjetoModel[] = [];
   listSexo: SexoModel[] = [];
   listSiNo: any[] = [];
-
+  listCiudadano: CiudadanoModel[]=[];
   //variables tramite  
   formTramiteDialog: boolean= false;
   existe_violencia_genero: boolean = false;
@@ -51,10 +52,11 @@ export class TramitesCiudadanoNuevoComponent implements OnInit {
     private readonly datePipe: DatePipe,
     private serviceMensajes: MessageService,
     private ciudadanoService: CiudadanosService,
-    private tramiteService: TramitesService
+    private tramiteService: TramitesService,
 
     ){ 
       this.formaTramite = this.fb.group({
+        dni_ciudadano: [,[]],
         esta_asesorado: [false,[Validators.required]],
         objeto_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
         violencia_genero: [false,[Validators.required]],
@@ -86,6 +88,7 @@ export class TramitesCiudadanoNuevoComponent implements OnInit {
     this.cargarMunicipios(1);
     
     console.log("sino", this.listSiNo);
+    this.listarCiudadanos();
   }
 
   // ngOnDestroy(): void {
@@ -118,7 +121,7 @@ export class TramitesCiudadanoNuevoComponent implements OnInit {
     let data:any;
     data ={
      dataTramite : {
-      dni_ciudadano: 32505424,
+      dni_ciudadano: parseInt(this.formaTramite.get('dni_ciudadano')?.value),
       esta_asesorado: this.formaTramite.get('esta_asesorado')?.value,
       objeto_id: parseInt(this.formaTramite.get('objeto_id')?.value),
       violencia_genero: this.formaTramite.get('violencia_genero')?.value,
@@ -209,5 +212,15 @@ export class TramitesCiudadanoNuevoComponent implements OnInit {
       this.existe_violencia_genero= false;
     }
   }
+
+  //LISTADO DE MEDIADORES
+  listarCiudadanos(){    
+    this.ciudadanoService.listarCiudadanosTodos().
+        subscribe(respuesta => {
+        this.listCiudadano= respuesta[0];
+    
+    });
+  }
+  //FIN LISTADO DE MEDIADORES............................
 
 }

@@ -22,4 +22,11 @@ export class CiudadanosService {
   listarCiudadanosTodos(){
     return this.http.get<[ciudadano:CiudadanoModel[], total: number]>(`${base_url}/ciudadanos`)
   }
+
+  buscarXDni(dni: number){
+    return this.http.get<CiudadanoModel>(`${base_url}/ciudadanos/buscar-xdni?dni=${dni}`)
+  }
+
+  
+
 }

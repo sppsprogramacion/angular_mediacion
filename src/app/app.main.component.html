@@ -8,6 +8,8 @@
                                 'p-ripple-disabled': !config.ripple, 'p-input-filled': config.inputStyle === 'filled'}">
     <app-topbar></app-topbar>
     <div class="layout-sidebar">
+
+        <br>
         <app-menu></app-menu>
     </div>
     <div class="layout-main-container">
@@ -16,6 +18,6 @@
         </div>
         <app-footer></app-footer>
     </div>
-        <app-config></app-config>
-        <div *ngIf="menuActiveMobile" class="layout-mask p-component-overlay"></div>
+    <app-config></app-config>
+    <div *ngIf="menuActiveMobile" class="layout-mask p-component-overlay"></div>
 </div>

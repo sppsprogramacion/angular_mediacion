@@ -27,4 +27,12 @@ export class TramitesService {
   listarTramitesNuevos(){
     return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/nuevos`)
   }
+
+  listarTramitesAsignadosMediador(){
+    return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/asignados-mediador`)
+  }
+
+  listarTramitesFinalizados(){
+    return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/finalizados`)
+  }
 }

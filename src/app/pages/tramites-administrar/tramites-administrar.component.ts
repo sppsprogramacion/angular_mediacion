@@ -9,6 +9,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { UsuarioTramiteModel } from '../../models/usuario_tramite.model';
 import { UsuariosTramiteService } from '../../service/usuarios-tramite.service';
 import Swal from 'sweetalert2';
+import { FuncionTramiteService } from '../../service/funcion-tramite.service';
+import { FuncionTtramiteModel } from 'src/app/models/funcion_tramite.model';
 
 @Component({
   selector: 'app-tramites-administrar',
@@ -24,9 +26,11 @@ export class TramitesAdministrarComponent implements OnInit {
 
   //listas
   listUsuarios: UsuarioModel[]=[];
-
+  listFuncionTramite: FuncionTtramiteModel[] = []
+  
   //variables
-  loading: boolean = true;
+  loadingMediadores: boolean = true;
+  loadingFuncionTramite: boolean = true
 
   //FORMULARIOS
   formaMediadorAsignado: FormGroup;  
@@ -36,7 +40,8 @@ export class TramitesAdministrarComponent implements OnInit {
     private readonly datePipe: DatePipe,
     public dataService: DataService,
     private usuarioService: UsuariosService,
-    private usuarioTramiteService: UsuariosTramiteService
+    private usuarioTramiteService: UsuariosTramiteService,
+    private funcionTramiteService: FuncionTramiteService
     
   ) { 
     //OBTENER EL TRAMITE
@@ -44,7 +49,7 @@ export class TramitesAdministrarComponent implements OnInit {
 
     //FORMULARIO 
     this.formaMediadorAsignado = this.fb.group({
-      tramite_numero: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      //tramite_numero: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       dni_usuario: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       detalles: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(200)]],      
       funcion_tramite_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]]       
@@ -54,6 +59,7 @@ export class TramitesAdministrarComponent implements OnInit {
 
   ngOnInit(): void {
     this.listarMediadores();
+    this.listarFuncionTramite();
   }
 
   //GUARDAR USUARIO-TRAMITE  
@@ -68,7 +74,7 @@ export class TramitesAdministrarComponent implements OnInit {
         //     'Formulario Tramite con errores','Complete correctamente todos los campos del formulario',"warning"
         //     );
         
-        
+        console.log("formulario", this.formaMediadorAsignado);
         console.log("errores formulario");
         return Object.values(this.formaMediadorAsignado.controls).forEach(control => control.markAsTouched());
     }
@@ -77,7 +83,7 @@ export class TramitesAdministrarComponent implements OnInit {
 
     dataMediadorAsignado = {
       tramite_numero: this.dataTramite.numero_tramite,
-      dni_usuario: parseInt(this.formaMediadorAsignado.get('dni')?.value),
+      dni_usuario: parseInt(this.formaMediadorAsignado.get('dni_usuario')?.value),
       detalles: this.formaMediadorAsignado.get('detalles')?.value,
       funcion_tramite_id: parseInt(this.formaMediadorAsignado.get('funcion_tramite_id')?.value),             
     };
@@ -88,8 +94,6 @@ export class TramitesAdministrarComponent implements OnInit {
         .subscribe(resultado => {
             let usuarioTramiteRes: UsuarioTramiteModel = resultado;
             Swal.fire('Exito',`La asignacion de mediador se realizo con exito`,"success");
-            
-           
         },
         (error) => {
             Swal.fire('Error',`Error al realizar la asignacion: ${error.error.message}`,"error") 
@@ -106,20 +110,21 @@ export class TramitesAdministrarComponent implements OnInit {
     this.usuarioService.listarUsuariosTodos().
         subscribe(respuesta => {
         this.listUsuarios= respuesta[0];
-        this.loading = false;  
+        this.loadingMediadores = false;  
     
     });
   }
   //FIN LISTADO DE MEDIADORES............................
 
   //LISTADO DE TRAMITES
-  // listarFuncionTramite(){    
-  //   this.usuarioTramiteService.listarFuncionTramitesTodos().
-  //       subscribe(respuesta => {
-  //       this.listUsuarios= respuesta[0];
-  //       this.loading = false;  
+  listarFuncionTramite(){    
+    this.funcionTramiteService.listarFuncionTramitesTodos().
+        subscribe(respuesta => {
+        this.listFuncionTramite= respuesta[0];
+        console.log("listfuncion", this.listFuncionTramite);
+        this.loadingFuncionTramite = false;  
     
-  //   });
-  // }
+    });
+  }
   //FIN LISTADO DE TRAMITES............................
 }

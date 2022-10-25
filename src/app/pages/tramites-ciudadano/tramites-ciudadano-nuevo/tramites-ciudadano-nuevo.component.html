@@ -7,6 +7,13 @@
                 <div class="col-12">
                     <form [formGroup]="formaTramite">
                         <div class="formgrid grid">
+                            <div class="field col-6">
+                                <label for="dni_ciudadano">Ciudadano</label>
+                                <p-dropdown id="dni_ciudadano" [options]="listCiudadano" optionLabel="apellido" optionValue="dni" formControlName="dni_ciudadano" placeholder="Seleccionar...">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                        <div class="formgrid grid">
                             <div class="field col-4">
                                 <label for="id_opcion_sino">¿Está asesorado?</label>
                                 <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="esta_asesorado" placeholder="Seleccionar...">
