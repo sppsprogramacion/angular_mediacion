@@ -31,16 +31,44 @@ export const objetos = [
         "objeto": "alimentos"
     },
     {
+        "id_objeto": 9,
+        "objeto": "Canon locativo"
+    },
+    {
         "id_objeto": 4,
         "objeto": "Cobro de pesos"
+    },
+    {
+        "id_objeto": 6,
+        "objeto": "Compensacion economica"
+    },
+    {
+        "id_objeto": 5,
+        "objeto": "Comprobante de Reconocimiento"
     },
     {
         "id_objeto": 2,
         "objeto": "Cuidado personal"
     },
     {
+        "id_objeto": 10,
+        "objeto": "Daños y perjuicios en general"
+    },
+    {
+        "id_objeto": 11,
+        "objeto": "Derecho de comunnicación"
+    },
+    {
         "id_objeto": 3,
         "objeto": "División de bienes"
+    },
+    {
+        "id_objeto": 8,
+        "objeto": "División de condominio"
+    },
+    {
+        "id_objeto": 7,
+        "objeto": "Organización de convivencia"
     }
 ];
 

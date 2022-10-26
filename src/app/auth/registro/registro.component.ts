@@ -54,8 +54,8 @@ export class RegistroComponent implements OnInit {
     ){ 
       this.formaRegistro = this.fb.group({
         dni: ['',[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.minLength(5)]],
-        apellido: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
-        nombre:   ['',[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+        apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+        nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
         sexo_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
         departamento_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
         municipio_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
@@ -71,10 +71,60 @@ export class RegistroComponent implements OnInit {
       });
     }
 
-  ngOnInit(): void {
-    this.config = this.configService.config;
-    this.subscription = this.configService.configUpdate$.subscribe(config => {
-      this.config = config;
+    //MENSAJES DE VALIDACIONES
+    user_validation_messages = {
+      //datos tramite
+      'dni': [
+        { type: 'required', message: 'El dni es requerido' },
+        { type: 'pattern', message: 'Solo se pueden ingresar números.' },
+        { type: 'pattern', message: 'El número ingresado debe tener mas de 5 digitos.' }
+      ],
+      'apellido': [
+        { type: 'required', message: 'El asunto es requerido' },
+        { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
+        { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
+        { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
+      ],
+      'nombre': [
+        { type: 'required', message: 'El asunto es requerido' },
+        { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
+        { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
+        { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
+      ],
+      'sexo_id': [
+        { type: 'required', message: 'El sexo es requerido' },
+        { type: 'pattern', message: 'Solo se pueden ingresar números.' }
+      ],
+      'departamento_id': [
+        { type: 'required', message: 'El sexo es requerido' },
+        { type: 'pattern', message: 'Solo se pueden ingresar números.' }
+      ],
+      'municipio_id': [
+        { type: 'required', message: 'El sexo es requerido' },
+        { type: 'pattern', message: 'Solo se pueden ingresar números.' }
+      ],
+      'persona_referencia': [
+          { type: 'required', message: 'La persona de referencia es requerido' },
+          { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
+          { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
+          { type: 'maxlength', message: 'La cantidad máxima de caracteres es 50.' }
+      ],
+      'descripcion': [
+          { type: 'required', message: 'La descripción es requerida' },
+          { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
+          { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
+          { type: 'maxlength', message: 'La cantidad máxima de caracteres es 500.' }
+      ],
+      
+    }
+    //FIN MENSAJES DE VALIDACIONES...............................................................
+  
+
+
+    ngOnInit(): void {
+      this.config = this.configService.config;
+      this.subscription = this.configService.configUpdate$.subscribe(config => {
+        this.config = config;
     });
 
     //CARGA DE LISTADOS DESDE DATA MOKEADA
