@@ -40,6 +40,7 @@ export class RegistroComponent implements OnInit {
 
   //variables registro  
   formRegistroDialog: boolean= false;
+  validacionClaves: boolean = true;
 
   //FORMULARIOS
   formaRegistro: FormGroup;  
@@ -65,8 +66,8 @@ export class RegistroComponent implements OnInit {
         telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
         fecha_nac: [,[Validators.required, Validators.maxLength(100)]],  
         email: ['',[Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],    
-        clave1: ['',[Validators.required,  Validators.minLength(6)]],
-        clave2: ['',[Validators.required,  Validators.minLength(6)]]
+        clave1: ['',[Validators.required,  Validators.minLength(8),Validators.pattern(/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/)]],
+        clave2: ['',[Validators.required,  Validators.minLength(8)]]
       
       });
     }
@@ -77,10 +78,10 @@ export class RegistroComponent implements OnInit {
       'dni': [
         { type: 'required', message: 'El dni es requerido' },
         { type: 'pattern', message: 'Solo se pueden ingresar números.' },
-        { type: 'pattern', message: 'El número ingresado debe tener mas de 5 digitos.' }
+        { type: 'minlength', message: 'El número ingresado debe tener mas de 5 digitos.' }
       ],
       'apellido': [
-        { type: 'required', message: 'El aoellido es requerido' },
+        { type: 'required', message: 'El apellido es requerido' },
         { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
         { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
         { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
@@ -131,24 +132,17 @@ export class RegistroComponent implements OnInit {
       ],
       'clave1': [
         { type: 'required', message: 'La contraseña es requerida' },
-        { type: 'minlength', message: 'La contraseña debe tener al menos 6 caracteres.' },
+        { type: 'minlength', message: 'La contraseña debe tener al menos 8 caracteres.' },
+        { type: 'pattern', message: 'Debe ingresar al menos un número, al menos una letra minuscula, almenos una letra mayuscula.\n Puede tener guiones bajo (_).\n No debe tener otros caracteres especiales.' },
       ],
       
     }
     //FIN MENSAJES DE VALIDACIONES...............................................................
   
     //VALIDACIONES DE FORMULARIO
-    isValid(campo: string): boolean{
-      // if (this.formaRegistro.get(campo).invalid && this.form_submitted) {
-      // if (this.formaRegistro.get(campo).invalid && this.formaRegistro.get(campo)?.touched) {
-      //   return true; this.forma.get('sector_id')?.touched;
-      // }else{
-      //   return false;
-      // }
-      console.log("valido",this.formaRegistro.get(campo)?.valid && this.formaRegistro.get(campo)?.touched);
+    isValid(campo: string): boolean{     
       
-      return this.formaRegistro.get(campo)?.invalid && this.formaRegistro.get(campo)?.touched;
-      
+      return this.formaRegistro.get(campo)?.invalid && this.formaRegistro.get(campo)?.touched;      
     }
   
     clavesValidation(): boolean{
@@ -180,17 +174,16 @@ export class RegistroComponent implements OnInit {
 
   //GUARDAR CIUDADANO  
   submitFormRegistro(){
+    this.validacionClaves = this.clavesValidation();
     if(this.formaRegistro.invalid){                        
         // this.msgs = [];
         // this.msgs.push({ severity: 'warn', summary: 'Errores en formulario', detail: 'Cargue correctamente los datos' });
         // this.serviceMensajes.add({key: 'tst', severity: 'warn', summary: 'Errores en formulario', detail: 'Cargue correctamente los dato'});
-        // Swal.fire(
-            
-        //     {target: document.getElementById('form-modal')},
-        //     'Formulario Tramite con errores','Complete correctamente todos los campos del formulario',"warning"
-        //     );
+        Swal.fire('Formulario con errores',`Complete correctamente todos los campos del formulario`,"warning");
+        
         let fechaAuxiliar = this.datePipe.transform(this.formaRegistro.get('fecha_nac')?.value,"yyyy-MM-dd")!;
         
+
         console.log("errores formulario");
         return Object.values(this.formaRegistro.controls).forEach(control => control.markAsTouched());
     }

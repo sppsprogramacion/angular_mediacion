@@ -2,15 +2,14 @@
     <div class="col-10 sm:col-10 lg:col-4 xl:col-4">
         <div class="card">
             <h5>
-                <!-- <span class="text-orange-600"><b>{{(sector != null)?sector.organismo.organismo : "Sin organismo"}}</b></span>
-                <span class="text-orange-500"> - {{(sector != null)?sector.sector : "sin sector"}}</span> -->
+                <img src="assets/imagenes/general/logo-gobierno-salta.png" alt="Image" height="200" class="mb-3">
 
             </h5>
         </div>
     </div>
     <div class="col-10 sm:col-10 lg:col-5 xl:col-6">
         <div class="card p-fluid">
-            <h5>Registarme</h5>
+            <h5>Registrarme</h5>
             <div class="p-formgrid grid">
                 <!-- FORMULARIO TRAMITES -->
                 <form [formGroup]="formaRegistro">
@@ -18,7 +17,7 @@
                         <div class="field col">
                             <label for="apellido">Apellido</label>
                             <input type="text" pInputText id="apellido" formControlName="apellido" />
-                            <small *ngIf="isValid" class="p-error">
+                            <small *ngIf="isValid('apellido')" class="p-error">
                                 <div *ngFor="let validation of user_validation_messages.apellido" >
                                     <div  *ngIf="formaRegistro.get('apellido')?.hasError(validation.type)">
                                         {{validation.message}}
@@ -29,7 +28,7 @@
                         <div class="field col">
                             <label for="nombre">Nombre</label>
                             <input type="text" pInputText id="nombre" formControlName="nombre" />
-                            <small *ngIf="isValid" class="p-error">
+                            <small *ngIf="isValid('nombre')" class="p-error">
                                 <div *ngFor="let validation of user_validation_messages.nombre" >
                                     <div  *ngIf="formaRegistro.get('nombre')?.hasError(validation.type)">
                                         {{validation.message}}
@@ -69,20 +68,48 @@
                         <div class="field col">
                             <label for="localidad_barrio">Barrio</label>
                             <input type="text" pInputText id="localidad_barrio" formControlName="localidad_barrio" />
+                            <small *ngIf="isValid('localidad_barrio')" class="p-error">
+                                <div *ngFor="let validation of user_validation_messages.localidad_barrio" >
+                                    <div  *ngIf="formaRegistro.get('localidad_barrio')?.hasError(validation.type)">
+                                        {{validation.message}}
+                                    </div>
+                                </div>
+                            </small>
                         </div>
                         <div class="field col">
                             <label for="calle_direccion">Calle/dirección</label>
                             <input type="text" pInputText id="calle_direccion" formControlName="calle_direccion" />
+                            <small *ngIf="isValid('calle_direccion')" class="p-error">
+                                <div *ngFor="let validation of user_validation_messages.calle_direccion" >
+                                    <div  *ngIf="formaRegistro.get('calle_direccion')?.hasError(validation.type)">
+                                        {{validation.message}}
+                                    </div>
+                                </div>
+                            </small>
                         </div>
                     </div>
                     <div class="formgrid grid">
                         <div class="field col">
                             <label for="numero_dom">Número</label>
                             <input type="text" pInputText id="numero_dom" formControlName="numero_dom" />
+                            <small *ngIf="isValid('numero_dom')" class="p-error">
+                                <div *ngFor="let validation of user_validation_messages.numero_dom" >
+                                    <div  *ngIf="formaRegistro.get('numero_dom')?.hasError(validation.type)">
+                                        {{validation.message}}
+                                    </div>
+                                </div>
+                            </small>
                         </div>
                         <div class="field col">
                             <label for="telefono">Teléfono</label>
                             <input type="text" pInputText id="telefono" formControlName="telefono" />
+                            <small *ngIf="isValid('telefono')" class="p-error">
+                                <div *ngFor="let validation of user_validation_messages.telefono" >
+                                    <div  *ngIf="formaRegistro.get('telefono')?.hasError(validation.type)">
+                                        {{validation.message}}
+                                    </div>
+                                </div>
+                            </small>
                         </div>
                     </div>
                     <div class="formgrid grid">
@@ -90,6 +117,13 @@
                         <div class="field col">
                             <label for="email">Correo electrónico</label>
                             <input type="text" pInputText id="email" formControlName="email" />
+                            <small *ngIf="isValid('email')" class="p-error">
+                                <div *ngFor="let validation of user_validation_messages.email" >
+                                    <div  *ngIf="formaRegistro.get('email')?.hasError(validation.type)">
+                                        {{validation.message}}
+                                    </div>
+                                </div>
+                            </small>
                         </div>
                     </div>
                     <div class="formgrid grid">
@@ -97,16 +131,32 @@
                         <div class="field col-6">
                             <label for="dni">DNI usuario</label>
                             <input type="text" pInputText id="dni" formControlName="dni" />
+                            <small *ngIf="isValid('dni')" class="p-error">
+                                <div *ngFor="let validation of user_validation_messages.dni" >
+                                    <div  *ngIf="formaRegistro.get('dni')?.hasError(validation.type)">
+                                        {{validation.message}}
+                                    </div>
+                                </div>
+                            </small>
                         </div>
                     </div>
                     <div class="formgrid grid">
-                        <div class="field col">
+                        <div class="field col-6">
                             <label for="clave1">Contraseña</label>
-                            <input type="text" pInputText id="clave1" formControlName="clave1" />
+                            <p-password id="clave1" formControlName="clave1" [toggleMask]="true" styleClass="w-full mb-3"></p-password>
+
+                            <small *ngIf="isValid('clave1')" class="p-error">
+                                <div *ngFor="let validation of user_validation_messages.clave1" >
+                                    <div  *ngIf="formaRegistro.get('clave1')?.hasError(validation.type)">
+                                        {{validation.message}}
+                                    </div>
+                                </div>
+                            </small>
                         </div>
-                        <div class="field col">
+                        <div class="field col-6">
                             <label for="clave2">confirmar contraseña</label>
-                            <input type="text" pInputText id="clave2" formControlName="clave2" />
+                            <p-password id="clave1" formControlName="clave2" [toggleMask]="true" styleClass="w-full mb-3"></p-password>
+                            <small *ngIf="validacionClaves" class="p-error">Las contraseñas no coinciden.</small>
                         </div>
                     </div>
                 </form>
