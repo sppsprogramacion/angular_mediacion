@@ -66,10 +66,12 @@ export class RegistroComponent implements OnInit {
         telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
         fecha_nac: [,[Validators.required, Validators.maxLength(100)]],  
         email: ['',[Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],    
-        clave1: ['',[Validators.required,  Validators.minLength(8),Validators.pattern(/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/)]],
+        // clave1: ['',[Validators.required,  Validators.minLength(8),Validators.maxLength(16),Validators.pattern(/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{0,17}$/)]],
+        clave1: ['',[Validators.required,  Validators.minLength(8),Validators.maxLength(16),Validators.pattern(/[^$%&|<>=# ]$/)]],
         clave2: ['',[Validators.required,  Validators.minLength(8)]]
       
       });
+     
     }
 
     //MENSAJES DE VALIDACIONES
@@ -133,7 +135,14 @@ export class RegistroComponent implements OnInit {
       'clave1': [
         { type: 'required', message: 'La contraseña es requerida' },
         { type: 'minlength', message: 'La contraseña debe tener al menos 8 caracteres.' },
-        { type: 'pattern', message: 'Debe ingresar al menos un número, al menos una letra minuscula, almenos una letra mayuscula.\n Puede tener guiones bajo (_).\n No debe tener otros caracteres especiales.' },
+        { type: 'maxlength', message: 'La cantidad máxima de caracteres es 16.' },
+        //{ type: 'pattern', message: 'Debe ingresar al menos un número, al menos una letra minuscula, almenos una letra mayuscula.\n Puede tener guiones bajo (_).\n No debe tener otros caracteres especiales.' },
+        { type: 'pattern', message: 'Estos caracteres no están permitidos ($,%,&,|,<,>,=,#,) y tampoco espacios.' },
+      
+      ],
+      'clave2': [
+        { type: 'required', message: 'La contraseña es requerida' },
+        { type: 'minlength', message: 'La contraseña debe tener al menos 8 caracteres.' },        
       ],
       
     }
@@ -145,8 +154,8 @@ export class RegistroComponent implements OnInit {
       return this.formaRegistro.get(campo)?.invalid && this.formaRegistro.get(campo)?.touched;      
     }
   
-    clavesValidation(): boolean{
-      return ((this.formaRegistro.get('clave1').value === this.formaRegistro.get('clave2').value))?  false: true;
+    clavesValidationIguales(): boolean{
+      return ((this.formaRegistro.get('clave1').value === this.formaRegistro.get('clave2').value))?  true: false;
           
     }
     //FIN VALIDACIONES DE FORMULARIO
@@ -174,7 +183,7 @@ export class RegistroComponent implements OnInit {
 
   //GUARDAR CIUDADANO  
   submitFormRegistro(){
-    this.validacionClaves = this.clavesValidation();
+    
     if(this.formaRegistro.invalid){                        
         // this.msgs = [];
         // this.msgs.push({ severity: 'warn', summary: 'Errores en formulario', detail: 'Cargue correctamente los datos' });
@@ -186,6 +195,10 @@ export class RegistroComponent implements OnInit {
 
         console.log("errores formulario");
         return Object.values(this.formaRegistro.controls).forEach(control => control.markAsTouched());
+    }
+    this.validacionClaves = this.clavesValidationIguales();
+    if(!this.validacionClaves){
+      return Object.values(this.formaRegistro.controls).forEach(control => control.markAsTouched());
     }
 
     let dataRegistro: Partial<CiudadanoModel>;

@@ -140,7 +140,7 @@
                             </small>
                         </div>
                     </div>
-                    <div class="formgrid grid">
+                    <!-- <div class="formgrid grid">
                         <div class="field col-6">
                             <label for="clave1">Contraseña</label>
                             <p-password id="clave1" formControlName="clave1" [toggleMask]="true" styleClass="w-full mb-3"></p-password>
@@ -158,6 +158,35 @@
                             <p-password id="clave1" formControlName="clave2" [toggleMask]="true" styleClass="w-full mb-3"></p-password>
                             <small *ngIf="validacionClaves" class="p-error">Las contraseñas no coinciden.</small>
                         </div>
+
+                    </div> -->
+
+                    <div class="formgrid grid">
+                        <div class="field col-6">
+                            <label for="clave1">Contraseña2</label>
+                            <p-password id="clave1" formControlName="clave1" [feedback]="false" [toggleMask]="true" styleClass="w-full mb-3"></p-password>
+
+                            <small *ngIf="isValid('clave1')" class="p-error">
+                                <div *ngFor="let validation of user_validation_messages.clave1" >
+                                    <div  *ngIf="formaRegistro.get('clave1')?.hasError(validation.type)">
+                                        {{validation.message}}
+                                    </div>
+                                </div>
+                            </small>
+                        </div>
+                        <div class="field col-6">
+                            <label for="clave2">confirmar contraseña2</label>
+                            <p-password formControlName="clave2" [feedback]="false" [toggleMask]="true"></p-password>
+                            <small *ngIf="isValid('clave2')" class="p-error">
+                                <div *ngFor="let validation of user_validation_messages.clave2" >
+                                    <div  *ngIf="formaRegistro.get('clave2')?.hasError(validation.type)">
+                                        {{validation.message}}
+                                    </div>
+                                </div>
+                            </small>
+                            <small *ngIf="!validacionClaves" class="p-error">Las contraseñas no coinciden.</small>
+                        </div>
+
                     </div>
                 </form>
                 <!--  FIN FORMULARIO TRAMITES -->
