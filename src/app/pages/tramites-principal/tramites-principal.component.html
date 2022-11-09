@@ -61,7 +61,8 @@
             <h5>Tramites</h5>
 
             <!-- TABLA DE TRAMITES -->
-            <p-table #dt1 [value]="listTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
+            <p-table #dt1 [value]="listTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['numero_tramite','ciudadano.apellido','ciudadano.nombre','dni_ciudadano','objeto.objeto','expediente']"
+                responsiveLayout="scroll">
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-between flex-column sm:flex-row">
                         <button pButton label="Solicitar tramite" icon="pi pi-plus" class="p-button-success mr-2" (click)="abrirNuevoTramite()"></button>
@@ -135,7 +136,7 @@
                 <ng-template pTemplate="body" let-tramite>
                     <tr>
                         <td>
-                            <button pButton pRipple type="button" icon="pi pi-search-plus" class="p-button-rounded p-button-secondary mr-2 mb-2" (click)="administrarTramite(tramite)"></button>
+                            <button pButton pRipple type="button" icon="pi pi-folder-open" class="p-button-rounded bg-cyan-600 mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
                         </td>
                         <td style="min-width: 10rem;">
                             {{tramite.numero_tramite}}
@@ -158,6 +159,9 @@
                         </td>
                         <td style="min-width: 15rem;">
                             {{tramite.expediente}}
+
+
+
                         </td>
                         <td style="min-width: 5rem;">
                             {{tramite.fecha_expediente| date: 'dd/MM/yyyy'}}
