@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
 import { MunicipioModel } from 'src/app/models/municipio.model';
 import { SexoModel } from 'src/app/models/sexo.model';
 import { TramiteModel } from 'src/app/models/tramite.model';
+import { DataService } from 'src/app/service/data.service';
 import { TramitesService } from 'src/app/service/tramites.service';
 
 @Component({
@@ -27,7 +29,9 @@ export class TramitesNuevoslisComponent implements OnInit {
   listSexo: SexoModel[]=[];
 
   constructor(
-    private tramitesService: TramitesService
+    private tramitesService: TramitesService,
+    public dataService: DataService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -46,5 +50,12 @@ export class TramitesNuevoslisComponent implements OnInit {
     });
   }
   //FIN LISTADO DE TRAMITES NUEVOS....................................................... 
+
+  //ACCEDER A DATA SERVICE
+  administrarTramite(data: TramiteModel){
+    this.dataService.tramiteData = data;
+    this.router.navigateByUrl("tramites/administrar");
+  }
+  //FIN ACCEDER A DATA SERVICE
 
 }

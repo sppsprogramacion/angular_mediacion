@@ -1,29 +1,32 @@
 <!-- Card Tramite -->
-<div class="card mb-0 bg-cyan-600">
-    <span class="block text-white  font-bold font-medium mb-3">DATOS DEL TRAMITE</span>
-    <div class="col-12 border-bottom-1 surface-border">
+<div class="card mb-0 ">
+    <p-toolbar styleClass="bg-cyan-600">
+        <span class="block text-white  font-bold font-medium mb-3">DATOS DEL TRAMITE</span>
+    </p-toolbar>
+
+    <div class="col-12 border-bottom-1 surface-border mt-4">
         <div class="grid">
             <div class="col-12 lg:col-4 xl:col-4">
-                <span class="text-white font-medium text-1xl">Tramite N°:<span class="text-white ml-2 font-medium"> {{dataTramite.numero_tramite}} </span></span>
+                <span class="text font-medium text-1xl">Tramite N°:<span class="text ml-2 font-medium"> {{dataTramite.numero_tramite}} </span></span>
             </div>
             <div class="col-12 lg:col-4 xl:col-4">
-                <span class="text-white font-medium text-1xl">Solicitante:<span class="text-white ml-1 font-medium"> {{dataTramite.ciudadano?.apellido}} {{dataTramite.ciudadano?.nombre}}</span></span>
+                <span class="text font-medium text-1xl">Solicitante:<span class="text ml-1 font-medium"> {{dataTramite.ciudadano?.apellido}} {{dataTramite.ciudadano?.nombre}}</span></span>
             </div>
             <div class="col-12 lg:col-4 xl:col-4">
-                <span class="text-white font-medium text-1xl">DNI:<span class="text-white ml-1 font-medium"> {{dataTramite.ciudadano?.dni}}</span></span>
+                <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{dataTramite.ciudadano?.dni}}</span></span>
             </div>
         </div>
     </div>
     <div class="col-12 border-bottom-1 surface-border">
         <div class="grid">
             <div class="col-12 lg:col-6 xl:col-6 py-2">
-                <span class="text-white font-medium text-1xl">Mootivo de la solicitud:<span class="text-white ml-1 font-medium"> {{dataTramite.objeto?.objeto}}</span></span>
+                <span class="text font-medium text-1xl">Motivo de la solicitud:<span class="text ml-1 font-medium"> {{dataTramite.objeto?.objeto}}</span></span>
             </div>
             <div class="col-12 lg:col-3 xl:col-3 py-2">
-                <span class="text-white font-medium text-1xl">Fecha inicia:<span class="text-white ml-1 font-medium"> {{dataTramite.fecha_tramite| date: 'dd/MM/yyyy'}}</span></span>
+                <span class="text font-medium text-1xl">Fecha inicia:<span class="text ml-1 font-medium"> {{dataTramite.fecha_tramite| date: 'dd/MM/yyyy'}}</span></span>
             </div>
             <div class="col-12 lg:col-3 xl:col-3 py-2">
-                <span class="text-white font-medium text-1xl">Numero expediente:<span class="text-white ml-1 font-medium"> {{dataTramite.expediente}}</span></span>
+                <span class="text font-medium text-1xl">Numero expediente:<span class="text ml-1 font-medium"> {{dataTramite.expediente}}</span></span>
             </div>
         </div>
     </div>
@@ -33,13 +36,16 @@
 
 <!-- Card Tramite -->
 
-<div class="card p-fluid mb-0 bg-cyan-600 mt-2">
-    <span class="block text-white  font-bold font-medium mb-3">ASIGNAR EL TRAMITE A UN MEDIADOR</span>
+<div class="card p-fluid mb-0 mt-2">
+    <p-toolbar styleClass="bg-cyan-600">
+        <span class="block text-white  font-bold font-medium mb-3">ASIGNAR EL TRAMITE A UN MEDIADOR</span>
+    </p-toolbar>
+
 
     <div class="col-12 border-bottom-1 surface-border">
         <div class="grid">
             <div class="col-12 lg:col-6 xl:col-6">
-                <span class="text-white font-bold font-medium text-1xl">Mediador Actual:<span class="text-white ml-2 font-medium"> {{dataTramite.numero_tramite}} </span></span>
+                <span class="text font-bold font-medium text-1xl">Mediador Actual:<span class="text ml-2 font-medium"> {{dataTramite.numero_tramite}} </span></span>
             </div>
 
         </div>
@@ -52,13 +58,13 @@
                 <form [formGroup]="formaMediadorAsignado">
                     <div class="formgrid grid">
                         <div class="field col-6">
-                            <label for="dni" class="text-white font-medium">Seleccionar un usuario</label>
+                            <label for="dni" class="text font-medium">Seleccionar un usuario</label>
                             <p-dropdown id="dni" [options]="listUsuarios" optionLabel="apellido" optionValue="dni" formControlName="dni_usuario">
                             </p-dropdown>
 
                         </div>
                         <div class="field col-6">
-                            <label for="funcion_tramite_id" class="text-white font-medium">Funcion en el tramite</label>
+                            <label for="funcion_tramite_id" class="text font-medium">Funcion en el tramite</label>
                             <p-dropdown id="funcion_tramite_id" [options]="listFuncionTramite" optionLabel="funcion_tramite" optionValue="id_funcion_tramite" formControlName="funcion_tramite_id">
                             </p-dropdown>
                         </div>
@@ -66,7 +72,7 @@
 
                     <div class="formgrid grid">
                         <div class="field col-6">
-                            <label for="detalles" class="text-white font-medium">Detalles</label>
+                            <label for="detalles" class="text font-medium">Detalles</label>
                             <input type="text" pInputText id="detalles" formControlName="detalles" />
                         </div>
                     </div>
