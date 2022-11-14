@@ -88,7 +88,7 @@
                 <ng-template pTemplate="body" let-tramite>
                     <tr>
                         <td>
-                            <button pButton pRipple type="button" icon="pi pi-folder-open text-orange-100" class="p-button-secondary p-button-rounded bg-orange-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
+                            <button *ngIf="tramite.estado_tramite_id==1" pButton pRipple type="button" icon="pi pi-folder-open text-purple-100" class="p-button-secondary p-button-rounded bg-purple-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
                         </td>
                         <td style="min-width: 10rem;">
                             {{tramite.numero_tramite}}

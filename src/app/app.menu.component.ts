@@ -51,7 +51,7 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Usuarios',
                 items: [
-                    {label: 'Mediadores', icon: 'pi pi-fw pi-id-card', routerLink: ['/ciudadanos/mantenimiento']},
+                    {label: 'Ver Usuarios', icon: 'pi pi-fw pi-id-card', routerLink: ['/usuarios/lista']},
                     {label: 'Administradores', icon: 'pi pi-fw pi-id-card', routerLink: ['/ciudadanos/mantenimiento']}                    
                 ]
             },

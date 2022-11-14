@@ -24,6 +24,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TramitesUsuarioAsignadosComponent } from './tramites-usuario/tramites-usuario-asignados/tramites-usuario-asignados.component';
 import { TramitesUsuarioFinalizadosComponent } from './tramites-usuario/tramites-usuario-finalizados/tramites-usuario-finalizados.component';
 import { TramitesAdministrarComponent } from './tramites-administrar/tramites-administrar.component';
+import { UsuariosListaComponent } from './usuarios/usuarios-lista/usuarios-lista.component';
+import { UsuariosAdministrarComponent } from './usuarios/usuarios-administrar/usuarios-administrar.component';
 
 
 
@@ -56,7 +58,9 @@ import { TramitesAdministrarComponent } from './tramites-administrar/tramites-ad
     TramitesCiudadanoNuevoslisComponent,
     TramitesUsuarioAsignadosComponent,
     TramitesUsuarioFinalizadosComponent,
-    TramitesAdministrarComponent
+    TramitesAdministrarComponent,
+    UsuariosListaComponent,
+    UsuariosAdministrarComponent
     
   ],
   

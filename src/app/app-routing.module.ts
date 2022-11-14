@@ -42,6 +42,7 @@ import { TramitesCiudadanoAsignadosComponent } from './pages/tramites-ciudadano/
 import { TramitesCiudadanoFinalizadosComponent } from './pages/tramites-ciudadano/tramites-ciudadano-finalizados/tramites-ciudadano-finalizados.component';
 import { TramitesCiudadanoPrincipalComponent } from './pages/tramites-ciudadano/tramites-ciudadano-principal/tramites-ciudadano-principal.component';
 import { TramitesAdministrarComponent } from './pages/tramites-administrar/tramites-administrar.component';
+import { UsuariosListaComponent } from './pages/usuarios/usuarios-lista/usuarios-lista.component';
 @NgModule({
     imports: [
         RouterModule.forRoot([
@@ -60,7 +61,8 @@ import { TramitesAdministrarComponent } from './pages/tramites-administrar/trami
                     {path: 'tramites/ciudadano/nuevo', component: TramitesCiudadanoNuevoComponent},
                     {path: 'tramites/ciudadano/nuevoslis', component: TramitesCiudadanoNuevoslisComponent},
                     {path: 'tramites/ciudadano/asignados', component: TramitesCiudadanoAsignadosComponent},
-                    {path: 'tramites/ciudadano/finalizados', component: TramitesCiudadanoFinalizadosComponent}
+                    {path: 'tramites/ciudadano/finalizados', component: TramitesCiudadanoFinalizadosComponent},
+                    {path: 'usuarios/lista', component: UsuariosListaComponent}
                     
                 ],
             },

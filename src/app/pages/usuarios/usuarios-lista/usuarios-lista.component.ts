@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { CiudadanoModel } from '../../models/ciudadano.model';
-import { DepartamentoModel } from '../../models/departamento.model';
-import { MunicipioModel } from '../../models/municipio.model';
-import { SexoModel } from '../../models/sexo.model';
-import { CiudadanosService } from '../../service/ciudadanos.service';
+import { CiudadanoModel } from 'src/app/models/ciudadano.model';
+import { DepartamentoModel } from 'src/app/models/departamento.model';
+import { MunicipioModel } from 'src/app/models/municipio.model';
+import { SexoModel } from 'src/app/models/sexo.model';
+import { CiudadanosService } from 'src/app/service/ciudadanos.service';
 
 @Component({
-  selector: 'app-ciudadanos',
-  templateUrl: './ciudadanos.component.html',
-  styleUrls: ['./ciudadanos.component.scss']
+  selector: 'app-usuarios-lista',
+  templateUrl: './usuarios-lista.component.html',
+  styleUrls: ['./usuarios-lista.component.scss']
 })
-export class CiudadanosComponent implements OnInit {
+export class UsuariosListaComponent implements OnInit {
 
   loading:boolean = true;
 
@@ -49,3 +49,5 @@ export class CiudadanosComponent implements OnInit {
   //FIN LISTADO DE CIUDADANOS....................................................... 
 
 }
+
+
