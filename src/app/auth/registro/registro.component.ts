@@ -52,27 +52,27 @@ export class RegistroComponent implements OnInit {
     private readonly datePipe: DatePipe,
     private serviceMensajes: MessageService,
     private ciudadanoService: CiudadanosService
-    ){ 
-      this.formaRegistro = this.fb.group({
-        dni: ['',[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.minLength(5)]],
-        apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
-        nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
-        sexo_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-        departamento_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-        municipio_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-        localidad_barrio: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
-        calle_direccion: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],        
-        numero_dom: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-        telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
-        fecha_nac: [,[Validators.required, Validators.maxLength(100)]],  
-        email: ['',[Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],    
-        // clave1: ['',[Validators.required,  Validators.minLength(8),Validators.maxLength(16),Validators.pattern(/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{0,17}$/)]],
-        clave1: ['',[Validators.required,  Validators.minLength(8),Validators.maxLength(16),Validators.pattern(/[^$%&|<>=# ]$/)]],
-        clave2: ['',[Validators.required,  Validators.minLength(8)]]
-      
-      });
-     
-    }
+  ){ 
+    this.formaRegistro = this.fb.group({
+      dni: ['',[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.minLength(5)]],
+      apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      sexo_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      departamento_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      municipio_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      localidad_barrio: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+      calle_direccion: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],        
+      numero_dom: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+      fecha_nac: [,[Validators.required, Validators.maxLength(100)]],  
+      email: ['',[Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],    
+      // clave1: ['',[Validators.required,  Validators.minLength(8),Validators.maxLength(16),Validators.pattern(/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{0,17}$/)]],
+      clave1: ['',[Validators.required,  Validators.minLength(8),Validators.maxLength(16),Validators.pattern(/[^$%&|<>=# ]$/)]],
+      clave2: ['',[Validators.required,  Validators.minLength(8)]]
+    
+    });
+    
+  }
 
     //MENSAJES DE VALIDACIONES
     user_validation_messages = {

@@ -16,14 +16,14 @@
                     <div class="my-2">
                         <!-- <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNewTramite()"></button>
                         <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
-                        <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNewTramite()"></button>
+                        <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openDialogUsuario()"></button>
                         <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"></button>
                     </div>
                 </ng-template>
 
             </p-toolbar>
             <!-- TABLA DE CIUDADANOS -->
-            <p-table #dt1 [value]="listCiudadanos" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
+            <p-table #dt1 [value]="listUsuarios" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-between flex-column sm:flex-row">
                         <button pButton label="Limpiar" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
@@ -59,48 +59,30 @@
                         <th>
                             <div class="flex justify-content-between align-items-center">
                                 Sexo
-                                <p-columnFilter type="text" field="sexo.sexo" display="menu" placeholder="Buscar por sexo"></p-columnFilter>
-
-                            </div>
-                        </th>
-                        <th>
-                            <div class="flex justify-content-between align-items-center">
-                                Fecha Nac
-                                <p-columnFilter type="date" field="fecha" display="menu" placeholder="dd/mm/yyyy"></p-columnFilter>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="flex justify-content-between align-items-center">
-                                Deparrtamento
-                                <p-columnFilter type="text" field="descripcion" display="menu" placeholder="Buscar por descripción"></p-columnFilter>
-
-                            </div>
-                        </th>
-
-
-                        <th>
-                            <div class="flex justify-content-between align-items-center">
-                                Municipio
-                                <!-- <p-columnFilter type="text" field="sector.sector" display="menu" placeholder="Buscar por sector"></p-columnFilter> -->
-
-                                <p-columnFilter field="sector" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                                <p-columnFilter field="sexo.sexo" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                                     <ng-template pTemplate="header">
                                         <div class="px-3 pt-3 pb-0">
-                                            <span class="font-bold">Sector</span>
+                                            <span class="font-bold">Sexo</span>
                                         </div>
                                     </ng-template>
                                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                        <p-multiSelect [ngModel]="value" [options]="listaSectores" placeholder="--Elija sector--" (onChange)="filter($event.value)" optionLabel="sector">
+                                        <p-dropdown [ngModel]="value" [options]="listSexo" (onChange)="filter($event.value)" placeholder="seleccionar" [showClear]="true">
                                             <ng-template let-option pTemplate="item">
-                                                <div class="p-multiselect-sector-option">
-                                                    <span class="ml-2">{{option.sector}}</span>
-                                                </div>
+                                                <span class="ml-2">{{option.label}}</span>
                                             </ng-template>
-                                        </p-multiSelect>
+                                        </p-dropdown>
                                     </ng-template>
                                 </p-columnFilter>
+
                             </div>
                         </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Vencimiento matricula
+                                <p-columnFilter type="date" field="fecha" display="menu" placeholder="dd/mm/yyyy"></p-columnFilter>
+                            </div>
+                        </th>
+
                         <th>
                             <div class="flex justify-content-between align-items-center">
                                 Telefono
@@ -116,39 +98,33 @@
                         </th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-ciudadano>
+                <ng-template pTemplate="body" let-usuario>
                     <tr>
                         <td>
                             <button type="button" pButton pRipple [pRowToggler]="tramite" class="p-button-rounded p-button-secondary mr-2 mb-2" icon="pi pi-eye"></button>
                         </td>
                         <td style="min-width: 10rem;">
-                            {{ciudadano.dni}}
+                            {{usuario.dni}}
                         </td>
 
                         <td style="min-width: 15rem;">
-                            {{ciudadano.apellido}}
+                            {{usuario.apellido}}
                         </td>
                         <td style="min-width: 2rem;">
-                            {{ciudadano.nombre}}
+                            {{usuario.nombre}}
                         </td>
                         <td style="min-width: 10rem;">
-                            {{ciudadano.sexo.sexo}}
+                            {{usuario.sexo.sexo}}
                         </td>
                         <td style="min-width: 5rem;">
-                            {{ciudadano.fecha_nac| date: 'dd/MM/yyyy'}}
-                        </td>
-                        <td style="min-width: 15rem;">
-                            {{ciudadano.departamento.departamento}}
-                        </td>
-                        <td style="min-width: 10rem;">
-                            {{ciudadano.municipio.municipio}}
+                            {{usuario.fecha_venc_licencia| date: 'dd/MM/yyyy'}}
                         </td>
 
                         <td style="min-width: 10rem;">
-                            {{ciudadano.telefono}}
+                            {{usuario.telefono}}
                         </td>
                         <td style="min-width: 5rem;">
-                            {{ciudadano.email}}
+                            {{usuario.email}}
                         </td>
 
 
@@ -169,24 +145,28 @@
             <!-- FIN TABLA DE CIUDADANOS -->
 
             <!-- DIALOG FORMULARIO CIUDADANOS -->
-            <p-dialog id="formTramiteDialog" [(visible)]="ciudadanoDialog" [style]="{width: '450px'}" header="Nuevo Tramite" [closable]="false" [modal]="true" class="p-fluid">
+            <p-dialog id="formUsuarioDialog" [(visible)]="usuarioDialog" [style]="{width: '450px'}" header="Nuevo Tramite" [closable]="false" [modal]="true" class="p-fluid">
                 <ng-template pTemplate="content">
                     <!-- FORMULARIO TRAMITES -->
-                    <form [formGroup]="formaTramites">
-                        <p-messages [value]="msgs" [showTransitionOptions]="'200ms'" [hideTransitionOptions]="'200ms'" [escape]="true"></p-messages>
-                        <p-toast key="tst" [baseZIndex]="99999"></p-toast>
+                    <form [formGroup]="formaUsuario">
                         <div class="formgrid grid">
                             <div class="field col">
-                                <label for="tipo_tramite_id">Tipo Tramite</label>
-                                <p-dropdown id="tipo_tramite_id" [options]="listaTiposTramite" optionLabel="tipo_tramite" optionValue="id_tipo_tramite" formControlName="tipo_tramite_id" placeholder="Seleccionar...">
-                                </p-dropdown>
+                                <label for="apellido">Apellido</label>
+                                <input type="text" pInputText id="apellido" formControlName="apellido" />
+                                <small *ngIf="isValid('apellido')" class="p-error">
+                                    <div *ngFor="let validation of user_validation_messages.apellido" >
+                                        <div  *ngIf="formaRegistro.get('apellido')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
                             </div>
                             <div class="field col">
-                                <label for="name">Expediente/Nota</label>
-                                <input type="text" pInputText id="expediente_nota" formControlName="expediente_nota" />
-                                <small *ngIf="expedienteNotaNoValido" class="p-error">
-                                    <div *ngFor="let validation of user_validation_messages.expediente_nota" >
-                                        <div  *ngIf="formaTramites.get('expediente_nota')?.hasError(validation.type)">
+                                <label for="nombre">Nombre</label>
+                                <input type="text" pInputText id="nombre" formControlName="nombre" />
+                                <small *ngIf="isValid('nombre')" class="p-error">
+                                    <div *ngFor="let validation of user_validation_messages.nombre" >
+                                        <div  *ngIf="formaRegistro.get('nombre')?.hasError(validation.type)">
                                             {{validation.message}}
                                         </div>
                                     </div>
@@ -194,39 +174,155 @@
                             </div>
                         </div>
 
-                        <div class="field">
-                            <label for="name">Asunto</label>
-                            <input type="text" pInputText id="asunto" formControlName="asunto" />
-                            <small *ngIf="asuntoNotaNoValido" class="p-error">
-                                <div *ngFor="let validation of user_validation_messages.asunto" >
-                                    <div  *ngIf="formaTramites.get('asunto')?.hasError(validation.type)">
-                                        {{validation.message}}
-                                    </div>
-                                </div>
-                            </small>
+                        <div class="formgrid grid">
+                            <div class="field col">
+                                <label for="sexo_id">Sexo</label>
+                                <p-dropdown id="sexo_id" [options]="listaSexo" optionLabel="sexo" optionValue="id_sexo" formControlName="sexo_id" placeholder="Seleccionar...">
+                                </p-dropdown>
+                            </div>
+                            <div class="field col">
+                                <label for="fecha_nac">Fecha Nacimiento</label>
+                                <p-calendar formControlName="fecha_nac" dateFormat="dd/mm/yy"></p-calendar>
+                                <!-- <input type="text" pInputText id="fecha_nac" formControlName="fecha_nac" /> -->
+                            </div>
                         </div>
 
-                        <div class="field">
-                            <label for="name">Persona Referencia</label>
-                            <input type="text" pInputText id="persona_referencia" formControlName="persona_referencia" />
-                            <small *ngIf="personaReferenciaNotaNoValido" class="p-error">
-                                <div *ngFor="let validation of user_validation_messages.persona_referencia" >
-                                    <div  *ngIf="formaTramites.get('persona_referencia')?.hasError(validation.type)">
-                                        {{validation.message}}
-                                    </div>
-                                </div>
-                            </small>
+                        <div class="formgrid grid">
+                            <div class="field col">
+                                <label for="departamento_id">Departamento</label>
+                                <p-dropdown id="departamento_id" [options]="listaDepartamentos" optionLabel="departamento" optionValue="id_departamento" formControlName="departamento_id" placeholder="Seleccionar..." (onChange)="onChangeDepartamento()">
+                                </p-dropdown>
+                            </div>
+                            <div class="field col">
+                                <label for="municipio_id">Municipio</label>
+                                <p-dropdown id="municipio_id" [options]="listaMunicipios" optionLabel="municipio" optionValue="id_municipio" formControlName="municipio_id" placeholder="Seleccionar...">
+                                </p-dropdown>
+                            </div>
                         </div>
-                        <div class="field">
-                            <label for="descripcion">Descripción</label>
-                            <textarea pInputTextarea id="descripcion" formControlName="descripcion" rows="3" cols="20"></textarea>
-                            <small *ngIf="descripcionNotaNoValido" class="p-error">
-                                <div *ngFor="let validation of user_validation_messages.descripcion" >
-                                    <div  *ngIf="formaTramites.get('descripcion')?.hasError(validation.type)">
-                                        {{validation.message}}
+
+                        <div class="formgrid grid">
+                            <div class="field col">
+                                <label for="localidad_barrio">Barrio</label>
+                                <input type="text" pInputText id="localidad_barrio" formControlName="localidad_barrio" />
+                                <small *ngIf="isValid('localidad_barrio')" class="p-error">
+                                    <div *ngFor="let validation of user_validation_messages.localidad_barrio" >
+                                        <div  *ngIf="formaRegistro.get('localidad_barrio')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
                                     </div>
-                                </div>
-                            </small>
+                                </small>
+                            </div>
+                            <div class="field col">
+                                <label for="calle_direccion">Calle/dirección</label>
+                                <input type="text" pInputText id="calle_direccion" formControlName="calle_direccion" />
+                                <small *ngIf="isValid('calle_direccion')" class="p-error">
+                                    <div *ngFor="let validation of user_validation_messages.calle_direccion" >
+                                        <div  *ngIf="formaRegistro.get('calle_direccion')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
+                            </div>
+                        </div>
+                        <div class="formgrid grid">
+                            <div class="field col">
+                                <label for="numero_dom">Número</label>
+                                <input type="text" pInputText id="numero_dom" formControlName="numero_dom" />
+                                <small *ngIf="isValid('numero_dom')" class="p-error">
+                                    <div *ngFor="let validation of user_validation_messages.numero_dom" >
+                                        <div  *ngIf="formaRegistro.get('numero_dom')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
+                            </div>
+                            <div class="field col">
+                                <label for="telefono">Teléfono</label>
+                                <input type="text" pInputText id="telefono" formControlName="telefono" />
+                                <small *ngIf="isValid('telefono')" class="p-error">
+                                    <div *ngFor="let validation of user_validation_messages.telefono" >
+                                        <div  *ngIf="formaRegistro.get('telefono')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
+                            </div>
+                        </div>
+                        <div class="formgrid grid">
+
+                            <div class="field col">
+                                <label for="email">Correo electrónico</label>
+                                <input type="text" pInputText id="email" formControlName="email" />
+                                <small *ngIf="isValid('email')" class="p-error">
+                                    <div *ngFor="let validation of user_validation_messages.email" >
+                                        <div  *ngIf="formaRegistro.get('email')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
+                            </div>
+                        </div>
+                        <div class="formgrid grid">
+
+                            <div class="field col-6">
+                                <label for="dni">DNI usuario</label>
+                                <input type="text" pInputText id="dni" formControlName="dni" />
+                                <small *ngIf="isValid('dni')" class="p-error">
+                                    <div *ngFor="let validation of user_validation_messages.dni" >
+                                        <div  *ngIf="formaRegistro.get('dni')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
+                            </div>
+                        </div>
+                        <!-- <div class="formgrid grid">
+                            <div class="field col-6">
+                                <label for="clave1">Contraseña</label>
+                                <p-password id="clave1" formControlName="clave1" [toggleMask]="true" styleClass="w-full mb-3"></p-password>
+    
+                                <small *ngIf="isValid('clave1')" class="p-error">
+                                    <div *ngFor="let validation of user_validation_messages.clave1" >
+                                        <div  *ngIf="formaRegistro.get('clave1')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
+                            </div>
+                            <div class="field col-6">
+                                <label for="clave2">confirmar contraseña</label>
+                                <p-password id="clave1" formControlName="clave2" [toggleMask]="true" styleClass="w-full mb-3"></p-password>
+                                <small *ngIf="validacionClaves" class="p-error">Las contraseñas no coinciden.</small>
+                            </div>
+    
+                        </div> -->
+
+                        <div class="formgrid grid">
+                            <div class="field col-6">
+                                <label for="clave1">Contraseña2</label>
+                                <p-password id="clave1" formControlName="clave1" [feedback]="false" [toggleMask]="true" styleClass="w-full mb-3"></p-password>
+
+                                <small *ngIf="isValid('clave1')" class="p-error">
+                                    <div *ngFor="let validation of user_validation_messages.clave1" >
+                                        <div  *ngIf="formaRegistro.get('clave1')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
+                            </div>
+                            <div class="field col-6">
+                                <label for="clave2">confirmar contraseña2</label>
+                                <p-password formControlName="clave2" [feedback]="false" [toggleMask]="true"></p-password>
+                                <small *ngIf="isValid('clave2')" class="p-error">
+                                    <div *ngFor="let validation of user_validation_messages.clave2" >
+                                        <div  *ngIf="formaRegistro.get('clave2')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
+                                <small *ngIf="!validacionClaves" class="p-error">Las contraseñas no coinciden.</small>
+                            </div>
+
                         </div>
                     </form>
                     <!--  FIN FORMULARIO TRAMITES -->
@@ -234,7 +330,7 @@
 
                 </ng-template>
                 <ng-template pTemplate="footer">
-                    <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogTramite()"></button>
+                    <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogUsuario()"></button>
                     <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormTramite()"></button>
                 </ng-template>
             </p-dialog>
