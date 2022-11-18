@@ -6,7 +6,7 @@ import { SexoModel } from 'src/app/models/sexo.model';
 import { CiudadanosService } from 'src/app/service/ciudadanos.service';
 import { UsuarioModel } from '../../../models/usuario.model';
 import { UsuariosService } from '../../../service/usuarios.service';
-import { departamentos, sexo } from '../../../common/data-mokeada';
+import { departamentos, municipios, sexo } from '../../../common/data-mokeada';
 import { FiltroModel } from '../../../models/filtro.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfigService } from 'src/app/service/app.config.service';
@@ -196,6 +196,22 @@ export class UsuariosListaComponent implements OnInit {
   }    
   //FIN MANEJO FORMULARIO DIALOG....................................
 
+
+  cargarMunicipios(id_departamento: number){
+    this.listMunicipios=municipios.filter(municipio => {      
+      return municipio.id_municipio == 1 || municipio.departamento_id == id_departamento;
+    });    
+  }
+
+  onChangeDepartamento(){
+    const id = this.formaUsuario.get('departamento_id')?.value;
+    if(id != null){               
+        this.cargarMunicipios(parseInt(id.toString()));
+        this.formaUsuario.get('municipio_id')?.setValue(1);               
+        this.formaUsuario.get('municipio_id')?.markAsUntouched();
+        
+    }
+  }
 }
 
 
