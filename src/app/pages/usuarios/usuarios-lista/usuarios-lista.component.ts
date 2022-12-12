@@ -16,6 +16,7 @@ import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-usuarios-lista',
   templateUrl: './usuarios-lista.component.html',
+  providers: [MessageService,DatePipe],
   styleUrls: ['./usuarios-lista.component.scss']
 })
 export class UsuariosListaComponent implements OnInit {
@@ -27,12 +28,14 @@ export class UsuariosListaComponent implements OnInit {
   usuarioDialog: boolean;
   nuevoUsuario: boolean;
   submitted: boolean;
+  validacionClaves: boolean = true;
 
   //LISTAS    
   listUsuarios: UsuarioModel[]=[];
   listDepartamentos: DepartamentoModel[]=[];
   listMunicipios: MunicipioModel[]= [];
-  listSexo: FiltroModel[]=[];
+  listSexo: SexoModel[]=[];
+  filtroSexo: FiltroModel[]=[];
 
   //FORMULARIOS
   formaUsuario: FormGroup;  
@@ -50,14 +53,9 @@ export class UsuariosListaComponent implements OnInit {
       dni: ['',[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.minLength(5)]],
       apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
       nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
-      sexo_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-      departamento_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-      municipio_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-      localidad_barrio: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
-      calle_direccion: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],        
-      numero_dom: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      sexo_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],      
       telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
-      fecha_nac: [,[Validators.required, Validators.maxLength(100)]],  
+      fecha_venc_licencia: [,[Validators.required, Validators.maxLength(100)]],  
       email: ['',[Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],    
       // clave1: ['',[Validators.required,  Validators.minLength(8),Validators.maxLength(16),Validators.pattern(/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{0,17}$/)]],
       clave1: ['',[Validators.required,  Validators.minLength(8),Validators.maxLength(16),Validators.pattern(/[^$%&|<>=# ]$/)]],
@@ -90,35 +88,14 @@ export class UsuariosListaComponent implements OnInit {
       { type: 'required', message: 'El sexo es requerido' },
       { type: 'pattern', message: 'Solo se pueden ingresar números.' }
     ],
-    'departamento_id': [
-      { type: 'required', message: 'El sexo es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
-    ],
-    'municipio_id': [
-      { type: 'required', message: 'El sexo es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
-    ],
-    'localidad_barrio': [
-        { type: 'required', message: 'La localidad/barrio es requerido.' },
-        { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
-        { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
-    ],
-    'calle_direccion': [
-        { type: 'required', message: 'La calle/direccion es requerida' },
-        { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
-        { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
-    ],
-    'numero_dom': [
-      { type: 'required', message: 'El número de domicilio es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
-    ],
+    
     'telefono': [
       { type: 'required', message: 'El télefono es requerido.' },
         { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
         { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
     ],
-    'fecha_nac': [
-      { type: 'required', message: 'La fecha de nacimiento es requerida.' },
+    'fecha_venc_licencia': [
+      { type: 'required', message: 'La fecha de vencimiento de licencia es requerida.' },
     ],
     'email': [
       { type: 'required', message: 'El e-mail es requerido' },
@@ -157,12 +134,14 @@ export class UsuariosListaComponent implements OnInit {
 
     //CARGA DE LISTADOS DESDE DATA MOKEADA
     //this.listSexo = sexo;
-    this.listSexo = sexo.map(respuesta => {
+    this.filtroSexo = sexo.map(respuesta => {
       return {
         label: respuesta.sexo.toLowerCase(),
         value: respuesta.sexo,
        }
     });
+
+    this.listSexo= sexo;
 
     this.listDepartamentos = departamentos;
     //this.cargarMunicipios(1);
@@ -175,6 +154,7 @@ export class UsuariosListaComponent implements OnInit {
     this.usuariosService.listarUsuariosTodos().
         subscribe(respuesta => {
         this.listUsuarios= respuesta[0];
+        console.log("lista usuarios",this.listUsuarios);
         this.loading = false;  
     
     });

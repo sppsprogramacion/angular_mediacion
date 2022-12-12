@@ -26,21 +26,26 @@ import { TramitesUsuarioFinalizadosComponent } from './tramites-usuario/tramites
 import { TramitesAdministrarComponent } from './tramites-administrar/tramites-administrar.component';
 import { UsuariosListaComponent } from './usuarios/usuarios-lista/usuarios-lista.component';
 import { UsuariosAdministrarComponent } from './usuarios/usuarios-administrar/usuarios-administrar.component';
+import { CalendarModule } from 'primeng/calendar';
+import { PasswordModule } from 'primeng/password';
 
 
 
 @NgModule({
   imports: [
+    CalendarModule,
     CommonModule,
     BrowserAnimationsModule,
     ButtonModule,
     DialogModule,
     DropdownModule,
     InputTextModule,
-    TableModule,
-    TabViewModule,//funciona ng-template
     InputTextareaModule,
+    PasswordModule,
+    TableModule,
+    TabViewModule,//funciona ng-template    
     ToolbarModule,
+    
     FormsModule,
     ReactiveFormsModule
   ],

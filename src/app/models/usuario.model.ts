@@ -11,6 +11,7 @@ export class UsuarioModel{
         public nombre?: string,       
         public telefono?: string,
         public email?: string,
+        public fecha_venc_licencia?: Date,
         public clave?: string,
 
     ){}
