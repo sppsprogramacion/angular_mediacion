@@ -12,12 +12,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfigService } from 'src/app/service/app.config.service';
 import { DatePipe } from '@angular/common';
 import { MessageService } from 'primeng/api';
+import Swal from 'sweetalert2';
+import { DataService } from '../../../service/data.service';
 
 @Component({
   selector: 'app-usuarios-lista',
   templateUrl: './usuarios-lista.component.html',
   providers: [MessageService,DatePipe],
-  styleUrls: ['./usuarios-lista.component.scss']
+  styleUrls: ['./usuarios-lista.component.scss'],
+ 
 })
 export class UsuariosListaComponent implements OnInit {
 
@@ -44,6 +47,7 @@ export class UsuariosListaComponent implements OnInit {
     private fb: FormBuilder,
     public configService: ConfigService,
     private readonly datePipe: DatePipe,
+    private readonly dataService: DataService,
     private serviceMensajes: MessageService,
     private usuariosService: UsuariosService
 
@@ -142,12 +146,65 @@ export class UsuariosListaComponent implements OnInit {
     });
 
     this.listSexo= sexo;
-
     this.listDepartamentos = departamentos;
     //this.cargarMunicipios(1);
     
   }
+  //FIN ONINIT...................................................
+  //...............................................................
 
+  //GUARDAR USUAEIO
+  submitFormUsuario(){
+    
+    if(this.formaUsuario.invalid){                        
+        // this.msgs = [];
+        // this.msgs.push({ severity: 'warn', summary: 'Errores en formulario', detail: 'Cargue correctamente los datos' });
+        // this.serviceMensajes.add({key: 'tst', severity: 'warn', summary: 'Errores en formulario', detail: 'Cargue correctamente los dato'});
+        Swal.fire('Formulario con errores',`Complete correctamente todos los campos del formulario`,"warning");
+        
+        let fechaAuxiliar = this.datePipe.transform(this.formaUsuario.get('fecha_nac')?.value,"yyyy-MM-dd")!;
+        
+
+        console.log("errores formulario");
+        return Object.values(this.formaUsuario.controls).forEach(control => control.markAsTouched());
+    }
+    this.validacionClaves = this.clavesValidationIguales();
+    if(!this.validacionClaves){
+      return Object.values(this.formaUsuario.controls).forEach(control => control.markAsTouched());
+    }
+
+    let dataRegistro: Partial<UsuarioModel>;
+    dataRegistro = {
+
+      dni: parseInt(this.formaUsuario.get('dni')?.value),
+      apellido: this.formaUsuario.get('apellido')?.value,
+      nombre: this.formaUsuario.get('nombre')?.value,
+      sexo_id: parseInt(this.formaUsuario.get('sexo_id')?.value),  
+      telefono: this.formaUsuario.get('telefono')?.value,
+      fecha_venc_licencia: this.dataService.getchangeFormatoFechaGuardar(this.formaUsuario.get('fecha_venc_licencia')?.value),  
+      email: this.formaUsuario.get('email')?.value,    
+      clave: this.formaUsuario.get('clave1')?.value,
+       
+    };
+    
+    
+    //GUARDAR NUEVO CIUDADANO
+    this.usuariosService.guardarUsuario(dataRegistro)
+        .subscribe(resultado => {
+            let usuarioRes: UsuarioModel = resultado;
+            this.hideDialogUsuario();            
+            Swal.fire('Exito',`El registro se realizo con exito`,"success");
+            this.listarUsuarios();
+           
+        },
+        (error) => {
+            Swal.fire('Error',`Error al realizar el regsistro: ${error.error.message}`,"error") 
+        }
+    );         
+    //FIN GUARDAR NUEVO CIUDADANO 
+
+  } 
+  //FIN GUARDAR USUAEIO.................................................
 
   //LISTADO DE CIUDADANOS
   listarUsuarios(){    
@@ -177,6 +234,7 @@ export class UsuariosListaComponent implements OnInit {
   //FIN MANEJO FORMULARIO DIALOG....................................
 
 
+  //CARGAR MUNICIPOS
   cargarMunicipios(id_departamento: number){
     this.listMunicipios=municipios.filter(municipio => {      
       return municipio.id_municipio == 1 || municipio.departamento_id == id_departamento;
@@ -192,6 +250,9 @@ export class UsuariosListaComponent implements OnInit {
         
     }
   }
+  //FIN CARGAR MUNICIPOS..........................................................................
+
+
 }
 
 

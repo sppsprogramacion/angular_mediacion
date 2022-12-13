@@ -28,6 +28,7 @@ import { UsuariosListaComponent } from './usuarios/usuarios-lista/usuarios-lista
 import { UsuariosAdministrarComponent } from './usuarios/usuarios-administrar/usuarios-administrar.component';
 import { CalendarModule } from 'primeng/calendar';
 import { PasswordModule } from 'primeng/password';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 
@@ -35,6 +36,7 @@ import { PasswordModule } from 'primeng/password';
   imports: [
     CalendarModule,
     CommonModule,
+    BrowserModule,
     BrowserAnimationsModule,
     ButtonModule,
     DialogModule,

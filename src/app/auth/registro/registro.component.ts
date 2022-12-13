@@ -74,112 +74,105 @@ export class RegistroComponent implements OnInit {
     
   }
 
-    //MENSAJES DE VALIDACIONES
-    user_validation_messages = {
-      //datos tramite
-      'dni': [
-        { type: 'required', message: 'El dni es requerido' },
-        { type: 'pattern', message: 'Solo se pueden ingresar números.' },
-        { type: 'minlength', message: 'El número ingresado debe tener mas de 5 digitos.' }
-      ],
-      'apellido': [
-        { type: 'required', message: 'El apellido es requerido' },
-        { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
-        { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
+  //MENSAJES DE VALIDACIONES
+  user_validation_messages = {
+    //datos tramite
+    'dni': [
+      { type: 'required', message: 'El dni es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' },
+      { type: 'minlength', message: 'El número ingresado debe tener mas de 5 digitos.' }
+    ],
+    'apellido': [
+      { type: 'required', message: 'El apellido es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
+      { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
+      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
+    ],
+    'nombre': [
+      { type: 'required', message: 'El nombre es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
+      { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
+      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
+    ],
+    'sexo_id': [
+      { type: 'required', message: 'El sexo es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
+    ],
+    'departamento_id': [
+      { type: 'required', message: 'El sexo es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
+    ],
+    'municipio_id': [
+      { type: 'required', message: 'El sexo es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
+    ],
+    'localidad_barrio': [
+        { type: 'required', message: 'La localidad/barrio es requerido.' },
+        { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
         { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
-      ],
-      'nombre': [
-        { type: 'required', message: 'El nombre es requerido' },
-        { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
-        { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
+    ],
+    'calle_direccion': [
+        { type: 'required', message: 'La calle/direccion es requerida' },
+        { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
         { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
-      ],
-      'sexo_id': [
-        { type: 'required', message: 'El sexo es requerido' },
-        { type: 'pattern', message: 'Solo se pueden ingresar números.' }
-      ],
-      'departamento_id': [
-        { type: 'required', message: 'El sexo es requerido' },
-        { type: 'pattern', message: 'Solo se pueden ingresar números.' }
-      ],
-      'municipio_id': [
-        { type: 'required', message: 'El sexo es requerido' },
-        { type: 'pattern', message: 'Solo se pueden ingresar números.' }
-      ],
-      'localidad_barrio': [
-          { type: 'required', message: 'La localidad/barrio es requerido.' },
-          { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
-          { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
-      ],
-      'calle_direccion': [
-          { type: 'required', message: 'La calle/direccion es requerida' },
-          { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
-          { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
-      ],
-      'numero_dom': [
-        { type: 'required', message: 'El número de domicilio es requerido' },
-        { type: 'pattern', message: 'Solo se pueden ingresar números.' }
-      ],
-      'telefono': [
-        { type: 'required', message: 'El télefono es requerido.' },
-          { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
-          { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
-      ],
-      'fecha_nac': [
-        { type: 'required', message: 'La fecha de nacimiento es requerida.' },
-      ],
-      'email': [
-        { type: 'required', message: 'El e-mail es requerido' },
-        { type: 'pattern', message: 'El formato del e-mail no es correcto.' }
-      ],
-      'clave1': [
-        { type: 'required', message: 'La contraseña es requerida' },
-        { type: 'minlength', message: 'La contraseña debe tener al menos 8 caracteres.' },
-        { type: 'maxlength', message: 'La cantidad máxima de caracteres es 16.' },
-        //{ type: 'pattern', message: 'Debe ingresar al menos un número, al menos una letra minuscula, almenos una letra mayuscula.\n Puede tener guiones bajo (_).\n No debe tener otros caracteres especiales.' },
-        { type: 'pattern', message: 'Estos caracteres no están permitidos ($,%,&,|,<,>,=,#,) y tampoco espacios.' },
-      
-      ],
-      'clave2': [
-        { type: 'required', message: 'La contraseña es requerida' },
-        { type: 'minlength', message: 'La contraseña debe tener al menos 8 caracteres.' },        
-      ],
-      
-    }
-    //FIN MENSAJES DE VALIDACIONES...............................................................
-  
-    //VALIDACIONES DE FORMULARIO
-    isValid(campo: string): boolean{     
-      
-      return this.formaRegistro.get(campo)?.invalid && this.formaRegistro.get(campo)?.touched;      
-    }
-  
-    clavesValidationIguales(): boolean{
-      return ((this.formaRegistro.get('clave1').value === this.formaRegistro.get('clave2').value))?  true: false;
-          
-    }
-    //FIN VALIDACIONES DE FORMULARIO
+    ],
+    'numero_dom': [
+      { type: 'required', message: 'El número de domicilio es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
+    ],
+    'telefono': [
+      { type: 'required', message: 'El télefono es requerido.' },
+        { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
+        { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
+    ],
+    'fecha_nac': [
+      { type: 'required', message: 'La fecha de nacimiento es requerida.' },
+    ],
+    'email': [
+      { type: 'required', message: 'El e-mail es requerido' },
+      { type: 'pattern', message: 'El formato del e-mail no es correcto.' }
+    ],
+    'clave1': [
+      { type: 'required', message: 'La contraseña es requerida' },
+      { type: 'minlength', message: 'La contraseña debe tener al menos 8 caracteres.' },
+      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 16.' },
+      //{ type: 'pattern', message: 'Debe ingresar al menos un número, al menos una letra minuscula, almenos una letra mayuscula.\n Puede tener guiones bajo (_).\n No debe tener otros caracteres especiales.' },
+      { type: 'pattern', message: 'Estos caracteres no están permitidos ($,%,&,|,<,>,=,#,) y tampoco espacios.' },
+    
+    ],
+    'clave2': [
+      { type: 'required', message: 'La contraseña es requerida' },
+      { type: 'minlength', message: 'La contraseña debe tener al menos 8 caracteres.' },        
+    ],
+    
+  }
+  //FIN MENSAJES DE VALIDACIONES...............................................................
 
-    ngOnInit(): void {
-      this.config = this.configService.config;
-      this.subscription = this.configService.configUpdate$.subscribe(config => {
-        this.config = config;
+  //VALIDACIONES DE FORMULARIO
+  isValid(campo: string): boolean{     
+    
+    return this.formaRegistro.get(campo)?.invalid && this.formaRegistro.get(campo)?.touched;      
+  }
+
+  clavesValidationIguales(): boolean{
+    return ((this.formaRegistro.get('clave1').value === this.formaRegistro.get('clave2').value))?  true: false;
+        
+  }
+  //FIN VALIDACIONES DE FORMULARIO......................................................
+
+  ngOnInit(): void {
+    this.config = this.configService.config;
+    this.subscription = this.configService.configUpdate$.subscribe(config => {
+      this.config = config;
     });
 
     //CARGA DE LISTADOS DESDE DATA MOKEADA
     this.listaSexo = sexo;
     this.listaDepartamentos = departamentos;
     this.cargarMunicipios(1);
-    
   }
+  //FIN ONINIT...................................................
 
-  // ngOnDestroy(): void {
-  //   if(this.subscription){
-  //     this.subscription.unsubscribe();
-  //   }
-  // }
-
- 
 
   //GUARDAR CIUDADANO  
   submitFormRegistro(){
@@ -225,7 +218,7 @@ export class RegistroComponent implements OnInit {
     //GUARDAR NUEVO CIUDADANO
     this.ciudadanoService.guardarCiudadano(dataRegistro)
         .subscribe(resultado => {
-            let tramiteRes: CiudadanoModel = resultado;
+            let ciudadanoRes: CiudadanoModel = resultado;
             Swal.fire('Exito',`El registro se realizo con exito`,"success");
             
            
@@ -238,7 +231,6 @@ export class RegistroComponent implements OnInit {
 
   }    
   //FIN GUARDAR CIUDADANO............................................................
-
   
 
   mostrarRegistroDialog(){

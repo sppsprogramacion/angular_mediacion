@@ -8,7 +8,9 @@ export class UsuarioModel{
     constructor(
         public dni?: number,
         public apellido?: string,
-        public nombre?: string,       
+        public nombre?: string,    
+        public sexo_id?: number,
+        public sexo?: SexoModel,   
         public telefono?: string,
         public email?: string,
         public fecha_venc_licencia?: Date,

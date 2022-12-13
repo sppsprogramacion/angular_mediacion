@@ -9,7 +9,6 @@
     </div>
     <div class="col-12">
         <div class="card">
-
             <h5>Usuarios</h5>
             <p-toolbar styleClass="mb-4">
                 <ng-template pTemplate="left">
@@ -145,7 +144,7 @@
             <!-- FIN TABLA DE CIUDADANOS -->
 
             <!-- DIALOG FORMULARIO CIUDADANOS -->
-            <p-dialog id="formUsuarioDialog" [(visible)]="usuarioDialog" [style]="{width: '450px'}" header="Nuevo Tramite" [closable]="false" [modal]="true" class="p-fluid">
+            <p-dialog id="formUsuarioDialog" [(visible)]="usuarioDialog" [style]="{width: '450px'}" header="Nuevo Usuario" [closable]="false" [modal]="true" class="p-fluid">
                 <ng-template pTemplate="content">
                     <!-- FORMULARIO TRAMITES -->
                     <form [formGroup]="formaUsuario">
@@ -161,6 +160,8 @@
                                     </div>
                                 </small>
                             </div>
+                        </div>
+                        <div class="formgrid grid">
                             <div class="field col">
                                 <label for="nombre">Nombre</label>
                                 <input type="text" pInputText id="nombre" formControlName="nombre" />
@@ -181,12 +182,24 @@
                                 </p-dropdown>
                             </div>
                             <div class="field col">
-                                <label for="fecha_venc_licencia">Fecha vencimiento lic.</label>
+                                <label for="fecha_venc_licencia">Vencimiento licencia</label>
                                 <p-calendar formControlName="fecha_venc_licencia" dateFormat="dd/mm/yy"></p-calendar>
                                 <!-- <input type="text" pInputText id="fecha_nac" formControlName="fecha_nac" /> -->
                             </div>
                         </div>
-
+                        <div class="formgrid grid">
+                            <div class="field col">
+                                <label for="email">Correo electrónico</label>
+                                <input type="text" pInputText id="email" formControlName="email" />
+                                <small *ngIf="isValid('email')" class="p-error">
+                                    <div *ngFor="let validation of user_validation_messages.email" >
+                                        <div  *ngIf="formaUsuario.get('email')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
+                            </div>
+                        </div>
                         <div class="formgrid grid">
                             <div class="field col">
                                 <label for="telefono">Teléfono</label>
@@ -194,19 +207,6 @@
                                 <small *ngIf="isValid('telefono')" class="p-error">
                                     <div *ngFor="let validation of user_validation_messages.telefono" >
                                         <div  *ngIf="formaUsuario.get('telefono')?.hasError(validation.type)">
-                                            {{validation.message}}
-                                        </div>
-                                    </div>
-                                </small>
-                            </div>
-
-
-                            <div class="field col">
-                                <label for="email">Correo electrónico</label>
-                                <input type="text" pInputText id="email" formControlName="email" />
-                                <small *ngIf="isValid('email')" class="p-error">
-                                    <div *ngFor="let validation of user_validation_messages.email" >
-                                        <div  *ngIf="formaUsuario.get('email')?.hasError(validation.type)">
                                             {{validation.message}}
                                         </div>
                                     </div>
@@ -227,32 +227,13 @@
                                 </small>
                             </div>
                         </div>
-                        <!-- <div class="formgrid grid">
-                            <div class="field col-6">
-                                <label for="clave1">Contraseña</label>
-                                <p-password id="clave1" formControlName="clave1" [toggleMask]="true" styleClass="w-full mb-3"></p-password>
-    
-                                <small *ngIf="isValid('clave1')" class="p-error">
-                                    <div *ngFor="let validation of user_validation_messages.clave1" >
-                                        <div  *ngIf="formaRegistro.get('clave1')?.hasError(validation.type)">
-                                            {{validation.message}}
-                                        </div>
-                                    </div>
-                                </small>
-                            </div>
-                            <div class="field col-6">
-                                <label for="clave2">confirmar contraseña</label>
-                                <p-password id="clave1" formControlName="clave2" [toggleMask]="true" styleClass="w-full mb-3"></p-password>
-                                <small *ngIf="validacionClaves" class="p-error">Las contraseñas no coinciden.</small>
-                            </div>
-    
-                        </div> -->
 
                         <div class="formgrid grid">
-                            <div class="field col-6">
-                                <label for="clave1">Contraseña2</label>
-                                <p-password id="clave1" formControlName="clave1" [feedback]="false" [toggleMask]="true" styleClass="w-full mb-3"></p-password>
-
+                            <div class="field col-8">
+                                <div>
+                                    <label for="clave1">Contraseña</label>
+                                    <p-password id="clave1" formControlName="clave1" [toggleMask]="true" styleClass="p-password-info"></p-password>
+                                </div>
                                 <small *ngIf="isValid('clave1')" class="p-error">
                                     <div *ngFor="let validation of user_validation_messages.clave1" >
                                         <div  *ngIf="formaUsuario.get('clave1')?.hasError(validation.type)">
@@ -261,8 +242,10 @@
                                     </div>
                                 </small>
                             </div>
-                            <div class="field col-6">
-                                <label for="clave2">confirmar contraseña2</label>
+                        </div>
+                        <div class="formgrid grid">
+                            <div class="field col">
+                                <label for="clave2">Confirmar contraseña</label>
                                 <p-password formControlName="clave2" [feedback]="false" [toggleMask]="true"></p-password>
                                 <small *ngIf="isValid('clave2')" class="p-error">
                                     <div *ngFor="let validation of user_validation_messages.clave2" >
@@ -280,9 +263,10 @@
 
 
                 </ng-template>
+
                 <ng-template pTemplate="footer">
                     <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogUsuario()"></button>
-                    <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormTramite()"></button>
+                    <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormUsuario()"></button>
                 </ng-template>
             </p-dialog>
             <!-- FIN DIALOG FORMULARIO  CIUDADANOS -->
