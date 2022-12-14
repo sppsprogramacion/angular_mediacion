@@ -11,6 +11,7 @@ import { UsuariosTramiteService } from '../../service/usuarios-tramite.service';
 import Swal from 'sweetalert2';
 import { FuncionTramiteService } from '../../service/funcion-tramite.service';
 import { FuncionTtramiteModel } from 'src/app/models/funcion_tramite.model';
+import { ElementoModel } from '../../models/elemento.model';
 
 @Component({
   selector: 'app-tramites-administrar',
@@ -27,6 +28,7 @@ export class TramitesAdministrarComponent implements OnInit {
   //listas
   listUsuarios: UsuarioModel[]=[];
   listFuncionTramite: FuncionTtramiteModel[] = []
+  elementosUsuarios: ElementoModel[]=[];
   
   //variables
   loadingMediadores: boolean = true;
@@ -56,11 +58,13 @@ export class TramitesAdministrarComponent implements OnInit {
     
     });
   }
+  //FIN CONSTRUCTOR................................................................................
 
   ngOnInit(): void {
     this.listarMediadores();
     this.listarFuncionTramite();
   }
+  //FIN ONINIT......................................................................................
 
   //GUARDAR USUARIO-TRAMITE  
   submitFormUsuarioTramite(){
@@ -111,9 +115,16 @@ export class TramitesAdministrarComponent implements OnInit {
         subscribe(respuesta => {
         this.listUsuarios= respuesta[0];
         this.loadingMediadores = false;  
+        this.elementosUsuarios = this.listUsuarios.map(usuario => {
+          return {
+            clave: usuario.dni,
+            value: usuario.apellido + " " + usuario.nombre 
+           }
+        });
     
     });
   }
+  
   //FIN LISTADO DE MEDIADORES............................
 
   //LISTADO DE TRAMITES
