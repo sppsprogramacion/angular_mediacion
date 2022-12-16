@@ -5,7 +5,7 @@ import { UsuarioModel } from './usuario.model';
 
 export class UsuarioTramiteModel{
     constructor(
-        public id_obid_usuario_tramitejeto?: number,
+        public id_usuario_tramite?: number,
         public tramite_numero?: number,
         public tramite?: TramiteModel,
         public dni_usuario?: number,
