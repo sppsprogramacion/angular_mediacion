@@ -13,7 +13,6 @@ export class UsuarioModel{
         public sexo?: SexoModel,   
         public telefono?: string,
         public email?: string,
-        public fecha_venc_licencia?: Date,
         public clave?: string,
 
     ){}

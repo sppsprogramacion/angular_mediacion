@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
 import { MunicipioModel } from 'src/app/models/municipio.model';
@@ -14,6 +14,7 @@ import { DatePipe } from '@angular/common';
 import { MessageService } from 'primeng/api';
 import Swal from 'sweetalert2';
 import { DataService } from '../../../service/data.service';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-usuarios-lista',
@@ -25,6 +26,16 @@ import { DataService } from '../../../service/data.service';
 export class UsuariosListaComponent implements OnInit {
 
   loading:boolean = true;
+
+  //PARA FILTRAR EN TABLA
+  @ViewChild('dt') table: Table;
+
+  @ViewChild('filter') filter: ElementRef;
+
+  //CANTIDADES
+  cantEnEspera: number = 0;
+  cantRecibidos: number = 0;
+  cantEnviados: number = 0;
 
   //VARIABLES TRAMITE    
   usuario: UsuarioModel;
@@ -59,7 +70,6 @@ export class UsuariosListaComponent implements OnInit {
       nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
       sexo_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],      
       telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
-      fecha_venc_licencia: [,[Validators.required, Validators.maxLength(100)]],  
       email: ['',[Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],    
       // clave1: ['',[Validators.required,  Validators.minLength(8),Validators.maxLength(16),Validators.pattern(/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{0,17}$/)]],
       clave1: ['',[Validators.required,  Validators.minLength(8),Validators.maxLength(16),Validators.pattern(/[^$%&|<>=# ]$/)]],
@@ -97,9 +107,6 @@ export class UsuariosListaComponent implements OnInit {
       { type: 'required', message: 'El télefono es requerido.' },
         { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
         { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
-    ],
-    'fecha_venc_licencia': [
-      { type: 'required', message: 'La fecha de vencimiento de licencia es requerida.' },
     ],
     'email': [
       { type: 'required', message: 'El e-mail es requerido' },
@@ -181,8 +188,7 @@ export class UsuariosListaComponent implements OnInit {
       nombre: this.formaUsuario.get('nombre')?.value,
       sexo_id: parseInt(this.formaUsuario.get('sexo_id')?.value),  
       telefono: this.formaUsuario.get('telefono')?.value,
-      fecha_venc_licencia: this.dataService.getchangeFormatoFechaGuardar(this.formaUsuario.get('fecha_venc_licencia')?.value),  
-      email: this.formaUsuario.get('email')?.value,    
+     email: this.formaUsuario.get('email')?.value,    
       clave: this.formaUsuario.get('clave1')?.value,
        
     };
@@ -251,6 +257,13 @@ export class UsuariosListaComponent implements OnInit {
     }
   }
   //FIN CARGAR MUNICIPOS..........................................................................
+
+  //LIMPIAR FILTROS
+  clear(table: Table) {
+    table.clear();
+    this.filter.nativeElement.value = '';
+  } 
+  //FIN LIMPIAR FILTROS....................................................................................  
 
 
 }

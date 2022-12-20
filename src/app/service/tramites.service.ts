@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { CiudadanoModel } from '../models/ciudadano.model';
 import { TramiteModel } from '../models/tramite.model';
+import { TotalesTramitesModel } from '../models/totales_tramites.model';
 
 const base_url = environment.URL_BASE
 
@@ -34,5 +35,9 @@ export class TramitesService {
 
   listarTramitesFinalizados(){
     return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/finalizados`)
+  }
+
+  contarTotalesTramitesXEstado(){
+    return this.http.get<TotalesTramitesModel>(`${base_url}/tramites/totales-tramites`)
   }
 }

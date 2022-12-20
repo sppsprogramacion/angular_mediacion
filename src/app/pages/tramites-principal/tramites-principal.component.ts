@@ -6,6 +6,7 @@ import { SexoModel } from 'src/app/models/sexo.model';
 import { DataService } from 'src/app/service/data.service';
 import { TramiteModel } from '../../models/tramite.model';
 import { TramitesService } from '../../service/tramites.service';
+import { TotalesTramitesModel } from '../../models/totales_tramites.model';
 
 @Component({
   selector: 'app-tramites-principal',
@@ -22,6 +23,8 @@ export class TramitesPrincipalComponent implements OnInit {
   nuevoTramite: boolean;
   submitted: boolean;
   urlTramite: string = 'tramites/administrar';
+  totalTramite: number= 0;
+  totalesTramites: TotalesTramitesModel= {};
 
   //LISTAS    
   listTramites: TramiteModel[]=[];
@@ -37,6 +40,7 @@ export class TramitesPrincipalComponent implements OnInit {
 
   ngOnInit(): void {
     this.listarTramites();
+    this.contarTramitesXEstado();
     
   }
 
@@ -46,11 +50,21 @@ export class TramitesPrincipalComponent implements OnInit {
     this.tramitesService.listarTramitesTodos().
         subscribe(respuesta => {
         this.listTramites= respuesta[0];
-        this.loading = false;  
+        this.totalTramite = respuesta[1];
+        this.loading=false;
     
     });
   }
   //FIN LISTADO DE TRAMITES............................
+
+  //CONTAR TRAMITES
+  contarTramitesXEstado(){    
+    this.tramitesService.contarTotalesTramitesXEstado().
+        subscribe(respuesta => {
+        this.totalesTramites = respuesta;    
+    });
+  }
+  //FIN CONTAR TRAMITES............................
 
   //ACCEDER A DATA SERVICE
   administrarTramite(data: TramiteModel){
