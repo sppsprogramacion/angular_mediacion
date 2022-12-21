@@ -4,9 +4,9 @@ import { DepartamentoModel } from 'src/app/models/departamento.model';
 import { MunicipioModel } from 'src/app/models/municipio.model';
 import { SexoModel } from 'src/app/models/sexo.model';
 import { DataService } from 'src/app/service/data.service';
-import { TramiteModel } from '../../models/tramite.model';
-import { TramitesService } from '../../service/tramites.service';
-import { TotalesTramitesModel } from '../../models/totales_tramites.model';
+import { TramiteModel } from '../../../models/tramite.model';
+import { TramitesService } from '../../../service/tramites.service';
+import { TotalesTramitesModel } from '../../../models/totales_tramites.model';
 
 @Component({
   selector: 'app-tramites-principal',

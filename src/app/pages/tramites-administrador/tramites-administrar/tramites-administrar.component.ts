@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/service/data.service';
-import { TramiteModel } from '../../models/tramite.model';
-import { UsuariosService } from '../../service/usuarios.service';
-import { UsuarioModel } from '../../models/usuario.model';
+import { TramiteModel } from '../../../models/tramite.model';
+import { UsuariosService } from '../../../service/usuarios.service';
+import { UsuarioModel } from '../../../models/usuario.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { UsuarioTramiteModel } from '../../models/usuario_tramite.model';
-import { UsuariosTramiteService } from '../../service/usuarios-tramite.service';
+import { UsuarioTramiteModel } from '../../../models/usuario_tramite.model';
+import { UsuariosTramiteService } from '../../../service/usuarios-tramite.service';
 import Swal from 'sweetalert2';
-import { FuncionTramiteService } from '../../service/funcion-tramite.service';
+import { FuncionTramiteService } from '../../../service/funcion-tramite.service';
 import { FuncionTtramiteModel } from 'src/app/models/funcion_tramite.model';
-import { ElementoModel } from '../../models/elemento.model';
+import { ElementoModel } from '../../../models/elemento.model';
 
 @Component({
   selector: 'app-tramites-administrar',

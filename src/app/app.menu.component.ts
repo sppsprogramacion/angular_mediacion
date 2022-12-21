@@ -36,42 +36,40 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Tramites',
                 items: [
-                    {label: 'Nuevos', icon: 'pi pi-fw pi-bookmark', routerLink: ['/tramites/nuevoslis']},
-                    {label: 'Asignados mediador', icon: 'pi pi-fw pi-send', routerLink: ['/tramites/asignados']},
-                    {label: 'Finalizados', icon: 'pi pi-fw pi-check-square', routerLink: ['/tramites/finalizados']},                    
+                    {label: 'Nuevos', icon: 'pi pi-fw pi-bookmark', routerLink: ['/admin/tramites/nuevoslis']},
+                    {label: 'Asignados mediador', icon: 'pi pi-fw pi-send', routerLink: ['/admin/tramites/asignados']},
+                    {label: 'Finalizados', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/tramites/finalizados']},                    
                 ]
             },
             {
                 label: 'Ciudadanos admin',
                 items: [
-                    {label: 'Ver ciudadanos', icon: 'pi pi-fw pi-id-card', routerLink: ['/ciudadanos/mantenimiento']}
+                    {label: 'Ver ciudadanos', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/ciudadanos/lista']}
                     
                 ]
             },            
             {
                 label: 'Usuarios',
                 items: [
-                    {label: 'Ver Usuarios', icon: 'pi pi-fw pi-id-card', routerLink: ['/usuarios/lista']},
-                    {label: 'Administradores', icon: 'pi pi-fw pi-id-card', routerLink: ['/ciudadanos/mantenimiento']}                    
+                    {label: 'Ver Usuarios', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/usuarios/lista']}
+                                       
                 ]
             },
             {
                 label: 'Ciudadanos opciones',
                 items: [
-                    {label: 'Tramites principal', icon: 'pi pi-fw pi-clone', routerLink: ['/tramites/ciudadano/principal']},
-                    {label: 'Tramites nuevos', icon: 'pi pi-fw pi-bookmark', routerLink: ['/tramites/ciudadano/nuevoslis']},
-                    {label: 'Tramites con mediador', icon: 'pi pi-fw pi-send', routerLink: ['/tramites/ciudadano/asignados']},
-                    {label: 'Tramites finalizados', icon: 'pi pi-fw pi-check-square', routerLink: ['/tramites/ciudadano/finalizados']}
+                    {label: 'Tramites principal', icon: 'pi pi-fw pi-clone', routerLink: ['/ciudadano/tramites/principal']},
+                    {label: 'Tramites nuevos', icon: 'pi pi-fw pi-bookmark', routerLink: ['/ciudadano/tramites/nuevoslis']},
+                    {label: 'Tramites con mediador', icon: 'pi pi-fw pi-send', routerLink: ['/ciudadano/tramites/asignados']},
+                    {label: 'Tramites finalizados', icon: 'pi pi-fw pi-check-square', routerLink: ['/ciudadano/tramites/finalizados']}
                     
                 ]
             },
             {
                 label: 'Usuarios opciones',
                 items: [
-                    {label: 'Tramites principal', icon: 'pi pi-fw pi-clone', routerLink: ['/tramites/ciudadano/principal']},
-                    {label: 'Tramites nuevos', icon: 'pi pi-fw pi-bookmark', routerLink: ['/tramites/ciudadano/nuevoslis']},
-                    {label: 'Tramites con mediador', icon: 'pi pi-fw pi-send', routerLink: ['/tramites/ciudadano/asignados']},
-                    {label: 'Tramites finalizados', icon: 'pi pi-fw pi-check-square', routerLink: ['/tramites/ciudadano/finalizados']}
+                    {label: 'Tramites asignados', icon: 'pi pi-fw pi-send', routerLink: ['/usuario/tramites/asignados']},
+                    {label: 'Tramites finalizados', icon: 'pi pi-fw pi-check-square', routerLink: ['/usuario/tramites/finalizados']}
                     
                 ]
             },

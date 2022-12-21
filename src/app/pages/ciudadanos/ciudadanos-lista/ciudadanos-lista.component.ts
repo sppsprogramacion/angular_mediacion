@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { CiudadanoModel } from '../../models/ciudadano.model';
-import { DepartamentoModel } from '../../models/departamento.model';
-import { MunicipioModel } from '../../models/municipio.model';
-import { SexoModel } from '../../models/sexo.model';
-import { CiudadanosService } from '../../service/ciudadanos.service';
+import { CiudadanoModel } from '../../../models/ciudadano.model';
+import { DepartamentoModel } from '../../../models/departamento.model';
+import { MunicipioModel } from '../../../models/municipio.model';
+import { SexoModel } from '../../../models/sexo.model';
+import { CiudadanosService } from '../../../service/ciudadanos.service';
 
 @Component({
   selector: 'app-ciudadanos',
-  templateUrl: './ciudadanos.component.html',
-  styleUrls: ['./ciudadanos.component.scss']
+  templateUrl: './ciudadanos-lista.component.html',
+  styleUrls: ['./ciudadanos-lista.component.scss']
 })
-export class CiudadanosComponent implements OnInit {
+export class CiudadanosListaComponent implements OnInit {
 
   loading:boolean = true;
 
