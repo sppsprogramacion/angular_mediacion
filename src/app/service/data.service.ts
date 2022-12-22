@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, Injectable } from '@angular/core';
 import { TramiteModel } from '../models/tramite.model';
+import { UsuarioModel } from '../models/usuario.model';
 
 
 @Injectable({
@@ -9,10 +10,15 @@ import { TramiteModel } from '../models/tramite.model';
 export class DataService {
 
   tramiteData: TramiteModel = {};
+  usuarioData: UsuarioModel ={};
   constructor(private readonly datePipe: DatePipe,) { }
 
   getTramiteData(data: TramiteModel){
     this.tramiteData = data;
+  }
+
+  getUsuarioData(data: UsuarioModel){
+    this.usuarioData = data;
   }
 
   getchangeFormatoFechaGuardar(nuevaFecha: Date){

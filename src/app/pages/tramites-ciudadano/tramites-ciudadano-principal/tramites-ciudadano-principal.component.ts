@@ -53,13 +53,13 @@ export class TramitesCiudadanoPrincipalComponent implements OnInit {
 
 //ABRIR NUEVO TRAMITE
 abrirNuevoTramite(){
-  this.router.navigateByUrl("tramites/ciudadano/nuevo");
+  this.router.navigateByUrl("ciudadano/tramites/nuevo");
 }
 //FIN ABRIR NUEVO TRAMITE
 
 //ABRIR NUEVO TRAMITE
 volverTramitesPrincipal(){
-  this.router.navigateByUrl("tramites/ciudadano/principal");
+  this.router.navigateByUrl("ciudadano/tramites/principal");
 }
 //FIN ABRIR NUEVO TRAMITE
 

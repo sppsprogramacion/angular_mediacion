@@ -15,6 +15,7 @@ import { MessageService } from 'primeng/api';
 import Swal from 'sweetalert2';
 import { DataService } from '../../../service/data.service';
 import { Table } from 'primeng/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-usuarios-lista',
@@ -60,7 +61,8 @@ export class UsuariosListaComponent implements OnInit {
     private readonly datePipe: DatePipe,
     private readonly dataService: DataService,
     private serviceMensajes: MessageService,
-    private usuariosService: UsuariosService
+    private usuariosService: UsuariosService,
+    private router: Router
 
   ) { 
 
@@ -265,6 +267,12 @@ export class UsuariosListaComponent implements OnInit {
   } 
   //FIN LIMPIAR FILTROS....................................................................................  
 
+  //ACCEDER A DATA SERVICE
+  administrarUsuario(data: UsuarioModel){
+    this.dataService.usuarioData = data;
+    this.router.navigateByUrl("admin/usuarios/administrar");
+  }
+  //FIN ACCEDER A DATA SERVICE
 
 }
 
