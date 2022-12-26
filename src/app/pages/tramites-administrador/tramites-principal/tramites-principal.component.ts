@@ -69,7 +69,7 @@ export class TramitesPrincipalComponent implements OnInit {
   //ACCEDER A DATA SERVICE
   administrarTramite(data: TramiteModel){
     this.dataService.tramiteData = data;
-    this.router.navigateByUrl("tramites/administrar");
+    this.router.navigateByUrl("admin/tramites/administrar");
   }
   //FIN ACCEDER A DATA SERVICE
 

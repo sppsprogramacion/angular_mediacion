@@ -1,18 +1,10 @@
 <div class="grid">
     <div class="col-12 xl:col-12">
         <div class="card">
-            <h5>
-                <span class="text-orange-600"><b>{{(dataUsuario != null)?dataUsuario.apellido + " " + dataUsuario.nombre : "Sin organismo"}}</b></span>
-                <!-- <span class="text-orange-500"> - {{(dataUsuario != null)?sector.sector : "sin sector"}}</span> -->
-            </h5>
-        </div>
-    </div>
-</div>
-
-<div class="grid">
-    <div class="col-12 xl:col-12">
-        <div class="card">
-            <p-tabView>
+            <p-toolbar styleClass="bg-cyan-600 ">
+                <span class="block text-white  font-bold"><h5>Usuario: {{(dataUsuario != null)?dataUsuario.apellido + " " + dataUsuario.nombre : "Sin usuario"}}</h5></span>
+            </p-toolbar>
+            <p-tabView styleClass="mt-2">
                 <p-tabPanel header="Datos Personales" leftIcon="pi pi-id-card">
 
                 </p-tabPanel>
