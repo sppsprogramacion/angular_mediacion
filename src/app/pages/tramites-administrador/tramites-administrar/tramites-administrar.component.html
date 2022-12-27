@@ -6,15 +6,30 @@
 
     <div class="col-12 border-bottom-1 surface-border mt-4">
         <div class="grid">
-            <div class="col-12 lg:col-4 xl:col-4">
+            <div class="col-12 lg:col-3 xl:col-3">
                 <span class="text font-medium text-1xl">Tramite N°:<span class="text ml-2 font-medium"> {{dataTramite.numero_tramite}} </span></span>
             </div>
+            <div class="col-12 lg:col-3 xl:col-3 py-2">
+                <span class="text font-medium text-1xl">Fecha inicia:<span class="text ml-1 font-medium"> {{dataTramite.fecha_tramite| date: 'dd/MM/yyyy'}}</span></span>
+            </div>
+            <div class="col-12 lg:col-3 xl:col-3 py-2">
+                <span class="text font-medium text-1xl">N° expediente:<span class="text ml-1 font-medium"> {{dataTramite.expediente}}</span></span>
+            </div>
+            <div class="col-12 lg:col-3 xl:col-3 py-2">
+                <span class="text font-medium text-1xl">Fecha exp.:<span class="text ml-1 font-medium"> {{dataTramite.fecha_expediente| date: 'dd/MM/yyyy'}}</span></span>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-12 border-bottom-1 surface-border">
+        <div class="grid">
             <div class="col-12 lg:col-4 xl:col-4">
                 <span class="text font-medium text-1xl">Solicitante:<span class="text ml-1 font-medium"> {{dataTramite.ciudadano?.apellido}} {{dataTramite.ciudadano?.nombre}}</span></span>
             </div>
             <div class="col-12 lg:col-4 xl:col-4">
                 <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{dataTramite.ciudadano?.dni}}</span></span>
             </div>
+
         </div>
     </div>
     <div class="col-12 border-bottom-1 surface-border">
@@ -22,12 +37,7 @@
             <div class="col-12 lg:col-6 xl:col-6 py-2">
                 <span class="text font-medium text-1xl">Motivo de la solicitud:<span class="text ml-1 font-medium"> {{dataTramite.objeto?.objeto}}</span></span>
             </div>
-            <div class="col-12 lg:col-3 xl:col-3 py-2">
-                <span class="text font-medium text-1xl">Fecha inicia:<span class="text ml-1 font-medium"> {{dataTramite.fecha_tramite| date: 'dd/MM/yyyy'}}</span></span>
-            </div>
-            <div class="col-12 lg:col-3 xl:col-3 py-2">
-                <span class="text font-medium text-1xl">Numero expediente:<span class="text ml-1 font-medium"> {{dataTramite.expediente}}</span></span>
-            </div>
+
         </div>
     </div>
 

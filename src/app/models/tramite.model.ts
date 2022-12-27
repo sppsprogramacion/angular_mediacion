@@ -7,6 +7,7 @@ import { ModalidadModel } from './modalidad.model';
 import { VarianteModel } from './variante.model';
 import { EstadoTramiteModel } from './estado_tramite.model';
 import { CiudadanoModel } from './ciudadano.model';
+import { UsuarioTramiteModel } from './usuario_tramite.model';
 
 
 export class TramiteModel{
@@ -34,6 +35,7 @@ export class TramiteModel{
         public variante_id?: number,
         public variante?: VarianteModel,
         public estado_tramite_id?: number,
-        public estado_tramite?: EstadoTramiteModel
+        public estado_tramite?: EstadoTramiteModel,
+        public asignaciones?: UsuarioTramiteModel[]
     ){}
 }
