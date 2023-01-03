@@ -47,6 +47,8 @@ import { CiudadanosAdministrarComponent } from './pages/ciudadanos/ciudadanos-ad
 import { UsuariosAdministrarComponent } from './pages/usuarios/usuarios-administrar/usuarios-administrar.component';
 import { TramitesUsuarioAsignadosComponent } from './pages/tramites-usuario/tramites-usuario-asignados/tramites-usuario-asignados.component';
 import { TramitesUsuarioFinalizadosComponent } from './pages/tramites-usuario/tramites-usuario-finalizados/tramites-usuario-finalizados.component';
+import { CentrosListaComponent } from './pages/centros-mediacion/centros-lista/centros-lista.component';
+import { CentroAdministrarComponent } from './pages/centros-mediacion/centro-administrar/centro-administrar.component';
 
 @NgModule({
     imports: [
@@ -58,6 +60,8 @@ import { TramitesUsuarioFinalizadosComponent } from './pages/tramites-usuario/tr
                     {path: 'home/principal', component: TramitesPrincipalComponent},
                     {path: 'admin/ciudadanos/lista', component: CiudadanosListaComponent},
                     {path: 'admin/ciudadanos/administrar', component: CiudadanosAdministrarComponent},
+                    {path: 'admin/centro-mediacion/lista', component: CentrosListaComponent},
+                    {path: 'admin/centro-mediacion/administrar', component: CentroAdministrarComponent},
                     {path: 'admin/usuarios/administrar', component: UsuariosAdministrarComponent},
                     {path: 'admin/usuarios/lista', component: UsuariosListaComponent},
                     {path: 'admin/tramites/nuevo', component: TramitesNuevoComponent},

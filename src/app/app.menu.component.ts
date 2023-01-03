@@ -47,6 +47,13 @@ export class AppMenuComponent implements OnInit {
                     {label: 'Ver ciudadanos', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/ciudadanos/lista']}
                     
                 ]
+            }, 
+            {
+                label: 'Centros Mediacion admin',
+                items: [
+                    {label: 'Ver centros de mediacion', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/centro-mediacion/lista']}
+                    
+                ]
             },            
             {
                 label: 'Usuarios',

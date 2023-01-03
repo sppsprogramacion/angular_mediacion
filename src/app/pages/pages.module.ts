@@ -32,6 +32,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { TramitesCiudadanoAdministrarComponent } from './tramites-ciudadano/tramites-ciudadano-administrar/tramites-ciudadano-administrar.component';
 import { TramitesUsuarioAdministrarComponent } from './tramites-usuario/tramites-usuario-administrar/tramites-usuario-administrar.component';
 import { CiudadanosAdministrarComponent } from './ciudadanos/ciudadanos-administrar/ciudadanos-administrar.component';
+import { CentroAdministrarComponent } from './centros-mediacion/centro-administrar/centro-administrar.component';
+import { CentrosListaComponent } from './centros-mediacion/centros-lista/centros-lista.component';
 
 
 
@@ -73,7 +75,9 @@ import { CiudadanosAdministrarComponent } from './ciudadanos/ciudadanos-administ
     UsuariosAdministrarComponent,
     TramitesCiudadanoAdministrarComponent,
     TramitesUsuarioAdministrarComponent,
-    CiudadanosAdministrarComponent
+    CiudadanosAdministrarComponent,
+    CentroAdministrarComponent,
+    CentrosListaComponent
     
   ],
   
