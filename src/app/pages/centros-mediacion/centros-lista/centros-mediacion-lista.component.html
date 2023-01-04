@@ -1,0 +1,263 @@
+<div class="grid">
+
+    <div class="col-12">
+        <div class="card">
+
+            <h5>Centros de Mediación</h5>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openDialogCentroMediacion()"></button>
+
+                    </div>
+                </ng-template>
+
+            </p-toolbar>
+            <!-- TABLA DE CENTROS MEDIACION -->
+            <p-table #dt1 [value]="listCentrosMediacion" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
+                <ng-template pTemplate="caption">
+                    <div class="flex justify-content-between flex-column sm:flex-row">
+                        <button pButton label="Limpiar" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+                        <span class="p-input-icon-left mb-2">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem"></th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                ID
+                                <p-columnFilter type="text" field="id_centro_mediacion" display="menu" placeholder="Buscar por ID"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Centro Mediación
+                                <p-columnFilter type="text" field="centro_mediacion" display="menu" placeholder="Buscar por apellido"></p-columnFilter>
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Dirección
+                                <p-columnFilter type="text" field="direccion" display="menu" placeholder="Buscar por direccion"></p-columnFilter>
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Departamento
+                                <p-columnFilter field="departamento.departamento" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                                    <ng-template pTemplate="header">
+                                        <div class="px-3 pt-3 pb-0">
+                                            <span class="font-bold">Departamento</span>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                        <p-dropdown [ngModel]="value" [options]="filtroDepartamentos" (onChange)="filter($event.value)" placeholder="seleccionar" [showClear]="true">
+                                            <ng-template let-option pTemplate="item">
+                                                <span class="ml-2">{{option.label}}</span>
+                                            </ng-template>
+                                        </p-dropdown>
+                                    </ng-template>
+                                </p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Municipio
+                                <p-columnFilter field="municipio.municipio" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                                    <ng-template pTemplate="header">
+                                        <div class="px-3 pt-3 pb-0">
+                                            <span class="font-bold">Municipio</span>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                        <p-dropdown [ngModel]="value" [options]="filtroMunicipios" (onChange)="filter($event.value)" placeholder="seleccionar" [showClear]="true">
+                                            <ng-template let-option pTemplate="item">
+                                                <span class="ml-2">{{option.label}}</span>
+                                            </ng-template>
+                                        </p-dropdown>
+                                    </ng-template>
+                                </p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Telefono
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                E-mail
+                                <p-columnFilter type="text" field="email" display="menu" placeholder="Buscar por e-mail"></p-columnFilter>
+
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-centro>
+                    <tr>
+                        <td>
+                            <button type="button" pButton pRipple class="p-button-rounded p-button-info mr-2 mb-2" icon="pi pi-eye" (click)="administrarCentroMediacion(centro)"></button>
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{centro.id_centro_mediacion}}
+                        </td>
+
+                        <td style="min-width: 15rem;">
+                            {{centro.centro_mediacion}}
+                        </td>
+
+                        <td style="min-width: 15rem;">
+                            {{centro.calle_direccion}}
+                        </td>
+
+                        <td style="min-width: 15rem;">
+                            {{centro.departamento.departamento}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{centro.municipio.municipio}}
+                        </td>
+
+                        <td style="min-width: 10rem;">
+                            {{centro.telefono}}
+                        </td>
+                        <td style="min-width: 5rem;">
+                            {{centro.email}}
+                        </td>
+
+
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="8">No se encontraron ciudadanos registrados.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="8">Cargando ciudadanos... .</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <!-- FIN TABLA DE CENTROS MEDIACION -->
+
+            <!-- DIALOG FORMULARIO CIUDADANOS -->
+            <p-dialog id="formUsuarioDialog" [(visible)]="centroMediacionDialog" [style]="{width: '600px'}" header="Nuevo Centro de Mediación" [closable]="false" [modal]="true" class="p-fluid">
+                <ng-template pTemplate="content">
+                    <!-- FORMULARIO TRAMITES -->
+                    <form [formGroup]="formaCentroMediacion">
+                        <div class="formgrid grid">
+                            <div class="field col">
+                                <label for="apellido">Nombre</label>
+                                <input type="text" pInputText id="centro_mediacion" formControlName="centro_mediacion" />
+                                <small *ngIf="isValid('centro_mediacion')" class="p-error">
+                        <div *ngFor="let validation of user_validation_messages.apellido" >
+                            <div  *ngIf="formaUsuario.get('apellido')?.hasError(validation.type)">
+                                {{validation.message}}
+                            </div>
+                        </div>
+                    </small>
+                            </div>
+                        </div>
+                        <div class="formgrid grid">
+                            <div class="field col">
+                                <label for="departamento_id">Departamento</label>
+                                <p-dropdown id="departamento_id" [options]="listDepartamentos" optionLabel="departamento" optionValue="id_departamento" formControlName="departamento_id" placeholder="Seleccionar..." (onChange)="onChangeDepartamento()">
+                                </p-dropdown>
+                            </div>
+                            <div class="field col">
+                                <label for="municipio_id">Municipio</label>
+                                <p-dropdown id="municipio_id" [options]="listMunicipios" optionLabel="municipio" optionValue="id_municipio" formControlName="municipio_id" placeholder="Seleccionar...">
+                                </p-dropdown>
+                            </div>
+                        </div>
+
+                        <div class="formgrid grid">
+                            <div class="field col">
+                                <label for="localidad_barrio">Barrio</label>
+                                <input type="text" pInputText id="localidad_barrio" formControlName="localidad_barrio" />
+                                <small *ngIf="isValid('localidad_barrio')" class="p-error">
+                        <div *ngFor="let validation of user_validation_messages.localidad_barrio" >
+                            <div  *ngIf="formaRegistro.get('localidad_barrio')?.hasError(validation.type)">
+                                {{validation.message}}
+                            </div>
+                        </div>
+                    </small>
+                            </div>
+
+                        </div>
+                        <div class="formgrid grid">
+                            <div class="field col">
+                                <label for="calle_direccion">Calle/dirección</label>
+                                <input type="text" pInputText id="calle_direccion" formControlName="calle_direccion" />
+                                <small *ngIf="isValid('calle_direccion')" class="p-error">
+                        <div *ngFor="let validation of user_validation_messages.calle_direccion" >
+                            <div  *ngIf="formaRegistro.get('calle_direccion')?.hasError(validation.type)">
+                                {{validation.message}}
+                            </div>
+                        </div>
+                    </small>
+                            </div>
+                            <div class="field col">
+                                <label for="numero_dom">Número</label>
+                                <input type="text" pInputText id="numero_dom" formControlName="numero_dom" />
+                                <small *ngIf="isValid('numero_dom')" class="p-error">
+                        <div *ngFor="let validation of user_validation_messages.numero_dom" >
+                            <div  *ngIf="formaRegistro.get('numero_dom')?.hasError(validation.type)">
+                                {{validation.message}}
+                            </div>
+                        </div>
+                    </small>
+                            </div>
+                        </div>
+
+                        <div class="formgrid grid">
+
+                            <div class="field col">
+                                <label for="telefono">Teléfono</label>
+                                <input type="text" pInputText id="telefono" formControlName="telefono" />
+                                <small *ngIf="isValid('telefono')" class="p-error">
+                        <div *ngFor="let validation of user_validation_messages.telefono" >
+                            <div  *ngIf="formaUsuario.get('telefono')?.hasError(validation.type)">
+                                {{validation.message}}
+                            </div>
+                        </div>
+                    </small>
+                            </div>
+                        </div>
+                        <div class="formgrid grid">
+                            <div class="field col">
+                                <label for="email">Correo electrónico</label>
+                                <input type="text" pInputText id="email" formControlName="email" />
+                                <small *ngIf="isValid('email')" class="p-error">
+                        <div *ngFor="let validation of user_validation_messages.email" >
+                            <div  *ngIf="formaUsuario.get('email')?.hasError(validation.type)">
+                                {{validation.message}}
+                            </div>
+                        </div>
+                    </small>
+                            </div>
+                        </div>
+                    </form>
+                    <!--  FIN FORMULARIO TRAMITES -->
+                </ng-template>
+
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogCentroMediacion()"></button>
+                    <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormUsuario()"></button>
+                </ng-template>
+            </p-dialog>
+            <!-- FIN DIALOG FORMULARIO  CIUDADANOS -->
+
+
+        </div>
+
+    </div>
+</div>

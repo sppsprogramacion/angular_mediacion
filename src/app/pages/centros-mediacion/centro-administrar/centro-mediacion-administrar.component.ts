@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-centro-administrar',
-  templateUrl: './centro-administrar.component.html',
-  styleUrls: ['./centro-administrar.component.scss']
+  templateUrl: './centro-mediacion-administrar.component.html',
+  styleUrls: ['./centro-mediacion-administrar.component.scss']
 })
 export class CentroAdministrarComponent implements OnInit {
 

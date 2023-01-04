@@ -214,7 +214,7 @@ export class UsuariosListaComponent implements OnInit {
   } 
   //FIN GUARDAR USUAEIO.................................................
 
-  //LISTADO DE CIUDADANOS
+  //LISTADO DE USUARIOS
   listarUsuarios(){    
     this.usuariosService.listarUsuariosTodos().
         subscribe(respuesta => {
@@ -224,7 +224,7 @@ export class UsuariosListaComponent implements OnInit {
     
     });
   }
-  //FIN LISTADO DE CIUDADANOS....................................................... 
+  //FIN LISTADO DE USUARIOS....................................................... 
 
   //MANEJO DE FORMULARIO DIALOG
   openDialogUsuario() {

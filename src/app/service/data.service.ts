@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, Injectable } from '@angular/core';
 import { TramiteModel } from '../models/tramite.model';
 import { UsuarioModel } from '../models/usuario.model';
+import { CentroMediacionModel } from '../models/centro_mediacion.model';
 
 
 @Injectable({
@@ -11,6 +12,8 @@ export class DataService {
 
   tramiteData: TramiteModel = {};
   usuarioData: UsuarioModel ={};
+  centroMediacionData: CentroMediacionModel= {};
+
   constructor(private readonly datePipe: DatePipe,) { }
 
   getTramiteData(data: TramiteModel){
@@ -19,6 +22,10 @@ export class DataService {
 
   getUsuarioData(data: UsuarioModel){
     this.usuarioData = data;
+  }
+
+  getCentroMediacionData(data: CentroMediacionModel){
+    this.centroMediacionData = data;
   }
 
   getchangeFormatoFechaGuardar(nuevaFecha: Date){
