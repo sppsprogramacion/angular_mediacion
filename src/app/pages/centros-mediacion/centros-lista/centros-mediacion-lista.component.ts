@@ -10,14 +10,25 @@ import { DepartamentoModel } from 'src/app/models/departamento.model';
 import { MunicipioModel } from '../../../models/municipio.model';
 import { DataService } from 'src/app/service/data.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Message, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-centros-lista',
   templateUrl: './centros-mediacion-lista.component.html',
+  providers: [MessageService],
   styleUrls: ['./centros-mediacion-lista.component.scss']
 })
 export class CentrosMediacionListaComponent implements OnInit {
   loading:boolean = true;
+
+  //MENSAJES
+  msgs: Message[] = []; 
+  public messages = [
+    { severity: "warn", summary: "", detail: "Example text." }
+  ];
+
   //PARA FILTRAR EN TABLA
   @ViewChild('dt') table: Table;
   @ViewChild('filter') filter: ElementRef;
@@ -33,13 +44,13 @@ export class CentrosMediacionListaComponent implements OnInit {
   filtroDepartamentos: FiltroModel[]=[];
   filtroMunicipios: FiltroModel[]=[];
 
-
   //FORMULARIOS
   formaCentroMediacion: FormGroup;  
   
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private serviceMensajes: MessageService,
     private readonly dataService: DataService,
     private centrosMediacionService: CentrosMediacionService,
   ) {
@@ -132,31 +143,77 @@ export class CentrosMediacionListaComponent implements OnInit {
 
     //FIN LISTAS.....................................
   }
+  //FIN ONINIT........................................................
+
+  //GUARDAR USUAEIO
+  submitFormUsuario(){
+    
+    if(this.formaCentroMediacion.invalid){                        
+      this.msgs = [];
+      this.msgs.push({ severity: 'success', summary: 'Success Message', detail: 'Message sent' });
+        //Swal.fire('Formulario con errores',`Complete correctamente todos los campos del formulario`,"warning");
+        
+
+        console.log("errores formulario");
+        return Object.values(this.formaCentroMediacion.controls).forEach(control => control.markAsTouched());
+    }    
+
+    let dataRegistro: Partial<CentroMediacionModel>;
+    dataRegistro = {
+      centro_mediacion: this.formaCentroMediacion.get('centro_mediacion')?.value,
+      departamento_id: parseInt(this.formaCentroMediacion.get('departamento_id')?.value),
+      municipio_id: parseInt(this.formaCentroMediacion.get('municipio_id')?.value),
+      localidad_barrio: this.formaCentroMediacion.get('localidad_barrio')?.value,
+      calle_direccion: this.formaCentroMediacion.get('calle_direccion')?.value,        
+      numero_dom: parseInt(this.formaCentroMediacion.get('numero_dom')?.value),
+      telefono: this.formaCentroMediacion.get('telefono')?.value,
+      email: this.formaCentroMediacion.get('email')?.value, 
+    };
+    
+    
+    //GUARDAR NUEVO CIUDADANO
+    this.centrosMediacionService.guardarCentroMediacion(dataRegistro)
+        .subscribe(resultado => {
+            let centroRes: CentroMediacionModel = resultado;
+            this.hideDialogCentroMediacion();            
+            Swal.fire('Exito',`El registro se realizo con exito`,"success");
+            this.listarCentrosMediacion();
+           
+        },
+        (error) => {
+            Swal.fire('Error',`Error al realizar el regsistro: ${error.error.message}`,"error") 
+        }
+    );         
+    //FIN GUARDAR NUEVO CIUDADANO 
+
+  } 
+  //FIN GUARDAR USUAEIO.................................................
 
   
-  //LISTADO DE CIUDADANOS
+  //LISTADO DE CENTROS DE MEDIACION
   listarCentrosMediacion(){    
     this.centrosMediacionService.listarCentroMediacionTodos().
         subscribe(respuesta => {
         this.listCentrosMediacion= respuesta[0];
-        console.log("lista centros mediacion",this.listCentrosMediacion);
         this.loading = false;  
     
     });
   }
-  //FIN LISTADO DE CIUDADANOS.......................................................
+  //FIN LISTADO DE CENTROS DE MEDIACION.......................................................
 
   //MANEJO DE FORMULARIO DIALOG
   openDialogCentroMediacion() {
-    //this.usuario = {};
-    //this.submitted = false;
     this.centroMediacionDialog = true;
   }
   
   hideDialogCentroMediacion() {
-      this.centroMediacionDialog = false;
+    this.formaCentroMediacion.reset();
+    this.centroMediacionDialog = false;
+      
       //this.submitted = false;
-  }    
+  }  
+  
+  
   //FIN MANEJO FORMULARIO DIALOG....................................
 
 

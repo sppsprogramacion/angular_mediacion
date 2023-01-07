@@ -30,7 +30,6 @@ export class UsuariosListaComponent implements OnInit {
 
   //PARA FILTRAR EN TABLA
   @ViewChild('dt') table: Table;
-
   @ViewChild('filter') filter: ElementRef;
 
   //CANTIDADES
@@ -41,8 +40,6 @@ export class UsuariosListaComponent implements OnInit {
   //VARIABLES TRAMITE    
   usuario: UsuarioModel;
   usuarioDialog: boolean;
-  nuevoUsuario: boolean;
-  submitted: boolean;
   validacionClaves: boolean = true;
 
   //LISTAS    
@@ -228,16 +225,12 @@ export class UsuariosListaComponent implements OnInit {
 
   //MANEJO DE FORMULARIO DIALOG
   openDialogUsuario() {
-    this.usuario = {};
-    this.submitted = false;
     this.usuarioDialog = true;
-    this.nuevoUsuario=true;
   }
   
   hideDialogUsuario() {
-      this.usuarioDialog = false;
-      this.submitted = false;
-      this.nuevoUsuario=false;
+    this.formaUsuario.reset();
+    this.usuarioDialog = false;
   }    
   //FIN MANEJO FORMULARIO DIALOG....................................
 

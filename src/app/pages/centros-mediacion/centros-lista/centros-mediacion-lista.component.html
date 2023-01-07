@@ -153,13 +153,14 @@
                 <ng-template pTemplate="content">
                     <!-- FORMULARIO TRAMITES -->
                     <form [formGroup]="formaCentroMediacion">
+                        <p-messages [value]="messages"></p-messages>
                         <div class="formgrid grid">
                             <div class="field col">
                                 <label for="apellido">Nombre</label>
                                 <input type="text" pInputText id="centro_mediacion" formControlName="centro_mediacion" />
                                 <small *ngIf="isValid('centro_mediacion')" class="p-error">
-                        <div *ngFor="let validation of user_validation_messages.apellido" >
-                            <div  *ngIf="formaUsuario.get('apellido')?.hasError(validation.type)">
+                        <div *ngFor="let validation of user_validation_messages.centro_mediacion" >
+                            <div  *ngIf="formaCentroMediacion.get('centro_mediacion')?.hasError(validation.type)">
                                 {{validation.message}}
                             </div>
                         </div>
@@ -185,7 +186,7 @@
                                 <input type="text" pInputText id="localidad_barrio" formControlName="localidad_barrio" />
                                 <small *ngIf="isValid('localidad_barrio')" class="p-error">
                         <div *ngFor="let validation of user_validation_messages.localidad_barrio" >
-                            <div  *ngIf="formaRegistro.get('localidad_barrio')?.hasError(validation.type)">
+                            <div  *ngIf="formaCentroMediacion.get('localidad_barrio')?.hasError(validation.type)">
                                 {{validation.message}}
                             </div>
                         </div>
@@ -199,7 +200,7 @@
                                 <input type="text" pInputText id="calle_direccion" formControlName="calle_direccion" />
                                 <small *ngIf="isValid('calle_direccion')" class="p-error">
                         <div *ngFor="let validation of user_validation_messages.calle_direccion" >
-                            <div  *ngIf="formaRegistro.get('calle_direccion')?.hasError(validation.type)">
+                            <div  *ngIf="formaCentroMediacion.get('calle_direccion')?.hasError(validation.type)">
                                 {{validation.message}}
                             </div>
                         </div>
@@ -210,7 +211,7 @@
                                 <input type="text" pInputText id="numero_dom" formControlName="numero_dom" />
                                 <small *ngIf="isValid('numero_dom')" class="p-error">
                         <div *ngFor="let validation of user_validation_messages.numero_dom" >
-                            <div  *ngIf="formaRegistro.get('numero_dom')?.hasError(validation.type)">
+                            <div  *ngIf="formaCentroMediacion.get('numero_dom')?.hasError(validation.type)">
                                 {{validation.message}}
                             </div>
                         </div>
@@ -225,7 +226,7 @@
                                 <input type="text" pInputText id="telefono" formControlName="telefono" />
                                 <small *ngIf="isValid('telefono')" class="p-error">
                         <div *ngFor="let validation of user_validation_messages.telefono" >
-                            <div  *ngIf="formaUsuario.get('telefono')?.hasError(validation.type)">
+                            <div  *ngIf="formaCentroMediacion.get('telefono')?.hasError(validation.type)">
                                 {{validation.message}}
                             </div>
                         </div>
@@ -238,7 +239,7 @@
                                 <input type="text" pInputText id="email" formControlName="email" />
                                 <small *ngIf="isValid('email')" class="p-error">
                         <div *ngFor="let validation of user_validation_messages.email" >
-                            <div  *ngIf="formaUsuario.get('email')?.hasError(validation.type)">
+                            <div  *ngIf="formaCentroMediacion.get('email')?.hasError(validation.type)">
                                 {{validation.message}}
                             </div>
                         </div>
