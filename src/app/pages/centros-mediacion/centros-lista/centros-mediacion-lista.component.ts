@@ -244,7 +244,7 @@ export class CentrosMediacionListaComponent implements OnInit {
 
   //ACCEDER A DATA SERVICE
   administrarCentroMediacion(data: CentroMediacionModel){
-    this.dataService.usuarioData = data;
+    this.dataService.centroMediacionData = data;
     this.router.navigateByUrl("admin/centro-mediacion/administrar");
   }
   //FIN ACCEDER A DATA SERVICE

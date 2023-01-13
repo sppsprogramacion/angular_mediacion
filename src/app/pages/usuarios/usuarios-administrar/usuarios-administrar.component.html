@@ -1,8 +1,10 @@
 <div class="grid">
     <div class="col-12 xl:col-12">
         <div class="card">
-            <p-toolbar styleClass="bg-cyan-600 ">
-                <span class="block text-white  font-bold"><h5>Usuario: {{(dataUsuario != null)?dataUsuario.apellido + " " + dataUsuario.nombre : "Sin usuario"}}</h5></span>
+            <p-toolbar styleClass="mb-3 bg-cyan-500 ">
+                <h5 class="block text-white font-bold font-medium mb-1 ">
+                    Usuario: {{(dataUsuario != null)?dataUsuario.apellido + " " + dataUsuario.nombre : "Sin usuario"}}
+                </h5>
             </p-toolbar>
             <p-tabView styleClass="mt-2">
                 <p-tabPanel header="Datos Personales" leftIcon="pi pi-id-card">
