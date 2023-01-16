@@ -18,6 +18,7 @@
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-between flex-column sm:flex-row">
                         <button pButton label="Limpiar" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+                        
                         <span class="p-input-icon-left mb-2">
                             <i class="pi pi-search"></i>
                             <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
@@ -150,21 +151,28 @@
 
             <!-- DIALOG FORMULARIO CIUDADANOS -->
             <p-dialog id="formUsuarioDialog" [(visible)]="centroMediacionDialog" [style]="{width: '600px'}" header="Nuevo Centro de Mediación" [closable]="false" [modal]="true" class="p-fluid">
+                <ng-template pTemplate="header">                      
+                    <div class="formgrid grid">                        
+                        <h5 class="mb-1" style="width: 100%;">Nuevo Centro de Mediación</h5>
+                        <!-- MENSAJE DE ERROR -->   
+                        <p-messages [(value)]="msgs" [enableService]="false"></p-messages> 
+                    </div>
+                </ng-template>
+                
                 <ng-template pTemplate="content">
                     <!-- FORMULARIO TRAMITES -->
-                    <form [formGroup]="formaCentroMediacion">
-                        <p-messages [value]="messages"></p-messages>
+                    <form [formGroup]="formaCentroMediacion">                                               
                         <div class="formgrid grid">
                             <div class="field col">
                                 <label for="apellido">Nombre</label>
                                 <input type="text" pInputText id="centro_mediacion" formControlName="centro_mediacion" />
                                 <small *ngIf="isValid('centro_mediacion')" class="p-error">
-                        <div *ngFor="let validation of user_validation_messages.centro_mediacion" >
-                            <div  *ngIf="formaCentroMediacion.get('centro_mediacion')?.hasError(validation.type)">
-                                {{validation.message}}
-                            </div>
-                        </div>
-                    </small>
+                                    <div *ngFor="let validation of user_validation_messages.centro_mediacion" >
+                                        <div  *ngIf="formaCentroMediacion.get('centro_mediacion')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
                             </div>
                         </div>
                         <div class="formgrid grid">
@@ -172,11 +180,19 @@
                                 <label for="departamento_id">Departamento</label>
                                 <p-dropdown id="departamento_id" [options]="listDepartamentos" optionLabel="departamento" optionValue="id_departamento" formControlName="departamento_id" placeholder="Seleccionar..." (onChange)="onChangeDepartamento()">
                                 </p-dropdown>
+                                
                             </div>
                             <div class="field col">
                                 <label for="municipio_id">Municipio</label>
                                 <p-dropdown id="municipio_id" [options]="listMunicipios" optionLabel="municipio" optionValue="id_municipio" formControlName="municipio_id" placeholder="Seleccionar...">
                                 </p-dropdown>
+                                <small *ngIf="isValid('municipio_id')" class="p-error">
+                                    <div *ngFor="let validation of user_validation_messages.centro_mediacion" >
+                                        <div  *ngIf="formaCentroMediacion.get('municipio_id')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
                             </div>
                         </div>
 
@@ -185,12 +201,12 @@
                                 <label for="localidad_barrio">Barrio</label>
                                 <input type="text" pInputText id="localidad_barrio" formControlName="localidad_barrio" />
                                 <small *ngIf="isValid('localidad_barrio')" class="p-error">
-                        <div *ngFor="let validation of user_validation_messages.localidad_barrio" >
-                            <div  *ngIf="formaCentroMediacion.get('localidad_barrio')?.hasError(validation.type)">
-                                {{validation.message}}
-                            </div>
-                        </div>
-                    </small>
+                                    <div *ngFor="let validation of user_validation_messages.localidad_barrio" >
+                                        <div  *ngIf="formaCentroMediacion.get('localidad_barrio')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
                             </div>
 
                         </div>
@@ -199,23 +215,23 @@
                                 <label for="calle_direccion">Calle/dirección</label>
                                 <input type="text" pInputText id="calle_direccion" formControlName="calle_direccion" />
                                 <small *ngIf="isValid('calle_direccion')" class="p-error">
-                        <div *ngFor="let validation of user_validation_messages.calle_direccion" >
-                            <div  *ngIf="formaCentroMediacion.get('calle_direccion')?.hasError(validation.type)">
-                                {{validation.message}}
-                            </div>
-                        </div>
-                    </small>
+                                    <div *ngFor="let validation of user_validation_messages.calle_direccion" >
+                                        <div  *ngIf="formaCentroMediacion.get('calle_direccion')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
                             </div>
                             <div class="field col">
                                 <label for="numero_dom">Número</label>
                                 <input type="text" pInputText id="numero_dom" formControlName="numero_dom" />
                                 <small *ngIf="isValid('numero_dom')" class="p-error">
-                        <div *ngFor="let validation of user_validation_messages.numero_dom" >
-                            <div  *ngIf="formaCentroMediacion.get('numero_dom')?.hasError(validation.type)">
-                                {{validation.message}}
-                            </div>
-                        </div>
-                    </small>
+                                    <div *ngFor="let validation of user_validation_messages.numero_dom" >
+                                        <div  *ngIf="formaCentroMediacion.get('numero_dom')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
                             </div>
                         </div>
 
@@ -225,12 +241,12 @@
                                 <label for="telefono">Teléfono</label>
                                 <input type="text" pInputText id="telefono" formControlName="telefono" />
                                 <small *ngIf="isValid('telefono')" class="p-error">
-                        <div *ngFor="let validation of user_validation_messages.telefono" >
-                            <div  *ngIf="formaCentroMediacion.get('telefono')?.hasError(validation.type)">
-                                {{validation.message}}
-                            </div>
-                        </div>
-                    </small>
+                                    <div *ngFor="let validation of user_validation_messages.telefono" >
+                                        <div  *ngIf="formaCentroMediacion.get('telefono')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
                             </div>
                         </div>
                         <div class="formgrid grid">
@@ -238,12 +254,12 @@
                                 <label for="email">Correo electrónico</label>
                                 <input type="text" pInputText id="email" formControlName="email" />
                                 <small *ngIf="isValid('email')" class="p-error">
-                        <div *ngFor="let validation of user_validation_messages.email" >
-                            <div  *ngIf="formaCentroMediacion.get('email')?.hasError(validation.type)">
-                                {{validation.message}}
-                            </div>
-                        </div>
-                    </small>
+                                    <div *ngFor="let validation of user_validation_messages.email" >
+                                        <div  *ngIf="formaCentroMediacion.get('email')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
                             </div>
                         </div>
                     </form>
@@ -251,8 +267,10 @@
                 </ng-template>
 
                 <ng-template pTemplate="footer">
-                    <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogCentroMediacion()"></button>
+                                    
                     <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormUsuario()"></button>
+                    <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogCentroMediacion()"></button>
+                    
                 </ng-template>
             </p-dialog>
             <!-- FIN DIALOG FORMULARIO  CIUDADANOS -->

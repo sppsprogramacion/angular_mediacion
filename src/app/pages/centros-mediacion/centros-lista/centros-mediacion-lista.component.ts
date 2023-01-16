@@ -24,10 +24,7 @@ export class CentrosMediacionListaComponent implements OnInit {
   loading:boolean = true;
 
   //MENSAJES
-  msgs: Message[] = []; 
-  public messages = [
-    { severity: "warn", summary: "", detail: "Example text." }
-  ];
+  msgs: Message[] = [];   
 
   //PARA FILTRAR EN TABLA
   @ViewChild('dt') table: Table;
@@ -36,6 +33,8 @@ export class CentrosMediacionListaComponent implements OnInit {
   //VARIABLES TRAMITE    
   centroMediacion: CentroMediacionModel;
   centroMediacionDialog: boolean;
+  municipioInvalid: boolean;
+  departamentoInvalid: boolean;
 
   //LISTAS    
   listCentrosMediacion: CentroMediacionModel[]=[];
@@ -145,18 +144,23 @@ export class CentrosMediacionListaComponent implements OnInit {
   }
   //FIN ONINIT........................................................
 
-  //GUARDAR USUAEIO
+  //GUARDAR CENTRO
   submitFormUsuario(){
     
     if(this.formaCentroMediacion.invalid){                        
       this.msgs = [];
-      this.msgs.push({ severity: 'success', summary: 'Success Message', detail: 'Message sent' });
-        //Swal.fire('Formulario con errores',`Complete correctamente todos los campos del formulario`,"warning");
-        
-
-        console.log("errores formulario");
-        return Object.values(this.formaCentroMediacion.controls).forEach(control => control.markAsTouched());
-    }    
+      this.msgs.push({ severity: 'error', summary: 'Datos inválidos', detail: 'Revise los datos cargados. ' });
+      
+      //return Object.values(this.formaCentroMediacion.controls).forEach(control => control.markAsTouched());
+    }   
+    if(parseInt(this.formaCentroMediacion.get('departamento_id')?.value) == 1){
+      //this.msgs = [];
+      this.msgs.push({ severity: 'error', summary: 'Datos inválidos', detail: 'Debe elegir un departamento. ' });
+    }
+    if(this.formaCentroMediacion.get('municipio_id')?.value == 1){
+      this.msgs.push({ severity: 'error', summary: 'Datos inválidos', detail: 'Debe elegir un municipio. ' });
+      return Object.values(this.formaCentroMediacion.controls).forEach(control => control.markAsTouched());
+    } 
 
     let dataRegistro: Partial<CentroMediacionModel>;
     dataRegistro = {
@@ -168,26 +172,28 @@ export class CentrosMediacionListaComponent implements OnInit {
       numero_dom: parseInt(this.formaCentroMediacion.get('numero_dom')?.value),
       telefono: this.formaCentroMediacion.get('telefono')?.value,
       email: this.formaCentroMediacion.get('email')?.value, 
-    };
-    
+    };    
     
     //GUARDAR NUEVO CIUDADANO
-    this.centrosMediacionService.guardarCentroMediacion(dataRegistro)
-        .subscribe(resultado => {
+    this.centrosMediacionService.guardarCentroMediacion(dataRegistro)        
+        .subscribe({
+          next: (resultado) => {
             let centroRes: CentroMediacionModel = resultado;
             this.hideDialogCentroMediacion();            
-            Swal.fire('Exito',`El registro se realizo con exito`,"success");
+            Swal.fire('Exito',`El registro se realizó correctamente`,"success");
             this.listarCentrosMediacion();
-           
-        },
-        (error) => {
-            Swal.fire('Error',`Error al realizar el regsistro: ${error.error.message}`,"error") 
-        }
-    );         
+          },
+          error: (err) => {
+            this.msgs = [];
+            this.msgs.push({ severity: 'error', summary: 'Error al guardar', detail: ` ${err.error.message}` });
+          }
+        });
+      
+            
     //FIN GUARDAR NUEVO CIUDADANO 
 
   } 
-  //FIN GUARDAR USUAEIO.................................................
+  //FIN GUARDAR CENTRO.................................................
 
   
   //LISTADO DE CENTROS DE MEDIACION
@@ -203,11 +209,13 @@ export class CentrosMediacionListaComponent implements OnInit {
 
   //MANEJO DE FORMULARIO DIALOG
   openDialogCentroMediacion() {
+    
     this.centroMediacionDialog = true;
   }
   
   hideDialogCentroMediacion() {
     this.formaCentroMediacion.reset();
+    this.msgs = [];
     this.centroMediacionDialog = false;
       
       //this.submitted = false;
@@ -236,7 +244,7 @@ export class CentrosMediacionListaComponent implements OnInit {
   //FIN CARGAR MUNICIPOS..........................................................................
 
   //LIMPIAR FILTROS
-  clear(table: Table) {
+  clear(table: Table) {    
     table.clear();
     this.filter.nativeElement.value = '';
   } 

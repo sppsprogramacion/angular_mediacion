@@ -34,6 +34,8 @@ import { TramitesUsuarioAdministrarComponent } from './tramites-usuario/tramites
 import { CiudadanosAdministrarComponent } from './ciudadanos/ciudadanos-administrar/ciudadanos-administrar.component';
 import { CentroAdministrarComponent } from './centros-mediacion/centro-administrar/centro-mediacion-administrar.component';
 import { CentrosMediacionListaComponent } from './centros-mediacion/centros-lista/centros-mediacion-lista.component';
+import { MessageModule } from 'primeng/message';
+import { MessagesModule } from 'primeng/messages';
 
 
 
@@ -48,6 +50,8 @@ import { CentrosMediacionListaComponent } from './centros-mediacion/centros-list
     DropdownModule,
     InputTextModule,
     InputTextareaModule,
+    MessageModule,
+    MessagesModule,
     PasswordModule,
     TableModule,
     TabViewModule,//funciona ng-template    
