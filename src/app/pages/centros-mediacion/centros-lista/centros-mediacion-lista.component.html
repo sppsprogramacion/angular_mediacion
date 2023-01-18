@@ -2,7 +2,6 @@
 
     <div class="col-12">
         <div class="card">
-
             <h5>Centros de Mediación</h5>
             <p-toolbar styleClass="mb-4">
                 <ng-template pTemplate="left">
@@ -11,7 +10,6 @@
 
                     </div>
                 </ng-template>
-
             </p-toolbar>
             <!-- TABLA DE CENTROS MEDIACION -->
             <p-table #dt1 [value]="listCentrosMediacion" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
@@ -109,30 +107,24 @@
                         <td style="min-width: 10rem;">
                             {{centro.id_centro_mediacion}}
                         </td>
-
                         <td style="min-width: 15rem;">
                             {{centro.centro_mediacion}}
                         </td>
-
                         <td style="min-width: 15rem;">
                             {{centro.calle_direccion}}
                         </td>
-
                         <td style="min-width: 15rem;">
                             {{centro.departamento.departamento}}
                         </td>
                         <td style="min-width: 10rem;">
                             {{centro.municipio.municipio}}
                         </td>
-
                         <td style="min-width: 10rem;">
                             {{centro.telefono}}
                         </td>
                         <td style="min-width: 5rem;">
                             {{centro.email}}
                         </td>
-
-
                     </tr>
                 </ng-template>
 

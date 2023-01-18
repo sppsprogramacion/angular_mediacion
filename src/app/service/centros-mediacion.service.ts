@@ -21,7 +21,7 @@ export class CentrosMediacionService {
   }
 
   listarCentroMediacionTodos(){
-    return this.http.get<[tramite:CentroMediacionModel[], total: number]>(`${base_url}/centros-mediacion`)
+    return this.http.get<[centros:CentroMediacionModel[], total: number]>(`${base_url}/centros-mediacion`)
   }
 
   
