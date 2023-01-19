@@ -1,5 +1,7 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Message, MessageService } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { DataService } from 'src/app/service/data.service';
 import Swal from 'sweetalert2';
 import { CentroMediacionModel } from '../../../models/centro_mediacion.model';
@@ -9,13 +11,22 @@ import { UsuariosCentroService } from '../../../service/usuarios-centro.service'
 @Component({
   selector: 'app-centro-administrar',
   templateUrl: './centro-mediacion-administrar.component.html',
+  providers: [MessageService],
   styleUrls: ['./centro-mediacion-administrar.component.scss']
 })
 export class CentroAdministrarComponent implements OnInit {
   loading: boolean = true
+
+  //MENSAJES
+  msgs: Message[] = []; 
+
   //MODELOS
   dataCentroMediacion: CentroMediacionModel= new CentroMediacionModel;
   //dataUsuarioCentro: Usua= new UsuarioTramiteModel;
+
+  //PARA FILTRAR EN TABLA
+  @ViewChild('dt') table: Table;
+  @ViewChild('filter') filter: ElementRef;
 
   //LISTAS    
   listUsuariosCentro: UsuarioCentroModel[]=[];
@@ -35,7 +46,7 @@ export class CentroAdministrarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.listarUsuariosCentroMediacion();
+    this.listarUsuariosActivosCentroMediacion();
   }
   //FIN ONINIT................................................
 
@@ -52,6 +63,28 @@ export class CentroAdministrarComponent implements OnInit {
         } 
       })      
   }
-  //FIN LISTADO DE CENTROS DE MEDIACION.......................................................
+  //FIN LISTADO DE USUARIOS - CENTROS DE MEDIACION.......................................................
+
+  //LISTADO DE USUARIOS ACTIVOS - CENTRO DE MEDIACION
+  listarUsuariosActivosCentroMediacion(){        
+    this.usuariosCentrosService.listarUsuariosActivosXCentro(this.dataCentroMediacion.id_centro_mediacion).
+      subscribe({
+        next: (resultado) => {
+          this.listUsuariosCentro = resultado[0]
+          this.loading = false
+        },
+        error: (err) => {
+          Swal.fire('Error al listar los usuarios',`${err.error.message}`,"error");
+        } 
+      })      
+  }
+  //FIN LISTADO DE USUARIOS ACTIVOS - CENTRO DE MEDIACION.......................................................
+
+  //LIMPIAR FILTROS
+  clear(table: Table) {    
+    table.clear();
+    this.filter.nativeElement.value = '';
+  } 
+  //FIN LIMPIAR FILTROS....................................................................................  
 
 }

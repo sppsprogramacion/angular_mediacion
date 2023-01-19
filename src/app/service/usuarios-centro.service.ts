@@ -24,4 +24,10 @@ export class UsuariosCentroService {
   listarUsuariosXCentro(id_centro:number){
     return this.http.get<[usuarioCentro: UsuarioCentroModel[], total: number]>(`${base_url}/usuarios-centros/buscar-xcentro-mediacion?id_centro=${id_centro}`)
   }
+
+  listarUsuariosActivosXCentro(id_centro:number){
+    return this.http.get<[usuarioCentro: UsuarioCentroModel[], total: number]>(`${base_url}/usuarios-centros/buscar-activos-xcentro-mediacion?id_centro=${id_centro}`)
+  }
+
+  
 }

@@ -52,10 +52,10 @@
 
 <!-- Card Usuarios -->
 
-<div class="card p-fluid mb-0 mt-2">
+<div class="card mb-0 mt-2">
     <p-toolbar styleClass="mb-3 bg-cyan-500">
         <h5 class="block text-white font-bold font-medium mb-1 ">
-            Usuarios Asignados
+            Usuarios Designados
         </h5>
     </p-toolbar>
     <!-- TABLA DE CENTROS MEDIACION -->
@@ -76,21 +76,17 @@
                 <th>
                     <div class="flex justify-content-between align-items-center">
                         DNI
-                        <p-columnFilter type="text" field="id_centro_mediacion" display="menu" placeholder="Buscar por ID"></p-columnFilter>
                     </div>
+                </th>
+                <th pSortableColumn="usuario.apellido">
+                    <div class="flex justify-content-between align-items-center">
+                        Apellido 
+                        <p-sortIcon field="usuario.apellido"></p-sortIcon>                       
+                    </div>                    
                 </th>
                 <th>
                     <div class="flex justify-content-between align-items-center">
-                        Apellido
-                        <p-columnFilter type="text" field="centro_mediacion" display="menu" placeholder="Buscar por apellido"></p-columnFilter>
-
-                    </div>
-                </th>
-                <th>
-                    <div class="flex justify-content-between align-items-center">
-                        Nombre
-                        <p-columnFilter type="text" field="direccion" display="menu" placeholder="Buscar por direccion"></p-columnFilter>
-
+                        Nombre                       
                     </div>
                 </th>
                 <th>
@@ -100,15 +96,17 @@
                 </th>
                 <th>
                     <div class="flex justify-content-between align-items-center">
-                        Telefono
-
+                        Fecha Desig
                     </div>
                 </th>
                 <th>
                     <div class="flex justify-content-between align-items-center">
-                        E-mail
-                        <p-columnFilter type="text" field="email" display="menu" placeholder="Buscar por e-mail"></p-columnFilter>
-
+                        Detalles
+                    </div>
+                </th>
+                <th>
+                    <div class="flex justify-content-between align-items-center">
+                        Activo                        
                     </div>
                 </th>
             </tr>
@@ -127,14 +125,17 @@
                 <td style="min-width: 15rem;">
                     {{usuariocentro.usuario.nombre}}
                 </td>
-                <td style="min-width: 15rem;">
+                <td style="min-width: 7rem;">
                     {{usuariocentro.usuario.sexo.sexo}}
                 </td>
                 <td style="min-width: 10rem;">
-                    {{usuariocentro.usuario.telefono}}
+                    {{usuariocentro.fecha_designacion}}
+                </td>
+                <td style="min-width: 15rem;">
+                    {{usuariocentro.detalles}}
                 </td>
                 <td style="min-width: 5rem;">
-                    {{usuariocentro.usuario.email}}
+                    {{usuariocentro.activo}}
                 </td>
             </tr>
         </ng-template>
