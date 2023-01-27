@@ -116,6 +116,7 @@ export class CentrosMediacionListaComponent implements OnInit {
     
     return this.formaCentroMediacion.get(campo)?.invalid && this.formaCentroMediacion.get(campo)?.touched;      
   }
+  //FIN VALIDACIONES DE FORMULARIO.......................................
 
   ngOnInit(): void {
     //CARGAR cENTROS DE MEDIACION

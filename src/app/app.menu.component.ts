@@ -49,19 +49,19 @@ export class AppMenuComponent implements OnInit {
                 ]
             }, 
             {
-                label: 'Centros Mediacion admin',
+                label: 'Usuarios Admin',
                 items: [
-                    {label: 'Ver centros de mediacion', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/centro-mediacion/lista']}
-                    
-                ]
-            },            
-            {
-                label: 'Usuarios',
-                items: [
-                    {label: 'Ver Usuarios', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/usuarios/lista']}
+                    {label: 'Ver usuarios', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/usuarios/lista']}
                                        
                 ]
             },
+            {
+                label: 'Centros Mediacion admin',
+                items: [
+                    {label: 'Ver centros de mediacion', icon: 'pi pi-fw pi-building', routerLink: ['/admin/centro-mediacion/lista']}
+                    
+                ]
+            },   
             {
                 label: 'Ciudadanos opciones',
                 items: [

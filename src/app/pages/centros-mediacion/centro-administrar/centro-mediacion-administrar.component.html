@@ -52,18 +52,53 @@
 
 <!-- Card Usuarios -->
 
-<div class="card mb-0 mt-2">
+<div class="card p-fluid mb-0 mt-2">
     <p-toolbar styleClass="mb-3 bg-cyan-500">
         <h5 class="block text-white font-bold font-medium mb-1 ">
             Usuarios Designados
         </h5>
     </p-toolbar>
+
+    <div class="col-12 border-bottom-1 surface-border">
+
+        <div class="p-formgrid grid">
+            <!-- FORMULARIO USUARIO-CENTRO -->
+            <div class="col-12">
+                <form [formGroup]="formaUsuarioCentroMediacion">
+                    <div class="formgrid grid">
+                        <div class="field col-6">
+                            <label for="detalles" class="text font-medium">Detalles</label>
+                            <input type="text" pInputText id="detalles" formControlName="detalles" />
+                        </div>
+                        <div class="field col-6">
+                            <label for="detalles" class="text font-medium">Detalles</label>
+                            <input type="text" pInputText id="detalles" formControlName="detalles" />
+                        </div>
+
+                    </div>
+
+                    <div class="formgrid grid">
+                        <div class="field col-6">
+                            <label for="detalles" class="text font-medium">Detalles</label>
+                            <input type="text" pInputText id="detalles" formControlName="detalles" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--  FIN FORMULARIO USUARIO CENTRO -->
+            <div class="col-12">
+                <button pButton pRipple type="button" label="Guardar" class="p-button-success mr-2 mb-2" (click)="submitFormUsuarioCentro()"></button>
+            </div>
+        </div>
+    </div>
+
     <!-- TABLA DE CENTROS MEDIACION -->
-    <p-table #dt1 [value]="listUsuariosCentro" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['usuario.dni','usuario.apellido','usuario.nombre','usuario.telefono','objeto.objeto','expediente']" responsiveLayout="scroll">
+    <p-table #dt1 [value]="listUsuariosCentro" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['usuario.dni','usuario.apellido','usuario.nombre','usuario.telefono','objeto.objeto','expediente']"
+        responsiveLayout="scroll">
         <ng-template pTemplate="caption">
             <div class="flex justify-content-between flex-column sm:flex-row">
                 <button pButton label="Limpiar" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
-                
+
                 <span class="p-input-icon-left mb-2">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
@@ -80,18 +115,18 @@
                 </th>
                 <th pSortableColumn="usuario.apellido">
                     <div class="flex justify-content-between align-items-center">
-                        Apellido 
-                        <p-sortIcon field="usuario.apellido"></p-sortIcon>                       
-                    </div>                    
-                </th>
-                <th>
-                    <div class="flex justify-content-between align-items-center">
-                        Nombre                       
+                        Apellido
+                        <p-sortIcon field="usuario.apellido"></p-sortIcon>
                     </div>
                 </th>
                 <th>
                     <div class="flex justify-content-between align-items-center">
-                        Sexo                        
+                        Nombre
+                    </div>
+                </th>
+                <th>
+                    <div class="flex justify-content-between align-items-center">
+                        Sexo
                     </div>
                 </th>
                 <th>
@@ -106,7 +141,7 @@
                 </th>
                 <th>
                     <div class="flex justify-content-between align-items-center">
-                        Activo                        
+                        Activo
                     </div>
                 </th>
             </tr>
