@@ -18,6 +18,7 @@ export class UsuariosCentroService {
 
   guardarUsuarioCentro(data: Partial<UsuarioCentroModel>){    
     this.usuarioCentroModel={...data};
+    console.log("data en servicio", this.usuarioCentroModel);
     return this.http.post(`${base_url}/usuarios-centros`, this.usuarioCentroModel);
   }
 

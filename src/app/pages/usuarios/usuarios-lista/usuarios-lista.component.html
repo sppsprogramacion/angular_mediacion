@@ -21,7 +21,7 @@
                 </ng-template>
 
             </p-toolbar>
-            <!-- TABLA DE CIUDADANOS -->
+            <!-- TABLA DE USUARIOS -->
             <p-table #dt1 [value]="listUsuarios" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['dni','sexo.sexo','apellido','nombre','telefono','email']" responsiveLayout="scroll">
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-between flex-column sm:flex-row">
@@ -114,8 +114,6 @@
                         <td style="min-width: 5rem;">
                             {{usuario.email}}
                         </td>
-
-
                     </tr>
                 </ng-template>
 
@@ -130,9 +128,9 @@
                     </tr>
                 </ng-template>
             </p-table>
-            <!-- FIN TABLA DE CIUDADANOS -->
+            <!-- FIN TABLA DE USUARIOS -->
 
-            <!-- DIALOG FORMULARIO CIUDADANOS -->
+            <!-- DIALOG FORMULARIO USUARIOS -->
             <p-dialog id="formUsuarioDialog" [(visible)]="usuarioDialog" [style]="{width: '450px'}" header="Nuevo Usuario" [closable]="false" [modal]="true" class="p-fluid">
                 <ng-template pTemplate="content">
                     <!-- FORMULARIO TRAMITES -->
@@ -248,7 +246,7 @@
                     <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormUsuario()"></button>
                 </ng-template>
             </p-dialog>
-            <!-- FIN DIALOG FORMULARIO  CIUDADANOS -->
+            <!-- FIN DIALOG FORMULARIO  USUARIOS -->
         </div>
 
     </div>

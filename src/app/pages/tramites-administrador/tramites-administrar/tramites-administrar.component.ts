@@ -118,13 +118,12 @@ export class TramitesAdministrarComponent implements OnInit {
         this.elementosUsuarios = this.listUsuarios.map(usuario => {
           return {
             clave: usuario.dni,
-            value: usuario.apellido + " " + usuario.nombre 
+            value: usuario.apellido + " " + usuario.nombre + " (" + usuario.sexo.sexo + ")"
            }
         });
     
     });
-  }
-  
+  }  
   //FIN LISTADO DE MEDIADORES............................
 
   //LISTADO DE TRAMITES

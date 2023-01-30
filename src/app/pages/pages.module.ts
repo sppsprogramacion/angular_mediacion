@@ -36,12 +36,13 @@ import { CentroAdministrarComponent } from './centros-mediacion/centro-administr
 import { CentrosMediacionListaComponent } from './centros-mediacion/centros-lista/centros-mediacion-lista.component';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
-
+import {CardModule} from 'primeng/card';
 
 
 @NgModule({
   imports: [
     CalendarModule,
+    CardModule,
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,

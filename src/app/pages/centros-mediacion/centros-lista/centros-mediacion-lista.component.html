@@ -141,7 +141,7 @@
             </p-table>
             <!-- FIN TABLA DE CENTROS MEDIACION -->
 
-            <!-- DIALOG FORMULARIO CIUDADANOS -->
+            <!-- DIALOG FORMULARIO CENTRO MEDIACION -->
             <p-dialog id="formUsuarioDialog" [(visible)]="centroMediacionDialog" [style]="{width: '600px'}" header="Nuevo Centro de Mediación" [closable]="false" [modal]="true" class="p-fluid">
                 <ng-template pTemplate="header">                      
                     <div class="formgrid grid">                        
@@ -152,7 +152,7 @@
                 </ng-template>
                 
                 <ng-template pTemplate="content">
-                    <!-- FORMULARIO TRAMITES -->
+                    <!-- FORMULARIO CENTRO MEDIACION -->
                     <form [formGroup]="formaCentroMediacion">                                               
                         <div class="formgrid grid">
                             <div class="field col">
@@ -172,18 +172,16 @@
                                 <label for="departamento_id">Departamento</label>
                                 <p-dropdown id="departamento_id" [options]="listDepartamentos" optionLabel="departamento" optionValue="id_departamento" formControlName="departamento_id" placeholder="Seleccionar..." (onChange)="onChangeDepartamento()">
                                 </p-dropdown>
-                                
+                                <small *ngIf="departamentoInvalid" class="p-error">
+                                    Debe seleccionar un departamento
+                                </small>
                             </div>
                             <div class="field col">
                                 <label for="municipio_id">Municipio</label>
                                 <p-dropdown id="municipio_id" [options]="listMunicipios" optionLabel="municipio" optionValue="id_municipio" formControlName="municipio_id" placeholder="Seleccionar...">
                                 </p-dropdown>
-                                <small *ngIf="isValid('municipio_id')" class="p-error">
-                                    <div *ngFor="let validation of user_validation_messages.centro_mediacion" >
-                                        <div  *ngIf="formaCentroMediacion.get('municipio_id')?.hasError(validation.type)">
-                                            {{validation.message}}
-                                        </div>
-                                    </div>
+                                <small *ngIf="municipioInvalid" class="p-error">
+                                    Debe seleccionar un municipio
                                 </small>
                             </div>
                         </div>
@@ -255,18 +253,16 @@
                             </div>
                         </div>
                     </form>
-                    <!--  FIN FORMULARIO TRAMITES -->
+                    <!--  FIN FORMULARIO CENTRO MEDIACION -->
                 </ng-template>
 
-                <ng-template pTemplate="footer">
-                                    
+                <ng-template pTemplate="footer">                                    
                     <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormUsuario()"></button>
                     <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogCentroMediacion()"></button>
                     
                 </ng-template>
             </p-dialog>
-            <!-- FIN DIALOG FORMULARIO  CIUDADANOS -->
-
+            <!-- FIN DIALOG FORMULARIO  CENTRO MEDIACION -->
 
         </div>
 

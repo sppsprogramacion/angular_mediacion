@@ -3,7 +3,10 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Message, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
+import { ElementoModel } from 'src/app/models/elemento.model';
+import { UsuarioModel } from 'src/app/models/usuario.model';
 import { DataService } from 'src/app/service/data.service';
+import { UsuariosService } from 'src/app/service/usuarios.service';
 import Swal from 'sweetalert2';
 import { CentroMediacionModel } from '../../../models/centro_mediacion.model';
 import { UsuarioCentroModel } from '../../../models/usuario_centro.model ';
@@ -30,9 +33,14 @@ export class CentroAdministrarComponent implements OnInit {
   @ViewChild('filter') filter: ElementRef;
 
   //LISTAS    
+  listUsuarios: UsuarioModel[]=[];
   listUsuariosCentro: UsuarioCentroModel[]=[];
+  elementosUsuarios: ElementoModel[]=[];
   // filtroDepartamentos: FiltroModel[]=[];
   // filtroMunicipios: FiltroModel[]=[];
+
+  //VARIABLES CENTRO
+  usuarioCentroDialog: boolean;
 
   //FORMULARIOS
   formaUsuarioCentroMediacion: FormGroup;
@@ -41,13 +49,15 @@ export class CentroAdministrarComponent implements OnInit {
     private fb: FormBuilder,
     private readonly datePipe: DatePipe,
     public dataService: DataService,
-    private usuariosCentrosService: UsuariosCentroService
+    private usuariosCentrosService: UsuariosCentroService,
+    private usuarioService: UsuariosService   
+    
   ) {
     //FORMULARIOS
     this.formaUsuarioCentroMediacion = this.fb.group({
       
-      centro_mediacion_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-      dni_usuario: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      //centro_mediacion_id: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      dni_usuario: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       detalles: [,[Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
       
     });
@@ -62,11 +72,11 @@ export class CentroAdministrarComponent implements OnInit {
   user_validation_messages = {   
              
     'centro_mediacion_id': [
-      { type: 'required', message: 'El departamento es requerido' },
+      { type: 'required', message: 'El centro de mediación es requerido' },
       { type: 'pattern', message: 'Solo se pueden ingresar números.' }
     ],
     'dni_usuario': [
-      { type: 'required', message: 'El DNI del usuario es requerido' },
+      { type: 'required', message: 'Debe seleccionar un usuario, el DNI del usuario es requerido' },
       { type: 'pattern', message: 'Solo se pueden ingresar números.' }
     ],
     'detalles': [
@@ -85,14 +95,62 @@ export class CentroAdministrarComponent implements OnInit {
   //FIN VALIDACIONES DE FORMULARIO.......................................
 
   ngOnInit(): void {
+    this.listarMediadores();
     this.listarUsuariosActivosCentroMediacion();
   }
   //FIN ONINIT................................................
 
-  //GUARDAR USUARIO-TRAMITE  
+  //GUARDAR USUARIO-CENTRO  
   submitFormUsuarioCentro(){
+    if(this.formaUsuarioCentroMediacion.invalid){
+      this.msgs = [];
+      this.msgs.push({ severity: 'error', summary: 'Datos inválidos', detail: 'Revise los datos cargados. ' });
+      return Object.values(this.formaUsuarioCentroMediacion.controls).forEach(control => control.markAsTouched());
+    }
+
+    let dataRegistro: Partial<UsuarioCentroModel>;
+    dataRegistro = {
+      centro_mediacion_id: this.dataCentroMediacion.id_centro_mediacion,
+      dni_usuario: parseInt(this.formaUsuarioCentroMediacion.get('dni_usuario')?.value),
+      detalles: this.formaUsuarioCentroMediacion.get('detalles')?.value
+    };
+    console.log("dataRegistro", dataRegistro);
+    //GUARDAR NUEVO USUARIO-CENTRO
+    this.usuariosCentrosService.guardarUsuarioCentro(dataRegistro)
+      .subscribe({
+        next: (resultado) => {
+          let usuarioCentroRes: UsuarioCentroModel = resultado[0];
+          this.usuarioCentroDialog = false;
+          Swal.fire('Exito',`El registro se realizó correctamente`,"success");
+          this.listarUsuariosActivosCentroMediacion();
+        },
+        error: (err) => {
+          this.msgs = [];
+          this.msgs.push({ severity: 'error', summary: 'Error al guardar', detail: ` ${err.error.message}` });
+        }
+      });
+      
+    //FIN GUARDAR NUEVO USUARIO-CENTRO   
 
   }
+  //FIN GUARDAR USUARIO-CENTRO..................................................  
+
+  //LISTADO DE MEDIADORES
+  listarMediadores(){    
+    this.usuarioService.listarUsuariosTodos().
+        subscribe(respuesta => {
+        this.listUsuarios= respuesta[0];
+        //this.loadingMediadores = false;  
+        this.elementosUsuarios = this.listUsuarios.map(usuario => {
+          return {
+            clave: usuario.dni,
+            value: usuario.apellido + " " + usuario.nombre + " (" + usuario.sexo.sexo + ")"
+           }
+        });    
+    });
+  }
+  
+  //FIN LISTADO DE MEDIADORES............................
 
   //LISTADO DE USUARIOS - CENTRO DE MEDIACION
   listarUsuariosCentroMediacion(){        
@@ -123,6 +181,18 @@ export class CentroAdministrarComponent implements OnInit {
       })      
   }
   //FIN LISTADO DE USUARIOS ACTIVOS - CENTRO DE MEDIACION.......................................................
+
+
+  //MANEJO DE FORMULARIO DIALOG
+  openDialogUsuarioCentro() {
+    this.usuarioCentroDialog = true;
+  }
+  
+  hideDialogUsuarioCentro() {
+    this.formaUsuarioCentroMediacion.reset();
+    this.usuarioCentroDialog = false;
+  }    
+  //FIN MANEJO FORMULARIO DIALOG....................................
 
   //LIMPIAR FILTROS
   clear(table: Table) {    

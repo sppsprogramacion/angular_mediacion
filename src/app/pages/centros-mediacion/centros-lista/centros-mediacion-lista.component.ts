@@ -33,8 +33,8 @@ export class CentrosMediacionListaComponent implements OnInit {
   //VARIABLES TRAMITE    
   centroMediacion: CentroMediacionModel;
   centroMediacionDialog: boolean;
-  municipioInvalid: boolean;
-  departamentoInvalid: boolean;
+  municipioInvalid: boolean=false;
+  departamentoInvalid: boolean= false;
 
   //LISTAS    
   listCentrosMediacion: CentroMediacionModel[]=[];
@@ -147,21 +147,22 @@ export class CentrosMediacionListaComponent implements OnInit {
 
   //GUARDAR CENTRO
   submitFormUsuario(){
-    
-    if(this.formaCentroMediacion.invalid){                        
-      this.msgs = [];
-      this.msgs.push({ severity: 'error', summary: 'Datos inválidos', detail: 'Revise los datos cargados. ' });
-      
-      //return Object.values(this.formaCentroMediacion.controls).forEach(control => control.markAsTouched());
-    }   
-    if(parseInt(this.formaCentroMediacion.get('departamento_id')?.value) == 1){
-      //this.msgs = [];
-      this.msgs.push({ severity: 'error', summary: 'Datos inválidos', detail: 'Debe elegir un departamento. ' });
+    this.msgs = [];
+    this.departamentoInvalid = false;
+    this.municipioInvalid = false;
+    if(parseInt(this.formaCentroMediacion.get('departamento_id')?.value) == 1){      
+      //this.msgs.push({ severity: 'error', summary: 'Datos inválidos', detail: 'Debe elegir un departamento. ' });
+      this.departamentoInvalid=true;
     }
     if(this.formaCentroMediacion.get('municipio_id')?.value == 1){
-      this.msgs.push({ severity: 'error', summary: 'Datos inválidos', detail: 'Debe elegir un municipio. ' });
-      return Object.values(this.formaCentroMediacion.controls).forEach(control => control.markAsTouched());
+      //this.msgs.push({ severity: 'error', summary: 'Datos inválidos', detail: 'Debe elegir un municipio. ' });
+      this.municipioInvalid = true;
     } 
+    if(this.formaCentroMediacion.invalid){  
+      this.msgs.push({ severity: 'error', summary: 'Datos inválidos', detail: 'Revise los datos cargados. ' });
+      return Object.values(this.formaCentroMediacion.controls).forEach(control => control.markAsTouched());
+    }   
+    
 
     let dataRegistro: Partial<CentroMediacionModel>;
     dataRegistro = {
@@ -175,7 +176,7 @@ export class CentrosMediacionListaComponent implements OnInit {
       email: this.formaCentroMediacion.get('email')?.value, 
     };    
     
-    //GUARDAR NUEVO CIUDADANO
+    //GUARDAR NUEVO CENTRO
     this.centrosMediacionService.guardarCentroMediacion(dataRegistro)        
         .subscribe({
           next: (resultado) => {
@@ -189,9 +190,7 @@ export class CentrosMediacionListaComponent implements OnInit {
             this.msgs.push({ severity: 'error', summary: 'Error al guardar', detail: ` ${err.error.message}` });
           }
         });
-      
-            
-    //FIN GUARDAR NUEVO CIUDADANO 
+    //FIN GUARDAR NUEVO CENTRO 
 
   } 
   //FIN GUARDAR CENTRO.................................................
@@ -217,6 +216,8 @@ export class CentrosMediacionListaComponent implements OnInit {
   hideDialogCentroMediacion() {
     this.formaCentroMediacion.reset();
     this.msgs = [];
+    this.departamentoInvalid = false;
+    this.municipioInvalid = false;
     this.centroMediacionDialog = false;
       
       //this.submitted = false;
