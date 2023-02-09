@@ -18,8 +18,14 @@ export class UsuariosCentroService {
 
   guardarUsuarioCentro(data: Partial<UsuarioCentroModel>){    
     this.usuarioCentroModel={...data};
-    console.log("data en servicio", this.usuarioCentroModel);
     return this.http.post(`${base_url}/usuarios-centros`, this.usuarioCentroModel);
+  }
+
+  deshabilitarUsuarioCentro(id_usuario_centro:number) {
+    let data: Partial<UsuarioCentroModel>;
+    
+    let habilitado: boolean = false;
+    return this.http.put(`${base_url}/usuarios-centros/deshabilitar-usuario?id_usuario_centro=${id_usuario_centro}`,data);
   }
 
   listarUsuariosXCentro(id_centro:number){

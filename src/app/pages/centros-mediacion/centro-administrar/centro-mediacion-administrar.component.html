@@ -70,7 +70,7 @@
 
         </p-toolbar>
         <!-- TABLA DE CENTROS MEDIACION -->
-        <p-table  #dt1 [value]="listUsuariosCentro" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['usuario.dni','usuario.apellido','usuario.nombre','usuario.telefono','objeto.objeto','expediente']"
+        <p-table #dt1 [value]="listUsuariosCentro" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['usuario.dni','usuario.apellido','usuario.nombre','usuario.telefono','objeto.objeto','expediente']"
             responsiveLayout="scroll">
             <ng-template pTemplate="caption">
                 <div class="flex justify-content-between flex-column sm:flex-row">
@@ -126,7 +126,7 @@
             <ng-template pTemplate="body" let-usuariocentro>
                 <tr>
                     <td>
-                        <button type="button" pButton pRipple class="p-button-rounded p-button-info mr-2 mb-2" icon="pi pi-eye" (click)="administrarCentroMediacion(centro)"></button>
+                        <button type="button" pButton pRipple class="p-button-rounded p-button-danger mr-2 mb-2" icon="pi pi-eye" (click)="deshabilitarUsuarioCentro(usuariocentro)"></button>
                     </td>
                     <td style="min-width: 10rem;">
                         {{usuariocentro.usuario.dni}}
@@ -167,8 +167,8 @@
     </div>
     <!-- DIALOG FORMULARIO USUARIOS -->
     <p-dialog id="usuarioCentroDialog" [(visible)]="usuarioCentroDialog" [style]="{width: '600px'}" header="Asignar Usuario" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}">
-        <!-- MENSAJE DE ERROR -->   
-        <p-messages [(value)]="msgs" [enableService]="false"></p-messages> 
+        <!-- MENSAJE DE ERROR -->
+        <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
         <ng-template pTemplate="content">
             <!-- FORMULARIO USUARIO-CENTRO -->
             <div class="col-12 p-fluid mt-0">
@@ -176,7 +176,7 @@
                     <div class="formgrid grid">
                         <div class="field col-12">
                             <label for="dni" class="text font-medium">Seleccionar un usuario</label>
-                            <p-dropdown id="dni" [options]="elementosUsuarios" filter="true" optionLabel="value" optionValue="clave" formControlName="dni_usuario" placeholder="Seleccionar...">
+                            <p-dropdown id="dni_usuario" [options]="elementosUsuarios" filter="true" optionLabel="value" optionValue="clave" formControlName="dni_usuario">
                             </p-dropdown>
                             <small *ngIf="isValid('dni_usuario')" class="p-error">
                                 <div *ngFor="let validation of user_validation_messages.dni_usuario" >
@@ -202,13 +202,13 @@
                     </div>
                 </form>
             </div>
-            <!--  FIN FORMULARIO USUARIO CENTRO -->  
+            <!--  FIN FORMULARIO USUARIO CENTRO -->
         </ng-template>
 
         <ng-template pTemplate="footer" class="mt-1">
             <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormUsuarioCentro()"></button>
             <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogUsuarioCentro()"></button>
-            
+
         </ng-template>
     </p-dialog>
     <!-- FIN DIALOG FORMULARIO  USUARIOS -->

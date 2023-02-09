@@ -36,6 +36,7 @@ export class CentroAdministrarComponent implements OnInit {
   listUsuarios: UsuarioModel[]=[];
   listUsuariosCentro: UsuarioCentroModel[]=[];
   elementosUsuarios: ElementoModel[]=[];
+  elementosSiNo: ElementoModel[]=[];
   // filtroDepartamentos: FiltroModel[]=[];
   // filtroMunicipios: FiltroModel[]=[];
 
@@ -57,7 +58,7 @@ export class CentroAdministrarComponent implements OnInit {
     this.formaUsuarioCentroMediacion = this.fb.group({
       
       //centro_mediacion_id: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-      dni_usuario: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      dni_usuario: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       detalles: [,[Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
       
     });
@@ -120,7 +121,7 @@ export class CentroAdministrarComponent implements OnInit {
       .subscribe({
         next: (resultado) => {
           let usuarioCentroRes: UsuarioCentroModel = resultado[0];
-          this.usuarioCentroDialog = false;
+          this.hideDialogUsuarioCentro();
           Swal.fire('Exito',`El registro se realizó correctamente`,"success");
           this.listarUsuariosActivosCentroMediacion();
         },
@@ -134,6 +135,24 @@ export class CentroAdministrarComponent implements OnInit {
 
   }
   //FIN GUARDAR USUARIO-CENTRO..................................................  
+
+  //DESHABILITAR USUARIO-CENTRO
+  deshabilitarUsuarioCentro(dataUsuarioCentro:UsuarioCentroModel){
+    this.usuariosCentrosService.deshabilitarUsuarioCentro(dataUsuarioCentro.id_usuario_centro)
+    .subscribe({
+      next: (resultado) => {
+        let usuarioCentroRes: UsuarioCentroModel = resultado[0];
+        Swal.fire('Exito',`El registro se modifico correctamente`,"success");
+        this.listarUsuariosActivosCentroMediacion();
+      },
+      error: (err) => {
+        Swal.fire('Fallo ',`El registro no se modifico`,"error");
+        // this.msgs = [];
+        // this.msgs.push({ severity: 'error', summary: 'Error al guardar', detail: ` ${err.error.message}` });
+      }
+    });
+  }
+  //FIN DESHABILITAR USUARIO-CENTRO.................................................
 
   //LISTADO DE MEDIADORES
   listarMediadores(){    
@@ -190,6 +209,7 @@ export class CentroAdministrarComponent implements OnInit {
   
   hideDialogUsuarioCentro() {
     this.formaUsuarioCentroMediacion.reset();
+    this.msgs = [];
     this.usuarioCentroDialog = false;
   }    
   //FIN MANEJO FORMULARIO DIALOG....................................
