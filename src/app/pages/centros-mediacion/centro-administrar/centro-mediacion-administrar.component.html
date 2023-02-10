@@ -126,7 +126,7 @@
             <ng-template pTemplate="body" let-usuariocentro>
                 <tr>
                     <td>
-                        <button type="button" pButton pRipple class="p-button-rounded p-button-danger mr-2 mb-2" icon="pi pi-eye" (click)="deshabilitarUsuarioCentro(usuariocentro)"></button>
+                        <button type="button" pButton pRipple class="p-button-danger p-button-rounded p-button-outlined mr-2 mb-2" icon="pi pi-thumbs-down" (click)="confirmarDeshabilitarUsuario(usuariocentro)"></button>
                     </td>
                     <td style="min-width: 10rem;">
                         {{usuariocentro.usuario.dni}}
@@ -154,7 +154,7 @@
 
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td colspan="8">No se encontraron usuarios registrados.</td>
+                    <td colspan="8">No se encontraron usuarios asignados.</td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="loadingbody">

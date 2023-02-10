@@ -115,7 +115,6 @@ export class CentroAdministrarComponent implements OnInit {
       dni_usuario: parseInt(this.formaUsuarioCentroMediacion.get('dni_usuario')?.value),
       detalles: this.formaUsuarioCentroMediacion.get('detalles')?.value
     };
-    console.log("dataRegistro", dataRegistro);
     //GUARDAR NUEVO USUARIO-CENTRO
     this.usuariosCentrosService.guardarUsuarioCentro(dataRegistro)
       .subscribe({
@@ -136,17 +135,36 @@ export class CentroAdministrarComponent implements OnInit {
   }
   //FIN GUARDAR USUARIO-CENTRO..................................................  
 
+  //CONFIRMAR DESHABILITACION USUARIO-CENTRO
+  confirmarDeshabilitarUsuario(dataUsuarioCentro:UsuarioCentroModel){    
+    Swal.fire({
+      title: 'Deshabilitar este usuario del centro de mediación?',
+      text: 'No podrá deshacer esta acción luego de confirmar',
+      icon: 'warning',
+      showDenyButton: true,
+      //showCancelButton: true,
+      confirmButtonText: `Aceptar`,
+      confirmButtonColor:"#3085d6",
+      denyButtonText: `Cancelar`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deshabilitarUsuarioCentro(dataUsuarioCentro)
+      }
+    })    
+  }
+  //FIN CONFIRMAR DESHABILITACION USUARIO-CENTRO
+
   //DESHABILITAR USUARIO-CENTRO
   deshabilitarUsuarioCentro(dataUsuarioCentro:UsuarioCentroModel){
     this.usuariosCentrosService.deshabilitarUsuarioCentro(dataUsuarioCentro.id_usuario_centro)
     .subscribe({
       next: (resultado) => {
         let usuarioCentroRes: UsuarioCentroModel = resultado[0];
-        Swal.fire('Exito',`El registro se modifico correctamente`,"success");
+        Swal.fire('Exito',`El usuario fue deshabilitado correctamente`,"success");
         this.listarUsuariosActivosCentroMediacion();
       },
       error: (err) => {
-        Swal.fire('Fallo ',`El registro no se modifico`,"error");
+        Swal.fire('Fallo ',`El usuario no fue deshabilitado`,"error");
         // this.msgs = [];
         // this.msgs.push({ severity: 'error', summary: 'Error al guardar', detail: ` ${err.error.message}` });
       }
