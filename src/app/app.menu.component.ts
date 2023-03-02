@@ -56,6 +56,13 @@ export class AppMenuComponent implements OnInit {
                 ]
             },
             {
+                label: 'Categorias',
+                items: [
+                    {label: 'Ver categorias', icon: 'pi pi-fw pi-building', routerLink: ['/admin/categoria/lista']}
+                    
+                ]
+            }, 
+            {
                 label: 'Centros Mediacion admin',
                 items: [
                     {label: 'Ver centros de mediacion', icon: 'pi pi-fw pi-building', routerLink: ['/admin/centro-mediacion/lista']}

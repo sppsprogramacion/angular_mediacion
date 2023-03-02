@@ -50,6 +50,8 @@ import { TramitesUsuarioFinalizadosComponent } from './pages/tramites-usuario/tr
 
 import { CentroAdministrarComponent } from './pages/centros-mediacion/centro-administrar/centro-mediacion-administrar.component';
 import { CentrosMediacionListaComponent } from './pages/centros-mediacion/centros-lista/centros-mediacion-lista.component';
+import { CategoriasListaComponent } from './pages/categorias/categorias-lista/categorias-lista.component';
+import { CategoriaAdministrarComponent } from './pages/categorias/categoria-administrar/categoria-administrar.component';
 
 @NgModule({
     imports: [
@@ -59,6 +61,8 @@ import { CentrosMediacionListaComponent } from './pages/centros-mediacion/centro
                 children: [
                     {path: '', component: TramitesPrincipalComponent},
                     {path: 'home/principal', component: TramitesPrincipalComponent},
+                    {path: 'admin/categoria/lista', component: CategoriasListaComponent},
+                    {path: 'admin/categoria/administrar', component: CategoriaAdministrarComponent},
                     {path: 'admin/ciudadanos/lista', component: CiudadanosListaComponent},
                     {path: 'admin/ciudadanos/administrar', component: CiudadanosAdministrarComponent},
                     {path: 'admin/centro-mediacion/lista', component: CentrosMediacionListaComponent},

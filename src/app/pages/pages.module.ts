@@ -37,6 +37,8 @@ import { CentrosMediacionListaComponent } from './centros-mediacion/centros-list
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import {CardModule} from 'primeng/card';
+import { CategoriaAdministrarComponent } from './categorias/categoria-administrar/categoria-administrar.component';
+import { CategoriasListaComponent } from './categorias/categorias-lista/categorias-lista.component';
 
 
 @NgModule({
@@ -82,7 +84,9 @@ import {CardModule} from 'primeng/card';
     TramitesUsuarioAdministrarComponent,
     CiudadanosAdministrarComponent,
     CentroAdministrarComponent,
-    CentrosMediacionListaComponent
+    CentrosMediacionListaComponent,
+    CategoriaAdministrarComponent,
+    CategoriasListaComponent
     
   ],
   

@@ -1,0 +1,125 @@
+<div class="grid">
+
+    <div class="col-12">
+        <div class="card">
+            <h5>Categorías</h5>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openDialogCategoria()"></button>
+
+                    </div>
+                </ng-template>
+            </p-toolbar>
+            <!-- TABLA DE CENTROS MEDIACION -->
+            <p-table #dt1 [value]="listCategoria" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
+                <ng-template pTemplate="caption">
+                    <div class="flex justify-content-between flex-column sm:flex-row">
+                        <button pButton label="Limpiar" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+
+                        <span class="p-input-icon-left mb-2">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem"></th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                ID
+                                <p-columnFilter type="text" field="id_categoria" display="menu" placeholder="Buscar por ID"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Categoria
+                                <p-columnFilter type="text" field="categoria" display="menu" placeholder="Buscar por categoria"></p-columnFilter>
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Habilitada
+                                <p-columnFilter type="text" field="direccion" display="menu" placeholder="Buscar por direccion"></p-columnFilter>
+
+                            </div>
+                        </th>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-categoria>
+                    <tr>
+                        <td style="min-width: 10rem;">
+                            <button type="button" pButton pRipple class="p-button-rounded p-button-warning mr-2 mb-2" icon="pi pi-pencil" (click)="editDialogCategoria(categoria)"></button>
+                        </td>
+                        <td style="min-width: 8rem;">
+                            {{categoria.id_categoria}}
+                        </td>
+                        <td style="min-width: 15rem;">
+                            {{categoria.categoria}}
+                        </td>
+                        <td style="min-width: 15rem;">
+                            {{categoria.categoria}}
+                        </td>
+
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="8">No se encontraron categoria registradas.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="8">Cargando categorias... .</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <!-- FIN TABLA DE CENTROS MEDIACION -->
+
+
+
+        </div>
+        <!-- DIALOG FORMULARIO CENTRO MEDIACION -->
+        <p-dialog id="formcategoriaDialog" [(visible)]="categoriaDialog" [style]="{width: '600px'}" header="Nueva categoria" [closable]="false" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="header">
+                <div class="formgrid grid">
+                    <h5 class="mb-1" style="width: 100%;">{{tituloDialog}}</h5>
+                    <!-- MENSAJE DE ERROR -->
+                    <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="content">
+                <!-- FORMULARIO CENTRO MEDIACION -->
+                <form [formGroup]="formaCategoria">
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <label for="categoria">Categoria</label>
+                            <input type="text" pInputText id="categoria" formControlName="categoria" />
+                            <small *ngIf="isValid('categoria')" class="p-error">
+                                <div *ngFor="let validation of user_validation_messages.categoria" >
+                                    <div  *ngIf="formaCategoria.get('categoria')?.hasError(validation.type)">
+                                        {{validation.message}}
+                                    </div>
+                                </div>
+                            </small>
+                        </div>
+                    </div>
+
+                </form>
+                <!--  FIN FORMULARIO CENTRO MEDIACION -->
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormCategoria()"></button>
+                <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogCategoria()"></button>
+            </ng-template>
+        </p-dialog>
+        <!-- FIN DIALOG FORMULARIO  CENTRO MEDIACION -->
+
+    </div>
+</div>

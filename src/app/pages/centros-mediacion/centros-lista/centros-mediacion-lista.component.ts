@@ -20,8 +20,7 @@ import { Message, MessageService } from 'primeng/api';
   providers: [MessageService],
   styleUrls: ['./centros-mediacion-lista.component.scss']
 })
-export class CentrosMediacionListaComponent implements OnInit {
-  loading:boolean = true;
+export class CentrosMediacionListaComponent implements OnInit {  
 
   //MENSAJES
   msgs: Message[] = [];   
@@ -30,11 +29,17 @@ export class CentrosMediacionListaComponent implements OnInit {
   @ViewChild('dt') table: Table;
   @ViewChild('filter') filter: ElementRef;
 
-  //VARIABLES TRAMITE    
-  centroMediacion: CentroMediacionModel;
-  centroMediacionDialog: boolean;
+  //VARIABLES
+  loading:boolean = true;
   municipioInvalid: boolean=false;
   departamentoInvalid: boolean= false;
+
+  //VARIABLES CENTRO MEDIACION    
+  centroMediacion: CentroMediacionModel;
+  centroMediacionDialog: boolean;
+  editarCentro: boolean = false;
+  id_centro_editar:number = 0;
+  tituloDialog: string = "";
 
   //LISTAS    
   listCentrosMediacion: CentroMediacionModel[]=[];
@@ -177,7 +182,8 @@ export class CentrosMediacionListaComponent implements OnInit {
     };    
     
     //GUARDAR NUEVO CENTRO
-    this.centrosMediacionService.guardarCentroMediacion(dataRegistro)        
+    if(this.editarCentro==false){
+      this.centrosMediacionService.guardarCentroMediacion(dataRegistro)        
         .subscribe({
           next: (resultado) => {
             let centroRes: CentroMediacionModel = resultado;
@@ -190,8 +196,27 @@ export class CentrosMediacionListaComponent implements OnInit {
             this.msgs.push({ severity: 'error', summary: 'Error al guardar', detail: ` ${err.error.message}` });
           }
         });
+    }
     //FIN GUARDAR NUEVO CENTRO 
 
+    //GUARDAR EDICION CENTRO
+    if(this.editarCentro===true){
+      this.centrosMediacionService.guardarEdicionCentroMediacion(this.id_centro_editar, dataRegistro)        
+        .subscribe({
+          next: (resultado) => {
+            let centroRes: CentroMediacionModel = resultado;
+            this.hideDialogCentroMediacion();            
+            Swal.fire('Exito',`Se actualizó correctamente`,"success");
+            this.listarCentrosMediacion();
+          },
+          error: (err) => {
+            this.msgs = [];
+            this.msgs.push({ severity: 'error', summary: 'Error al actualizar', detail: ` ${err.error.message}` });
+          }
+        });
+    }
+    //FIN GUARDAR EDICION CENTRO 
+    
   } 
   //FIN GUARDAR CENTRO.................................................
 
@@ -209,7 +234,24 @@ export class CentrosMediacionListaComponent implements OnInit {
 
   //MANEJO DE FORMULARIO DIALOG
   openDialogCentroMediacion() {
-    
+    this.tituloDialog= "Nuevo centro mediacion";
+    this.centroMediacionDialog = true;
+  }
+
+  editDialogCentroMediacion(data: CentroMediacionModel){
+    this.tituloDialog="Editar centro de mediación";
+    this.cargarMunicipios(data.departamento_id);
+    this.id_centro_editar = data.id_centro_mediacion;
+    this.formaCentroMediacion.get('centro_mediacion')?.setValue(data.centro_mediacion);
+    this.formaCentroMediacion.get('departamento_id')?.setValue(data.departamento_id); 
+    this.formaCentroMediacion.get('municipio_id')?.setValue(data.municipio_id);
+    this.formaCentroMediacion.get('localidad_barrio')?.setValue(data.localidad_barrio);
+    this.formaCentroMediacion.get('calle_direccion')?.setValue(data.calle_direccion);
+    this.formaCentroMediacion.get('numero_dom')?.setValue(data.numero_dom);
+    this.formaCentroMediacion.get('telefono')?.setValue(data.telefono);
+    this.formaCentroMediacion.get('email')?.setValue(data.email);
+
+    this.editarCentro = true;
     this.centroMediacionDialog = true;
   }
   
@@ -218,11 +260,11 @@ export class CentrosMediacionListaComponent implements OnInit {
     this.msgs = [];
     this.departamentoInvalid = false;
     this.municipioInvalid = false;
+    this.listMunicipios=[];
     this.centroMediacionDialog = false;
-      
+    this.editarCentro = false;  
       //this.submitted = false;
-  }  
-  
+  }    
   
   //FIN MANEJO FORMULARIO DIALOG....................................
 
