@@ -7,6 +7,7 @@ import { CentroMediacionModel } from './centro_mediacion.model';
 
 export class UsuarioModel{
     constructor(
+        public id_usuario?: number,
         public dni?: number,
         public apellido?: string,
         public nombre?: string,    

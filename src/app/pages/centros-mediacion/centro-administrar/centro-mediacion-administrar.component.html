@@ -173,12 +173,12 @@
                 <form [formGroup]="formaUsuarioCentroMediacion">
                     <div class="formgrid grid">
                         <div class="field col-12">
-                            <label for="dni" class="text font-medium">Seleccionar un usuario</label>
-                            <p-dropdown id="dni_usuario" [options]="elementosUsuarios" filter="true" optionLabel="value" optionValue="clave" formControlName="dni_usuario">
+                            <label for="usuario_id" class="text font-medium">Seleccionar un usuario</label>
+                            <p-dropdown id="usuario_id" [options]="elementosUsuarios" filter="true" optionLabel="value" optionValue="clave" formControlName="usuario_id">
                             </p-dropdown>
-                            <small *ngIf="isValid('dni_usuario')" class="p-error">
-                                <div *ngFor="let validation of user_validation_messages.dni_usuario" >
-                                    <div  *ngIf="formaUsuarioCentroMediacion.get('dni_usuario')?.hasError(validation.type)">
+                            <small *ngIf="isValid('usuario_id')" class="p-error">
+                                <div *ngFor="let validation of user_validation_messages.usuario_id" >
+                                    <div  *ngIf="formaUsuarioCentroMediacion.get('usuario_id')?.hasError(validation.type)">
                                         {{validation.message}}
                                     </div>
                                 </div>

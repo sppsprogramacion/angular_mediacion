@@ -12,8 +12,9 @@ import { UsuarioTramiteModel } from './usuario_tramite.model';
 
 export class TramiteModel{
     constructor(
+        public id_tramite?: number,
         public numero_tramite?: number,
-        public dni_ciudadano?: number,
+        public ciudadano_id?: number,
         public ciudadano?: CiudadanoModel,        
         public fecha_tramite?: Date,
         public es_expediente?: boolean,

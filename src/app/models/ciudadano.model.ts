@@ -6,6 +6,7 @@ import { MunicipioModel } from './municipio.model';
 
 export class CiudadanoModel{
     constructor(
+        public id_ciudadano?: number,
         public dni?: number,
         public apellido?: string,
         public nombre?: string,

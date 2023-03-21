@@ -8,7 +8,7 @@ export class UsuarioCentroModel{
         public id_usuario_centro?: number,      
         public centro_mediacion_id?: number,
         public centro_mediacion?: CentroMediacionModel,
-        public dni_usuario?: number,
+        public usuario_id?: number,
         public usuario?: UsuarioModel,
         public detalles?: string,
         public fecha_designacion?: Date,

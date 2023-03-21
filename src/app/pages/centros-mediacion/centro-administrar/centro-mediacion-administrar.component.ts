@@ -58,7 +58,7 @@ export class CentroAdministrarComponent implements OnInit {
     this.formaUsuarioCentroMediacion = this.fb.group({
       
       //centro_mediacion_id: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-      dni_usuario: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      usuario_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       detalles: [,[Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
       
     });
@@ -76,7 +76,7 @@ export class CentroAdministrarComponent implements OnInit {
       { type: 'required', message: 'El centro de mediación es requerido' },
       { type: 'pattern', message: 'Solo se pueden ingresar números.' }
     ],
-    'dni_usuario': [
+    'usuario_id': [
       { type: 'required', message: 'Debe seleccionar un usuario, el DNI del usuario es requerido' },
       { type: 'pattern', message: 'Solo se pueden ingresar números.' }
     ],
@@ -112,7 +112,7 @@ export class CentroAdministrarComponent implements OnInit {
     let dataRegistro: Partial<UsuarioCentroModel>;
     dataRegistro = {
       centro_mediacion_id: this.dataCentroMediacion.id_centro_mediacion,
-      dni_usuario: parseInt(this.formaUsuarioCentroMediacion.get('dni_usuario')?.value),
+      usuario_id: parseInt(this.formaUsuarioCentroMediacion.get('usuario_id')?.value),
       detalles: this.formaUsuarioCentroMediacion.get('detalles')?.value
     };
     //GUARDAR NUEVO USUARIO-CENTRO
@@ -180,8 +180,8 @@ export class CentroAdministrarComponent implements OnInit {
         //this.loadingMediadores = false;  
         this.elementosUsuarios = this.listUsuarios.map(usuario => {
           return {
-            clave: usuario.dni,
-            value: usuario.apellido + " " + usuario.nombre + " (" + usuario.sexo.sexo + ")"
+            clave: usuario.id_usuario,
+            value: usuario.apellido + " " + usuario.nombre + " (" + usuario.dni + ")"
            }
         });    
     });
