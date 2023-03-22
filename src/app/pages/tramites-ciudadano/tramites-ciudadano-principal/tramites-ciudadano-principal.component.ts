@@ -44,7 +44,6 @@ export class TramitesCiudadanoPrincipalComponent implements OnInit {
     this.tramitesService.listarTramitesTodos().
         subscribe(respuesta => {
         this.listTramites= respuesta[0];
-        console.log("tramites", this.listTramites);
         this.loading = false;  
     
     });

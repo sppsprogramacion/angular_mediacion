@@ -6,6 +6,7 @@ import { DataService } from 'src/app/service/data.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
 import { CiudadanoModel } from '../../models/ciudadano.model';
 import { CiudadanosService } from '../../service/ciudadanos.service';
+import { globalConstants } from '../../common/global-constants';
 
 @Component({
   selector: 'app-ciudadano-usuario',
@@ -17,6 +18,7 @@ export class CiudadanoUsuarioComponent implements OnInit {
   //MODELOS
   dataCiudadano: CiudadanoModel= new CiudadanoModel;
   dataUsuario: UsuarioModel= new UsuarioModel;
+  dataAdministrador: string = "Administrador";
   
   //listas
   listUsuarios: UsuarioModel[] = [];
@@ -60,62 +62,79 @@ export class CiudadanoUsuarioComponent implements OnInit {
 
   //LISTADO DE USUARIOS
   listarUsuarios(){    
-    this.usuarioService.listarUsuariosTodos().
-        subscribe(respuesta => {
-        this.listUsuarios= respuesta[0];
-        this.loadingMediadores = false;  
-        this.elementosUsuarios = this.listUsuarios.map(usuario => {
-          return {
-            clave: usuario.dni,
-            value: usuario.apellido + " " + usuario.nombre + " (" + usuario.dni + ")"
-           }
+    this.usuarioService.listarUsuariosTodos()
+        .subscribe({
+          next:  (respuesta) => {
+            this.listUsuarios= respuesta[0];
+            this.loadingMediadores = false;  
+            this.elementosUsuarios = this.listUsuarios.map(usuario => {
+              return {
+                clave: usuario.dni,
+                value: usuario.apellido + " " + usuario.nombre + " (" + usuario.dni + ")"
+               }
+            })
+          }
         });
-    
-    });
   }  
   //FIN LISTADO DE USUARIOS............................
 
   //LISTADO DE USUARIOS
   listarCiudadanos(){    
-    this.ciudadanoService.listarCiudadanosTodos().
-        subscribe(respuesta => {
-        this.listCiudadanos= respuesta[0];
-        this.loadingMediadores = false;  
-        this.elementosCiudadanos = this.listCiudadanos.map(ciudadano => {
-          return {
-            clave: ciudadano.dni,
-            value: ciudadano.apellido + " " + ciudadano.nombre + " (" + ciudadano.dni + ")"
-           }
-        });
-    
-    });
+    this.ciudadanoService.listarCiudadanosTodos()
+      .subscribe({ 
+        next: (respuesta) => {
+          this.listCiudadanos= respuesta[0];
+          this.loadingMediadores = false;  
+          this.elementosCiudadanos = this.listCiudadanos.map(ciudadano => {
+            return {
+              clave: ciudadano.dni,
+              value: ciudadano.apellido + " " + ciudadano.nombre + " (" + ciudadano.dni + ")"
+              }
+          })
+        }
+      });
   }  
   //FIN LISTADO DE USUARIOS............................
 
-  //ACCEDER A DATA SERVICE
+  //ACCEDER A GLOBAL CONSTANTS
   elegirCiudadano(){
     let dni_ciudadano = parseInt(this.formaCiudadano.get('dni_ciudadano')?.value)
     this.ciudadanoService.buscarXDni(dni_ciudadano)
       .subscribe({
-        next: (resultado) => {
-          this.dataCiudadano = resultado;
-          this.dataService.ciudadanoLogin = this.dataCiudadano;
+        next: (resultado) => {          
+          this.dataCiudadano = resultado;   
+          this.dataUsuario = {};       
+          this.dataAdministrador = "";
+          globalConstants.ciudadanoLogin = this.dataCiudadano;          
+          globalConstants.usuarioLogin = {};
+          globalConstants.isAdministrador = false;
         }
-      });
-    
+      });    
   }
 
   elegirUsuario(){
     let dni_usuario = parseInt(this.formaUsuario.get('dni_usuario')?.value)
     this.usuarioService.buscarXDni(dni_usuario)
       .subscribe({
-        next: (resultado) => {
+        next: (resultado) => {          
+          this.dataCiudadano = {};
           this.dataUsuario = resultado;
-          this.dataService.usuarioLogin = this.dataUsuario;
+          this.dataAdministrador = "";
+          globalConstants.ciudadanoLogin = {};
+          globalConstants.usuarioLogin = this.dataUsuario;
+          globalConstants.isAdministrador = false;
         }
-      });
-    
+      });    
   }
-  //FIN ACCEDER A DATA SERVICE
+
+  elegirAdministrador(){    
+    this.dataCiudadano = {};
+    this.dataUsuario = {};
+    this.dataAdministrador = "Administrador";
+    globalConstants.ciudadanoLogin = {};
+    globalConstants.usuarioLogin = {};
+    globalConstants.isAdministrador = true;
+  }
+  //FIN ACCEDER A GLOBAL CONSTANTS
 
 }

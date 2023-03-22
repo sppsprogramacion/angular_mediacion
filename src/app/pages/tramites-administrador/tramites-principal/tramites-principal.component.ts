@@ -7,6 +7,9 @@ import { DataService } from 'src/app/service/data.service';
 import { TramiteModel } from '../../../models/tramite.model';
 import { TramitesService } from '../../../service/tramites.service';
 import { TotalesTramitesModel } from '../../../models/totales_tramites.model';
+import { globalConstants } from '../../../common/global-constants';
+import { UsuariosTramiteService } from '../../../service/usuarios-tramite.service';
+import { UsuarioTramiteModel } from '../../../models/usuario_tramite.model';
 
 @Component({
   selector: 'app-tramites-principal',
@@ -28,25 +31,32 @@ export class TramitesPrincipalComponent implements OnInit {
 
   //LISTAS    
   listTramites: TramiteModel[]=[];
+  listUsuariosTramites: UsuarioTramiteModel[]=[];
   listDepartamentos: DepartamentoModel[]=[];
   listMunicipios: MunicipioModel[]= [];
   listSexo: SexoModel[]=[];
 
   constructor(
     private tramitesService: TramitesService,
+    private usuariosTramitesService: UsuariosTramiteService,
     public dataService: DataService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.listarTramites();
+    if (globalConstants.isAdministrador) this.listarTramitesAdministrador();
+
+    if (globalConstants.ciudadanoLogin) this.listarTramitesCiudadano();
+    
+    if (globalConstants.usuarioLogin) this.listTramites = [];
+
     this.contarTramitesXEstado();
     
   }
 
 
-  //LISTADO DE TRAMITES
-  listarTramites(){    
+  //LISTADO DE TRAMITES ADMINISTRADOR
+  listarTramitesAdministrador(){    
     this.tramitesService.listarTramitesTodos().
         subscribe(respuesta => {
         this.listTramites= respuesta[0];
@@ -56,6 +66,31 @@ export class TramitesPrincipalComponent implements OnInit {
     });
   }
   //FIN LISTADO DE TRAMITES............................
+
+  //LISTADO DE TRANITES USUARIO
+  listarTramitesUsuario(){
+    let id_usuario: number = 0;
+    id_usuario = globalConstants.usuarioLogin.id_usuario;
+
+    this.usuariosTramitesService.listarTramitesAsignadosXUsuario(id_usuario).
+        subscribe(respuesta => {
+        this.listUsuariosTramites= respuesta[0];
+        this.loading = false;  
+    
+    });
+  }
+  //FIN LISTADO DE TRAMITES USUARIO.......................................................
+
+  //LISTADO DE TRAMITES CIUDADANOS
+  listarTramitesCiudadano(){    
+    this.tramitesService.listarTramitesTodos().
+        subscribe(respuesta => {
+        this.listTramites= respuesta[0];
+        this.loading = false;  
+    
+    });
+  }
+  //FIN LISTADO DE TRAMITES CIUDADANOS.......................................................
 
   //CONTAR TRAMITES
   contarTramitesXEstado(){    

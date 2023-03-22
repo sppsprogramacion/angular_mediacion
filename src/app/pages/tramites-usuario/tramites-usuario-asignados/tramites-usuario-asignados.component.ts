@@ -36,7 +36,7 @@ export class TramitesUsuarioAsignadosComponent implements OnInit {
     this.listarTramites();
   }
 
-  //LISTADO DE CIUDADANOS
+  //LISTADO DE TRANITES USUARIO
   listarTramites(){
     let id_usuario: number = 0;
     if (this.dataUsuarioLogin) id_usuario = this.dataUsuarioLogin.id_usuario;
@@ -49,6 +49,6 @@ export class TramitesUsuarioAsignadosComponent implements OnInit {
     
     });
   }
-  //FIN LISTADO DE CIUDADANOS.......................................................
+  //FIN LISTADO DE TRAMITES USUARIO.......................................................
 
 }
