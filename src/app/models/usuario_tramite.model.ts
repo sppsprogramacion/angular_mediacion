@@ -8,7 +8,7 @@ export class UsuarioTramiteModel{
         public id_usuario_tramite?: number,
         public tramite_numero?: number,
         public tramite?: TramiteModel,
-        public dni_usuario?: number,
+        public usuario_id?: number,
         public usuario?: UsuarioModel,
         public detalles?: string,
         public funcion_tramite_id?: number,

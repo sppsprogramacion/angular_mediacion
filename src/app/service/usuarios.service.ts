@@ -18,7 +18,10 @@ export class UsuariosService {
     this.usuario={...data};
     return this.http.post(`${base_url}/usuarios`, this.usuario);
   }
-  
+  buscarXDni(dni: number){
+    return this.http.get<UsuarioModel>(`${base_url}/usuarios/buscar-xdni?dni=${dni}`)
+  }
+
   listarUsuariosTodos(){
     return this.http.get<[usuario:UsuarioModel[], total: number]>(`${base_url}/usuarios`)
   }

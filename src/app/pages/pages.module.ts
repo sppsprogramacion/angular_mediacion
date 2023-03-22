@@ -39,6 +39,7 @@ import { MessagesModule } from 'primeng/messages';
 import {CardModule} from 'primeng/card';
 import { CategoriaAdministrarComponent } from './categorias/categoria-administrar/categoria-administrar.component';
 import { CategoriasListaComponent } from './categorias/categorias-lista/categorias-lista.component';
+import { CiudadanoUsuarioComponent } from './ciudadano-usuario/ciudadano-usuario.component';
 
 
 @NgModule({
@@ -86,7 +87,8 @@ import { CategoriasListaComponent } from './categorias/categorias-lista/categori
     CentroAdministrarComponent,
     CentrosMediacionListaComponent,
     CategoriaAdministrarComponent,
-    CategoriasListaComponent
+    CategoriasListaComponent,
+    CiudadanoUsuarioComponent
     
   ],
   

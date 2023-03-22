@@ -48,8 +48,8 @@ export class TramitesCiudadanoPrincipalComponent implements OnInit {
         this.loading = false;  
     
     });
-}
-//FIN LISTADO DE CIUDADANOS....................................................... 
+  }
+  //FIN LISTADO DE CIUDADANOS....................................................... 
 
 //ABRIR NUEVO TRAMITE
 abrirNuevoTramite(){

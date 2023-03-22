@@ -52,7 +52,7 @@ export class TramitesAdministrarComponent implements OnInit {
     //FORMULARIO 
     this.formaMediadorAsignado = this.fb.group({
       //tramite_numero: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-      dni_usuario: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      usuario_id: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       detalles: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(200)]],      
       funcion_tramite_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]]       
     
@@ -87,7 +87,7 @@ export class TramitesAdministrarComponent implements OnInit {
 
     dataMediadorAsignado = {
       tramite_numero: this.dataTramite.numero_tramite,
-      dni_usuario: parseInt(this.formaMediadorAsignado.get('dni_usuario')?.value),
+      usuario_id: parseInt(this.formaMediadorAsignado.get('usuario_id')?.value),
       detalles: this.formaMediadorAsignado.get('detalles')?.value,
       funcion_tramite_id: parseInt(this.formaMediadorAsignado.get('funcion_tramite_id')?.value),             
     };
@@ -95,14 +95,15 @@ export class TramitesAdministrarComponent implements OnInit {
     
     //GUARDAR NUEVO USUARIO-TRAMITE
     this.usuarioTramiteService.guardarUsuarioTramite(dataMediadorAsignado)
-        .subscribe(resultado => {
-            let usuarioTramiteRes: UsuarioTramiteModel = resultado;
-            Swal.fire('Exito',`La asignacion de mediador se realizo con exito`,"success");
+      .subscribe({
+        next: (resultado) => {
+          let usuarioTramiteRes: UsuarioTramiteModel = resultado;
+          Swal.fire('Exito',`La asignacion de mediador se realizo con exito`,"success");
         },
-        (error) => {
-            Swal.fire('Error',`Error al realizar la asignacion: ${error.error.message}`,"error") 
+        error: (err) => {
+          Swal.fire('Error',`Error al realizar la asignacion: ${err.error.message}`,"error") 
         }
-    );         
+      });         
     //FIN GUARDAR NUEVO USUARIO-TRAMITE
 
   }    
@@ -117,8 +118,8 @@ export class TramitesAdministrarComponent implements OnInit {
         this.loadingMediadores = false;  
         this.elementosUsuarios = this.listUsuarios.map(usuario => {
           return {
-            clave: usuario.dni,
-            value: usuario.apellido + " " + usuario.nombre + " (" + usuario.sexo.sexo + ")"
+            clave: usuario.id_usuario,
+            value: usuario.apellido + " " + usuario.nombre + " (" + usuario.dni + ")"
            }
         });
     

@@ -52,6 +52,7 @@ import { CentroAdministrarComponent } from './pages/centros-mediacion/centro-adm
 import { CentrosMediacionListaComponent } from './pages/centros-mediacion/centros-lista/centros-mediacion-lista.component';
 import { CategoriasListaComponent } from './pages/categorias/categorias-lista/categorias-lista.component';
 import { CategoriaAdministrarComponent } from './pages/categorias/categoria-administrar/categoria-administrar.component';
+import { CiudadanoUsuarioComponent } from './pages/ciudadano-usuario/ciudadano-usuario.component';
 
 @NgModule({
     imports: [
@@ -65,6 +66,7 @@ import { CategoriaAdministrarComponent } from './pages/categorias/categoria-admi
                     {path: 'admin/categoria/administrar', component: CategoriaAdministrarComponent},
                     {path: 'admin/ciudadanos/lista', component: CiudadanosListaComponent},
                     {path: 'admin/ciudadanos/administrar', component: CiudadanosAdministrarComponent},
+                    {path: 'admin/ciudadanos-usuarios/administrar', component: CiudadanoUsuarioComponent},
                     {path: 'admin/centro-mediacion/lista', component: CentrosMediacionListaComponent},
                     {path: 'admin/centro-mediacion/administrar', component: CentroAdministrarComponent},
                     {path: 'admin/usuarios/administrar', component: UsuariosAdministrarComponent},

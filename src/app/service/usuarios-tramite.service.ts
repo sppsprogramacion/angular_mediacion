@@ -25,8 +25,8 @@ export class UsuariosTramiteService {
     return this.http.get<[tramite:UsuarioTramiteModel[], total: number]>(`${base_url}/usuarios-tramite`)
   }
 
-  listarTramitesAsignadosXUsuario(dni_usuariox: number){
-    return this.http.get<[tramite:UsuarioTramiteModel[], total: number]>(`${base_url}/usuarios-tramite/buscar-xdni-usuario?dni_usuario=${dni_usuariox}`)
+  listarTramitesAsignadosXUsuario(id_usuariox: number){
+    return this.http.get<[tramite:UsuarioTramiteModel[], total: number]>(`${base_url}/usuarios-tramite/buscar-xusuario?id_usuario=${id_usuariox}`)
   }
 
   

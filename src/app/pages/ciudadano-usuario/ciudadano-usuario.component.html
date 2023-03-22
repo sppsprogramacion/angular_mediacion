@@ -1,0 +1,86 @@
+<!-- Card Usuarios -->
+
+<div class="card p-fluid mb-0 mt-2">
+    <p-toolbar styleClass="mb-3 bg-cyan-500">
+        <h5 class="block text-white font-bold font-medium mb-1 ">
+           Seleccionar Ciudadano
+        </h5>
+    </p-toolbar>
+
+    <div class="col-12 border-bottom-1 surface-border">
+        <div class="grid">
+            <div class="col-12 lg:col-6 xl:col-6">
+                <span class="text font-bold font-medium text-1xl">Ciudadano Actual:<span class="text ml-2 font-medium"> {{dataCiudadano.apellido}} {{dataCiudadano.nombre}}</span></span>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-12 border-bottom-1 surface-border">
+
+        <div class="p-formgrid grid">
+            <!-- FORMULARIO TRAMITES -->
+            <div class="col-12">
+                <form [formGroup]="formaCiudadano">
+                    <div class="formgrid grid">
+                        <div class="field col-6">
+                            <label for="id_ciudadano" class="text font-medium">Seleccionar un Ciudadano</label>
+                            <p-dropdown id="id_ciudadano" [options]="elementosCiudadanos" filter="true" optionLabel="value" optionValue="clave" formControlName="dni_ciudadano" >
+                            </p-dropdown>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--  FIN FORMULARIO TRAMITES -->
+            <div class="col-12">
+                <button pButton pRipple type="button" label="Guardar" class="p-button-success mr-2 mb-2" (click)="elegirCiudadano()"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FIN Card Usuarios -->
+
+<!-- Card Usuarios -->
+
+<div class="card p-fluid mb-0 mt-2">
+    <p-toolbar styleClass="mb-3 bg-cyan-500">
+        <h5 class="block text-white font-bold font-medium mb-1 ">
+            Seleccionar Usuario
+        </h5>
+    </p-toolbar>
+
+    <div class="col-12 border-bottom-1 surface-border">
+        <div class="grid">
+            <div class="col-12 lg:col-6 xl:col-6">
+                <span class="text font-bold font-medium text-1xl">Usuario Actual:<span class="text ml-2 font-medium"> {{dataUsuario.apellido}} {{dataUsuario.nombre}}</span></span>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-12 border-bottom-1 surface-border">
+
+        <div class="p-formgrid grid">
+            <!-- FORMULARIO TRAMITES -->
+            <div class="col-12">
+                <form [formGroup]="formaUsuario">
+                    <div class="formgrid grid">
+                        <div class="field col-6">
+                            <label for="dni" class="text font-medium">Seleccionar un usuario</label>
+                            <p-dropdown id="dni" [options]="elementosUsuarios" filter="true" optionLabel="value" optionValue="clave" formControlName="dni_usuario" >
+                            </p-dropdown>
+
+                        </div>                        
+                    </div>
+                    
+                </form>
+            </div>
+            <!--  FIN FORMULARIO TRAMITES -->
+            <div class="col-12">
+                <button pButton pRipple type="button" label="Guardar" class="p-button-success mr-2 mb-2" (click)="elegirUsuario()"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FIN Card Usuarios -->

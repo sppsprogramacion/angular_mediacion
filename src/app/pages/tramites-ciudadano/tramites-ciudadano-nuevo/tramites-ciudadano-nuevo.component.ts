@@ -56,7 +56,7 @@ export class TramitesCiudadanoNuevoComponent implements OnInit {
 
     ){ 
       this.formaTramite = this.fb.group({
-        dni_ciudadano: [,[]],
+        ciudadano_id: [,[]],
         esta_asesorado: [false,[Validators.required]],
         objeto_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
         violencia_genero: [false,[Validators.required]],
@@ -121,7 +121,7 @@ export class TramitesCiudadanoNuevoComponent implements OnInit {
     let data:any;
     data ={
      dataTramite : {
-      dni_ciudadano: parseInt(this.formaTramite.get('dni_ciudadano')?.value),
+      ciudadano_id: parseInt(this.formaTramite.get('ciudadano_id')?.value),
       esta_asesorado: this.formaTramite.get('esta_asesorado')?.value,
       objeto_id: parseInt(this.formaTramite.get('objeto_id')?.value),
       violencia_genero: this.formaTramite.get('violencia_genero')?.value,
@@ -141,14 +141,23 @@ export class TramitesCiudadanoNuevoComponent implements OnInit {
     
     //GUARDAR NUEVO TRAMITE
     this.tramiteService.guardarTramite(data)
-        .subscribe(resultado => {
-            let tramiteRes: TramiteModel = resultado;
-            Swal.fire('Exito',`El registro se realizó con exito`,"success");
+      .subscribe({
+        next: (resultado) => {
+          let tramiteRes: TramiteModel = resultado;
+          Swal.fire('Exito',`El registro se realizó con exito`,"success");
         },
-        (error) => {
-            Swal.fire('Error',`Error al guardar el tramite: ${error.error.message}`,"error") 
+        error: (err) => {
+          Swal.fire('Error',`Error al guardar el tramite: ${err.error.message}`,"error")
         }
-    );         
+      });
+    //     .subscribe(resultado => {
+    //         let tramiteRes: TramiteModel = resultado;
+    //         Swal.fire('Exito',`El registro se realizó con exito`,"success");
+    //     },
+    //     (error) => {
+    //         Swal.fire('Error',`Error al guardar el tramite: ${error.error.message}`,"error") 
+    //     }
+    // );         
     //FIN GUARDAR NUEVO TRAMITE 
 
   }    

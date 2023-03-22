@@ -45,28 +45,24 @@ export class AppMenuComponent implements OnInit {
                 label: 'Ciudadanos admin',
                 items: [
                     {label: 'Ver ciudadanos', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/ciudadanos/lista']}
-                    
                 ]
             }, 
             {
                 label: 'Usuarios Admin',
                 items: [
-                    {label: 'Ver usuarios', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/usuarios/lista']}
-                                       
+                    {label: 'Ver usuarios', icon: 'pi pi-fw pi-user', routerLink: ['/admin/usuarios/lista']}
                 ]
             },
             {
                 label: 'Categorias',
                 items: [
-                    {label: 'Ver categorias', icon: 'pi pi-fw pi-building', routerLink: ['/admin/categoria/lista']}
-                    
+                    {label: 'Ver categorias', icon: 'pi pi-fw pi-star', routerLink: ['/admin/categoria/lista']}
                 ]
             }, 
             {
                 label: 'Centros Mediacion admin',
                 items: [
                     {label: 'Ver centros de mediacion', icon: 'pi pi-fw pi-building', routerLink: ['/admin/centro-mediacion/lista']}
-                    
                 ]
             },   
             {
@@ -76,7 +72,6 @@ export class AppMenuComponent implements OnInit {
                     {label: 'Tramites nuevos', icon: 'pi pi-fw pi-bookmark', routerLink: ['/ciudadano/tramites/nuevoslis']},
                     {label: 'Tramites con mediador', icon: 'pi pi-fw pi-send', routerLink: ['/ciudadano/tramites/asignados']},
                     {label: 'Tramites finalizados', icon: 'pi pi-fw pi-check-square', routerLink: ['/ciudadano/tramites/finalizados']}
-                    
                 ]
             },
             {
@@ -84,7 +79,12 @@ export class AppMenuComponent implements OnInit {
                 items: [
                     {label: 'Tramites asignados', icon: 'pi pi-fw pi-send', routerLink: ['/usuario/tramites/asignados']},
                     {label: 'Tramites finalizados', icon: 'pi pi-fw pi-check-square', routerLink: ['/usuario/tramites/finalizados']}
-                    
+                ]
+            },
+            {
+                label: 'Seleccionar usuario/ciudadano',
+                items: [
+                    {label: 'Seleccionar', icon: 'pi pi-fw pi-users', routerLink: ['/admin/ciudadanos-usuarios/administrar']},
                 ]
             },
             

@@ -29,19 +29,7 @@ import { globalConstants } from './common/global-constants';
     ]
 })
 export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
-    //temporal
-    ciudadano: CiudadanoModel=new CiudadanoModel;
-    listCiudadanos: CiudadanoModel[]=[];
-    listUsuarios: UsuarioModel[]=[];
-
-
-    //FORMULARIOS
-    formaCiudadano: FormGroup;
-    formaUsuario: FormGroup;
-
-    //fin temporal
-
-
+    
     public menuInactiveDesktop: boolean;
 
     public menuActiveMobile: boolean;
@@ -73,36 +61,13 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
     subscription: Subscription;
     
     constructor(public renderer: Renderer2, public app: AppComponent, public configService: ConfigService,
-        private ciudadanoService: CiudadanosService,
-        private usuarioService: UsuariosService,
-        private fb: FormBuilder
-        ) { 
-
-            //FORMULARIO CIUDADANOE    
-            this.formaCiudadano = this.fb.group({
-                dni_ciudadano: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]]               
-               
-            });
-            //FIN FORMULARIO CIUDADANO
-
-            //FORMULARIO CIUDADANOE    
-            this.formaUsuario = this.fb.group({
-                dni_usuario: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]]               
-               
-            });
-            //FIN FORMULARIO CIUDADANO
-        }
+        
+    ) { }
 
     ngOnInit() {
         this.config = this.configService.config;
         this.subscription = this.configService.configUpdate$.subscribe(config => this.config = config);
 
-        //temporal
-        // this.listarCiudadanos();
-        // this.listarUsuarios();
-
-        console.log("lista ciudadanos menu", this.listCiudadanos);
-        console.log("lista usuarios menu", this.listUsuarios);
     }
 
     ngAfterViewInit() {
@@ -226,30 +191,5 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
 
-    //TEMPORAL
-    //CARGA DE LISTADOS DROP
-    async listarCiudadanos(){    
-        await this.ciudadanoService.listarCiudadanosTodos().
-            subscribe(respuesta => {
-            this.listCiudadanos= respuesta[0];
-        });
-    }
-
-    listarUsuarios(){    
-        this.ciudadanoService.listarCiudadanosTodos().
-            subscribe(respuesta => {
-            this.listCiudadanos= respuesta[0];
-        });
-    }
-
-    guardarCiudadano(){
-        //TEMPORAL BUSQUEDA DEL CIUDADANO
-        this.ciudadanoService.buscarXDni(this.formaCiudadano.get('dni_ciudadano')?.value).
-            subscribe(respuesta => {
-            globalConstants.ciudadano = respuesta[0];
-            
-        
-        });
-        //FIN TEMPORAL BUSQUEDA DEL CIUDADANO
-    }
+    
 }

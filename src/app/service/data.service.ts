@@ -3,13 +3,15 @@ import { Component, Injectable } from '@angular/core';
 import { TramiteModel } from '../models/tramite.model';
 import { UsuarioModel } from '../models/usuario.model';
 import { CentroMediacionModel } from '../models/centro_mediacion.model';
+import { CiudadanoModel } from '../models/ciudadano.model';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-
+  ciudadanoLogin: CiudadanoModel = {};
+  usuarioLogin: UsuarioModel = {};
   tramiteData: TramiteModel = {};
   usuarioData: UsuarioModel ={};
   centroMediacionData: CentroMediacionModel= {};
