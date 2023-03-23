@@ -24,7 +24,7 @@ export class TramitesNuevoslisComponent implements OnInit {
   tramiteDialog: boolean;
   nuevoTramite: boolean;
   submitted: boolean;
-  tituloPagina: string ="Usuario: Administrador"
+  tituloPagina: string ="Usuario: Administrador";
 
   //LISTAS    
   listTramites: TramiteModel[]=[];
@@ -50,13 +50,13 @@ export class TramitesNuevoslisComponent implements OnInit {
 
     if (globalConstants.ciudadanoLogin) {
       console.log("ciudadano", globalConstants.ciudadanoLogin);
-      this.tituloPagina ="Ciudadano: " + globalConstants.ciudadanoLogin.apellido + " " + globalConstants.ciudadanoLogin.nombre
+      this.tituloPagina ="Ciudadano: " + globalConstants.ciudadanoLogin.apellido + " " + globalConstants.ciudadanoLogin.nombre;
       this.listarTramitesCiudadano();
     }
     
     if (globalConstants.usuarioLogin) {
       console.log("usuario", globalConstants.usuarioLogin);
-      this.tituloPagina ="Usuario: " + globalConstants.usuarioLogin.apellido + " " + globalConstants.usuarioLogin.nombre
+      this.tituloPagina ="Usuario: " + globalConstants.usuarioLogin.apellido + " " + globalConstants.usuarioLogin.nombre;
       this.listTramites = [];
       this.loading=false;
     }
@@ -103,7 +103,7 @@ export class TramitesNuevoslisComponent implements OnInit {
 
  //ABRIR NUEVO TRAMITE
   abrirNuevoTramite(){
-    this.router.navigateByUrl("ciudadano/tramites/nuevo");
+    this.router.navigateByUrl("admin/tramites/nuevo");
   }
   //FIN ABRIR NUEVO TRAMITE
 

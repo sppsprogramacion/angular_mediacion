@@ -28,6 +28,7 @@ export class TramitesPrincipalComponent implements OnInit {
   urlTramite: string = 'tramites/administrar';
   totalTramite: number= 0;
   totalesTramites: TotalesTramitesModel= {};
+  tituloPagina: string ="Usuario: Administrador"
 
   //LISTAS    
   listTramites: TramiteModel[]=[];
@@ -44,14 +45,22 @@ export class TramitesPrincipalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (globalConstants.isAdministrador) this.listarTramitesAdministrador();
+    if (globalConstants.isAdministrador) {
+      this.tituloPagina ="Usuario: Administrador";
+      this.listarTramitesAdministrador();
+    }
 
-    if (globalConstants.ciudadanoLogin) this.listarTramitesCiudadano();
+    if (globalConstants.ciudadanoLogin) {
+      this.tituloPagina ="Ciudadano: " + globalConstants.ciudadanoLogin.apellido + " " + globalConstants.ciudadanoLogin.nombre;
+      this.listTramites = [];
+      this.loading = false;
+      //this.listarTramitesCiudadano();
+    }
     
     if (globalConstants.usuarioLogin) {
-      
+      this.tituloPagina ="Usuario: " + globalConstants.usuarioLogin.apellido + " " + globalConstants.usuarioLogin.nombre;
       this.listTramites = [];
-      this.loading = false
+      this.loading = false;
     }
 
     this.contarTramitesXEstado();

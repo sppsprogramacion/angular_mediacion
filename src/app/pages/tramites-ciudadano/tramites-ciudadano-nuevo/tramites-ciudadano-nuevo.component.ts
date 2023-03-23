@@ -90,13 +90,6 @@ export class TramitesCiudadanoNuevoComponent implements OnInit {
     console.log("sino", this.listSiNo);
     this.listarCiudadanos();
   }
-
-  // ngOnDestroy(): void {
-  //   if(this.subscription){
-  //     this.subscription.unsubscribe();
-  //   }
-  // }
-
  
 
   //GUARDAR Tramite  
@@ -150,14 +143,7 @@ export class TramitesCiudadanoNuevoComponent implements OnInit {
           Swal.fire('Error',`Error al guardar el tramite: ${err.error.message}`,"error")
         }
       });
-    //     .subscribe(resultado => {
-    //         let tramiteRes: TramiteModel = resultado;
-    //         Swal.fire('Exito',`El registro se realizó con exito`,"success");
-    //     },
-    //     (error) => {
-    //         Swal.fire('Error',`Error al guardar el tramite: ${error.error.message}`,"error") 
-    //     }
-    // );         
+    
     //FIN GUARDAR NUEVO TRAMITE 
 
   }    

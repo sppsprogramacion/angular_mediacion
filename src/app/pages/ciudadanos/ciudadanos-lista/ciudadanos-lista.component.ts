@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { DataService } from 'src/app/service/data.service';
 import { CiudadanoModel } from '../../../models/ciudadano.model';
 import { DepartamentoModel } from '../../../models/departamento.model';
 import { MunicipioModel } from '../../../models/municipio.model';
@@ -27,7 +29,9 @@ export class CiudadanosListaComponent implements OnInit {
   listSexo: SexoModel[]=[];
 
   constructor(
-    private ciudadanosService: CiudadanosService
+    private ciudadanosService: CiudadanosService,
+    private readonly dataService: DataService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -47,5 +51,12 @@ export class CiudadanosListaComponent implements OnInit {
     });
   }
   //FIN LISTADO DE CIUDADANOS....................................................... 
+
+  //ACCEDER A ADMINSTRAR USUARIO
+  administrarCiudadano(data: CiudadanoModel){
+    this.dataService.ciudadanoData = data;
+    this.router.navigateByUrl("admin/ciudadanos/administrar");
+  }
+  //FIN ACCEDER A ADMINSTRAR USUARIO
 
 }

@@ -260,12 +260,12 @@ export class UsuariosListaComponent implements OnInit {
   } 
   //FIN LIMPIAR FILTROS....................................................................................  
 
-  //ACCEDER A DATA SERVICE
+  //ACCEDER A ADMINSTRAR USUARIO
   administrarUsuario(data: UsuarioModel){
     this.dataService.usuarioData = data;
     this.router.navigateByUrl("admin/usuarios/administrar");
   }
-  //FIN ACCEDER A DATA SERVICE
+  //FIN ACCEDER A ADMINSTRAR USUARIO
 
 }
 

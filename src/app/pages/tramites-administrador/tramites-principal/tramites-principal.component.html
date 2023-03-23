@@ -63,7 +63,7 @@
     <div class="col-12">
         <div class="card">
 
-            <h5>Tramites</h5>
+            <h5>Tramites<span class="text-cyan-500"> -> {{tituloPagina}}</span></h5>
 
             <!-- TABLA DE TRAMITES -->
             <p-table #dt1 [value]="listTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['numero_tramite','ciudadano.apellido','ciudadano.nombre','dni_ciudadano','objeto.objeto','expediente']"
