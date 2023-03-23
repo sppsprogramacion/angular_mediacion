@@ -67,8 +67,7 @@ export class AppMenuComponent implements OnInit {
             },   
             {
                 label: 'Ciudadanos opciones',
-                items: [
-                    {label: 'Tramites principal', icon: 'pi pi-fw pi-clone', routerLink: ['/ciudadano/tramites/principal']},
+                items: [                    
                     {label: 'Tramites nuevos', icon: 'pi pi-fw pi-bookmark', routerLink: ['/ciudadano/tramites/nuevoslis']},
                     {label: 'Tramites con mediador', icon: 'pi pi-fw pi-send', routerLink: ['/ciudadano/tramites/asignados']},
                     {label: 'Tramites finalizados', icon: 'pi pi-fw pi-check-square', routerLink: ['/ciudadano/tramites/finalizados']}

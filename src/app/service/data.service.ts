@@ -10,8 +10,7 @@ import { CiudadanoModel } from '../models/ciudadano.model';
   providedIn: 'root'
 })
 export class DataService {
-  ciudadanoLogin: CiudadanoModel = {};
-  usuarioLogin: UsuarioModel = {};
+  ciudadanoData: CiudadanoModel = {};
   tramiteData: TramiteModel = {};
   usuarioData: UsuarioModel ={};
   centroMediacionData: CentroMediacionModel= {};
@@ -24,6 +23,10 @@ export class DataService {
 
   getUsuarioData(data: UsuarioModel){
     this.usuarioData = data;
+  }
+
+  getCiudadanoData(data: UsuarioModel){
+    this.ciudadanoData = data;
   }
 
   getCentroMediacionData(data: CentroMediacionModel){

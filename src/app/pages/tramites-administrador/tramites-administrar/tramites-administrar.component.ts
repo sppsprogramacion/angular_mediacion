@@ -48,6 +48,7 @@ export class TramitesAdministrarComponent implements OnInit {
   ) { 
     //OBTENER EL TRAMITE
     this.dataTramite= dataService.tramiteData;
+    console.log("tramite recibido", this.dataTramite);
 
     //FORMULARIO 
     this.formaMediadorAsignado = this.fb.group({

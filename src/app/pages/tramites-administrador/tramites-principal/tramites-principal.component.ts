@@ -48,7 +48,11 @@ export class TramitesPrincipalComponent implements OnInit {
 
     if (globalConstants.ciudadanoLogin) this.listarTramitesCiudadano();
     
-    if (globalConstants.usuarioLogin) this.listTramites = [];
+    if (globalConstants.usuarioLogin) {
+      
+      this.listTramites = [];
+      this.loading = false
+    }
 
     this.contarTramitesXEstado();
     

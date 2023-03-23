@@ -29,7 +29,7 @@ export class TramitesUsuarioAsignadosComponent implements OnInit {
     private usuariosTramitesService: UsuariosTramiteService,
     private dataService: DataService
     ) {
-      this.dataUsuarioLogin = this.dataService.usuarioLogin;
+      this.dataUsuarioLogin = this.dataService.usuarioData;
     }
 
   ngOnInit(): void {
@@ -39,6 +39,7 @@ export class TramitesUsuarioAsignadosComponent implements OnInit {
   //LISTADO DE TRANITES USUARIO
   listarTramites(){
     let id_usuario: number = 0;
+    //revisar id_usuario = this.dataUsuarioLogin.id_usuario;
     if (this.dataUsuarioLogin) id_usuario = this.dataUsuarioLogin.id_usuario;
 
     this.usuariosTramitesService.listarTramitesAsignadosXUsuario(id_usuario).

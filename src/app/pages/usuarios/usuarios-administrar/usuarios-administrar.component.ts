@@ -35,11 +35,11 @@ export class UsuariosAdministrarComponent implements OnInit {
 
   //LISTADO DE TRAMITES ASIGNADOS
   listarTramitesAsignados(){    
-    this.usuarioTramiteService.listarTramitesAsignadosXUsuario(this.dataUsuario.dni).
+    this.usuarioTramiteService.listarTramitesAsignadosXUsuario(this.dataUsuario.id_usuario).
         subscribe(respuesta => {
         this.listTramitesAsignados= respuesta[0];
         this.loading = false;  
-    
+        console.log("tramites asignados", this.listTramitesAsignados);
     });
   }
   //FIN LISTADO DE TRAMITES ASIGNADOS.......................................................

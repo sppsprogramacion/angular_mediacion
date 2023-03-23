@@ -7,6 +7,7 @@ import { UsuariosService } from 'src/app/service/usuarios.service';
 import { CiudadanoModel } from '../../models/ciudadano.model';
 import { CiudadanosService } from '../../service/ciudadanos.service';
 import { globalConstants } from '../../common/global-constants';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ciudadano-usuario',
@@ -105,9 +106,11 @@ export class CiudadanoUsuarioComponent implements OnInit {
           this.dataCiudadano = resultado;   
           this.dataUsuario = {};       
           this.dataAdministrador = "";
+          this.dataService.ciudadanoData = this.dataCiudadano;
           globalConstants.ciudadanoLogin = this.dataCiudadano;          
-          globalConstants.usuarioLogin = {};
+          globalConstants.usuarioLogin = null;
           globalConstants.isAdministrador = false;
+          Swal.fire('Exito',`Ciudadano seleccionado`,"success");
         }
       });    
   }
@@ -120,9 +123,10 @@ export class CiudadanoUsuarioComponent implements OnInit {
           this.dataCiudadano = {};
           this.dataUsuario = resultado;
           this.dataAdministrador = "";
-          globalConstants.ciudadanoLogin = {};
+          globalConstants.ciudadanoLogin = null;
           globalConstants.usuarioLogin = this.dataUsuario;
           globalConstants.isAdministrador = false;
+          Swal.fire('Exito',`Usuario seleccionado`,"success");
         }
       });    
   }
@@ -131,9 +135,10 @@ export class CiudadanoUsuarioComponent implements OnInit {
     this.dataCiudadano = {};
     this.dataUsuario = {};
     this.dataAdministrador = "Administrador";
-    globalConstants.ciudadanoLogin = {};
-    globalConstants.usuarioLogin = {};
+    globalConstants.ciudadanoLogin = null;
+    globalConstants.usuarioLogin = null;
     globalConstants.isAdministrador = true;
+    Swal.fire('Exito',`Administrador seleccionado`,"success");
   }
   //FIN ACCEDER A GLOBAL CONSTANTS
 

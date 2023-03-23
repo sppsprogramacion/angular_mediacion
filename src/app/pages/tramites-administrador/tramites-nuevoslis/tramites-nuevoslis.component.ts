@@ -24,6 +24,7 @@ export class TramitesNuevoslisComponent implements OnInit {
   tramiteDialog: boolean;
   nuevoTramite: boolean;
   submitted: boolean;
+  tituloPagina: string ="Usuario: Administrador"
 
   //LISTAS    
   listTramites: TramiteModel[]=[];
@@ -40,11 +41,25 @@ export class TramitesNuevoslisComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (globalConstants.isAdministrador) this.listarTramitesAdministrador();
-
-    if (globalConstants.ciudadanoLogin) this.listarTramitesCiudadano();
     
-    if (globalConstants.usuarioLogin) this.listTramites = [];
+    if (globalConstants.isAdministrador) {
+      console.log("administrador ", globalConstants.isAdministrador);
+      this.tituloPagina ="Usuario: Administrador"
+      this.listarTramitesAdministrador();
+    }
+
+    if (globalConstants.ciudadanoLogin) {
+      console.log("ciudadano", globalConstants.ciudadanoLogin);
+      this.tituloPagina ="Ciudadano: " + globalConstants.ciudadanoLogin.apellido + " " + globalConstants.ciudadanoLogin.nombre
+      this.listarTramitesCiudadano();
+    }
+    
+    if (globalConstants.usuarioLogin) {
+      console.log("usuario", globalConstants.usuarioLogin);
+      this.tituloPagina ="Usuario: " + globalConstants.usuarioLogin.apellido + " " + globalConstants.usuarioLogin.nombre
+      this.listTramites = [];
+      this.loading=false;
+    }
     
   }
 
@@ -86,7 +101,11 @@ export class TramitesNuevoslisComponent implements OnInit {
   }
   //FIN LISTADO DE TRAMITES USUARIO.......................................................
 
- 
+ //ABRIR NUEVO TRAMITE
+  abrirNuevoTramite(){
+    this.router.navigateByUrl("ciudadano/tramites/nuevo");
+  }
+  //FIN ABRIR NUEVO TRAMITE
 
   //ACCEDER A DATA SERVICE
   administrarTramite(data: TramiteModel){
