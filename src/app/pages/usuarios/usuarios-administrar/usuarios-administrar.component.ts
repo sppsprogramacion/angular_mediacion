@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/service/data.service';
-import { UsuarioModel } from '../../../models/usuario.model';
 import { UsuariosTramiteService } from '../../../service/usuarios-tramite.service';
-import { UsuarioTramiteModel } from '../../../models/usuario_tramite.model';
+import { UsuarioModel } from 'src/app/models/usuario.model';
+import { UsuarioTramiteModel } from 'src/app/models/usuario_tramite.model';
 
 @Component({
   selector: 'app-usuarios-administrar',
