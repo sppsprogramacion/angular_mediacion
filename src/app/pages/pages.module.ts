@@ -25,7 +25,7 @@ import { TramitesUsuarioAsignadosComponent } from './tramites-usuario/tramites-u
 import { TramitesUsuarioFinalizadosComponent } from './tramites-usuario/tramites-usuario-finalizados/tramites-usuario-finalizados.component';
 import { TramitesAdministrarComponent } from './tramites-administrador/tramites-administrar/tramites-administrar.component';
 import { UsuariosListaComponent } from './usuarios/usuarios-lista/usuarios-lista.component';
-import { UsuariosAdministrarComponent } from './usuarios/usuarios-administrar/usuarios-administrar.component';
+//import { UsuariosAdministrarComponent } from './usuarios/usuarios-administrar/usuarios-administrar.component';
 import { CalendarModule } from 'primeng/calendar';
 import { PasswordModule } from 'primeng/password';
 import { BrowserModule } from '@angular/platform-browser';
@@ -40,6 +40,7 @@ import {CardModule} from 'primeng/card';
 import { CategoriaAdministrarComponent } from './categorias/categoria-administrar/categoria-administrar.component';
 import { CategoriasListaComponent } from './categorias/categorias-lista/categorias-lista.component';
 import { CiudadanoUsuarioComponent } from './ciudadano-usuario/ciudadano-usuario.component';
+import { UsuariosAdministrarComponent } from './usuarios/usuarios-administrar/usuarios-administrar.component';
 
 
 @NgModule({
