@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  URL_BASE: "https://api-mediacion-dev.onrender.com"
+  URL_BASE: "https://mediacion-api.onrender.com"
 };
