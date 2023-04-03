@@ -32,8 +32,8 @@ export class TramitesNuevoComponent implements OnInit {
   msgs: Message[] = []; 
 
   //listas  
-  listMunicipios: MunicipioModel[] = [];
-  listDepartamentos: DepartamentoModel[] = [];
+  listaMunicipios: MunicipioModel[] = [];
+  listaDepartamentos: DepartamentoModel[] = [];
   listObjetos: ObjetoModel[] = [];
   listSexo: SexoModel[] = [];
   listSiNo: any[] = [];
@@ -57,7 +57,12 @@ export class TramitesNuevoComponent implements OnInit {
   ) {
     this.formaTramite = this.fb.group({
       //ciudadano_id: [,[]],
-      esta_asesorado: [false,[Validators.required]],
+      esta_asesorado: [false,[Validators.requiredTrue]],
+      departamento_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      municipio_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      localidad_barrio: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+      calle_direccion: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],        
+      numero_dom: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       objeto_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       violencia_genero: [false,[Validators.required]],
       violencia_partes: [false,[Validators.required]],
@@ -68,11 +73,73 @@ export class TramitesNuevoComponent implements OnInit {
       pdf_ingresos: [false,[Validators.required]],
       pdf_negativa: [false,[Validators.required]],
       modalidad_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-      variante_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-      estado_tramite_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]]       
+      variante_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],     
     
     });
-   }
+  }
+
+  //MENSAJES DE VALIDACIONES
+  user_validation_messages = {
+    //datos tramite
+    'esta_asesorado': [
+      { type: 'requiredTrue', message: 'Debe estar asesorado por un abogado.' }
+    ],    
+    'departamento_id': [
+      { type: 'required', message: 'El departamento es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
+    ],
+    'municipio_id': [
+      { type: 'required', message: 'El municipio es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
+    ],
+    'localidad_barrio': [
+        { type: 'required', message: 'La localidad/barrio es requerido.' },
+        { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
+        { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
+    ],
+    'calle_direccion': [
+        { type: 'required', message: 'La calle/direccion es requerida' },
+        { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
+        { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
+    ],
+    'numero_dom': [
+      { type: 'required', message: 'El número de domicilio es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
+    ],
+    'objeto_id': [
+      { type: 'required', message: 'El objeto es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
+    ],
+    
+    'violencia_genero': [
+      { type: 'required', message: 'Debe especificar si existe violencia de genero.' },
+    ],
+    'violencia_partes': [
+      { type: 'required', message: 'Debe especificar si existe violencia entre las partes.' },
+    ], 
+    'existe_denuncia': [
+      { type: 'required', message: 'Debe especificar si existe denuncia.' },
+    ],  
+    'medida_cautelar': [
+      { type: 'required', message: 'Debe especificar si existe medida cautelar.' },
+    ],   
+    'modalidad_id': [
+      { type: 'required', message: 'La modalidad es requerida' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
+    ],
+    'variante_id': [
+      { type: 'required', message: 'La variante es requerida' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
+    ]
+    
+  }
+  //FIN MENSAJES DE VALIDACIONES...............................................................
+
+  //VALIDACIONES DE FORMULARIO
+  isValid(campo: string): boolean{     
+    
+    return this.formaTramite.get(campo)?.invalid && this.formaTramite.get(campo)?.touched;      
+  }
 
   ngOnInit(): void {
     
@@ -83,7 +150,7 @@ export class TramitesNuevoComponent implements OnInit {
     this.listObjetos = objetos;
     this.listSexo = sexo;
     this.listSiNo = opcionSiNo;
-    this.listDepartamentos = departamentos;
+    this.listaDepartamentos = departamentos;
     this.cargarMunicipios(1);
     
     console.log("sino", this.listSiNo);
@@ -115,6 +182,12 @@ export class TramitesNuevoComponent implements OnInit {
       //ciudadano_id: parseInt(this.formaTramite.get('ciudadano_id')?.value),
       ciudadano_id: this.ciudadanoData.id_ciudadano,
       esta_asesorado: this.formaTramite.get('esta_asesorado')?.value,
+      provincia_id: 18,
+      departamento_id: parseInt(this.formaTramite.get('departamento_id')?.value),
+      municipio_id: parseInt(this.formaTramite.get('municipio_id')?.value),
+      localidad_barrio: this.formaTramite.get('localidad_barrio')?.value,
+      calle_direccion: this.formaTramite.get('calle_direccion')?.value,
+      numero_dom: parseInt(this.formaTramite.get('numero_dom')?.value),
       objeto_id: parseInt(this.formaTramite.get('objeto_id')?.value),
       violencia_genero: this.formaTramite.get('violencia_genero')?.value,
       violencia_partes: this.formaTramite.get('violencia_genero')?.value,
@@ -148,15 +221,7 @@ export class TramitesNuevoComponent implements OnInit {
   }    
   //FIN GUARDAR CIUDADANO............................................................
 
-  isValid(campo: string): boolean{
-    // if (this.formaRegistro.get(campo).invalid && this.form_submitted) {
-    if (this.formaTramite.get(campo).invalid ) {
-      return true;
-    }else{
-      return false;
-    }
-  }
-
+  
   clavesValidation(): boolean{
     return ((this.formaTramite.get('clave1').value === this.formaTramite.get('clave2').value))?  false: true;
         
@@ -171,7 +236,7 @@ export class TramitesNuevoComponent implements OnInit {
   }
 
   cargarMunicipios(id_departamento: number){
-    this.listMunicipios=municipios.filter(municipio => {      
+    this.listaMunicipios=municipios.filter(municipio => {      
       return municipio.id_municipio == 1 || municipio.departamento_id == id_departamento;
     });    
   }
