@@ -1,9 +1,9 @@
 <div class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
     <div class="grid justify-content-center p-2 lg:p-0" style="min-width:80%">
-        <div class="col-12 mt-5 xl:mt-0 text-center">
-            <img src="assets/layout/images/logo_spps.jpeg" alt="Image" height="90" class="mb-3">
+        <div class="col-12 mt-5 xl:mt-0 text-center mt-4">
+            <img src="assets/imagenes/general/logo-gobierno-salta.png" alt="Image" height="120" class="mb-3">
         </div>
-        <div class="col-12 xl:col-6" style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
+        <div class="col-12 xl:col-6" style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--teal-800) 10%, rgba(33, 150, 243, 0) 30%);">
             <form [formGroup]="formaLogin" autocomplete="off">
                 <div class="h-full w-full m-0 py-7 px-4" style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
                     <div class="text-center mb-5">
@@ -11,35 +11,10 @@
                         <div class="text-900 text-3xl font-medium mb-3">Bienvenido</div>
                         <span class="text-600 font-medium">Login para continuar</span>
                     </div>
-
-                    <!-- <div class="field">
-                        <label for="name">Email</label>
-                        <input type="text" pInputText id="correo" formControlName="correo" />
-                        <small *ngIf="asuntoNotaNoValido" class="p-error">
-                            <div *ngFor="let validation of user_validation_messages.asunto" >
-                                <div  *ngIf="formaTramites.get('asunto')?.hasError(validation.type)">
-                                    {{validation.message}}
-                                </div>
-                            </div>
-                        </small>
-                    </div>
-
-                    <div class="field">
-                        <label for="name">Password</label>
-                        <input type="text" pInputText id="clave" formControlName="clave" />
-                        <small *ngIf="personaReferenciaNotaNoValido" class="p-error">
-                            <div *ngFor="let validation of user_validation_messages.persona_referencia" >
-                                <div  *ngIf="formaTramites.get('persona_referencia')?.hasError(validation.type)">
-                                    {{validation.message}}
-                                </div>
-                            </div>
-                        </small>
-                    </div> -->
-
                     <div class="w-full md:w-10 mx-auto">
                         <div>
                             <label for="dni" class="block text-900 text-xl font-medium mb-2">Usuario</label>
-                            <input id="dni" type="text" pInputText placeholder="Email" formControlName="dni" class="w-full mb-3" style="padding:1rem;">
+                            <input id="dni" type="text" pInputText placeholder="DNI" formControlName="dni" class="w-full mb-3" style="padding:1rem;">
                             <!-- <small *ngIf="true" class="p-error">
                                 <div *ngFor="let validation of user_validation_messages.usuario" >
                                     <div  *ngIf="loginForm.get('usuario')?.hasError(validation.type)">
@@ -50,7 +25,7 @@
                         </div>
                         <div class="mt-2">
                             <label for="password" class="block text-900 font-medium text-xl mb-2">Password</label>
-                            <p-password id="password" formControlName="password" placeholder="Password" [toggleMask]="true" styleClass="w-full mb-3"></p-password>
+                            <p-password id="password" formControlName="password" placeholder="Password" [toggleMask]="false" [feedback]="false" class="w-full mb-3"></p-password>
                             <!-- <small *ngIf="true" class="p-error">
                                 <div *ngFor="let validation of user_validation_messages.clave" >
                                     <div  *ngIf="loginForm.get('clave')?.hasError(validation.type)">
@@ -67,7 +42,8 @@
                             <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Forgot password?</a>
                         </div> -->
                         <div class="mt-4">
-                            <button pButton pRipple label="Sign In" class="w-full p-3 text-xl" (click)="submitFormLogin()"></button>
+                            <button pButton pRipple type="button" label="LOGIN" class="p-button-outlined p-button-info w-full mr-2 mb-2" (click)="submitFormLogin()"></button>
+                            <button pButton pRipple label="LOGIN" class="w-full p-3 text-xl" (click)="submitFormLogin()"></button>
                         </div>
                     </div>
                 </div>

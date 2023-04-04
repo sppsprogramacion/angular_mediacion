@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styles:[`
-    :host ::ng-deep .p-password input {
+    /* :host ::ng-deep .p-password input {
     width: 100%;
     padding:1rem;
     }
@@ -28,7 +28,7 @@ import { Router } from '@angular/router';
       transform:scale(1.6);
       margin-right: 1rem;
       color: var(--primary-color) !important;
-    }
+    } */
   `]
 })
 export class LoginComponent implements OnInit {
