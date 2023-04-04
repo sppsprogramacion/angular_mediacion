@@ -19,8 +19,11 @@ export class TramitesNuevoslisComponent implements OnInit {
 
   loading:boolean = true;
 
-  //VARIABLES TRAMITE    
+  //MODELOS
   tramite: TramiteModel;
+
+  //VARIABLES TRAMITE    
+  isCiudadano: boolean = false;
   tramiteDialog: boolean;
   nuevoTramite: boolean;
   submitted: boolean;
@@ -52,6 +55,7 @@ export class TramitesNuevoslisComponent implements OnInit {
       console.log("ciudadano", globalConstants.ciudadanoLogin);
       this.tituloPagina ="Ciudadano: " + globalConstants.ciudadanoLogin.apellido + " " + globalConstants.ciudadanoLogin.nombre;
       this.listarTramitesCiudadano();
+      this.isCiudadano= true;
     }
     
     if (globalConstants.usuarioLogin) {

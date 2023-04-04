@@ -29,5 +29,9 @@ export class CentrosMediacionService {
     return this.http.get<[centros:CentroMediacionModel[], total: number]>(`${base_url}/centros-mediacion`)
   }
 
+  listarCentroMediacionXDepartamento(id_departamento: number){
+    return this.http.get<[centros:CentroMediacionModel[], total: number]>(`${base_url}/centros-mediacion/buscar-xdepartamento?id_departamento=${id_departamento}`)
+  }
+
   
 }

@@ -8,6 +8,7 @@ import { VarianteModel } from './variante.model';
 import { EstadoTramiteModel } from './estado_tramite.model';
 import { CiudadanoModel } from './ciudadano.model';
 import { UsuarioTramiteModel } from './usuario_tramite.model';
+import { CentroMediacionModel } from './centro_mediacion.model';
 
 
 export class TramiteModel{
@@ -15,7 +16,18 @@ export class TramiteModel{
         public id_tramite?: number,
         public numero_tramite?: number,
         public ciudadano_id?: number,
-        public ciudadano?: CiudadanoModel,        
+        public ciudadano?: CiudadanoModel,   
+        public provincia_id?: number,
+        public provincia?: ProvinciaModel,
+        public departamento_id?: number,
+        public departamento?: DepartamentoModel,
+        public municipio_id?: number,
+        public municipio?: MunicipioModel,
+        public localidad_barrio?: string,
+        public calle_direccion?: string,
+        public numero_dom?: number,      
+        public centro_mediacion_id?: number,
+        public centro_mediacion?: CentroMediacionModel,
         public fecha_tramite?: Date,
         public es_expediente?: boolean,
         public expediente?: string,

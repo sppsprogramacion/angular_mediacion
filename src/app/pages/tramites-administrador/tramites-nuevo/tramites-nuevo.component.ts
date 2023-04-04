@@ -5,17 +5,20 @@ import { ConfirmationService, Message, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { AppConfig } from 'src/app/api/appconfig';
 import { departamentos, municipios, objetos, opcionSiNo, sexo } from 'src/app/common/data-mokeada';
+import { CentroMediacionModel } from 'src/app/models/centro_mediacion.model';
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
 import { MunicipioModel } from 'src/app/models/municipio.model';
 import { ObjetoModel } from 'src/app/models/objeto.model';
 import { SexoModel } from 'src/app/models/sexo.model';
 import { TramiteModel } from 'src/app/models/tramite.model';
+import { CentrosMediacionService } from 'src/app/service/centros-mediacion.service';
 import { CiudadanosService } from 'src/app/service/ciudadanos.service';
 import { DataService } from 'src/app/service/data.service';
 import { TramitesService } from 'src/app/service/tramites.service';
 import Swal from 'sweetalert2';
 import { globalConstants } from '../../../common/global-constants';
+import { ElementoModel } from 'src/app/models/elemento.model';
 
 @Component({
   selector: 'app-tramites-nuevo',
@@ -32,12 +35,15 @@ export class TramitesNuevoComponent implements OnInit {
   msgs: Message[] = []; 
 
   //listas  
+  listaCentrosMediacion: CentroMediacionModel[]=[];
   listaMunicipios: MunicipioModel[] = [];
   listaDepartamentos: DepartamentoModel[] = [];
   listObjetos: ObjetoModel[] = [];
   listSexo: SexoModel[] = [];
   listSiNo: any[] = [];
-  listCiudadano: CiudadanoModel[]=[];
+  listCiudadano: CiudadanoModel[]=[];  
+
+  elementosCiudadanos: ElementoModel[]=[];
 
   //variables tramite  
   ciudadanoData: CiudadanoModel;
@@ -51,6 +57,7 @@ export class TramitesNuevoComponent implements OnInit {
     private fb: FormBuilder,
     private readonly datePipe: DatePipe,
     private serviceMensajes: MessageService,
+    private centroMediacionService: CentrosMediacionService,
     private ciudadanoService: CiudadanosService,
     private tramiteService: TramitesService,
     public dataService: DataService,
@@ -58,8 +65,10 @@ export class TramitesNuevoComponent implements OnInit {
     this.formaTramite = this.fb.group({
       //ciudadano_id: [,[]],
       esta_asesorado: [false,[Validators.requiredTrue]],
-      departamento_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      departamento_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],      
       municipio_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      departamento_id_centro: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      centro_mediacion_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       localidad_barrio: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       calle_direccion: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],        
       numero_dom: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
@@ -188,6 +197,7 @@ export class TramitesNuevoComponent implements OnInit {
       localidad_barrio: this.formaTramite.get('localidad_barrio')?.value,
       calle_direccion: this.formaTramite.get('calle_direccion')?.value,
       numero_dom: parseInt(this.formaTramite.get('numero_dom')?.value),
+      centro_mediacion_id: parseInt(this.formaTramite.get('centro_mediacion_id')?.value),
       objeto_id: parseInt(this.formaTramite.get('objeto_id')?.value),
       violencia_genero: this.formaTramite.get('violencia_genero')?.value,
       violencia_partes: this.formaTramite.get('violencia_genero')?.value,
@@ -247,6 +257,24 @@ export class TramitesNuevoComponent implements OnInit {
         this.cargarMunicipios(parseInt(id.toString()));
         this.formaTramite.get('municipio_id')?.setValue(1);               
         this.formaTramite.get('municipio_id')?.markAsUntouched();
+        
+    }
+  }
+
+  cargarCentrosMediacion(id_departamento: number){
+    this.centroMediacionService.listarCentroMediacionXDepartamento(id_departamento).
+        subscribe(respuesta => {
+        this.listaCentrosMediacion= respuesta[0];
+    
+    });  
+  }
+
+  onChangeDepartamentoParaCentros(){
+    const id = this.formaTramite.get('departamento_id_centro')?.value;
+    if(id != null){               
+        this.cargarCentrosMediacion(parseInt(id.toString()));
+        this.formaTramite.get('centro_mediacion_id')?.setValue(1);               
+        this.formaTramite.get('centro_mediacion_id')?.markAsUntouched();
         
     }
   }
