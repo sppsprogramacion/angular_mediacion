@@ -21,6 +21,10 @@ export class UsuariosTramiteService {
     return this.http.post(`${base_url}/usuarios-tramite`, this.usuario_tramite);
   }
 
+  buscarByNumTramiteActivo(num_tramite: number){
+    return this.http.get<UsuarioTramiteModel>(`${base_url}/usuarios-tramite/buscar-xnumtramite-activo?numero_tramite=${num_tramite}`)
+  }
+
   listarTramitesAsignadosTodos(){
     return this.http.get<[tramite:UsuarioTramiteModel[], total: number]>(`${base_url}/usuarios-tramite`)
   }

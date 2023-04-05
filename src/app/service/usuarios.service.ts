@@ -25,4 +25,6 @@ export class UsuariosService {
   listarUsuariosTodos(){
     return this.http.get<[usuario:UsuarioModel[], total: number]>(`${base_url}/usuarios`)
   }
+
+  
 }

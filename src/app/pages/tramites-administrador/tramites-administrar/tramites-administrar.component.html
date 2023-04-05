@@ -42,6 +42,23 @@
 
         </div>
     </div>
+    <div class="col-12 border-bottom-1 surface-border">
+        <div class="grid">
+            <div class="col-12">
+                <span class="text font-medium text-1xl">Centro de Mediación:<span class="text ml-1 font-medium"> {{dataTramite.centro_mediacion?.centro_mediacion}}</span></span>
+            </div>
+            <div class="col-12 lg:col-6 xl:col-6">
+                <span class="text font-medium text-1xl">Departamento:<span class="text ml-1 font-medium"> {{dataTramite.centro_mediacion?.departamento.departamento}} </span></span>
+            </div>
+            <div class="col-12 lg:col-6 xl:col-6">
+                <span class="text font-medium text-1xl">Municipio:<span class="text ml-1 font-medium"> {{dataTramite.centro_mediacion?.municipio.municipio}} </span></span>
+            </div>
+            <div class="col-12">
+                <span class="text font-medium text-1xl">Dirección:<span class="text ml-1 font-medium"> Barrio: {{dataTramite.centro_mediacion?.localidad_barrio}} - Calle/Dirección: {{dataTramite.centro_mediacion?.calle_direccion}} - Número: {{dataTramite.centro_mediacion?.numero_dom}}</span></span>
+            </div>
+
+        </div>
+    </div>
 
 </div>
 <!-- FIN Card Tramite -->
@@ -58,7 +75,7 @@
     <div class="col-12 border-bottom-1 surface-border">
         <div class="grid">
             <div class="col-12 lg:col-6 xl:col-6">
-                <span class="text font-bold font-medium text-1xl">Mediador Actual:<span class="text ml-2 font-medium"> {{dataTramite.numero_tramite}} </span></span>
+                <span class="text font-bold font-medium text-1xl">Mediador Actual:<span class="text ml-2 font-medium"> {{dataUsuarioTramite.usuario?.apellido}} {{dataUsuarioTramite.usuario?.nombre}}</span></span>
             </div>
 
         </div>
@@ -71,9 +88,25 @@
                 <form [formGroup]="formaMediadorAsignado">
                     <div class="formgrid grid">
                         <div class="field col-6">
-                            <label for="dni" class="text font-medium">Seleccionar un usuario</label>
-                            <p-dropdown id="dni" [options]="elementosUsuarios" filter="true" optionLabel="value" optionValue="clave" formControlName="usuario_id" >
+                            <label for="departamento_id_centro">Departamento</label>
+                            <p-dropdown id="departamento_id_centro" [options]="listDepartamentos" optionLabel="departamento" optionValue="id_departamento" formControlName="departamento_id_centro" placeholder="Seleccionar..." (onChange)="onChangeDepartamentoParaCentros()">
                             </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <label for="centro_mediacion_id">Centro Mediacion</label>
+                            <p-dropdown id="centro_mediacion_id" [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" formControlName="centro_mediacion_id" placeholder="Seleccionar..." (onChange)="onChangeCentroMediacion()">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="formgrid grid">
+                        <div class="field col-6">
+                            <label for="usuario_id" class="text font-medium">Seleccionar un usuario</label>
+                            <p-dropdown id="usuario_id" [options]="elementosUsuariosCentro" optionLabel="value" optionValue="clave" formControlName="usuario_id" placeholder="Seleccionar..." >
+                            </p-dropdown>
+                            <!-- <p-dropdown id="dni" [options]="elementosUsuarios" filter="true" optionLabel="value" optionValue="clave" formControlName="usuario_id" >
+                            </p-dropdown> -->
 
                         </div>
                         <div class="field col-6">

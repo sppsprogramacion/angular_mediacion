@@ -11,17 +11,7 @@
         <div class="card">
 
             <h5>Ciudadanos</h5>
-            <p-toolbar styleClass="mb-4">
-                <ng-template pTemplate="left">
-                    <div class="my-2">
-                        <!-- <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNewTramite()"></button>
-                        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
-                        <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNewTramite()"></button>
-                        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"></button>
-                    </div>
-                </ng-template>
-
-            </p-toolbar>
+            
             <!-- TABLA DE CIUDADANOS -->
             <p-table #dt1 [value]="listCiudadanos" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
                 <ng-template pTemplate="caption">
@@ -118,7 +108,7 @@
                 <ng-template pTemplate="body" let-ciudadano>
                     <tr>
                         <td>
-                            <button type="button" pButton pRipple [pRowToggler]="tramite" class="p-button-rounded p-button-info mr-2 mb-2" icon="pi pi-eye" (click)="administrarCiudadano(ciudadano)"></button>
+                            <button type="button" pButton pRipple class="p-button-rounded p-button-info mr-2 mb-2" icon="pi pi-eye" (click)="administrarCiudadano(ciudadano)"></button>
                         </td>
                         <td style="min-width: 10rem;">
                             {{ciudadano.dni}}
@@ -160,79 +150,7 @@
             </p-table>
             <!-- FIN TABLA DE CIUDADANOS -->
 
-            <!-- DIALOG FORMULARIO CIUDADANOS -->
-            <p-dialog id="formTramiteDialog" [(visible)]="ciudadanoDialog" [style]="{width: '450px'}" header="Nuevo Tramite" [closable]="false" [modal]="true" class="p-fluid">
-                <ng-template pTemplate="content">
-                    <!-- FORMULARIO TRAMITES -->
-                    <form [formGroup]="formaTramites">
-                        <p-messages [value]="msgs" [showTransitionOptions]="'200ms'" [hideTransitionOptions]="'200ms'" [escape]="true"></p-messages>
-                        <p-toast key="tst" [baseZIndex]="99999"></p-toast>
-                        <div class="formgrid grid">
-                            <div class="field col">
-                                <label for="tipo_tramite_id">Tipo Tramite</label>
-                                <p-dropdown id="tipo_tramite_id" [options]="listaTiposTramite" optionLabel="tipo_tramite" optionValue="id_tipo_tramite" formControlName="tipo_tramite_id" placeholder="Seleccionar...">
-                                </p-dropdown>
-                            </div>
-                            <div class="field col">
-                                <label for="name">Expediente/Nota</label>
-                                <input type="text" pInputText id="expediente_nota" formControlName="expediente_nota" />
-                                <small *ngIf="expedienteNotaNoValido" class="p-error">
-                                    <div *ngFor="let validation of user_validation_messages.expediente_nota" >
-                                        <div  *ngIf="formaTramites.get('expediente_nota')?.hasError(validation.type)">
-                                            {{validation.message}}
-                                        </div>
-                                    </div>
-                                </small>
-                            </div>
-                        </div>
-
-                        <div class="field">
-                            <label for="name">Asunto</label>
-                            <input type="text" pInputText id="asunto" formControlName="asunto" />
-                            <small *ngIf="asuntoNotaNoValido" class="p-error">
-                                <div *ngFor="let validation of user_validation_messages.asunto" >
-                                    <div  *ngIf="formaTramites.get('asunto')?.hasError(validation.type)">
-                                        {{validation.message}}
-                                    </div>
-                                </div>
-                            </small>
-                        </div>
-
-                        <div class="field">
-                            <label for="name">Persona Referencia</label>
-                            <input type="text" pInputText id="persona_referencia" formControlName="persona_referencia" />
-                            <small *ngIf="personaReferenciaNotaNoValido" class="p-error">
-                                <div *ngFor="let validation of user_validation_messages.persona_referencia" >
-                                    <div  *ngIf="formaTramites.get('persona_referencia')?.hasError(validation.type)">
-                                        {{validation.message}}
-                                    </div>
-                                </div>
-                            </small>
-                        </div>
-                        <div class="field">
-                            <label for="descripcion">Descripción</label>
-                            <textarea pInputTextarea id="descripcion" formControlName="descripcion" rows="3" cols="20"></textarea>
-                            <small *ngIf="descripcionNotaNoValido" class="p-error">
-                                <div *ngFor="let validation of user_validation_messages.descripcion" >
-                                    <div  *ngIf="formaTramites.get('descripcion')?.hasError(validation.type)">
-                                        {{validation.message}}
-                                    </div>
-                                </div>
-                            </small>
-                        </div>
-                    </form>
-                    <!--  FIN FORMULARIO TRAMITES -->
-
-
-                </ng-template>
-                <ng-template pTemplate="footer">
-                    <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogTramite()"></button>
-                    <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormTramite()"></button>
-                </ng-template>
-            </p-dialog>
-            <!-- FIN DIALOG FORMULARIO  CIUDADANOS -->
-
-
+            
         </div>
 
     </div>

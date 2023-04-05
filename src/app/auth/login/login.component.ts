@@ -93,7 +93,7 @@ export class LoginComponent implements OnInit {
           globalConstants.usuarioLogin = null;
           globalConstants.isAdministrador = false;
           Swal.fire('Exito',`El login se realizo con exito`,"success");
-          this.router.navigateByUrl("home/principal");
+          this.router.navigateByUrl("admin/ciudadanos/administrar");
         }, 
         error: (err) => {
           Swal.fire('Error',`Error al realizar el login: ${err.error.message}`,"error") ;

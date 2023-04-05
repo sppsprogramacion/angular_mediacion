@@ -43,7 +43,7 @@ export class TramitesNuevoComponent implements OnInit {
   listSiNo: any[] = [];
   listCiudadano: CiudadanoModel[]=[];  
 
-  elementosCiudadanos: ElementoModel[]=[];
+  elementosCentroMediacion: ElementoModel[]=[];
 
   //variables tramite  
   ciudadanoData: CiudadanoModel;
@@ -263,8 +263,14 @@ export class TramitesNuevoComponent implements OnInit {
 
   cargarCentrosMediacion(id_departamento: number){
     this.centroMediacionService.listarCentroMediacionXDepartamento(id_departamento).
-        subscribe(respuesta => {
+      subscribe(respuesta => {
         this.listaCentrosMediacion= respuesta[0];
+        this.elementosCentroMediacion = this.listaCentrosMediacion.map(centro => {
+          return {
+            clave: centro.id_centro_mediacion,
+            value: centro.centro_mediacion + " (" + centro.municipio.municipio + " - " + centro.localidad_barrio + " - " + centro.calle_direccion + " " + centro.numero_dom + ")"
+            }
+        });        
     
     });  
   }

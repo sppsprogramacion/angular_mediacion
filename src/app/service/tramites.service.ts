@@ -25,6 +25,10 @@ export class TramitesService {
     return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites`)
   }
 
+  listarTramitesXCiudadano(id_ciudadano: number){
+    return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/buscar-xciudadano?id_ciudadano=${id_ciudadano}`)
+  }
+
   listarTramitesNuevos( id_ciudadano: number){
     return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/nuevos?id_ciudadano=${id_ciudadano}`)
   }

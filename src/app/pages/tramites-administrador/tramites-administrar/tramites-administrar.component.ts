@@ -12,6 +12,12 @@ import Swal from 'sweetalert2';
 import { FuncionTramiteService } from '../../../service/funcion-tramite.service';
 import { FuncionTtramiteModel } from 'src/app/models/funcion_tramite.model';
 import { ElementoModel } from '../../../models/elemento.model';
+import { DepartamentoModel } from 'src/app/models/departamento.model';
+import { departamentos } from 'src/app/common/data-mokeada';
+import { CentroMediacionModel } from 'src/app/models/centro_mediacion.model';
+import { CentrosMediacionService } from '../../../service/centros-mediacion.service';
+import { UsuariosCentroService } from '../../../service/usuarios-centro.service';
+import { UsuarioCentroModel } from '../../../models/usuario_centro.model ';
 
 @Component({
   selector: 'app-tramites-administrar',
@@ -23,13 +29,17 @@ export class TramitesAdministrarComponent implements OnInit {
 
   //MODELOS
   dataTramite: TramiteModel= new TramiteModel;
-  dataUsuarioTramite: UsuarioTramiteModel= new UsuarioTramiteModel;
-
+  dataUsuarioTramite: UsuarioTramiteModel= {};
   //listas
+  listCentrosMediacion: CentroMediacionModel[]=[];
+  listDepartamentos: DepartamentoModel[] = [];
+  listFuncionTramite: FuncionTtramiteModel[] = [];
   listUsuarios: UsuarioModel[]=[];
-  listFuncionTramite: FuncionTtramiteModel[] = []
+  listUsuariosCentro: UsuarioCentroModel[]=[];
+  elementosCentroMediacion: ElementoModel[]=[];  
   elementosUsuarios: ElementoModel[]=[];
-  
+  elementosUsuariosCentro: ElementoModel[]=[];
+
   //variables
   loadingMediadores: boolean = true;
   loadingFuncionTramite: boolean = true
@@ -42,12 +52,14 @@ export class TramitesAdministrarComponent implements OnInit {
     private readonly datePipe: DatePipe,
     public dataService: DataService,
     private usuarioService: UsuariosService,
+    private centroMediacionService: CentrosMediacionService,
+    private usuariosCentroService: UsuariosCentroService,
     private usuarioTramiteService: UsuariosTramiteService,
     private funcionTramiteService: FuncionTramiteService
     
   ) { 
     //OBTENER EL TRAMITE
-    this.dataTramite= dataService.tramiteData;
+    
     console.log("tramite recibido", this.dataTramite);
 
     //FORMULARIO 
@@ -55,13 +67,20 @@ export class TramitesAdministrarComponent implements OnInit {
       //tramite_numero: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       usuario_id: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       detalles: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(200)]],      
-      funcion_tramite_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]]       
-    
+      funcion_tramite_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],       
+      departamento_id_centro: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      centro_mediacion_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
     });
   }
   //FIN CONSTRUCTOR................................................................................
 
   ngOnInit(): void {
+    this.dataTramite= this.dataService.tramiteData;
+    if(this.dataTramite){
+      this.buscarAsignacionByNumTramiteActivo();
+      
+    }    
+    this.listDepartamentos = departamentos;
     this.listarMediadores();
     this.listarFuncionTramite();
   }
@@ -110,6 +129,20 @@ export class TramitesAdministrarComponent implements OnInit {
   }    
   //FIN GUARDAR USUARIO-TRAMITE............................................................
 
+  //BUSCAR TRAMITE X NUMERO TRAMITE ACTIVO
+  buscarAsignacionByNumTramiteActivo(){
+    this.usuarioTramiteService.buscarByNumTramiteActivo(this.dataTramite.numero_tramite)
+      .subscribe({
+        next: (resultado) => {
+          this.dataUsuarioTramite = resultado;
+          console.log("dataUdsuarioTramite", this.dataUsuarioTramite);          
+        },
+        error: (err) => {
+          this.dataUsuarioTramite= {};
+          //Swal.fire('Error',`Error al buscar tramite asignado: ${err.error.message}`,"error") 
+        }
+      });       
+  }
 
   //LISTADO DE MEDIADORES
   listarMediadores(){    
@@ -139,4 +172,58 @@ export class TramitesAdministrarComponent implements OnInit {
     });
   }
   //FIN LISTADO DE TRAMITES............................
+
+  cargarCentrosMediacion(id_departamento: number){
+    this.centroMediacionService.listarCentroMediacionXDepartamento(id_departamento).
+      subscribe(respuesta => {
+        this.listCentrosMediacion= respuesta[0];
+        this.elementosCentroMediacion = this.listCentrosMediacion.map(centro => {
+          return {
+            clave: centro.id_centro_mediacion,
+            value: centro.centro_mediacion + " (" + centro.municipio.municipio + " - " + centro.localidad_barrio + " - " + centro.calle_direccion + " " + centro.numero_dom + ")"
+            }
+        });        
+    
+    });  
+  }
+
+  onChangeDepartamentoParaCentros(){
+    const id = this.formaMediadorAsignado.get('departamento_id_centro')?.value;
+    if(id != null){               
+        this.cargarCentrosMediacion(parseInt(id.toString()));
+        this.formaMediadorAsignado.get('centro_mediacion_id')?.setValue(1);               
+        this.formaMediadorAsignado.get('centro_mediacion_id')?.markAsUntouched();
+        
+    }
+  }
+
+  cargarUsuarios(id_centro_mediacion: number){
+    this.usuariosCentroService.listarUsuariosActivosXCentro(id_centro_mediacion)
+    .subscribe({
+      next: (resultado) => {
+        this.listUsuariosCentro = resultado[0]
+        this.elementosUsuariosCentro = this.listUsuariosCentro.map(usuarioCentro => {
+          return {
+            clave: usuarioCentro.usuario_id,
+            value: usuarioCentro.usuario.apellido +  " " + usuarioCentro.usuario.nombre + " (" + usuarioCentro.usuario.dni + ")"
+            
+          }
+        });
+      },
+      error: (err) => {
+        Swal.fire('Error al listar los usuarios',`${err.error.message}`,"error");
+      } 
+    })   
+       
+  }
+
+  onChangeCentroMediacion(){
+    const id = this.formaMediadorAsignado.get('centro_mediacion_id')?.value;
+    if(id != null){               
+        this.cargarUsuarios(parseInt(id.toString()));
+        this.formaMediadorAsignado.get('usuario_id')?.setValue(1);               
+        this.formaMediadorAsignado.get('usuario_id')?.markAsUntouched();
+        
+    }
+  }
 }

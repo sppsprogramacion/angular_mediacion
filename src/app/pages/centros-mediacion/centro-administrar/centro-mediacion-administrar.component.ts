@@ -206,8 +206,8 @@ export class CentroAdministrarComponent implements OnInit {
 
   //LISTADO DE USUARIOS ACTIVOS - CENTRO DE MEDIACION
   listarUsuariosActivosCentroMediacion(){        
-    this.usuariosCentrosService.listarUsuariosActivosXCentro(this.dataCentroMediacion.id_centro_mediacion).
-      subscribe({
+    this.usuariosCentrosService.listarUsuariosActivosXCentro(this.dataCentroMediacion.id_centro_mediacion)
+      .subscribe({
         next: (resultado) => {
           this.listUsuariosCentro = resultado[0]
           this.loading = false
