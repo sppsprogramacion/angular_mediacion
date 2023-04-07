@@ -16,7 +16,7 @@
                         responsiveLayout="scroll">
                         <ng-template pTemplate="caption">
                             <div class="flex justify-content-between flex-column sm:flex-row">
-                                
+
                                 <div>
                                     <button pButton label="Limpiar" icon="pi pi-filter-slash" class="p-button-outlined mr-1" (click)="clear(dt1)"></button>
                                     <span class="p-input-icon-left">
@@ -87,7 +87,7 @@
                         <ng-template pTemplate="body" let-tramiteAsignado>
                             <tr>
                                 <td>
-                                    <button *ngIf="tramiteAsignado.tramite.estado_tramite_id==2" pButton pRipple type="button" icon="pi pi-folder-open text-orange-100" class="p-button-secondary p-button-rounded bg-orange-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
+                                    <button *ngIf="tramiteAsignado.tramite.estado_tramite_id==2" pButton pRipple type="button" icon="pi pi-folder-open text-orange-100" class="p-button-secondary p-button-rounded bg-orange-500 mr-1 mb-1" (click)="administrarTramite(tramiteAsignado.tramite)"></button>
                                 </td>
                                 <td style="min-width: 10rem;">
                                     {{tramiteAsignado.tramite.numero_tramite}}

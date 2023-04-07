@@ -3,6 +3,9 @@ import { DataService } from 'src/app/service/data.service';
 import { UsuariosTramiteService } from '../../../service/usuarios-tramite.service';
 import { UsuarioModel } from 'src/app/models/usuario.model';
 import { UsuarioTramiteModel } from 'src/app/models/usuario_tramite.model';
+import { TramiteModel } from 'src/app/models/tramite.model';
+import { globalConstants } from 'src/app/common/global-constants';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-usuarios-administrar',
@@ -21,7 +24,8 @@ export class UsuariosAdministrarComponent implements OnInit {
 
   constructor(
     public dataService: DataService,
-    private usuarioTramiteService: UsuariosTramiteService
+    private usuarioTramiteService: UsuariosTramiteService,
+    private router: Router
   ) {
     this.dataUsuario = dataService.usuarioData;
   }
@@ -44,6 +48,18 @@ export class UsuariosAdministrarComponent implements OnInit {
   }
   //FIN LISTADO DE TRAMITES ASIGNADOS.......................................................
 
-  
+  //ACCEDER A DATA SERVICE
+  administrarTramite(data: TramiteModel){
+    this.dataService.tramiteData = data;
+    if (globalConstants.usuarioLogin) {
+      this.router.navigateByUrl("admin/tramites/administrar");
+      
+    }
+    else{
+      this.router.navigateByUrl("ciudadano/tramites/administrar");
+    }
+    
+  }
+  //FIN ACCEDER A DATA SERVICE
 
 }

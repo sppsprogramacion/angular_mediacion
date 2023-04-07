@@ -54,6 +54,7 @@ import { CategoriasListaComponent } from './pages/categorias/categorias-lista/ca
 import { CategoriaAdministrarComponent } from './pages/categorias/categoria-administrar/categoria-administrar.component';
 import { CiudadanoUsuarioComponent } from './pages/ciudadano-usuario/ciudadano-usuario.component';
 import { TramitesCiudadanoAdministrarComponent } from './pages/tramites-ciudadano/tramites-ciudadano-administrar/tramites-ciudadano-administrar.component';
+import { LoginUsuarioComponent } from './auth/login-usuario/login-usuario.component';
 
 @NgModule({
     imports: [
@@ -88,6 +89,7 @@ import { TramitesCiudadanoAdministrarComponent } from './pages/tramites-ciudadan
                     // {path: 'ciudadano/tramites/asignados', component: TramitesCiudadanoAsignadosComponent},
                     // {path: 'ciudadano/tramites/finalizados', component: TramitesCiudadanoFinalizadosComponent},
                     
+                    {path: 'usuario/tramites/administrar', component: TramitesAdministrarComponent},
                     {path: 'usuario/tramites/asignados', component: TramitesUsuarioAsignadosComponent},
                     {path: 'usuario/tramites/finalizados', component: TramitesUsuarioFinalizadosComponent},
                     
@@ -96,6 +98,7 @@ import { TramitesCiudadanoAdministrarComponent } from './pages/tramites-ciudadan
             },
             {path:'pages/landing', component: LandingComponent},
             {path:'login', component: LoginComponent},
+            {path:'login-admin-mediacion', component: LoginUsuarioComponent},
             {path:'registrar', component: RegistroComponent },
             {path:'pages/error', component: ErrorComponent},
             {path:'pages/notfound', component: NotfoundComponent},

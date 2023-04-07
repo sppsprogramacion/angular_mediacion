@@ -16,6 +16,7 @@ export class UsuarioModel{
         public telefono?: string,
         public email?: string,
         public clave?: string,
+        public rol_id?: number,
         public centros_mediacion?: CentroMediacionModel[]
 
     ){}

@@ -19,4 +19,11 @@ export class AuthService {
     return this.http.post(url, dataLogin);
   
   }
+
+  loginUsuario(dataLogin: LoginModel){
+    const url= `${this.base_url}/auth/login-usuario`;
+
+    return this.http.post(url, dataLogin);
+  
+  }
 }

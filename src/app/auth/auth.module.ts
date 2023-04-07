@@ -17,13 +17,15 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { AppRoutingModule } from '../app-routing.module';
 import { CheckboxModule } from 'primeng/checkbox';
 import { CalendarModule } from 'primeng/calendar';
+import { LoginUsuarioComponent } from './login-usuario/login-usuario.component';
 
 
 
 @NgModule({
   declarations: [
     RegistroComponent,
-    LoginComponent
+    LoginComponent,
+    LoginUsuarioComponent
   ],
   imports: [
     AppRoutingModule,

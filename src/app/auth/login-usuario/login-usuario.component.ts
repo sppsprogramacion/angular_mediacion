@@ -1,40 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import Swal from 'sweetalert2';
-import { AuthService } from '../../service/auth.service';
-import { LoginModel } from '../../models/login.model';
-import { UsuarioModel } from '../../models/usuario.model';
-import { CiudadanoModel } from 'src/app/models/ciudadano.model';
-import { DataService } from 'src/app/service/data.service';
-import { globalConstants } from 'src/app/common/global-constants';
 import { Router } from '@angular/router';
+import { globalConstants } from 'src/app/common/global-constants';
+import { LoginModel } from 'src/app/models/login.model';
+import { UsuarioModel } from 'src/app/models/usuario.model';
+import { AuthService } from 'src/app/service/auth.service';
+import { DataService } from 'src/app/service/data.service';
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styles:[`
-    /* :host ::ng-deep .p-password input {
-    width: 100%;
-    padding:1rem;
-    }
-
-    :host ::ng-deep .pi-eye{
-      transform:scale(1.6);
-      margin-right: 1rem;
-      color: var(--primary-color) !important;
-    }
-
-    :host ::ng-deep .pi-eye-slash{
-      transform:scale(1.6);
-      margin-right: 1rem;
-      color: var(--primary-color) !important;
-    } */
-  `]
+  selector: 'app-login-usuario',
+  templateUrl: './login-usuario.component.html',
+  styleUrls: ['./login-usuario.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginUsuarioComponent implements OnInit {
 
   //MODELOS
-  dataCiudadano: CiudadanoModel= new CiudadanoModel;
+  dataUsuario: UsuarioModel= new UsuarioModel;
   
   //FORMULARIOS
   formaLogin: FormGroup; 
@@ -55,6 +37,7 @@ export class LoginComponent implements OnInit {
   //FIN CONSTRUCTOR...................
 
   ngOnInit(): void {
+    
   }
   //FIN ONINIT........................
 
@@ -79,29 +62,38 @@ export class LoginComponent implements OnInit {
     };
     
     
-    //GUARDAR NUEVO CIUDADANO
-    this.authService.loginCiudadano(dataLogin)
+    //INICIO LOGIN
+    this.authService.loginUsuario(dataLogin)
       .subscribe({
         next: (resultado) => {
           let loginRes: UsuarioModel = resultado;
-          console.log("ciudadano", loginRes);
-          this.dataCiudadano = resultado;  
           
-          this.dataService.ciudadanoData = this.dataCiudadano;
-          globalConstants.ciudadanoLogin = this.dataCiudadano;          
-          globalConstants.usuarioLogin = null;
-          globalConstants.isAdministrador = false;
+          this.dataUsuario = resultado;  
+          console.log("USUARIO", this.dataUsuario);
+          this.dataService.usuarioData = this.dataUsuario;
+          globalConstants.usuarioLogin = this.dataUsuario;          
+          globalConstants.ciudadanoLogin = null;
+          if(this.dataUsuario.rol_id == 1){
+            globalConstants.isAdministrador = true;
+            this.router.navigateByUrl("home/principal");
+          }
+          if(this.dataUsuario.rol_id == 2){
+            globalConstants.isAdministrador = false;
+            this.router.navigateByUrl("admin/usuarios/administrar");
+          }
+          
           Swal.fire('Exito',`El login se realizo con exito`,"success");
-          this.router.navigateByUrl("admin/ciudadanos/administrar");
+          
         }, 
         error: (err) => {
           Swal.fire('Error',`Error al realizar el login: ${err.error.message}`,"error") ;
         }           
       
       });         
-    //FIN GUARDAR NUEVO CIUDADANO 
+    //FIN LOGIN....................................... 
 
   }    
   //FIN GUARDAR CIUDADANO............................................................
+
 
 }
