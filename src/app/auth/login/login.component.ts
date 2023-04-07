@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { AuthService } from '../../service/auth.service';
+
 import { LoginModel } from '../../models/login.model';
 import { UsuarioModel } from '../../models/usuario.model';
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { DataService } from 'src/app/service/data.service';
 import { globalConstants } from 'src/app/common/global-constants';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -103,5 +104,11 @@ export class LoginComponent implements OnInit {
 
   }    
   //FIN GUARDAR CIUDADANO............................................................
+
+  //IR A REGISTRARME
+  irARegisrtarme(){
+    this.router.navigateByUrl("registrar");
+  }
+  //FIN IR A REGISTRARME
 
 }

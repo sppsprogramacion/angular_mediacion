@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RegistroComponent } from './registro/registro.component';
-import { LoginComponent } from './login/login.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,7 +15,10 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { AppRoutingModule } from '../app-routing.module';
 import { CheckboxModule } from 'primeng/checkbox';
 import { CalendarModule } from 'primeng/calendar';
+
+import { RegistroComponent } from './registro/registro.component';
 import { LoginUsuarioComponent } from './login-usuario/login-usuario.component';
+import { LoginComponent } from './login/login.component';
 
 
 
