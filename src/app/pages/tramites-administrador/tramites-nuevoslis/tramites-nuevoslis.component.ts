@@ -23,7 +23,6 @@ export class TramitesNuevoslisComponent implements OnInit {
   tramite: TramiteModel;
 
   //VARIABLES TRAMITE    
-  isCiudadano: boolean = false;
   tramiteDialog: boolean;
   nuevoTramite: boolean;
   submitted: boolean;
@@ -50,27 +49,18 @@ export class TramitesNuevoslisComponent implements OnInit {
       this.tituloPagina ="Usuario: Administrador"
       this.listarTramitesAdministrador();
     }
-
-    if (globalConstants.ciudadanoLogin) {
-      console.log("ciudadano", globalConstants.ciudadanoLogin);
-      this.tituloPagina ="Ciudadano: " + globalConstants.ciudadanoLogin.apellido + " " + globalConstants.ciudadanoLogin.nombre;
-      this.listarTramitesCiudadano();
-      this.isCiudadano= true;
-    }
     
     if (globalConstants.usuarioLogin) {
       console.log("usuario", globalConstants.usuarioLogin);
       this.tituloPagina ="Usuario: " + globalConstants.usuarioLogin.apellido + " " + globalConstants.usuarioLogin.nombre;
-      this.listTramites = [];
-      this.loading=false;
+      this.listarTramitesAdministrador();
     }
     
   }
 
 
   //LISTADO DE TRAMITES ADMINISTRADOR NUEVOS
-  listarTramitesAdministrador(){    
-    
+  listarTramitesAdministrador(){        
     this.tramitesService.listarTramitesNuevos(0).
         subscribe(respuesta => {
         this.listTramites= respuesta[0];
@@ -114,7 +104,13 @@ export class TramitesNuevoslisComponent implements OnInit {
   //ACCEDER A DATA SERVICE
   administrarTramite(data: TramiteModel){
     this.dataService.tramiteData = data;
-    this.router.navigateByUrl("admin/tramites/administrar");
+    if( globalConstants.isAdministrador ){
+      this.router.navigateByUrl("admin/tramites/administrar");
+    }
+    else{
+      this.router.navigateByUrl("admin/tramites/administrar-med");
+    }
+    
   }
   //FIN ACCEDER A DATA SERVICE
 

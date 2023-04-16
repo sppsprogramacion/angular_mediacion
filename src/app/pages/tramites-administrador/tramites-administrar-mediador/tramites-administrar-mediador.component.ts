@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { ConfirmationService, Message, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import Swal from 'sweetalert2';
 
 import { DataService } from 'src/app/service/data.service';
@@ -21,16 +21,13 @@ import { UsuariosCentroService } from '../../../service/usuarios-centro.service'
 import { UsuarioCentroModel } from '../../../models/usuario_centro.model ';
 
 @Component({
-  selector: 'app-tramites-administrar',
-  templateUrl: './tramites-administrar.component.html',
+  selector: 'app-tramites-administrar-mediador',
+  templateUrl: './tramites-administrar-mediador.component.html',
   providers: [MessageService, ConfirmationService,DatePipe],
-  styleUrls: ['./tramites-administrar.component.scss']
+  styleUrls: ['./tramites-administrar-mediador.component.scss']
 })
-export class TramitesAdministrarComponent implements OnInit {
+export class TramitesAdministrarMediadorComponent implements OnInit {
 
-  //MENSAJES
-  msgs: Message[] = []; 
-  
   //MODELOS
   dataTramite: TramiteModel= new TramiteModel;
   dataUsuarioTramite: UsuarioTramiteModel= {};
@@ -46,10 +43,9 @@ export class TramitesAdministrarComponent implements OnInit {
   elementosUsuariosCentro: ElementoModel[]=[];
 
   //variables
-  loadingUsuariosTramite: boolean = true;
   loadingMediadores: boolean = true;
   loadingFuncionTramite: boolean = true;
-  usuarioTramiteDialog: boolean = false;
+  loadingUsuariosTramite: boolean = true;
 
   //FORMULARIOS
   formaMediadorAsignado: FormGroup;  
@@ -95,32 +91,40 @@ export class TramitesAdministrarComponent implements OnInit {
 
   //GUARDAR USUARIO-TRAMITE  
   submitFormUsuarioTramite(){
-    if(this.formaMediadorAsignado.invalid){
-      this.msgs = [];
-      this.msgs.push({ severity: 'error', summary: 'Datos inválidos', detail: 'Revise los datos cargados. ' });
-      return Object.values(this.formaMediadorAsignado.controls).forEach(control => control.markAsTouched());
+    if(this.formaMediadorAsignado.invalid){                        
+        // this.msgs = [];
+        // this.msgs.push({ severity: 'warn', summary: 'Errores en formulario', detail: 'Cargue correctamente los datos' });
+        // this.serviceMensajes.add({key: 'tst', severity: 'warn', summary: 'Errores en formulario', detail: 'Cargue correctamente los dato'});
+        // Swal.fire(
+            
+        //     {target: document.getElementById('form-modal')},
+        //     'Formulario Tramite con errores','Complete correctamente todos los campos del formulario',"warning"
+        //     );
+        
+        console.log("formulario", this.formaMediadorAsignado);
+        console.log("errores formulario");
+        return Object.values(this.formaMediadorAsignado.controls).forEach(control => control.markAsTouched());
     }
 
     let dataMediadorAsignado: Partial<UsuarioTramiteModel>;
+
     dataMediadorAsignado = {
       tramite_numero: this.dataTramite.numero_tramite,
       usuario_id: parseInt(this.formaMediadorAsignado.get('usuario_id')?.value),
       detalles: this.formaMediadorAsignado.get('detalles')?.value,
       funcion_tramite_id: parseInt(this.formaMediadorAsignado.get('funcion_tramite_id')?.value),             
-    };    
+    };
+    
     
     //GUARDAR NUEVO USUARIO-TRAMITE
     this.usuarioTramiteService.guardarUsuarioTramite(dataMediadorAsignado)
       .subscribe({
         next: (resultado) => {
           let usuarioTramiteRes: UsuarioTramiteModel = resultado;
-          this.hideDialogUsuarioTramite();
-          this.buscarAsignacionByNumTramiteActivo();
-          Swal.fire('Exito',`La asignacion de usuario se realizo con exito`,"success");
+          Swal.fire('Exito',`La asignacion de mediador se realizo con exito`,"success");
         },
         error: (err) => {
-          this.msgs = [];
-          this.msgs.push({ severity: 'error', summary: 'Error al guardar', detail: ` ${err.error.message}` });
+          Swal.fire('Error',`Error al realizar la asignacion: ${err.error.message}`,"error") 
         }
       });         
     //FIN GUARDAR NUEVO USUARIO-TRAMITE
@@ -134,50 +138,14 @@ export class TramitesAdministrarComponent implements OnInit {
       .subscribe({
         next: (resultado) => {
           this.listUsuariosTramite = resultado[0];  
-          this.loadingUsuariosTramite = false;     
+          this.loadingUsuariosTramite = false;           
         },
         error: (err) => {
           this.dataUsuarioTramite= {};
-          this.loadingUsuariosTramite = false;  
           //Swal.fire('Error',`Error al buscar tramite asignado: ${err.error.message}`,"error") 
         }
       });       
   }
-
-  //CONFIRMAR DESHABILITACION USUARIO-TRAMITE
-  confirmarDeshabilitarUsuario(dataUsuarioTramite:UsuarioTramiteModel){    
-    Swal.fire({
-      title: 'Deshabilitar este usuario del tramite?',
-      text: 'No podrá deshacer esta acción luego de confirmar',
-      icon: 'warning',
-      showDenyButton: true,
-      //showCancelButton: true,
-      confirmButtonText: `Confirmar`,
-      confirmButtonColor:"#3085d6",
-      denyButtonText: `Cancelar`,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.deshabilitarUsuarioTramite(dataUsuarioTramite)
-      }
-    })    
-  }
-  //FIN CONFIRMAR DESHABILITACION USUARIO-TRAMITE
-
-  //DESHABILITAR USUARIO-CENTRO
-  deshabilitarUsuarioTramite(dataUsuarioTramite:UsuarioTramiteModel){
-    this.usuarioTramiteService.deshabilitarUsuarioTramite(dataUsuarioTramite.id_usuario_tramite)
-    .subscribe({
-      next: (resultado) => {
-        let usuarioCentroRes: UsuarioTramiteModel = resultado[0];
-        Swal.fire('Exito',`El usuario fue deshabilitado correctamente`,"success");
-        this.buscarAsignacionByNumTramiteActivo();
-      },
-      error: (err) => {
-        Swal.fire("El usuario no fue deshabilitado",`${err.error.message}`,"error");
-      }
-    });
-  }
-  //FIN DESHABILITAR USUARIO-CENTRO.................................................
 
   //LISTADO DE MEDIADORES
   listarMediadores(){    
@@ -261,16 +229,4 @@ export class TramitesAdministrarComponent implements OnInit {
         
     }
   }
-
-  //MANEJO DE FORMULARIO DIALOG
-  openDialogUsuarioTramite() {
-    this.usuarioTramiteDialog = true;
-  }
-  
-  hideDialogUsuarioTramite() {
-    this.formaMediadorAsignado.reset();
-    this.msgs = [];
-    this.usuarioTramiteDialog = false;
-  }    
-  //FIN MANEJO FORMULARIO DIALOG....................................
 }

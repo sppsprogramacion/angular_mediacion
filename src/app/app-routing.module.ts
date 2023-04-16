@@ -55,6 +55,10 @@ import { CategoriaAdministrarComponent } from './pages/categorias/categoria-admi
 import { CiudadanoUsuarioComponent } from './pages/ciudadano-usuario/ciudadano-usuario.component';
 import { TramitesCiudadanoAdministrarComponent } from './pages/tramites-ciudadano/tramites-ciudadano-administrar/tramites-ciudadano-administrar.component';
 import { LoginUsuarioComponent } from './auth/login-usuario/login-usuario.component';
+import { CiudadanoPrincipalComponent } from './pages/ciudadano-perfil/ciudadano-principal/ciudadano-principal.component';
+import { CiudadanoTramitesNuevoComponent } from './pages/ciudadano-perfil/ciudadano-tramites-nuevo/ciudadano-tramites-nuevo.component';
+import { CiudadanoTramitesAdministrarComponent } from './pages/ciudadano-perfil/ciudadano-tramites-administrar/ciudadano-tramite-administrar.component';
+import { TramitesAdministrarMediadorComponent } from './pages/tramites-administrador/tramites-administrar-mediador/tramites-administrar-mediador.component';
 
 @NgModule({
     imports: [
@@ -64,6 +68,7 @@ import { LoginUsuarioComponent } from './auth/login-usuario/login-usuario.compon
                 children: [
                     {path: '', component: TramitesPrincipalComponent},
                     {path: 'home/principal', component: TramitesPrincipalComponent},
+
                     {path: 'admin/categoria/lista', component: CategoriasListaComponent},
                     {path: 'admin/categoria/administrar', component: CategoriaAdministrarComponent},
                     
@@ -77,17 +82,16 @@ import { LoginUsuarioComponent } from './auth/login-usuario/login-usuario.compon
                     {path: 'admin/usuarios/administrar', component: UsuariosAdministrarComponent},
                     {path: 'admin/usuarios/lista', component: UsuariosListaComponent},
                     
-                    {path: 'admin/tramites/nuevo', component: TramitesNuevoComponent},
-                    {path: 'admin/tramites/nuevoslis', component: TramitesNuevoslisComponent},
                     {path: 'admin/tramites/administrar', component: TramitesAdministrarComponent},
+                    {path: 'admin/tramites/administrar-med', component: TramitesAdministrarMediadorComponent},
                     {path: 'admin/tramites/asignados', component: TramitesAsignadosComponent},
                     {path: 'admin/tramites/finalizados', component: TramitesFinalizadosComponent},
-                    
-                    {path: 'ciudadano/tramites/administrar', component: TramitesCiudadanoAdministrarComponent},
-                    {path: 'ciudadano/tramites/nuevo', component: TramitesNuevoComponent},
-                    // {path: 'ciudadano/tramites/nuevoslis', component: TramitesNuevoslisComponent},
-                    // {path: 'ciudadano/tramites/asignados', component: TramitesCiudadanoAsignadosComponent},
-                    // {path: 'ciudadano/tramites/finalizados', component: TramitesCiudadanoFinalizadosComponent},
+                    {path: 'admin/tramites/nuevo', component: TramitesNuevoComponent},
+                    {path: 'admin/tramites/nuevoslis', component: TramitesNuevoslisComponent},
+                                        
+                    {path: 'ciudadano/principal', component: CiudadanoPrincipalComponent},
+                    {path: 'ciudadano/tramites/administrar', component: CiudadanoTramitesAdministrarComponent},
+                    {path: 'ciudadano/tramites/nuevo', component: CiudadanoTramitesNuevoComponent},
                     
                     {path: 'usuario/tramites/administrar', component: TramitesAdministrarComponent},
                     {path: 'usuario/tramites/asignados', component: TramitesUsuarioAsignadosComponent},

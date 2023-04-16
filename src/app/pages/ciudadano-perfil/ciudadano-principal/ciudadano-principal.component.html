@@ -1,0 +1,148 @@
+<div class="grid">
+    <div class="col-12 xl:col-12">
+        <div class="card">
+            <p-toolbar styleClass="mb-3 bg-cyan-500 ">
+                <h5 class="block text-white font-bold font-medium mb-1 ">
+                    Ciudadano: {{(dataCiudadano != null)?dataCiudadano.apellido + " " + dataCiudadano.nombre : "Sin ciudadano"}}
+                </h5>
+            </p-toolbar>
+            <p-tabView styleClass="mt-2">
+                <p-tabPanel header="Datos Personales" leftIcon="pi pi-id-card">
+
+                </p-tabPanel>
+
+                <!-- PANEL TRAMITES -->
+                <p-tabPanel header="Tramites" leftIcon="pi pi-send">
+                    <!-- TABLA DE TRAMITES -->
+                    <p-table #dt1 [value]="listTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
+                        <ng-template pTemplate="caption">
+                            <div class="flex justify-content-between flex-column sm:flex-row">
+                                <button pButton label="Solicitar tramite" icon="pi pi-plus" class="p-button-success mr-2" (click)="abrirNuevoTramite()"></button>
+                                <div>
+                                    <button pButton label="Limpiar" icon="pi pi-filter-slash" class="p-button-outlined mr-1" (click)="clear(dt1)"></button>
+                                    <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
+                            </span>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 3rem"></th>
+                                <th>
+                                    <div class="flex justify-content-between align-items-center">
+                                        Nº Tramite
+                                        <p-columnFilter type="text" field="numero_tramite" display="menu" placeholder="Buscar por tramite"></p-columnFilter>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="flex justify-content-between align-items-center">
+                                        Apellido
+                                        <p-columnFilter type="text" field="ciudadano.apellido" display="menu" placeholder="Buscar por apellido"></p-columnFilter>
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="flex justify-content-between align-items-center">
+                                        Nombre
+                                        <p-columnFilter type="text" field="ciudadano.nombre" display="menu" placeholder="Buscar por nombre"></p-columnFilter>
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="flex justify-content-between align-items-center">
+                                        DNI solicitante
+                                        <p-columnFilter type="text" field="tramite.dni_ciudadano" display="menu" placeholder="Buscar por dni"></p-columnFilter>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="flex justify-content-between align-items-center">
+                                        Objeto
+                                        <p-columnFilter type="text" field="objeto.objeto" display="menu" placeholder="Buscar por objeto"></p-columnFilter>
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="flex justify-content-between align-items-center">
+                                        Fecha tramite
+                                        <p-columnFilter type="date" field="fecha_tramite" display="menu" placeholder="dd/mm/yyyy"></p-columnFilter>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="flex justify-content-between align-items-center">
+                                        Expediente
+                                        <p-columnFilter type="text" field="descripcion" display="menu" placeholder="Buscar por descripción"></p-columnFilter>
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="flex justify-content-between align-items-center">
+                                        Fecha expediente
+                                        <p-columnFilter type="date" field="fecha_tramite" display="menu" placeholder="dd/mm/yyyy"></p-columnFilter>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="flex justify-content-between align-items-center">
+                                        Centro Mediacion
+                                        <!-- <p-columnFilter type="date" field="fecha_tramite" display="menu" placeholder="dd/mm/yyyy"></p-columnFilter> -->
+                                    </div>
+                                </th>
+
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-tramite>
+                            <tr>
+                                <td>
+                                    <button *ngIf="tramite.estado_tramite_id==1" pButton pRipple type="button" icon="pi pi-folder-open text-purple-100" class="p-button-secondary p-button-rounded bg-purple-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
+                                    <button *ngIf="tramite.estado_tramite_id==2" pButton pRipple type="button" icon="pi pi-folder-open text-orange-100" class="p-button-secondary p-button-rounded bg-orange-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
+                                </td>
+                                <td style="min-width: 10rem;">
+                                    {{tramite.numero_tramite}}
+                                </td>
+
+                                <td style="min-width: 15rem;">
+                                    {{tramite.ciudadano.apellido}}
+                                </td>
+                                <td style="min-width: 2rem;">
+                                    {{tramite.ciudadano.nombre}}
+                                </td>
+                                <td style="min-width: 10rem;">
+                                    {{tramite.ciudadano.dni}}
+                                </td>
+                                <td style="min-width: 10rem;">
+                                    {{tramite.objeto.objeto}}
+                                </td>
+                                <td style="min-width: 5rem;">
+                                    {{tramite.fecha_tramite| date: 'dd/MM/yyyy'}}
+                                </td>
+                                <td style="min-width: 15rem;">
+                                    {{tramite.expediente}}
+                                </td>
+                                <td style="min-width: 5rem;">
+                                    {{tramite.fecha_expediente| date: 'dd/MM/yyyy'}}
+                                </td>
+                                <td style="min-width: 10rem;">
+                                    {{tramite.centro_mediacion.centro_mediacion}}
+                                </td>
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="8">No se encontraron tramites asignados.</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="loadingbody">
+                            <tr>
+                                <td colspan="8">Cargando tramites... .</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                    <!-- FIN TABLA DE TRAMITES -->
+                </p-tabPanel>                
+            </p-tabView>
+        </div>
+
+    </div>
+</div>

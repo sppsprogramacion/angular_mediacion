@@ -8,24 +8,24 @@ import { FuncionTramiteService } from 'src/app/service/funcion-tramite.service';
 import { UsuariosCentroService } from 'src/app/service/usuarios-centro.service';
 import { UsuariosTramiteService } from 'src/app/service/usuarios-tramite.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
-
 @Component({
-  selector: 'app-tramites-ciudadano-administrar',
-  templateUrl: './tramites-ciudadano-administrar.component.html',
-  styleUrls: ['./tramites-ciudadano-administrar.component.scss']
+  selector: 'app-ciudadano-tramite-administrar',
+  templateUrl: './ciudadano-tramite-administrar.component.html',
+  styleUrls: ['./ciudadano-tramite-administrar.component.scss']
 })
-export class TramitesCiudadanoAdministrarComponent implements OnInit {
+export class CiudadanoTramitesAdministrarComponent implements OnInit {
 
   //MODELOS
   dataTramite: TramiteModel= new TramiteModel;
   dataUsuarioTramite: UsuarioTramiteModel= {};
 
   //listas
-  
+  listUsuariosTramite: UsuarioTramiteModel[]=[];
 
   //variables
   loadingMediadores: boolean = true;
-  loadingFuncionTramite: boolean = true
+  loadingFuncionTramite: boolean = true;
+  loadingUsuariosTramite: boolean = true;
 
   //FORMULARIOS
   
@@ -62,8 +62,8 @@ export class TramitesCiudadanoAdministrarComponent implements OnInit {
     this.usuarioTramiteService.buscarByNumTramiteActivo(this.dataTramite.numero_tramite)
       .subscribe({
         next: (resultado) => {
-          //this.dataUsuarioTramite = resultado;
-          console.log("dataUdsuarioTramite", this.dataUsuarioTramite);          
+          this.listUsuariosTramite = resultado[0];  
+          this.loadingUsuariosTramite = false;          
         },
         error: (err) => {
           this.dataUsuarioTramite= {};

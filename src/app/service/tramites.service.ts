@@ -30,7 +30,7 @@ export class TramitesService {
   }
 
   listarTramitesNuevos( id_ciudadano: number){
-    return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/nuevos?id_ciudadano=${id_ciudadano}`)
+    return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/nuevos-xciudadano?id_ciudadano=${id_ciudadano}`)
   }
 
   listarTramitesAsignadosMediador(id_ciudadano: number){

@@ -1,0 +1,83 @@
+<!-- Card Tramite -->
+<div class="card mb-0 ">
+    <p-toolbar styleClass="mb-3 bg-cyan-500">
+        <h5 class="block text-white font-bold font-medium mb-1 ">
+            Datos del Tramite+++
+        </h5>
+    </p-toolbar>
+
+    <div class="col-12 border-bottom-1 surface-border mt-4">
+        <div class="grid">
+            <div class="col-12 lg:col-3 xl:col-3">
+                <span class="text font-medium text-1xl">Tramite N°:<span class="text ml-2 font-medium"> {{dataTramite.numero_tramite}} </span></span>
+            </div>
+            <div class="col-12 lg:col-3 xl:col-3 py-2">
+                <span class="text font-medium text-1xl">Fecha inicia:<span class="text ml-1 font-medium"> {{dataTramite.fecha_tramite| date: 'dd/MM/yyyy'}}</span></span>
+            </div>
+            <div class="col-12 lg:col-3 xl:col-3 py-2">
+                <span class="text font-medium text-1xl">N° expediente:<span class="text ml-1 font-medium"> {{dataTramite.expediente}}</span></span>
+            </div>
+            <div class="col-12 lg:col-3 xl:col-3 py-2">
+                <span class="text font-medium text-1xl">Fecha exp.:<span class="text ml-1 font-medium"> {{dataTramite.fecha_expediente| date: 'dd/MM/yyyy'}}</span></span>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-12 border-bottom-1 surface-border">
+        <div class="grid">
+            <div class="col-12 lg:col-4 xl:col-4">
+                <span class="text font-medium text-1xl">Solicitante:<span class="text ml-1 font-medium"> {{dataTramite.ciudadano?.apellido}} {{dataTramite.ciudadano?.nombre}}</span></span>
+            </div>
+            <div class="col-12 lg:col-4 xl:col-4">
+                <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{dataTramite.ciudadano?.dni}}</span></span>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-12 border-bottom-1 surface-border">
+        <div class="grid">
+            <div class="col-12 lg:col-6 xl:col-6 py-2">
+                <span class="text font-medium text-1xl">Motivo de la solicitud:<span class="text ml-1 font-medium"> {{dataTramite.objeto?.objeto}}</span></span>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-12 border-bottom-1 surface-border">
+        <div class="grid">
+            <div class="col-12">
+                <span class="text font-medium text-1xl">Centro de Mediación:<span class="text ml-1 font-medium"> {{dataTramite.centro_mediacion?.centro_mediacion}}</span></span>
+            </div>
+            <div class="col-12 lg:col-6 xl:col-6">
+                <span class="text font-medium text-1xl">Departamento:<span class="text ml-1 font-medium"> {{dataTramite.centro_mediacion?.departamento.departamento}} </span></span>
+            </div>
+            <div class="col-12 lg:col-6 xl:col-6">
+                <span class="text font-medium text-1xl">Municipio:<span class="text ml-1 font-medium"> {{dataTramite.centro_mediacion?.municipio.municipio}} </span></span>
+            </div>
+            <div class="col-12">
+                <span class="text font-medium text-1xl">Dirección:<span class="text ml-1 font-medium"> Barrio: {{dataTramite.centro_mediacion?.localidad_barrio}} - Calle/Dirección: {{dataTramite.centro_mediacion?.calle_direccion}} - Número: {{dataTramite.centro_mediacion?.numero_dom}}</span></span>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<!-- FIN Card Tramite -->
+
+<!-- Card Usuarios -->
+
+<div class="card p-fluid mb-0 mt-2">
+    <p-toolbar styleClass="mb-3 bg-cyan-500">
+        <h5 class="block text-white font-bold font-medium mb-1 ">
+            Mediador Asignado
+        </h5>
+    </p-toolbar>
+
+    <div class="col-12 border-bottom-1 surface-border">
+        <div class="grid">
+            <div class="col-12 lg:col-6 xl:col-6">
+                <span class="text font-bold font-medium text-1xl">Mediador Actual:<span class="text ml-2 font-medium"> {{dataUsuarioTramite.usuario?.apellido}} {{dataUsuarioTramite.usuario?.nombre}}</span></span>
+            </div>
+
+        </div>
+    </div>
+</div>

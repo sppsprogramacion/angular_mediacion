@@ -68,68 +68,165 @@
 <div class="card p-fluid mb-0 mt-2">
     <p-toolbar styleClass="mb-3 bg-cyan-500">
         <h5 class="block text-white font-bold font-medium mb-1 ">
-            Asignar el Tramite a un mediador
+            Asignar el Tramite a un usuario
         </h5>
     </p-toolbar>
 
     <div class="col-12 border-bottom-1 surface-border">
-        <div class="grid">
-            <div class="col-12 lg:col-6 xl:col-6">
-                <span class="text font-bold font-medium text-1xl">Mediador Actual:<span class="text ml-2 font-medium"> {{dataUsuarioTramite.usuario?.apellido}} {{dataUsuarioTramite.usuario?.nombre}}</span></span>
-            </div>
+        <p-toolbar styleClass="mb-4">
+            <ng-template pTemplate="left">
+                <div class="my-2">
+                    <button pButton pRipple label="Asignar usuario" icon="pi pi-plus" class="p-button-success mr-2" (click)="openDialogUsuarioTramite()"></button>
+                </div>
+            </ng-template>
 
-        </div>
+        </p-toolbar>
+        <!-- TABLA DE USUARIOS-TRAMITE -->
+        <p-table #dt1 [value]="listUsuariosTramite" [rows]="10" [loading]="loadingUsuariosTramite" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['usuario.dni','usuario.apellido','usuario.nombre','usuario.telefono','objeto.objeto','expediente']"
+            responsiveLayout="scroll">
+            
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 3rem"></th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            DNI
+                        </div>
+                    </th>
+                    <th >
+                        <div class="flex justify-content-between align-items-center">
+                            Apellido - Nombre
+                        </div>
+                    </th>                    
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            Sexo
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            Fecha Asing
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            Funcion
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            Detalles
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            Activo
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-usuariotramite>
+                <tr>
+                    <td>
+                        <button type="button" pButton pRipple class="p-button-danger p-button-rounded mr-2 mb-2" icon="pi pi-times" (click)="confirmarDeshabilitarUsuario(usuariotramite)"></button>
+                    </td>
+                    <td style="min-width: 8rem;">
+                        {{usuariotramite.usuario.dni}}
+                    </td>
+                    <td style="min-width: 20rem;">
+                        {{usuariotramite.usuario.apellido}} {{usuariotramite.usuario.nombre}}
+                    </td>
+                    <td style="min-width: 7rem;">
+                        {{usuariotramite.usuario.sexo.sexo}}
+                    </td>
+                    <td style="min-width: 10rem;">
+                        {{usuariotramite.fecha_asignacion | date: 'dd/MM/yyyy'}}
+                    </td>
+                    <td style="min-width: 7rem;">
+                        {{usuariotramite.funcion_tramite.funcion_tramite}}
+                    </td>
+                    <td style="min-width: 15rem;">
+                        {{usuariotramite.detalles}}
+                    </td>
+                    <td style="min-width: 5rem;">
+                        {{usuariotramite.activo}}
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">No se encontraron usuarios asignados.</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+                <tr>
+                    <td colspan="8">Cargando usuarios... .</td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <!-- FIN TABLA DE USUARIOS-TRAMITE -->
     </div>
-    <div class="col-12 border-bottom-1 surface-border">
 
-        <div class="p-formgrid grid">
-            <!-- FORMULARIO TRAMITES -->
-            <div class="col-12">
-                <form [formGroup]="formaMediadorAsignado">
-                    <div class="formgrid grid">
-                        <div class="field col-6">
-                            <label for="departamento_id_centro">Departamento</label>
-                            <p-dropdown id="departamento_id_centro" [options]="listDepartamentos" optionLabel="departamento" optionValue="id_departamento" formControlName="departamento_id_centro" placeholder="Seleccionar..." (onChange)="onChangeDepartamentoParaCentros()">
-                            </p-dropdown>
+    <!-- DIALOG FORMULARIO USUARIOS -->
+    <p-dialog id="usuarioTramiteDialog" [(visible)]="usuarioTramiteDialog" [style]="{width: '500px'}" header="Asignar Usuario" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}">
+        <!-- MENSAJE DE ERROR -->
+        <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
+        <ng-template pTemplate="content">
+            <div class="p-formgrid grid">
+                <!-- FORMULARIO TRAMITES -->
+                <div class="col-12">
+                    <form [formGroup]="formaMediadorAsignado">
+                        <div class="formgrid grid">
+                            <div class="field col-12">
+                                <label for="departamento_id_centro">Departamento</label>
+                                <p-dropdown id="departamento_id_centro" [options]="listDepartamentos" optionLabel="departamento" optionValue="id_departamento" formControlName="departamento_id_centro" placeholder="Seleccionar..." (onChange)="onChangeDepartamentoParaCentros()">
+                                </p-dropdown>
+                            </div>
                         </div>
-                    </div>
-                    <div class="formgrid grid">
-                        <div class="field col">
-                            <label for="centro_mediacion_id">Centro Mediacion</label>
-                            <p-dropdown id="centro_mediacion_id" [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" formControlName="centro_mediacion_id" placeholder="Seleccionar..." (onChange)="onChangeCentroMediacion()">
-                            </p-dropdown>
+                        <div class="formgrid grid">
+                            <div class="field col">
+                                <label for="centro_mediacion_id">Centro Mediacion</label>
+                                <p-dropdown id="centro_mediacion_id" [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" formControlName="centro_mediacion_id" placeholder="Seleccionar..." (onChange)="onChangeCentroMediacion()">
+                                </p-dropdown>
+                            </div>
                         </div>
-                    </div>
-                    <div class="formgrid grid">
-                        <div class="field col-6">
-                            <label for="usuario_id" class="text font-medium">Seleccionar un usuario</label>
-                            <p-dropdown id="usuario_id" [options]="elementosUsuariosCentro" optionLabel="value" optionValue="clave" formControlName="usuario_id" placeholder="Seleccionar..." >
-                            </p-dropdown>
-                            <!-- <p-dropdown id="dni" [options]="elementosUsuarios" filter="true" optionLabel="value" optionValue="clave" formControlName="usuario_id" >
-                            </p-dropdown> -->
-
+                        <div class="formgrid grid">
+                            <div class="field col-12">
+                                <label for="usuario_id" class="text font-medium">Seleccionar un usuario</label>
+                                <p-dropdown id="usuario_id" [options]="elementosUsuariosCentro" optionLabel="value" optionValue="clave" formControlName="usuario_id" placeholder="Seleccionar..." >
+                                </p-dropdown>    
+                            </div>
+                            
                         </div>
-                        <div class="field col-6">
-                            <label for="funcion_tramite_id" class="text font-medium">Funcion en el tramite</label>
-                            <p-dropdown id="funcion_tramite_id" [options]="listFuncionTramite" optionLabel="funcion_tramite" optionValue="id_funcion_tramite" formControlName="funcion_tramite_id">
-                            </p-dropdown>
+                        <div class="formgrid grid">
+                            <div class="field col-12">
+                                <label for="funcion_tramite_id" class="text font-medium">Funcion en el tramite</label>
+                                <p-dropdown id="funcion_tramite_id" [options]="listFuncionTramite" optionLabel="funcion_tramite" optionValue="id_funcion_tramite" formControlName="funcion_tramite_id">
+                                </p-dropdown>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="formgrid grid">
-                        <div class="field col-6">
-                            <label for="detalles" class="text font-medium">Detalles</label>
-                            <input type="text" pInputText id="detalles" formControlName="detalles" />
+    
+                        <div class="formgrid grid">
+                            <div class="field col-12">
+                                <label for="detalles" class="text font-medium">Detalles</label>
+                                <input type="text" pInputText id="detalles" formControlName="detalles" />
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
+                <!--  FIN FORMULARIO TRAMITES -->
             </div>
-            <!--  FIN FORMULARIO TRAMITES -->
-            <div class="col-12">
-                <button pButton pRipple type="button" label="Guardar" class="p-button-success mr-2 mb-2" (click)="submitFormUsuarioTramite()"></button>
-            </div>
-        </div>
-    </div>
+        </ng-template>
+
+        <ng-template pTemplate="footer" class="mt-1">
+            <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormUsuarioTramite()"></button>
+            <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogUsuarioTramite()"></button>
+
+        </ng-template>
+    </p-dialog>
+    <!-- FIN DIALOG FORMULARIO  USUARIOS -->
+    
 </div>
 
 <!-- FIN Card Usuarios -->

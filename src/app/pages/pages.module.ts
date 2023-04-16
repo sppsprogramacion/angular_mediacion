@@ -41,6 +41,10 @@ import { CategoriaAdministrarComponent } from './categorias/categoria-administra
 import { CategoriasListaComponent } from './categorias/categorias-lista/categorias-lista.component';
 import { CiudadanoUsuarioComponent } from './ciudadano-usuario/ciudadano-usuario.component';
 import { UsuariosAdministrarComponent } from './usuarios/usuarios-administrar/usuarios-administrar.component';
+import { CiudadanoTramitesNuevoComponent } from './ciudadano-perfil/ciudadano-tramites-nuevo/ciudadano-tramites-nuevo.component';
+import { CiudadanoPrincipalComponent } from './ciudadano-perfil/ciudadano-principal/ciudadano-principal.component';
+import { CiudadanoTramitesAdministrarComponent } from './ciudadano-perfil/ciudadano-tramites-administrar/ciudadano-tramite-administrar.component';
+import { TramitesAdministrarMediadorComponent } from './tramites-administrador/tramites-administrar-mediador/tramites-administrar-mediador.component';
 
 
 @NgModule({
@@ -89,7 +93,11 @@ import { UsuariosAdministrarComponent } from './usuarios/usuarios-administrar/us
     CentrosMediacionListaComponent,
     CategoriaAdministrarComponent,
     CategoriasListaComponent,
-    CiudadanoUsuarioComponent
+    CiudadanoUsuarioComponent,
+    CiudadanoPrincipalComponent,
+    CiudadanoTramitesAdministrarComponent,
+    CiudadanoTramitesNuevoComponent,
+    TramitesAdministrarMediadorComponent
     
   ],
   

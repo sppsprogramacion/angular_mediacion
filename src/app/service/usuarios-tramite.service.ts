@@ -22,11 +22,11 @@ export class UsuariosTramiteService {
   }
 
   buscarByNumTramiteActivo(num_tramite: number){
-    return this.http.get<UsuarioTramiteModel>(`${base_url}/usuarios-tramite/buscar-xnumtramite-activo?numero_tramite=${num_tramite}`)
+    return this.http.get<[usuarioTramite:UsuarioTramiteModel[], total: number]>(`${base_url}/usuarios-tramite/buscar-xnumtramite-activo?numero_tramite=${num_tramite}`)
   }
 
   listarTramitesAsignadosTodos(){
-    return this.http.get<[tramite:UsuarioTramiteModel[], total: number]>(`${base_url}/usuarios-tramite`)
+    return this.http.get<[usuarioTramite:UsuarioTramiteModel[], total: number]>(`${base_url}/usuarios-tramite`)
   }
 
   listarTramitesAsignadosXUsuario(id_usuariox: number){
@@ -35,6 +35,12 @@ export class UsuariosTramiteService {
 
   listarTramitesAsignadosXCiudadano(id_ciudadanox: number){
     return this.http.get<[tramite:UsuarioTramiteModel[], total: number]>(`${base_url}/usuarios-tramite/buscar-xciudadano?id_ciudadano=${id_ciudadanox}`)
+  }
+
+  deshabilitarUsuarioTramite(id_usuario_tramite:number) {
+    let data: Partial<UsuarioTramiteModel>;
+    
+    return this.http.patch(`${base_url}/usuarios-tramite/deshabilitar-usuario?id_usuario_tramite=${id_usuario_tramite}`,data);
   }
 
   

@@ -112,8 +112,14 @@ export class TramitesAsignadosComponent implements OnInit {
   //ACCEDER A DATA SERVICE
   administrarTramite(data: UsuarioTramiteModel){
     this.dataService.tramiteData = data.tramite;
-    console.log("data", data.tramite);
-    this.router.navigateByUrl("admin/tramites/administrar");
+    if( globalConstants.isAdministrador ){
+      this.router.navigateByUrl("admin/tramites/administrar");
+    }
+    else{
+      this.router.navigateByUrl("admin/tramites/administrar-med");
+    }
+
+    
   }
   //FIN ACCEDER A DATA SERVICE
 

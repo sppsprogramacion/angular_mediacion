@@ -85,7 +85,6 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: (resultado) => {
           let loginRes: UsuarioModel = resultado;
-          console.log("ciudadano", loginRes);
           this.dataCiudadano = resultado;  
           
           this.dataService.ciudadanoData = this.dataCiudadano;
@@ -93,7 +92,7 @@ export class LoginComponent implements OnInit {
           globalConstants.usuarioLogin = null;
           globalConstants.isAdministrador = false;
           Swal.fire('Exito',`El login se realizo con exito`,"success");
-          this.router.navigateByUrl("admin/ciudadanos/administrar");
+          this.router.navigateByUrl("ciudadano/principal");
         }, 
         error: (err) => {
           Swal.fire('Error',`Error al realizar el login: ${err.error.message}`,"error") ;
