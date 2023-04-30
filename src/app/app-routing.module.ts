@@ -36,11 +36,6 @@ import { TramitesNuevoComponent } from './pages/tramites-administrador/tramites-
 import { TramitesAsignadosComponent } from './pages/tramites-administrador/tramites-asignados/tramites-asignados.component';
 import { TramitesFinalizadosComponent } from './pages/tramites-administrador/tramites-finalizados/tramites-finalizados.component';
 import { TramitesNuevoslisComponent } from './pages/tramites-administrador/tramites-nuevoslis/tramites-nuevoslis.component';
-import { TramitesCiudadanoNuevoComponent } from './pages/tramites-ciudadano/tramites-ciudadano-nuevo/tramites-ciudadano-nuevo.component';
-import { TramitesCiudadanoNuevoslisComponent } from './pages/tramites-ciudadano/tramites-ciudadano-nuevoslis/tramites-ciudadano-nuevoslis.component';
-import { TramitesCiudadanoAsignadosComponent } from './pages/tramites-ciudadano/tramites-ciudadano-asignados/tramites-ciudadano-asignados.component';
-import { TramitesCiudadanoFinalizadosComponent } from './pages/tramites-ciudadano/tramites-ciudadano-finalizados/tramites-ciudadano-finalizados.component';
-import { TramitesCiudadanoPrincipalComponent } from './pages/tramites-ciudadano/tramites-ciudadano-principal/tramites-ciudadano-principal.component';
 import { TramitesAdministrarComponent } from './pages/tramites-administrador/tramites-administrar/tramites-administrar.component';
 import { UsuariosListaComponent } from './pages/usuarios/usuarios-lista/usuarios-lista.component';
 import { CiudadanosAdministrarComponent } from './pages/ciudadanos/ciudadanos-administrar/ciudadanos-administrar.component';
@@ -53,7 +48,6 @@ import { CentrosMediacionListaComponent } from './pages/centros-mediacion/centro
 import { CategoriasListaComponent } from './pages/categorias/categorias-lista/categorias-lista.component';
 import { CategoriaAdministrarComponent } from './pages/categorias/categoria-administrar/categoria-administrar.component';
 import { CiudadanoUsuarioComponent } from './pages/ciudadano-usuario/ciudadano-usuario.component';
-import { TramitesCiudadanoAdministrarComponent } from './pages/tramites-ciudadano/tramites-ciudadano-administrar/tramites-ciudadano-administrar.component';
 import { LoginUsuarioComponent } from './auth/login-usuario/login-usuario.component';
 import { CiudadanoPrincipalComponent } from './pages/ciudadano-perfil/ciudadano-principal/ciudadano-principal.component';
 import { CiudadanoTramitesNuevoComponent } from './pages/ciudadano-perfil/ciudadano-tramites-nuevo/ciudadano-tramites-nuevo.component';
@@ -96,8 +90,7 @@ import { TramitesAdministrarMediadorComponent } from './pages/tramites-administr
                     {path: 'usuario/tramites/administrar', component: TramitesAdministrarComponent},
                     {path: 'usuario/tramites/asignados', component: TramitesUsuarioAsignadosComponent},
                     {path: 'usuario/tramites/finalizados', component: TramitesUsuarioFinalizadosComponent},
-                    
-                    
+                                        
                 ],
             },
             {path:'pages/landing', component: LandingComponent},

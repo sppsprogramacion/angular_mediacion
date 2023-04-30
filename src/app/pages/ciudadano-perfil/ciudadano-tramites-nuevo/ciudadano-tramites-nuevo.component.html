@@ -28,10 +28,17 @@
 
                             </div>
                             <div class="formgrid grid">
-                                <div class="field col-4">
-                                    <label for="id_opcion_sino">¿Está asesorado?</label>
-                                    <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="esta_asesorado" placeholder="Seleccionar...">
+                                <div class="field col-12 sm:col-6 md:col-4">
+                                    <label for="esta_asesorado">¿Está asesorado?</label>
+                                    <p-dropdown id="esta_asesorado" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="esta_asesorado" placeholder="Seleccionar...">
                                     </p-dropdown>
+                                    <small *ngIf="isValid('esta_asesorado')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.esta_asesorado" >
+                                            <div  *ngIf="formaTramite.get('esta_asesorado')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
                                 </div>
                             </div>
                         </div>
@@ -45,31 +52,45 @@
 
                             </div>
                             <div class="formgrid grid">
-                                <div class="field col">
+                                <div class="field col-12 md:col-6">
                                     <label for="departamento_id">Departamento</label>
                                     <p-dropdown id="departamento_id" [options]="listaDepartamentos" optionLabel="departamento" optionValue="id_departamento" formControlName="departamento_id" placeholder="Seleccionar..." (onChange)="onChangeDepartamento()">
                                     </p-dropdown>
+                                    <small *ngIf="isValid('departamento_id')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.departamento_id" >
+                                            <div  *ngIf="formaTramite.get('departamento_id')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
                                 </div>
-                                <div class="field col">
+                                <div class="field col-12 md:col-6">
                                     <label for="municipio_id">Municipio</label>
                                     <p-dropdown id="municipio_id" [options]="listaMunicipios" optionLabel="municipio" optionValue="id_municipio" formControlName="municipio_id" placeholder="Seleccionar...">
                                     </p-dropdown>
+                                    <small *ngIf="isValid('municipio_id')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.municipio_id" >
+                                            <div  *ngIf="formaTramite.get('municipio_id')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
                                 </div>
                             </div>
 
                             <div class="formgrid grid">
-                                <div class="field col">
+                                <div class="field col-12 md:col-6">
                                     <label for="localidad_barrio">Barrio</label>
                                     <input type="text" pInputText id="localidad_barrio" formControlName="localidad_barrio" />
                                     <small *ngIf="isValid('localidad_barrio')" class="p-error">
-                                    <div *ngFor="let validation of user_validation_messages.localidad_barrio" >
-                                        <div  *ngIf="formaTramite.get('localidad_barrio')?.hasError(validation.type)">
-                                            {{validation.message}}
+                                        <div *ngFor="let validation of user_validation_messages.localidad_barrio" >
+                                            <div  *ngIf="formaTramite.get('localidad_barrio')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
                                         </div>
-                                    </div>
-                                </small>
+                                    </small>
                                 </div>
-                                <div class="field col">
+                                <div class="field col-12 md:col-6">
                                     <label for="calle_direccion">Calle/dirección</label>
                                     <input type="text" pInputText id="calle_direccion" formControlName="calle_direccion" />
                                     <small *ngIf="isValid('calle_direccion')" class="p-error">
@@ -82,16 +103,16 @@
                                 </div>
                             </div>
                             <div class="formgrid grid">
-                                <div class="field col">
+                                <div class="field col-12 md:col-6">
                                     <label for="numero_dom">Número</label>
                                     <input type="text" pInputText id="numero_dom" formControlName="numero_dom" />
                                     <small *ngIf="isValid('numero_dom')" class="p-error">
-                                    <div *ngFor="let validation of user_validation_messages.numero_dom" >
-                                        <div  *ngIf="formaTramite.get('numero_dom')?.hasError(validation.type)">
-                                            {{validation.message}}
+                                        <div *ngFor="let validation of user_validation_messages.numero_dom" >
+                                            <div  *ngIf="formaTramite.get('numero_dom')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
                                         </div>
-                                    </div>
-                                </small>
+                                    </small>
                                 </div>
 
                             </div>
@@ -107,18 +128,32 @@
 
                             </div>
                             <div class="formgrid grid">
-                                <div class="field col-6">
+                                <div class="field col-12 md:col-8 lg:col-6">
                                     <label for="departamento_id_centro">Departamento</label>
                                     <p-dropdown id="departamento_id_centro" [options]="listaDepartamentos" optionLabel="departamento" optionValue="id_departamento" formControlName="departamento_id_centro" placeholder="Seleccionar..." (onChange)="onChangeDepartamentoParaCentros()">
                                     </p-dropdown>
+                                    <small *ngIf="isValid('departamento_id_centro')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.departamento_id_centro" >
+                                            <div  *ngIf="formaTramite.get('departamento_id_centro')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
                                 </div>
                             </div>
                             <div class="formgrid grid">
-                                <div class="field col">
-                                    <label for="centro_mediacion_id">Centro Mediacion</label>
-                                    <p-dropdown id="municipio_id" [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" formControlName="centro_mediacion_id" placeholder="Seleccionar...">
-                                    </p-dropdown>
+                                <div class="field col-12">
+                                    <label for="centro_mediacion_id">Centro Mediación</label>
+                                    <p-listbox [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" formControlName="centro_mediacion_id" styleClass="listbox1" [listStyle]="{'max-height':'250px'}"></p-listbox>
+                                    <small *ngIf="isValid('centro_mediacion_id')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.centro_mediacion_id" >
+                                            <div  *ngIf="formaTramite.get('centro_mediacion_id')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
                                 </div>
+                                
                             </div>
 
                         </div>
@@ -133,20 +168,27 @@
 
                             </div>
                             <div class="formgrid grid">
-                                <div class="field col-6">
+                                <div class="field col-12 md:col-6">
                                     <label for="objeto_id">Motivo de la mediación (según Ley 732, Art. 10)</label>
                                     <p-dropdown id="objeto_id" [options]="listObjetos" optionLabel="objeto" optionValue="id_objeto" formControlName="objeto_id" placeholder="Seleccionar...">
                                     </p-dropdown>
+                                    <small *ngIf="isValid('objeto_id')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.objeto_id" >
+                                            <div  *ngIf="formaTramite.get('objeto_id')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
                                 </div>
                             </div>
 
                             <div class="formgrid grid">
-                                <div class="field col-6">
+                                <div class="field col-12 sm:col-8 md:col-6">
                                     <label for="id_opcion_sino">¿Existe violencia entre las partes?</label>
                                     <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="violencia_partes">
                                     </p-dropdown>
                                 </div>
-                                <div class="field col-6">
+                                <div class="field col-12 sm:col-8 md:col-6">
                                     <label for="id_opcion_sino">¿Existe violencia de genero?</label>
                                     <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="violencia_genero" (onChange)="onChangeViolenciaGenero()">
                                     </p-dropdown>
@@ -170,17 +212,17 @@
                             </div>
 
                             <div class="formgrid grid">
-                                <div class="field col-4">
+                                <div class="field col-12 sm:col-6 md:col-4">
                                     <label for="id_opcion_sino">pdf denuncia</label>
                                     <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="pdf_denuncia">
                                     </p-dropdown>
                                 </div>
-                                <div class="field col-4">
+                                <div class="field col-12 sm:col-6 md:col-4">
                                     <label for="id_opcion_sino">pdf cautelar</label>
                                     <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="pdf_cautelar">
                                     </p-dropdown>
                                 </div>
-                                <div class="field col-4">
+                                <div class="field col-12 sm:col-6 md:col-4">
                                     <label for="id_opcion_sino">pdf ingresos</label>
                                     <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="pdf_ingresos">
                                     </p-dropdown>

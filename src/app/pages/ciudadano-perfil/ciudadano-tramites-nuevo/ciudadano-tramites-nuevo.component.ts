@@ -65,14 +65,14 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.formaTramite = this.fb.group({
       //ciudadano_id: [,[]],
       esta_asesorado: [false,[Validators.requiredTrue]],
-      departamento_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],      
-      municipio_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-      departamento_id_centro: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-      centro_mediacion_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      departamento_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(2)]],      
+      municipio_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(2)]],
+      departamento_id_centro: [1,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(2)]],
+      centro_mediacion_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(1)]],
       localidad_barrio: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       calle_direccion: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],        
       numero_dom: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-      objeto_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      objeto_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
       violencia_genero: [false,[Validators.required]],
       violencia_partes: [false,[Validators.required]],
       existe_denuncia: [false,[Validators.required]],
@@ -81,8 +81,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       pdf_cautelar: [false,[Validators.required]],
       pdf_ingresos: [false,[Validators.required]],
       pdf_negativa: [false,[Validators.required]],
-      modalidad_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-      variante_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],     
+      modalidad_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      variante_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/)]],     
     
     });
   }
@@ -91,15 +91,17 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   user_validation_messages = {
     //datos tramite
     'esta_asesorado': [
-      { type: 'requiredTrue', message: 'Debe estar asesorado por un abogado.' }
+      { type: 'required', message: 'Debe estar asesorado por un abogado.' }
     ],    
     'departamento_id': [
       { type: 'required', message: 'El departamento es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' },
+      { type: 'min', message: 'Debe seleccioanr un departamento.' }
     ],
     'municipio_id': [
       { type: 'required', message: 'El municipio es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' },
+      { type: 'min', message: 'Debe seleccioanr un municipio.' }
     ],
     'localidad_barrio': [
         { type: 'required', message: 'La localidad/barrio es requerido.' },
@@ -115,9 +117,20 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       { type: 'required', message: 'El número de domicilio es requerido' },
       { type: 'pattern', message: 'Solo se pueden ingresar números.' }
     ],
+    'departamento_id_centro': [
+      { type: 'required', message: 'El departamento es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' },
+      { type: 'min', message: 'Debe seleccioanr un departamento.' }
+    ],
+    'centro_mediacion_id': [
+      { type: 'required', message: 'El centro de mediación es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' },
+      { type: 'min', message: 'Debe seleccioanr un centro de mediación.' }
+    ],
     'objeto_id': [
       { type: 'required', message: 'El objeto es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' },
+      { type: 'min', message: 'Debe seleccioanr el motivo.' }
     ],
     
     'violencia_genero': [
@@ -147,51 +160,38 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   //VALIDACIONES DE FORMULARIO
   isValid(campo: string): boolean{     
     
-    return this.formaTramite.get(campo)?.invalid && this.formaTramite.get(campo)?.touched;      
+    return this.formaTramite.get(campo)?.invalid && this.formaTramite.get(campo)?.dirty;      
   }
 
   ngOnInit(): void {
     
     this.ciudadanoData = this.dataService.ciudadanoData
-    console.log("ciudadanoData nuevo", this.ciudadanoData);
 
     //CARGA DE LISTADOS DESDE DATA MOKEADA
     this.listObjetos = objetos;
     this.listSexo = sexo;
     this.listSiNo = opcionSiNo;
     this.listaDepartamentos = departamentos;
-    this.cargarMunicipios(1);
+    this.cargarMunicipios(1);    
     
-    console.log("sino", this.listSiNo);
-    this.listarCiudadanos();
   }
 
   //GUARDAR Tramite  
   submitFormTramite(){
     if(this.formaTramite.invalid){                        
-        // this.msgs = [];
-        // this.msgs.push({ severity: 'warn', summary: 'Errores en formulario', detail: 'Cargue correctamente los datos' });
-        // this.serviceMensajes.add({key: 'tst', severity: 'warn', summary: 'Errores en formulario', detail: 'Cargue correctamente los dato'});
-        // Swal.fire(
-            
-        //     {target: document.getElementById('form-modal')},
-        //     'Formulario Tramite con errores','Complete correctamente todos los campos del formulario',"warning"
-        //     );
+        Swal.fire('Formulario incompleto',`Complete correctamente todos los campos del formulario`,"error");
         let fechaAuxiliar = this.datePipe.transform(this.formaTramite.get('fecha_nac')?.value,"yyyy-MM-dd")!;
-        // console.log("fecha", this.formaRegistro.get('fecha_nac')?.value);
-        // console.log("fecha aux", fechaAuxiliar);
-        console.log("errores formulario");
-        return Object.values(this.formaTramite.controls).forEach(control => control.markAsTouched());
+        console.log("errores formulario", this.formaTramite.controls);
+        return Object.values(this.formaTramite.controls).forEach(control => control.markAsDirty());
     }
 
     let dataTramite: Partial<TramiteModel>;
+    
     let data:any;
     data ={
-     dataTramite : {
-      //ciudadano_id: parseInt(this.formaTramite.get('ciudadano_id')?.value),
+    dataTramite : {
       ciudadano_id: this.ciudadanoData.id_ciudadano,
       esta_asesorado: this.formaTramite.get('esta_asesorado')?.value,
-      provincia_id: 18,
       departamento_id: parseInt(this.formaTramite.get('departamento_id')?.value),
       municipio_id: parseInt(this.formaTramite.get('municipio_id')?.value),
       localidad_barrio: this.formaTramite.get('localidad_barrio')?.value,
@@ -207,8 +207,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       pdf_cautelar: this.formaTramite.get('pdf_cautelar')?.value,
       pdf_ingresos: this.formaTramite.get('pdf_ingresos')?.value,
       pdf_negativa: this.formaTramite.get('pdf_negativa')?.value,
-      modalidad_id: parseInt(this.formaTramite.get('modalidad_id')?.value),
-      variante_id: parseInt(this.formaTramite.get('variante_id')?.value),
+      // modalidad_id: parseInt(this.formaTramite.get('modalidad_id')?.value),
+      // variante_id: parseInt(this.formaTramite.get('variante_id')?.value),
     }
   }
     
@@ -219,22 +219,20 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       .subscribe({
         next: (resultado) => {
           let tramiteRes: TramiteModel = resultado;
-          Swal.fire('Exito',`El registro se realizó con exito`,"success");
+          Swal.fire('Exito',`La solicitud se registró con exito`,"success");
         },
         error: (err) => {
           Swal.fire('Error',`Error al guardar el tramite: ${err.error.message}`,"error")
         }
-      });
-          
+      });          
     //FIN GUARDAR NUEVO TRAMITE 
-
   }    
   //FIN GUARDAR CIUDADANO............................................................
 
   
   clavesValidation(): boolean{
+    
     return ((this.formaTramite.get('clave1').value === this.formaTramite.get('clave2').value))?  false: true;
-        
   }
 
   mostrarDialogTramite(){
@@ -255,32 +253,37 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     const id = this.formaTramite.get('departamento_id')?.value;
     if(id != null){               
         this.cargarMunicipios(parseInt(id.toString()));
-        this.formaTramite.get('municipio_id')?.setValue(1);               
-        this.formaTramite.get('municipio_id')?.markAsUntouched();
+        this.formaTramite.get('municipio_id')?.setValue(1);
         
     }
   }
 
   cargarCentrosMediacion(id_departamento: number){
-    this.centroMediacionService.listarCentroMediacionXDepartamento(id_departamento).
-      subscribe(respuesta => {
-        this.listaCentrosMediacion= respuesta[0];
-        this.elementosCentroMediacion = this.listaCentrosMediacion.map(centro => {
-          return {
-            clave: centro.id_centro_mediacion,
-            value: centro.centro_mediacion + " (" + centro.municipio.municipio + " - " + centro.localidad_barrio + " - " + centro.calle_direccion + " " + centro.numero_dom + ")"
-            }
-        });        
-    
+    this.centroMediacionService.listarCentroMediacionXDepartamento(id_departamento)
+      .subscribe({
+        next: (respuesta) => {
+          this.listaCentrosMediacion= respuesta[0];
+          this.elementosCentroMediacion = this.listaCentrosMediacion.map(centro => {
+            return {
+              clave: centro.id_centro_mediacion,
+              value: centro.centro_mediacion + " (municipio: " + centro.municipio.municipio + " - dirección: " + centro.localidad_barrio + " - " + centro.calle_direccion + " - n° " + centro.numero_dom + ")"
+              }
+          });
+          if(this.elementosCentroMediacion.length > 0 ){
+            let valueAux: number = this.elementosCentroMediacion[0].clave;        
+            this.formaTramite.get('centro_mediacion_id')?.setValue(valueAux);
+          }
+          else{
+            this.formaTramite.get('centro_mediacion_id')?.setValue(0);  
+          }
+        }     
     });  
   }
 
   onChangeDepartamentoParaCentros(){
     const id = this.formaTramite.get('departamento_id_centro')?.value;
     if(id != null){               
-        this.cargarCentrosMediacion(parseInt(id.toString()));
-        this.formaTramite.get('centro_mediacion_id')?.setValue(1);               
-        this.formaTramite.get('centro_mediacion_id')?.markAsUntouched();
+        this.cargarCentrosMediacion(parseInt(id.toString()));              
         
     }
   }
@@ -305,16 +308,6 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       this.existe_violencia_genero= false;
     }
   }
-
-  //LISTADO DE MEDIADORES
-  listarCiudadanos(){    
-    this.ciudadanoService.listarCiudadanosTodos().
-        subscribe(respuesta => {
-        this.listCiudadano= respuesta[0];
-    
-    });
-  }
-  //FIN LISTADO DE MEDIADORES............................
-
+  
 }
 

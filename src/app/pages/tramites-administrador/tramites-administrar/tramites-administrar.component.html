@@ -169,62 +169,97 @@
     </div>
 
     <!-- DIALOG FORMULARIO USUARIOS -->
-    <p-dialog id="usuarioTramiteDialog" [(visible)]="usuarioTramiteDialog" [style]="{width: '500px'}" header="Asignar Usuario" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}">
-        <!-- MENSAJE DE ERROR -->
-        <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
-        <ng-template pTemplate="content">
-            <div class="p-formgrid grid">
-                <!-- FORMULARIO TRAMITES -->
-                <div class="col-12">
-                    <form [formGroup]="formaMediadorAsignado">
-                        <div class="formgrid grid">
-                            <div class="field col-12">
-                                <label for="departamento_id_centro">Departamento</label>
-                                <p-dropdown id="departamento_id_centro" [options]="listDepartamentos" optionLabel="departamento" optionValue="id_departamento" formControlName="departamento_id_centro" placeholder="Seleccionar..." (onChange)="onChangeDepartamentoParaCentros()">
-                                </p-dropdown>
-                            </div>
-                        </div>
-                        <div class="formgrid grid">
-                            <div class="field col">
-                                <label for="centro_mediacion_id">Centro Mediacion</label>
-                                <p-dropdown id="centro_mediacion_id" [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" formControlName="centro_mediacion_id" placeholder="Seleccionar..." (onChange)="onChangeCentroMediacion()">
-                                </p-dropdown>
-                            </div>
-                        </div>
-                        <div class="formgrid grid">
-                            <div class="field col-12">
-                                <label for="usuario_id" class="text font-medium">Seleccionar un usuario</label>
-                                <p-dropdown id="usuario_id" [options]="elementosUsuariosCentro" optionLabel="value" optionValue="clave" formControlName="usuario_id" placeholder="Seleccionar..." >
-                                </p-dropdown>    
-                            </div>
-                            
-                        </div>
-                        <div class="formgrid grid">
-                            <div class="field col-12">
-                                <label for="funcion_tramite_id" class="text font-medium">Funcion en el tramite</label>
-                                <p-dropdown id="funcion_tramite_id" [options]="listFuncionTramite" optionLabel="funcion_tramite" optionValue="id_funcion_tramite" formControlName="funcion_tramite_id">
-                                </p-dropdown>
-                            </div>
-                        </div>
+    <!-- <p-dialog id="usuarioTramiteDialog" [(visible)]="usuarioTramiteDialog" [style]="{width: '500px'}" header="Asignar Usuario" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}"></p-dialog> -->
     
-                        <div class="formgrid grid">
-                            <div class="field col-12">
-                                <label for="detalles" class="text font-medium">Detalles</label>
-                                <input type="text" pInputText id="detalles" formControlName="detalles" />
+        <p-dialog id="usuarioTramiteDialog" [(visible)]="usuarioTramiteDialog" [style]="{width: '500px'}"  header="Asignar Usuario" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}">
+            <!-- MENSAJE DE ERROR -->
+            <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
+            <ng-template pTemplate="content">
+                <div class="p-formgrid grid">
+                    <!-- FORMULARIO TRAMITES -->
+                    <div class="col-12">
+                        <form [formGroup]="formaMediadorAsignado">
+                            <div class="formgrid grid">
+                                <div class="field col-12">
+                                    <label for="departamento_id_centro">Departamento</label>
+                                    <p-dropdown id="departamento_id_centro" [options]="listDepartamentos" optionLabel="departamento" optionValue="id_departamento" formControlName="departamento_id_centro" placeholder="Seleccionar..." (onChange)="onChangeDepartamentoParaCentros()">
+                                    </p-dropdown>
+                                    <small *ngIf="isValid('departamento_id_centro')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.departamento_id_centro" >
+                                            <div  *ngIf="formaMediadorAsignado.get('departamento_id_centro')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                            <div class="formgrid grid">
+                                <div class="field col-12">
+                                    <label for="centro_mediacion_id">Centro Mediacion</label>
+                                    <p-dropdown id="centro_mediacion_id" [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" formControlName="centro_mediacion_id" placeholder="Seleccionar..." (onChange)="onChangeCentroMediacion()">
+                                    </p-dropdown>
+                                    <small *ngIf="isValid('centro_mediacion_id')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.centro_mediacion_id" >
+                                            <div  *ngIf="formaMediadorAsignado.get('centro_mediacion_id')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="formgrid grid">
+                                <div class="field col-12">
+                                    <label for="usuario_id" class="text font-medium">Seleccionar un usuario</label>
+                                    <p-dropdown id="usuario_id" [options]="elementosUsuariosCentro" optionLabel="value" optionValue="clave" formControlName="usuario_id" placeholder="Seleccionar..." >
+                                    </p-dropdown>    
+                                    <small *ngIf="isValid('usuario_id')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.usuario_id" >
+                                            <div  *ngIf="formaMediadorAsignado.get('usuario_id')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
+                                </div>                            
+                            </div>
+                            <div class="formgrid grid">
+                                <div class="field col-12">
+                                    <label for="funcion_tramite_id" class="text font-medium">Funcion en el tramite</label>
+                                    <p-dropdown id="funcion_tramite_id" [options]="listFuncionTramite" optionLabel="funcion_tramite" optionValue="id_funcion_tramite" formControlName="funcion_tramite_id" placeholder="Seleccionar..." >
+                                    </p-dropdown>
+                                    <small *ngIf="isValid('funcion_tramite_id')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.funcion_tramite_id" >
+                                            <div  *ngIf="formaMediadorAsignado.get('funcion_tramite_id')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
+                                </div>
+                            </div>    
+                            <div class="formgrid grid">
+                                <div class="field col-12">
+                                    <label for="detalles" class="text font-medium">Detalles</label>
+                                    <input type="text" pInputText id="detalles" formControlName="detalles" />
+                                    <small *ngIf="isValid('detalles')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.detalles" >
+                                            <div  *ngIf="formaMediadorAsignado.get('detalles')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!--  FIN FORMULARIO TRAMITES -->
                 </div>
-                <!--  FIN FORMULARIO TRAMITES -->
-            </div>
-        </ng-template>
+            </ng-template>
 
-        <ng-template pTemplate="footer" class="mt-1">
-            <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormUsuarioTramite()"></button>
-            <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogUsuarioTramite()"></button>
-
-        </ng-template>
-    </p-dialog>
+            <ng-template pTemplate="footer" class="mt-1">
+                <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormUsuarioTramite()"></button>
+                <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogUsuarioTramite()"></button>
+            </ng-template>
+        </p-dialog>
+    
     <!-- FIN DIALOG FORMULARIO  USUARIOS -->
     
 </div>

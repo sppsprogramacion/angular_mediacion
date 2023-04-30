@@ -30,7 +30,7 @@ import { CentroAdministrarComponent } from './centros-mediacion/centro-administr
 import { CentrosMediacionListaComponent } from './centros-mediacion/centros-lista/centros-mediacion-lista.component';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
-import {CardModule} from 'primeng/card';
+import { CardModule } from 'primeng/card';
 import { CategoriaAdministrarComponent } from './categorias/categoria-administrar/categoria-administrar.component';
 import { CategoriasListaComponent } from './categorias/categorias-lista/categorias-lista.component';
 import { CiudadanoUsuarioComponent } from './ciudadano-usuario/ciudadano-usuario.component';
@@ -39,6 +39,7 @@ import { CiudadanoTramitesNuevoComponent } from './ciudadano-perfil/ciudadano-tr
 import { CiudadanoPrincipalComponent } from './ciudadano-perfil/ciudadano-principal/ciudadano-principal.component';
 import { CiudadanoTramitesAdministrarComponent } from './ciudadano-perfil/ciudadano-tramites-administrar/ciudadano-tramite-administrar.component';
 import { TramitesAdministrarMediadorComponent } from './tramites-administrador/tramites-administrar-mediador/tramites-administrar-mediador.component';
+import { ListboxModule } from 'primeng/listbox';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { TramitesAdministrarMediadorComponent } from './tramites-administrador/t
     DropdownModule,
     InputTextModule,
     InputTextareaModule,
+    ListboxModule,
     MessageModule,
     MessagesModule,
     PasswordModule,

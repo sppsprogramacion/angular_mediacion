@@ -18,7 +18,7 @@ export class TramitesService {
 
   guardarTramite(data: Partial<TramiteModel>){    
     this.tramite={...data};
-    return this.http.post(`${base_url}/tramites/prueba-crear`, this.tramite);
+    return this.http.post(`${base_url}/tramites/nuevo-tramite`, this.tramite);
   }
 
   listarTramitesTodos(){
