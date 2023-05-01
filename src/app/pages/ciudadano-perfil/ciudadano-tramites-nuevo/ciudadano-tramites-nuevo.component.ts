@@ -19,6 +19,7 @@ import { TramitesService } from 'src/app/service/tramites.service';
 import Swal from 'sweetalert2';
 import { globalConstants } from '../../../common/global-constants';
 import { ElementoModel } from 'src/app/models/elemento.model';
+import { ConvocadoModel } from '../../../models/convocado.model';
 
 @Component({
   selector: 'app-ciudadano-tramites-nuevo',
@@ -53,6 +54,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   //FORMULARIOS
   formaTramite: FormGroup;
   formaConvocado: FormGroup;
+
   constructor(
     private fb: FormBuilder,
     private readonly datePipe: DatePipe,
@@ -84,6 +86,23 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       modalidad_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       variante_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/)]],     
     
+    });
+
+    this.formaConvocado = this.fb.group({
+      apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      dni: ['',[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.minLength(5)]],
+      sexo_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      departamento_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(2)]],      
+      municipio_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(2)]],
+      codigo_postal: [0,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(1)]],
+      localidad_barrio: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+      calle_direccion: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],        
+      numero_dom: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      punto_referencia: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],       
+      telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+      email: ['',[Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
+
     });
   }
 
@@ -219,6 +238,24 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       .subscribe({
         next: (resultado) => {
           let tramiteRes: TramiteModel = resultado;
+          let dataConvocado: Partial<ConvocadoModel>
+          dataConvocado= {
+            tramite_numero: tramiteRes.numero_tramite,
+            apellido: this.formaConvocado.get('apellido')?.value,
+            nombre: this.formaConvocado.get('nombre')?.value,
+            dni: parseInt(this.formaConvocado.get('dni')?.value),
+            sexo_id: parseInt(this.formaConvocado.get('sexo_id')?.value),
+            departamento_id: parseInt(this.formaConvocado.get('departamento_id')?.value),
+            municipio_id: parseInt(this.formaConvocado.get('municipio_id')?.value),
+            codigo_postal: parseInt(this.formaConvocado.get('codigo_postal')?.value),
+            localidad_barrio: this.formaConvocado.get('localidad_barrio')?.value,
+            calle_direccion: this.formaConvocado.get('calle_direccion')?.value,        
+            numero_dom: parseInt(this.formaConvocado.get('numero_dom')?.value),
+            punto_referencia: this.formaConvocado.get('punto_referencia')?.value,
+            telefono: this.formaConvocado.get('telefono')?.value,
+            email: this.formaConvocado.get('email')?.value,
+          }
+
           Swal.fire('Exito',`La solicitud se registró con exito`,"success");
         },
         error: (err) => {
