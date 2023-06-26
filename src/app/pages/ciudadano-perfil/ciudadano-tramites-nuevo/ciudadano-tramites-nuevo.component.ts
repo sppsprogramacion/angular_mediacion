@@ -47,11 +47,13 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   listSiNo: any[] = [];
   listCiudadano: CiudadanoModel[]=[]; 
   listConvocados: any[]=[]; 
+  listConvocadosNoSalta: any[]=[]; 
 
   elementosCentroMediacion: ElementoModel[]=[];
 
   //modelos 
   ciudadanoData: CiudadanoModel;
+  convocado: any;
 
   //variables booleanas 
   formTramiteDialog: boolean = false;
@@ -262,6 +264,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     
     return this.formaProvincia.get(campo)?.invalid && this.formaProvincia.get(campo)?.touched;      
   }
+  //FIN VALIDACIONES DE FORMULARIO...............................................................
 
   ngOnInit(): void {
     
@@ -276,6 +279,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.cargarMunicipios(1);    
     
   }
+  //FIN ONINIT.................................
 
   //GUARDAR Tramite  
   submitFormTramite(){
@@ -349,8 +353,36 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       });          
     //FIN GUARDAR NUEVO TRAMITE 
   }    
-  //FIN GUARDAR CIUDADANO............................................................
+  //FIN GUARDAR Tramite............................................................
+  
+  //AGREGAR CONVOCADOS
+  agregarConvocado(){
+    
+    this.convocado = {
+      apellido: this.formaConvocado.get('apellido')?.value,
+      nombre: this.formaConvocado.get('nombre')?.value,
+      dni: parseInt(this.formaConvocado.get('dni')?.value),
+      sexo_id: parseInt(this.formaConvocado.get('sexo_id')?.value),
+      departamento_id: parseInt(this.formaDomicilioSalta.get('departamento_id')?.value),
+      municipio_id: parseInt(this.formaDomicilioSalta.get('municipio_id')?.value),
+      codigo_postal: parseInt(this.formaDomicilioSalta.get('codigo_postal')?.value),
+      localidad_barrio: this.formaDomicilioSalta.get('localidad_barrio')?.value,
+      calle_direccion: this.formaDomicilioSalta.get('calle_direccion')?.value,        
+      numero_dom: parseInt(this.formaDomicilioSalta.get('numero_dom')?.value),
+      punto_referencia: this.formaDomicilioSalta.get('punto_referencia')?.value,
+      telefono: this.formaDomicilioSalta.get('telefono')?.value,
+      email: this.formaDomicilioSalta.get('email')?.value,
+    }
 
+    this.listConvocados.push(this.convocado);
+    this.convocado = {};
+    console.log("lista convocados", this.listConvocados);
+  }
+
+  agregarConvocadoNoSalta(){
+
+  }
+  //AGREGAR CONVOCADOS..................................................
   
   clavesValidation(): boolean{
     

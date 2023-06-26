@@ -153,7 +153,7 @@
                                         </div>
                                     </small>
                                 </div>
-                                
+
                             </div>
 
                         </div>
@@ -247,21 +247,21 @@
                                         <div class="my-2">
                                             <button pButton pRipple label="Ingresar convocado" icon="pi pi-plus" class="p-button-success mr-2" (click)="openDialogConvocado()"></button>
                                         </div>
-                                    </ng-template>                        
+                                    </ng-template>
                                 </p-toolbar>
                                 <!-- TABLA DE CONVOCADOS -->
                                 <p-table #dt1 [value]="listConvocados" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
                                     <ng-template pTemplate="header">
                                         <tr>
-                                            <th style="width: 3rem"></th>                        
+                                            <th style="width: 3rem"></th>
                                             <th>
                                                 <div style="width: 6rem" class="flex justify-content-between align-items-left">
-                                                    Apellido                                
+                                                    Apellido
                                                 </div>
                                             </th>
                                             <th>
                                                 <div class="flex justify-content-between align-items-center">
-                                                    Nombre                                
+                                                    Nombre
                                                 </div>
                                             </th>
                                             <th>
@@ -301,12 +301,12 @@
                                             </th>
                                             <th>
                                                 <div class="flex justify-content-between align-items-center">
-                                                    Télefo                              
+                                                    Télefo
                                                 </div>
                                             </th>
                                             <th>
                                                 <div class="flex justify-content-between align-items-center">
-                                                    E-mail                                
+                                                    E-mail
                                                 </div>
                                             </th>
 
@@ -361,11 +361,11 @@
                                     </ng-template>
                                 </p-table>
                                 <!-- FIN TABLA DE CONVOCADOS -->
-                                
+
                             </div>
-                            <!-- DIALOG FORMULARIO CONVOCADOS -->  
+                            <!-- DIALOG FORMULARIO CONVOCADOS -->
                             <!-- <p-dialog id="usuarioTramiteDialog" [(visible)]="convocadoTramiteDialog" [style]="{width: '500px'}"  class="p-fluid" header="Nuevo Convocado" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}"> -->
-                            <p-dialog id="usuarioTramiteDialog" [(visible)]="convocadoTramiteDialog" [style]="{width: '500px','min-height':'400px'}" [position] = "posicion"  class="p-fluid" header="Nuevo Convocado" [closable]="false" [modal]="true" >
+                            <p-dialog id="usuarioTramiteDialog" [(visible)]="convocadoTramiteDialog" [style]="{width: '500px','min-height':'400px'}" [position]="posicion" class="p-fluid" header="Nuevo Convocado" [closable]="false" [modal]="true">
                                 <!-- MENSAJE DE ERROR -->
                                 <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
                                 <ng-template pTemplate="content">
@@ -392,7 +392,7 @@
                                         <!--  FIN FORMULARIO PROVINCIA -->
 
                                         <!-- FORMULARIO CONVOCADOS -->
-                                        <div class="col-12 "  *ngIf="isDatosPersonales">
+                                        <div class="col-12 " *ngIf="isDatosPersonales">
                                             <form [formGroup]="formaConvocado">
                                                 <h6 class="block font-bold font-medium">Datos personales</h6>
 
@@ -420,7 +420,7 @@
                                                         </small>
                                                     </div>
                                                 </div>
-                        
+
                                                 <div class="formgrid grid">
                                                     <div class="field col-12 md:col-6 lg:col-6">
                                                         <label for="sexo_id">Sexo</label>
@@ -438,9 +438,9 @@
                                                             </div>
                                                         </small>
                                                     </div>
-                                                </div>   
-                                                                                            
-                        
+                                                </div>
+
+
                                             </form>
                                         </div>
                                         <!--  FIN FORMULARIO CONVOCADOS -->
@@ -487,9 +487,9 @@
                                                             </div>
                                                         </small>
                                                     </div>
-                                                    
+
                                                 </div>
-                    
+
                                                 <div class="formgrid grid">
                                                     <div class="field col-12 md:col-6">
                                                         <label for="localidad_barrio">Barrio</label>
@@ -525,7 +525,7 @@
                                                                 </div>
                                                             </div>
                                                         </small>
-                                                    </div> 
+                                                    </div>
                                                     <div class="field col-12 md:col-6">
                                                         <label for="punto_referencia">Punto de Referencia</label>
                                                         <input type="text" pInputText id="punto_referencia" formControlName="punto_referencia" />
@@ -536,7 +536,7 @@
                                                                 </div>
                                                             </div>
                                                         </small>
-                                                    </div>                   
+                                                    </div>
                                                 </div>
                                                 <h6 class="block font-bold font-medium">Contacto</h6>
                                                 <div class="formgrid grid">
@@ -562,15 +562,15 @@
                                                         </div>
                                                     </small>
                                                     </div>
-                                                </div>                                                
+                                                </div>
                                             </form>
                                         </div>
                                         <!-- FIN FORMULARIO DOMICILIO CONVOCADOS -->
 
                                         <!-- FORMULARIO DOMICILIO CONVOCADOS NO SALTA-->
                                         <div class="col-12" *ngIf="isNoSalta">
-                                            <form [formGroup]="formaDomicilioNoSalta">  
-                                                <h6 class="block font-bold font-medium">Contacto</h6>                                              
+                                            <form [formGroup]="formaDomicilioNoSalta">
+                                                <h6 class="block font-bold font-medium">Contacto</h6>
                                                 <div class="formgrid grid">
                                                     <div class="field col-12 md:col-6">
                                                         <label for="codigo_postal">Codigo Postal</label>
@@ -582,8 +582,8 @@
                                                                 </div>
                                                             </div>
                                                         </small>
-                                                    </div>                                                    
-                                                </div>     
+                                                    </div>
+                                                </div>
                                                 <div class="formgrid grid">
                                                     <div class="field col-12 md:col-6">
                                                         <label for="telefono">Télefono</label>
@@ -607,7 +607,7 @@
                                                         </div>
                                                     </small>
                                                     </div>
-                                                </div>                                                
+                                                </div>
                                             </form>
                                         </div>
                                         <!-- FIN FORMULARIO DOMICILIO CONVOCADOS NO SALTA-->
@@ -615,7 +615,7 @@
                                 </ng-template>
 
                                 <ng-template pTemplate="footer" class="mt-1">
-                                    <button pButton pRipple type="button" label="Agregar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormUsuarioTramite()"></button>
+                                    <button pButton pRipple type="button" label="Agregar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="agregarConvocado()"></button>
                                     <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogConvocado()"></button>
                                 </ng-template>
                             </p-dialog>
@@ -629,7 +629,7 @@
                     <button pButton pRipple type="button" label="Guardar" class="p-button-success mr-2 mb-2" (click)="submitFormTramite()"></button>
                 </div>
             </div>
-        </div>        
+        </div>
 
     </div>
 </div>
