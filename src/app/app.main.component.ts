@@ -6,10 +6,6 @@ import { AppConfig } from './api/appconfig';
 import { Subscription } from 'rxjs';
 import { CiudadanosService } from './service/ciudadanos.service';
 import { UsuariosService } from './service/usuarios.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CiudadanoModel } from './models/ciudadano.model';
-import { UsuarioModel } from './models/usuario.model';
-import { globalConstants } from './common/global-constants';
 
 @Component({
     selector: 'app-main',
@@ -189,7 +185,4 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
             this.subscription.unsubscribe();
         }
     }
-
-
-    
 }

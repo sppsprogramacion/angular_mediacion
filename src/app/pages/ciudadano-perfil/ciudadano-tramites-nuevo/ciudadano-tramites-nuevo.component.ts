@@ -4,9 +4,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, Message, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { AppConfig } from 'src/app/api/appconfig';
-import { departamentos, municipios, objetos, opcionSiNo, sexo } from 'src/app/common/data-mokeada';
+import Swal from 'sweetalert2';
+
+import { departamentos, municipios, objetos, opcionSiNo, provincias, sexo } from 'src/app/common/data-mokeada';
 import { CentroMediacionModel } from 'src/app/models/centro_mediacion.model';
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
+import { ProvinciaModel } from '../../../models/provincia.model';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
 import { MunicipioModel } from 'src/app/models/municipio.model';
 import { ObjetoModel } from 'src/app/models/objeto.model';
@@ -16,7 +19,6 @@ import { CentrosMediacionService } from 'src/app/service/centros-mediacion.servi
 import { CiudadanosService } from 'src/app/service/ciudadanos.service';
 import { DataService } from 'src/app/service/data.service';
 import { TramitesService } from 'src/app/service/tramites.service';
-import Swal from 'sweetalert2';
 import { globalConstants } from '../../../common/global-constants';
 import { ElementoModel } from 'src/app/models/elemento.model';
 import { ConvocadoModel } from '../../../models/convocado.model';
@@ -39,21 +41,35 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   listaCentrosMediacion: CentroMediacionModel[]=[];
   listaMunicipios: MunicipioModel[] = [];
   listaDepartamentos: DepartamentoModel[] = [];
+  listaProvincias: ProvinciaModel[] = []
   listObjetos: ObjetoModel[] = [];
   listSexo: SexoModel[] = [];
   listSiNo: any[] = [];
-  listCiudadano: CiudadanoModel[]=[];  
+  listCiudadano: CiudadanoModel[]=[]; 
+  listConvocados: any[]=[]; 
 
   elementosCentroMediacion: ElementoModel[]=[];
 
-  //variables tramite  
+  //modelos 
   ciudadanoData: CiudadanoModel;
-  formTramiteDialog: boolean= false;
+
+  //variables booleanas 
+  formTramiteDialog: boolean = false;
+  convocadoTramiteDialog: boolean = false;
   existe_violencia_genero: boolean = false;
+  isDatosPersonales: boolean = false;
+  isSalta: boolean = false;
+  isNoSalta: boolean = false;
 
   //FORMULARIOS
   formaTramite: FormGroup;
   formaConvocado: FormGroup;
+  formaDomicilioSalta: FormGroup;
+  formaDomicilioNoSalta: FormGroup;
+  formaProvincia: FormGroup;
+
+  posicion: string = "top";
+
 
   constructor(
     private fb: FormBuilder,
@@ -92,7 +108,10 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
       nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
       dni: ['',[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.minLength(5)]],
-      sexo_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      sexo_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],   
+    });
+
+    this.formaDomicilioSalta = this.fb.group({      
       departamento_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(2)]],      
       municipio_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(2)]],
       codigo_postal: [0,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(1)]],
@@ -102,65 +121,70 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       punto_referencia: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],       
       telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       email: ['',[Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
+    });
 
+    this.formaDomicilioNoSalta = this.fb.group({     
+      codigo_postal: [0,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(1)]],
+      telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],      
+      email: ['',[Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
+    });
+
+    this.formaProvincia = this.fb.group({
+      provincia_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(2)]],    
     });
   }
 
   //MENSAJES DE VALIDACIONES
   user_validation_messages = {
-    //datos tramite
-    'esta_asesorado': [
-      { type: 'required', message: 'Debe estar asesorado por un abogado.' }
-    ],    
-    'departamento_id': [
-      { type: 'required', message: 'El departamento es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números.' },
-      { type: 'min', message: 'Debe seleccioanr un departamento.' }
-    ],
-    'municipio_id': [
-      { type: 'required', message: 'El municipio es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números.' },
-      { type: 'min', message: 'Debe seleccioanr un municipio.' }
-    ],
-    'localidad_barrio': [
-        { type: 'required', message: 'La localidad/barrio es requerido.' },
-        { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
-        { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
+    'apellido': [
+      { type: 'required', message: 'El apellido es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
+      { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
+      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
     ],
     'calle_direccion': [
-        { type: 'required', message: 'La calle/direccion es requerida' },
-        { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
-        { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
-    ],
-    'numero_dom': [
-      { type: 'required', message: 'El número de domicilio es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
-    ],
-    'departamento_id_centro': [
-      { type: 'required', message: 'El departamento es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números.' },
-      { type: 'min', message: 'Debe seleccioanr un departamento.' }
+      { type: 'required', message: 'La calle/direccion es requerida' },
+      { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
+      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
     ],
     'centro_mediacion_id': [
       { type: 'required', message: 'El centro de mediación es requerido' },
       { type: 'pattern', message: 'Solo se pueden ingresar números.' },
       { type: 'min', message: 'Debe seleccioanr un centro de mediación.' }
     ],
-    'objeto_id': [
-      { type: 'required', message: 'El objeto es requerido' },
+    'codigo_postal': [
+      { type: 'required', message: 'El codigo postal es requerido' },
       { type: 'pattern', message: 'Solo se pueden ingresar números.' },
-      { type: 'min', message: 'Debe seleccioanr el motivo.' }
+      { type: 'min', message: 'El número ingresado debe ser mayor a 0.' }
     ],
-    
-    'violencia_genero': [
-      { type: 'required', message: 'Debe especificar si existe violencia de genero.' },
+    'departamento_id': [
+      { type: 'required', message: 'El departamento es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' },
+      { type: 'min', message: 'Debe seleccioanr un departamento.' }
     ],
-    'violencia_partes': [
-      { type: 'required', message: 'Debe especificar si existe violencia entre las partes.' },
-    ], 
+    'departamento_id_centro': [
+      { type: 'required', message: 'El departamento es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' },
+      { type: 'min', message: 'Debe seleccioanr un departamento.' }
+    ],
+    'dni': [
+      { type: 'required', message: 'El dni es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' },
+      { type: 'minlength', message: 'El número ingresado debe tener mas de 5 digitos.' }
+    ],
+    'email': [
+      { type: 'required', message: 'El correo electrónico es requerido' },
+      { type: 'pattern', message: 'El formato del correo electrónico no es correcto.' }
+    ],
+     
     'existe_denuncia': [
       { type: 'required', message: 'Debe especificar si existe denuncia.' },
     ],  
+    'localidad_barrio': [
+      { type: 'required', message: 'La localidad/barrio es requerido.' },
+      { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
+      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
+    ],
     'medida_cautelar': [
       { type: 'required', message: 'Debe especificar si existe medida cautelar.' },
     ],   
@@ -168,10 +192,52 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       { type: 'required', message: 'La modalidad es requerida' },
       { type: 'pattern', message: 'Solo se pueden ingresar números.' }
     ],
+    'municipio_id': [
+      { type: 'required', message: 'El municipio es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' },
+      { type: 'min', message: 'Debe seleccioanr un municipio.' }
+    ],        
+    'nombre': [
+      { type: 'required', message: 'El nombre es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
+      { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
+      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
+    ],
+    'numero_dom': [
+      { type: 'required', message: 'El número de domicilio es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
+    ],
+    'objeto_id': [
+      { type: 'required', message: 'El objeto es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' },
+      { type: 'min', message: 'Debe seleccioanr el motivo.' }
+    ],
+    'punto_referencia': [
+      { type: 'required', message: 'El punto de referencia es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
+      { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
+      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
+    ],
+    'sexo_id': [
+      { type: 'required', message: 'El sexo es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
+    ],
+    'telefono': [
+      { type: 'required', message: 'El télefono es requerido.' },
+      { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
+      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
+    ],
     'variante_id': [
       { type: 'required', message: 'La variante es requerida' },
       { type: 'pattern', message: 'Solo se pueden ingresar números.' }
-    ]
+    ],
+    'violencia_genero': [
+      { type: 'required', message: 'Debe especificar si existe violencia de genero.' },
+    ],
+    'violencia_partes': [
+      { type: 'required', message: 'Debe especificar si existe violencia entre las partes.' },
+    ],
+    
     
   }
   //FIN MENSAJES DE VALIDACIONES...............................................................
@@ -179,7 +245,22 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   //VALIDACIONES DE FORMULARIO
   isValid(campo: string): boolean{     
     
-    return this.formaTramite.get(campo)?.invalid && this.formaTramite.get(campo)?.dirty;      
+    return this.formaConvocado.get(campo)?.invalid && this.formaConvocado.get(campo)?.touched;      
+  }
+
+  isValidDomicilioSalta(campo: string): boolean{     
+    
+    return this.formaDomicilioSalta.get(campo)?.invalid && this.formaDomicilioSalta.get(campo)?.touched;      
+  }
+
+  isValidDomicilioNoSalta(campo: string): boolean{     
+    
+    return this.formaDomicilioNoSalta.get(campo)?.invalid && this.formaDomicilioNoSalta.get(campo)?.touched;      
+  }
+
+  isValidProvincia(campo: string): boolean{     
+    
+    return this.formaProvincia.get(campo)?.invalid && this.formaProvincia.get(campo)?.touched;      
   }
 
   ngOnInit(): void {
@@ -190,6 +271,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.listObjetos = objetos;
     this.listSexo = sexo;
     this.listSiNo = opcionSiNo;
+    this.listaProvincias = provincias;
     this.listaDepartamentos = departamentos;
     this.cargarMunicipios(1);    
     
@@ -228,7 +310,9 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       pdf_negativa: this.formaTramite.get('pdf_negativa')?.value,
       // modalidad_id: parseInt(this.formaTramite.get('modalidad_id')?.value),
       // variante_id: parseInt(this.formaTramite.get('variante_id')?.value),
-    }
+    },
+    dataConvocado: this.listConvocados
+
   }
     
     console.log("form tramite", this.formaTramite);
@@ -238,6 +322,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       .subscribe({
         next: (resultado) => {
           let tramiteRes: TramiteModel = resultado;
+          //
           let dataConvocado: Partial<ConvocadoModel>
           dataConvocado= {
             tramite_numero: tramiteRes.numero_tramite,
@@ -280,6 +365,35 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.formTramiteDialog= false;
   }
 
+  //MANEJO DE FORMULARIO DIALOG
+  openDialogConvocado() {
+    this.convocadoTramiteDialog = true;
+    this.formaConvocado.reset();  
+    this.formaDomicilioSalta.reset();   
+    this.formaDomicilioNoSalta.reset(); 
+    this.formaProvincia.reset();  
+    console.log("formulario abrir", this.formaConvocado.controls);
+    Object.values(this.formaDomicilioSalta.controls).forEach(control => control.markAsUntouched());
+    Object.values(this.formaDomicilioSalta.controls).forEach(control => control.markAsUntouched());
+    return Object.values(this.formaConvocado.controls).forEach(control => control.markAsUntouched());
+    
+  }
+  
+  hideDialogConvocado() {
+    //this.elementosUsuarios = [];
+    //this.elementosCentroMediacion = [];
+    this.msgs = [];
+    console.log("formulario reset", this.formaConvocado.controls);
+    //Variables de convocados
+    this.isSalta = false;
+    this.isNoSalta = false;
+    this.isDatosPersonales = false;
+    //Fin Variables de convocados
+    this.convocadoTramiteDialog = false;
+    
+  }    
+  //FIN MANEJO FORMULARIO DIALOG....................................
+
   cargarMunicipios(id_departamento: number){
     this.listaMunicipios=municipios.filter(municipio => {      
       return municipio.id_municipio == 1 || municipio.departamento_id == id_departamento;
@@ -294,6 +408,45 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
         
     }
   }
+  
+  onChangeProvincia(){
+    const id = this.formaProvincia.get('provincia_id')?.value;
+    console.log("id provincia", id);
+    if(id != null){
+        if (id == 18) {
+          this.isSalta = true;
+          this.isNoSalta = false;
+          this.isDatosPersonales = true;
+        }
+        if (id != 18) {
+          this.isSalta = false;
+          this.isNoSalta = true;
+          this.isDatosPersonales = true;
+        }
+        if (id == 1) {
+          this.isSalta = false;
+          this.isNoSalta = false;
+          this.isDatosPersonales = false;
+        }
+    }
+  }
+
+  //CARGA DEPARTAMENTOS Y MUNICIPIOS CONVOCADOS
+  cargarMunicipiosConvocado(id_departamento: number){
+    this.listaMunicipios=municipios.filter(municipio => {      
+      return municipio.id_municipio == 1 || municipio.departamento_id == id_departamento;
+    });    
+  }
+
+  onChangeDepartamentoConvocado(){
+    const id = this.formaDomicilioSalta.get('departamento_id')?.value;
+    if(id != null){               
+        this.cargarMunicipiosConvocado(parseInt(id.toString()));
+        this.formaDomicilioSalta.get('municipio_id')?.setValue(1);
+        
+    }
+  }
+  //FIN CARGA DEPARTAMENTOS Y MUNICIPIOS CONVOCADOS
 
   cargarCentrosMediacion(id_departamento: number){
     this.centroMediacionService.listarCentroMediacionXDepartamento(id_departamento)

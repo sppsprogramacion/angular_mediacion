@@ -53,46 +53,105 @@ import { CiudadanoPrincipalComponent } from './pages/ciudadano-perfil/ciudadano-
 import { CiudadanoTramitesNuevoComponent } from './pages/ciudadano-perfil/ciudadano-tramites-nuevo/ciudadano-tramites-nuevo.component';
 import { CiudadanoTramitesAdministrarComponent } from './pages/ciudadano-perfil/ciudadano-tramites-administrar/ciudadano-tramite-administrar.component';
 import { TramitesAdministrarMediadorComponent } from './pages/tramites-administrador/tramites-administrar-mediador/tramites-administrar-mediador.component';
+import { CiudadanoTramitesNuevoslistaComponent } from './pages/ciudadano-perfil/ciudadano-tramites-nuevoslista/ciudadano-tramites-nuevoslista.component';
+import { CiudadanoTramitesFinalizadosComponent } from './pages/ciudadano-perfil/ciudadano-tramites-finalizados/ciudadano-tramites-finalizados.component';
+import { CiudadanoDatospersonalesComponent } from './pages/ciudadano-perfil/ciudadano-datospersonales/ciudadano-datospersonales.component';
+import { CiudadanosBuscarComponent } from './pages/ciudadanos/ciudadanos-buscar/ciudadanos-buscar.component';
 
 @NgModule({
     imports: [
         RouterModule.forRoot([
+            {path: '', redirectTo: 'login', pathMatch: 'full'},
             {
-                path: '', component: AppMainComponent,
+                path: 'admin', component: AppMainComponent,
                 children: [
                     {path: '', component: TramitesPrincipalComponent},
-                    {path: 'home/principal', component: TramitesPrincipalComponent},
+                    {path: 'principal', component: TramitesPrincipalComponent},
 
-                    {path: 'admin/categoria/lista', component: CategoriasListaComponent},
-                    {path: 'admin/categoria/administrar', component: CategoriaAdministrarComponent},
+                    {path: 'categoria/lista', component: CategoriasListaComponent},
+                    {path: 'categoria/administrar', component: CategoriaAdministrarComponent},
                     
-                    {path: 'admin/ciudadanos/lista', component: CiudadanosListaComponent},
-                    {path: 'admin/ciudadanos/administrar', component: CiudadanosAdministrarComponent},
-                    {path: 'admin/ciudadanos-usuarios/administrar', component: CiudadanoUsuarioComponent},
+                    {path: 'ciudadanos/administrar', component: CiudadanosAdministrarComponent},
+                    {path: 'ciudadanos/buscar', component: CiudadanosBuscarComponent},
+                    {path: 'ciudadanos/lista', component: CiudadanosListaComponent},
+                    {path: 'ciudadanos-usuarios/administrar', component: CiudadanoUsuarioComponent},
                     
-                    {path: 'admin/centro-mediacion/lista', component: CentrosMediacionListaComponent},
-                    {path: 'admin/centro-mediacion/administrar', component: CentroAdministrarComponent},
+                    {path: 'centro-mediacion/lista', component: CentrosMediacionListaComponent},
+                    {path: 'centro-mediacion/administrar', component: CentroAdministrarComponent},
                     
-                    {path: 'admin/usuarios/administrar', component: UsuariosAdministrarComponent},
-                    {path: 'admin/usuarios/lista', component: UsuariosListaComponent},
+                    {path: 'usuarios/administrar', component: UsuariosAdministrarComponent},
+                    {path: 'usuarios/lista', component: UsuariosListaComponent},
                     
-                    {path: 'admin/tramites/administrar', component: TramitesAdministrarComponent},
-                    {path: 'admin/tramites/administrar-med', component: TramitesAdministrarMediadorComponent},
-                    {path: 'admin/tramites/asignados', component: TramitesAsignadosComponent},
-                    {path: 'admin/tramites/finalizados', component: TramitesFinalizadosComponent},
-                    {path: 'admin/tramites/nuevo', component: TramitesNuevoComponent},
-                    {path: 'admin/tramites/nuevoslis', component: TramitesNuevoslisComponent},
+                    {path: 'tramites/administrar', component: TramitesAdministrarComponent},
+                    {path: 'tramites/administrar-med', component: TramitesAdministrarMediadorComponent},
+                    {path: 'tramites/asignados', component: TramitesAsignadosComponent},
+                    {path: 'tramites/finalizados', component: TramitesFinalizadosComponent},
+                    {path: 'tramites/nuevo', component: TramitesNuevoComponent},
+                    {path: 'tramites/nuevoslis', component: TramitesNuevoslisComponent},
                                         
-                    {path: 'ciudadano/principal', component: CiudadanoPrincipalComponent},
-                    {path: 'ciudadano/tramites/administrar', component: CiudadanoTramitesAdministrarComponent},
-                    {path: 'ciudadano/tramites/nuevo', component: CiudadanoTramitesNuevoComponent},
+                ],                
+            },
+            {
+                path: 'ciudadano', component: AppMainComponent,
+                children: [
+                    {path: '', component: CiudadanoPrincipalComponent},
+                    {path: 'principal', component: CiudadanoPrincipalComponent},
+                    {path: 'cambiarcontrasenia', component: CiudadanoDatospersonalesComponent},
+                    {path: 'datospersonales', component: CiudadanoDatospersonalesComponent},
+                    {path: 'tramites/administrar', component: CiudadanoTramitesAdministrarComponent},
+                    {path: 'tramites/finalizados', component: CiudadanoTramitesFinalizadosComponent},
+                    {path: 'tramites/nuevo', component: CiudadanoTramitesNuevoComponent},
+                    {path: 'tramites/nuevos', component: CiudadanoTramitesNuevoslistaComponent},
                     
                     {path: 'usuario/tramites/administrar', component: TramitesAdministrarComponent},
                     {path: 'usuario/tramites/asignados', component: TramitesUsuarioAsignadosComponent},
                     {path: 'usuario/tramites/finalizados', component: TramitesUsuarioFinalizadosComponent},
                                         
                 ],
+                
             },
+            // {
+            //     path: 'pages', component: AppMainComponent,
+            //     children: [
+            //         {path: '', component: TramitesPrincipalComponent},
+            //         {path: 'home/principal', component: TramitesPrincipalComponent},
+
+            //         {path: 'admin/categoria/lista', component: CategoriasListaComponent},
+            //         {path: 'admin/categoria/administrar', component: CategoriaAdministrarComponent},
+                    
+            //         {path: 'admin/ciudadanos/administrar', component: CiudadanosAdministrarComponent},
+            //         {path: 'admin/ciudadanos/buscar', component: CiudadanosBuscarComponent},
+            //         {path: 'admin/ciudadanos/lista', component: CiudadanosListaComponent},
+            //         {path: 'admin/ciudadanos-usuarios/administrar', component: CiudadanoUsuarioComponent},
+                    
+            //         {path: 'admin/centro-mediacion/lista', component: CentrosMediacionListaComponent},
+            //         {path: 'admin/centro-mediacion/administrar', component: CentroAdministrarComponent},
+                    
+            //         {path: 'admin/usuarios/administrar', component: UsuariosAdministrarComponent},
+            //         {path: 'admin/usuarios/lista', component: UsuariosListaComponent},
+                    
+            //         {path: 'admin/tramites/administrar', component: TramitesAdministrarComponent},
+            //         {path: 'admin/tramites/administrar-med', component: TramitesAdministrarMediadorComponent},
+            //         {path: 'admin/tramites/asignados', component: TramitesAsignadosComponent},
+            //         {path: 'admin/tramites/finalizados', component: TramitesFinalizadosComponent},
+            //         {path: 'admin/tramites/nuevo', component: TramitesNuevoComponent},
+            //         {path: 'admin/tramites/nuevoslis', component: TramitesNuevoslisComponent},
+                                        
+            //         {path: 'ciudadano/principal', component: CiudadanoPrincipalComponent},
+            //         {path: 'ciudadano/cambiarcontrasenia', component: CiudadanoDatospersonalesComponent},
+            //         {path: 'ciudadano/datospersonales', component: CiudadanoDatospersonalesComponent},
+            //         {path: 'ciudadano/tramites/administrar', component: CiudadanoTramitesAdministrarComponent},
+            //         {path: 'ciudadano/tramites/finalizados', component: CiudadanoTramitesFinalizadosComponent},
+            //         {path: 'ciudadano/tramites/nuevo', component: CiudadanoTramitesNuevoComponent},
+            //         {path: 'ciudadano/tramites/nuevos', component: CiudadanoTramitesNuevoslistaComponent},
+                    
+            //         {path: 'usuario/tramites/administrar', component: TramitesAdministrarComponent},
+            //         {path: 'usuario/tramites/asignados', component: TramitesUsuarioAsignadosComponent},
+            //         {path: 'usuario/tramites/finalizados', component: TramitesUsuarioFinalizadosComponent},
+                                        
+            //     ],
+                
+            // },
             {path:'pages/landing', component: LandingComponent},
             {path:'login', component: LoginComponent},
             {path:'login-admin-mediacion', component: LoginUsuarioComponent},

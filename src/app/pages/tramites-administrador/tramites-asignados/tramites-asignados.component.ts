@@ -54,7 +54,7 @@ export class TramitesAsignadosComponent implements OnInit {
       this.listarTramitesCiudadano();
     }
     
-    if (globalConstants.usuarioLogin) {
+    if (globalConstants.usuarioLogin && !globalConstants.isAdministrador) {
       console.log("usuario", globalConstants.usuarioLogin);
       this.tituloPagina ="Usuario: " + globalConstants.usuarioLogin.apellido + " " + globalConstants.usuarioLogin.nombre
       this.listTramites = [];

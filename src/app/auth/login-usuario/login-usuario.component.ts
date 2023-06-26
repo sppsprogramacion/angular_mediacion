@@ -76,11 +76,11 @@ export class LoginUsuarioComponent implements OnInit {
           globalConstants.ciudadanoLogin = null;
           if(this.dataUsuario.rol_id == 1){
             globalConstants.isAdministrador = true;
-            this.router.navigateByUrl("home/principal");
+            this.router.navigateByUrl("admin/principal");
           }
           if(this.dataUsuario.rol_id == 2){
             globalConstants.isAdministrador = false;
-            this.router.navigateByUrl("admin/usuarios/administrar");
+            this.router.navigateByUrl("admin/tramites/nuevoslis");
           }
           
           Swal.fire('Exito',`El login se realizo con exito`,"success");

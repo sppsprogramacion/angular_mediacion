@@ -83,7 +83,7 @@
 
 
         </div>
-        <!-- DIALOG FORMULARIO CENTRO MEDIACION -->
+        <!-- DIALOG FORMULARIO CATEGORIA -->
         <p-dialog id="formcategoriaDialog" [(visible)]="categoriaDialog" [style]="{width: '600px'}" header="Nueva categoria" [closable]="false" [modal]="true" class="p-fluid">
             <ng-template pTemplate="header">
                 <div class="formgrid grid">
@@ -94,7 +94,7 @@
             </ng-template>
 
             <ng-template pTemplate="content">
-                <!-- FORMULARIO CENTRO MEDIACION -->
+                <!-- FORMULARIO CATEGORIA -->
                 <form [formGroup]="formaCategoria">
                     <div class="formgrid grid">
                         <div class="field col">
@@ -111,7 +111,7 @@
                     </div>
 
                 </form>
-                <!--  FIN FORMULARIO CENTRO MEDIACION -->
+                <!--  FIN FORMULARIO CATEGORIA -->
             </ng-template>
 
             <ng-template pTemplate="footer">
@@ -119,7 +119,7 @@
                 <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogCategoria()"></button>
             </ng-template>
         </p-dialog>
-        <!-- FIN DIALOG FORMULARIO  CENTRO MEDIACION -->
+        <!-- FIN DIALOG FORMULARIO  CATEGORIA -->
 
     </div>
 </div>

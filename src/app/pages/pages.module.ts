@@ -40,6 +40,10 @@ import { CiudadanoPrincipalComponent } from './ciudadano-perfil/ciudadano-princi
 import { CiudadanoTramitesAdministrarComponent } from './ciudadano-perfil/ciudadano-tramites-administrar/ciudadano-tramite-administrar.component';
 import { TramitesAdministrarMediadorComponent } from './tramites-administrador/tramites-administrar-mediador/tramites-administrar-mediador.component';
 import { ListboxModule } from 'primeng/listbox';
+import { CiudadanoTramitesNuevoslistaComponent } from './ciudadano-perfil/ciudadano-tramites-nuevoslista/ciudadano-tramites-nuevoslista.component';
+import { CiudadanoTramitesFinalizadosComponent } from './ciudadano-perfil/ciudadano-tramites-finalizados/ciudadano-tramites-finalizados.component';
+import { CiudadanoDatospersonalesComponent } from './ciudadano-perfil/ciudadano-datospersonales/ciudadano-datospersonales.component';
+import { CiudadanosBuscarComponent } from './ciudadanos/ciudadanos-buscar/ciudadanos-buscar.component';
 
 
 @NgModule({
@@ -87,7 +91,11 @@ import { ListboxModule } from 'primeng/listbox';
     CiudadanoPrincipalComponent,
     CiudadanoTramitesAdministrarComponent,
     CiudadanoTramitesNuevoComponent,
-    TramitesAdministrarMediadorComponent
+    TramitesAdministrarMediadorComponent,
+    CiudadanoTramitesNuevoslistaComponent,
+    CiudadanoTramitesFinalizadosComponent,
+    CiudadanoDatospersonalesComponent,
+    CiudadanosBuscarComponent
     
   ],
   

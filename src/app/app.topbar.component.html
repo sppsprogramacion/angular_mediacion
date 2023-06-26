@@ -1,7 +1,8 @@
 <div class="layout-topbar">
-    <a class="layout-topbar-logo" routerLink="">
+    <a class="layout-topbar-logo" (click)="irAPrincipal()">
         <!-- <img src="assets/layout/images/{{appMain.config.dark ? 'logo-white' : 'logo-dark'}}.svg" alt="logo"> -->
-        <span>MEDIACION</span>
+        <!-- <span>MEDIACION</span> -->
+        <img src="assets/imagenes/general/logo-mediacion-2.png" alt="Image" height="100" >
     </a>
 
     <a class="p-link layout-menu-button layout-topbar-button" href="#" (click)="appMain.toggleMenu($event)">

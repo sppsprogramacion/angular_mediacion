@@ -22,3 +22,8 @@
     //font-weight: bold;
     border-bottom: 2px solid #D3D3D3;
 }
+
+p-dialog .ui-dialog {
+    overflow: inherit;
+    max-height: 100%;
+}
