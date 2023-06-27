@@ -116,7 +116,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.formaDomicilioSalta = this.fb.group({      
       departamento_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(2)]],      
       municipio_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(2)]],
-      codigo_postal: [0,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(1)]],
+      codigo_postal: [,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(1)]],
       localidad_barrio: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       calle_direccion: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],        
       numero_dom: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
@@ -126,7 +126,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     });
 
     this.formaDomicilioNoSalta = this.fb.group({     
-      codigo_postal: [0,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(1)]],
+      codigo_postal: [,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(1)]],
       telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],      
       email: ['',[Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
     });
@@ -213,6 +213,11 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       { type: 'required', message: 'El objeto es requerido' },
       { type: 'pattern', message: 'Solo se pueden ingresar números.' },
       { type: 'min', message: 'Debe seleccioanr el motivo.' }
+    ],
+    'provincia_id': [
+      { type: 'required', message: 'La provincia es requerida' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' },
+      { type: 'min', message: 'Debe seleccioanr una provincia.' }
     ],
     'punto_referencia': [
       { type: 'required', message: 'El punto de referencia es requerido' },
@@ -315,7 +320,19 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       // modalidad_id: parseInt(this.formaTramite.get('modalidad_id')?.value),
       // variante_id: parseInt(this.formaTramite.get('variante_id')?.value),
     },
-    dataConvocado: this.listConvocados
+    createConvocadoSaltaDto: this.listConvocados,
+    createConvocadoNoSaltaDto: this.listConvocadosNoSalta,
+    createVinculadoTramiteDto:[
+      {
+          "apellido": "Leguizamon",
+          "nombre": "Sebastian",
+          "dni": 33505001,
+          "sexo_id": 2,
+          "telefono": "3874853487",
+          "categoria_id": 1
+      }
+  ]
+
 
   }
     
@@ -328,22 +345,22 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
           let tramiteRes: TramiteModel = resultado;
           //
           let dataConvocado: Partial<ConvocadoModel>
-          dataConvocado= {
-            tramite_numero: tramiteRes.numero_tramite,
-            apellido: this.formaConvocado.get('apellido')?.value,
-            nombre: this.formaConvocado.get('nombre')?.value,
-            dni: parseInt(this.formaConvocado.get('dni')?.value),
-            sexo_id: parseInt(this.formaConvocado.get('sexo_id')?.value),
-            departamento_id: parseInt(this.formaConvocado.get('departamento_id')?.value),
-            municipio_id: parseInt(this.formaConvocado.get('municipio_id')?.value),
-            codigo_postal: parseInt(this.formaConvocado.get('codigo_postal')?.value),
-            localidad_barrio: this.formaConvocado.get('localidad_barrio')?.value,
-            calle_direccion: this.formaConvocado.get('calle_direccion')?.value,        
-            numero_dom: parseInt(this.formaConvocado.get('numero_dom')?.value),
-            punto_referencia: this.formaConvocado.get('punto_referencia')?.value,
-            telefono: this.formaConvocado.get('telefono')?.value,
-            email: this.formaConvocado.get('email')?.value,
-          }
+          // dataConvocado= {
+          //   tramite_numero: tramiteRes.numero_tramite,
+          //   apellido: this.formaConvocado.get('apellido')?.value,
+          //   nombre: this.formaConvocado.get('nombre')?.value,
+          //   dni: parseInt(this.formaConvocado.get('dni')?.value),
+          //   sexo_id: parseInt(this.formaConvocado.get('sexo_id')?.value),
+          //   departamento_id: parseInt(this.formaConvocado.get('departamento_id')?.value),
+          //   municipio_id: parseInt(this.formaConvocado.get('municipio_id')?.value),
+          //   codigo_postal: parseInt(this.formaConvocado.get('codigo_postal')?.value),
+          //   localidad_barrio: this.formaConvocado.get('localidad_barrio')?.value,
+          //   calle_direccion: this.formaConvocado.get('calle_direccion')?.value,        
+          //   numero_dom: parseInt(this.formaConvocado.get('numero_dom')?.value),
+          //   punto_referencia: this.formaConvocado.get('punto_referencia')?.value,
+          //   telefono: this.formaConvocado.get('telefono')?.value,
+          //   email: this.formaConvocado.get('email')?.value,
+          // }
 
           Swal.fire('Exito',`La solicitud se registró con exito`,"success");
         },
@@ -357,30 +374,88 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   
   //AGREGAR CONVOCADOS
   agregarConvocado(){
+    let id_provincia: number = parseInt(this.formaProvincia.get('provincia_id')?.value);
+    console.log("id_proncia", id_provincia);
     
-    this.convocado = {
-      apellido: this.formaConvocado.get('apellido')?.value,
-      nombre: this.formaConvocado.get('nombre')?.value,
-      dni: parseInt(this.formaConvocado.get('dni')?.value),
-      sexo_id: parseInt(this.formaConvocado.get('sexo_id')?.value),
-      departamento_id: parseInt(this.formaDomicilioSalta.get('departamento_id')?.value),
-      municipio_id: parseInt(this.formaDomicilioSalta.get('municipio_id')?.value),
-      codigo_postal: parseInt(this.formaDomicilioSalta.get('codigo_postal')?.value),
-      localidad_barrio: this.formaDomicilioSalta.get('localidad_barrio')?.value,
-      calle_direccion: this.formaDomicilioSalta.get('calle_direccion')?.value,        
-      numero_dom: parseInt(this.formaDomicilioSalta.get('numero_dom')?.value),
-      punto_referencia: this.formaDomicilioSalta.get('punto_referencia')?.value,
-      telefono: this.formaDomicilioSalta.get('telefono')?.value,
-      email: this.formaDomicilioSalta.get('email')?.value,
+    if(id_provincia == 1){
+
+      //VAIDACIONES DE FORMULARIOS
+      if(this.formaProvincia.invalid){        
+        this.msgs = [];                
+        return Object.values(this.formaProvincia.controls).forEach(control => control.markAsTouched());
+      }
     }
 
-    this.listConvocados.push(this.convocado);
+    if(id_provincia == 18 ){
+      //VAIDACIONES DE FORMULARIOS
+      if(this.formaConvocado.invalid){        
+        this.msgs = [];                
+        this.msgs.push({ severity: 'error', summary: 'Datos invalidos', detail: 'Revise los datos personales. ' });
+        Object.values(this.formaConvocado.controls).forEach(control => control.markAsTouched());
+        //return Object.values(this.formaTramite.controls).forEach(control => control.markAsDirty());
+      }
+      if(this.formaDomicilioSalta.invalid){           
+        this.msgs.push({ severity: 'error', summary: 'Datos invalidos', detail: 'Revise los datos de domicilio salta. ' });
+        Object.values(this.formaDomicilioSalta.controls).forEach(control => control.markAsTouched());
+        //return Object.values(this.formaTramite.controls).forEach(control => control.markAsDirty());
+      }      
+      console.log("id_proncia", id_provincia);
+      if(this.formaConvocado.invalid || this.formaDomicilioSalta.invalid) return;      
+      //FIN VAIDACIONES DE FORMULARIOS...........
+
+      this.convocado = {
+        apellido: this.formaConvocado.get('apellido')?.value,
+        nombre: this.formaConvocado.get('nombre')?.value,
+        dni: parseInt(this.formaConvocado.get('dni')?.value),
+        sexo_id: parseInt(this.formaConvocado.get('sexo_id')?.value),
+        departamento_id: parseInt(this.formaDomicilioSalta.get('departamento_id')?.value),
+        municipio_id: parseInt(this.formaDomicilioSalta.get('municipio_id')?.value),
+        codigo_postal: parseInt(this.formaDomicilioSalta.get('codigo_postal')?.value),
+        localidad_barrio: this.formaDomicilioSalta.get('localidad_barrio')?.value,
+        calle_direccion: this.formaDomicilioSalta.get('calle_direccion')?.value,        
+        numero_dom: parseInt(this.formaDomicilioSalta.get('numero_dom')?.value),
+        punto_referencia: this.formaDomicilioSalta.get('punto_referencia')?.value,
+        telefono: this.formaDomicilioSalta.get('telefono')?.value,
+        email: this.formaDomicilioSalta.get('email')?.value,
+      }
+  
+      this.listConvocados.push(this.convocado);
+    }
+
+    if(parseInt(this.formaProvincia.get('provincia_id')?.value) != 18 && id_provincia != 1){
+      //VAIDACIONES DE FORMULARIOS
+      if(this.formaConvocado.invalid){        
+        this.msgs = [];
+        this.msgs.push({ severity: 'error', summary: 'Datos invalidos', detail: 'Revise los datos personales. ' });
+        Object.values(this.formaConvocado.controls).forEach(control => control.markAsTouched());
+      }
+      if(this.formaDomicilioNoSalta.invalid){     
+        this.msgs.push({ severity: 'error', summary: 'Datos invalidos', detail: 'Revise los datos de domicilio. ' });
+        Object.values(this.formaDomicilioNoSalta.controls).forEach(control => control.markAsTouched());
+        
+      }      
+
+      console.log("id_proncia", id_provincia);
+      if(this.formaConvocado.invalid || this.formaDomicilioNoSalta.invalid) return;
+      //FIN VAIDACIONES DE FORMULARIOS...........      
+
+      this.convocado = {
+        apellido: this.formaConvocado.get('apellido')?.value,
+        nombre: this.formaConvocado.get('nombre')?.value,
+        dni: parseInt(this.formaConvocado.get('dni')?.value),
+        sexo_id: parseInt(this.formaConvocado.get('sexo_id')?.value),
+        provincia_id: parseInt(this.formaProvincia.get('provincia_id')?.value),        
+        codigo_postal: parseInt(this.formaDomicilioNoSalta.get('codigo_postal')?.value),
+        telefono: this.formaDomicilioNoSalta.get('telefono')?.value,
+        email: this.formaDomicilioNoSalta.get('email')?.value,
+      }
+  
+      this.listConvocadosNoSalta.push(this.convocado);
+    }
+    
     this.convocado = {};
     console.log("lista convocados", this.listConvocados);
-  }
-
-  agregarConvocadoNoSalta(){
-
+    console.log("lista convocados no salta", this.listConvocadosNoSalta);
   }
   //AGREGAR CONVOCADOS..................................................
   
@@ -398,29 +473,44 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   }
 
   //MANEJO DE FORMULARIO DIALOG
-  openDialogConvocado() {
-    this.convocadoTramiteDialog = true;
+  reiniciarformularios(){
+    this.msgs = [];
     this.formaConvocado.reset();  
     this.formaDomicilioSalta.reset();   
     this.formaDomicilioNoSalta.reset(); 
-    this.formaProvincia.reset();  
-    console.log("formulario abrir", this.formaConvocado.controls);
-    Object.values(this.formaDomicilioSalta.controls).forEach(control => control.markAsUntouched());
-    Object.values(this.formaDomicilioSalta.controls).forEach(control => control.markAsUntouched());
-    return Object.values(this.formaConvocado.controls).forEach(control => control.markAsUntouched());
-    
-  }
-  
-  hideDialogConvocado() {
-    //this.elementosUsuarios = [];
-    //this.elementosCentroMediacion = [];
-    this.msgs = [];
-    console.log("formulario reset", this.formaConvocado.controls);
     //Variables de convocados
     this.isSalta = false;
     this.isNoSalta = false;
     this.isDatosPersonales = false;
     //Fin Variables de convocados
+  }
+
+  openDialogConvocado() {
+    this.convocadoTramiteDialog = true; 
+    Object.values(this.formaProvincia.controls).forEach(control => control.markAsUntouched());   
+    console.log("formulario reset", this.formaConvocado.controls);
+    console.log("formulario domicilio salta", this.formaDomicilioSalta.controls);
+    console.log("formulario provincia", this.formaProvincia.controls);
+    console.log("formulario domicilio NO salta", this.formaDomicilioNoSalta.controls);
+    
+    // Object.values(this.formaDomicilioSalta.controls).forEach(control => control.markAsUntouched());
+    // Object.values(this.formaDomicilioSalta.controls).forEach(control => control.markAsUntouched());
+    // Object.values(this.formaConvocado.controls).forEach(control => control.markAsUntouched());
+  }
+  
+  hideDialogConvocado() {
+    //this.elementosUsuarios = [];
+    //this.elementosCentroMediacion = [];
+    
+    //this.formaProvincia.reset(); 
+    //this.formaProvincia.get('provincia_id')?.setValue(1);
+    //Object.values(this.formaProvincia.controls).forEach(control => control.markAsUntouched());
+    this.reiniciarformularios();
+    
+    console.log("formulario convocado", this.formaConvocado.controls);
+    console.log("formulario provincia", this.formaProvincia.controls);
+    console.log("formulario domicilio salta", this.formaDomicilioSalta.controls);
+    console.log("formulario domicilio NO salta", this.formaDomicilioNoSalta.controls);
     this.convocadoTramiteDialog = false;
     
   }    
@@ -442,6 +532,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   }
   
   onChangeProvincia(){
+    this.reiniciarformularios();
     const id = this.formaProvincia.get('provincia_id')?.value;
     console.log("id provincia", id);
     if(id != null){
