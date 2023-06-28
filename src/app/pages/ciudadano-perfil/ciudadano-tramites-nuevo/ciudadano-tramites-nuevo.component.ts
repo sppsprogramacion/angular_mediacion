@@ -47,13 +47,15 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   listSiNo: any[] = [];
   listCiudadano: CiudadanoModel[]=[]; 
   listConvocados: any[]=[]; 
-  listConvocadosNoSalta: any[]=[]; 
+  listConvocadosNoSalta: any[]=[];
+  listConvocadosAux: any[]=[]; 
 
   elementosCentroMediacion: ElementoModel[]=[];
 
   //modelos 
   ciudadanoData: CiudadanoModel;
   convocado: any;
+  convocadoAux: any;
 
   //variables booleanas 
   formTramiteDialog: boolean = false;
@@ -343,24 +345,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       .subscribe({
         next: (resultado) => {
           let tramiteRes: TramiteModel = resultado;
-          //
-          let dataConvocado: Partial<ConvocadoModel>
-          // dataConvocado= {
-          //   tramite_numero: tramiteRes.numero_tramite,
-          //   apellido: this.formaConvocado.get('apellido')?.value,
-          //   nombre: this.formaConvocado.get('nombre')?.value,
-          //   dni: parseInt(this.formaConvocado.get('dni')?.value),
-          //   sexo_id: parseInt(this.formaConvocado.get('sexo_id')?.value),
-          //   departamento_id: parseInt(this.formaConvocado.get('departamento_id')?.value),
-          //   municipio_id: parseInt(this.formaConvocado.get('municipio_id')?.value),
-          //   codigo_postal: parseInt(this.formaConvocado.get('codigo_postal')?.value),
-          //   localidad_barrio: this.formaConvocado.get('localidad_barrio')?.value,
-          //   calle_direccion: this.formaConvocado.get('calle_direccion')?.value,        
-          //   numero_dom: parseInt(this.formaConvocado.get('numero_dom')?.value),
-          //   punto_referencia: this.formaConvocado.get('punto_referencia')?.value,
-          //   telefono: this.formaConvocado.get('telefono')?.value,
-          //   email: this.formaConvocado.get('email')?.value,
-          // }
+          
 
           Swal.fire('Exito',`La solicitud se registró con exito`,"success");
         },
@@ -420,6 +405,31 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       }
   
       this.listConvocados.push(this.convocado);
+      //ARMAR ARRAY AUXILIAR
+      // this.convocadoAux = {
+      //   apellido: this.convocado.apellido,
+      //   nombre: this.convocado.nombre,
+      //   dni: this.convocado.dni,
+      //   sexo: aux.nombre,
+      //   provincia: parseInt(this.formaProvincia.get('provincia_id')?),
+      //   orden_origen: posicion,
+      //   posicion: posicion,
+      //   tipo: "salta"
+      // }
+
+      let posicion: number = 0;      
+      for (let aux of this.listConvocados){
+        this.convocadoAux = {
+          apellido: aux.apellido,
+          nombre: aux.nombre,
+          dni: aux.dni,
+          sexo_id: aux.nombre,
+          departamento_id: parseInt(this.formaDomicilioSalta.get('departamento_id')?.value),
+          orden_origen: posicion,
+          posicion: posicion,
+          tipo: "salta"
+        }
+      }
     }
 
     if(parseInt(this.formaProvincia.get('provincia_id')?.value) != 18 && id_provincia != 1){
