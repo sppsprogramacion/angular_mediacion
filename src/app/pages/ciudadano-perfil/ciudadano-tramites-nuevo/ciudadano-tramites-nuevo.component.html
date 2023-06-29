@@ -250,7 +250,7 @@
                                     </ng-template>
                                 </p-toolbar>
                                 <!-- TABLA DE CONVOCADOS -->
-                                <p-table #dt1 [value]="listConvocados" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
+                                <p-table #dt1 [value]="listConvocadosAux" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
                                     <ng-template pTemplate="header">
                                         <tr>
                                             <th style="width: 3rem"></th>
@@ -279,84 +279,40 @@
                                                     Provincia
                                                 </div>
                                             </th>
-                                            <th>
-                                                <div class="flex justify-content-between align-items-center">
-                                                    Departamento
-                                                </div>
-                                            </th>
-                                            <th>
-                                                <div class="flex justify-content-between align-items-center">
-                                                    Municipio
-                                                </div>
-                                            </th>
-                                            <th>
-                                                <div class="flex justify-content-between align-items-center">
-                                                    Codigo Postal
-                                                </div>
-                                            </th>
-                                            <th>
-                                                <div class="flex justify-content-between align-items-center">
-                                                    Barrio/Dirección
-                                                </div>
-                                            </th>
-                                            <th>
-                                                <div class="flex justify-content-between align-items-center">
-                                                    Télefo
-                                                </div>
-                                            </th>
-                                            <th>
-                                                <div class="flex justify-content-between align-items-center">
-                                                    E-mail
-                                                </div>
-                                            </th>
-
                                         </tr>
                                     </ng-template>
-                                    <ng-template pTemplate="body" let-tramite>
-                                        <!-- <tr>
+                                    <ng-template pTemplate="body" let-convocado>
+                                        <tr>
                                             <td>
-                                                <button *ngIf="tramite.estado_tramite_id==1" pButton pRipple type="button" icon="pi pi-folder-open text-purple-100" class="p-button-secondary p-button-rounded bg-purple-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
-                                                <button *ngIf="tramite.estado_tramite_id==2" pButton pRipple type="button" icon="pi pi-folder-open text-orange-100" class="p-button-secondary p-button-rounded bg-orange-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
+                                                <!-- <button *ngIf="tramite.estado_tramite_id==1" pButton pRipple type="button" icon="pi pi-folder-open text-purple-100" class="p-button-secondary p-button-rounded bg-purple-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
+                                                <button *ngIf="tramite.estado_tramite_id==2" pButton pRipple type="button" icon="pi pi-folder-open text-orange-100" class="p-button-secondary p-button-rounded bg-orange-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button> -->
                                             </td>
-                                            <td style="min-width: 10rem;">
-                                                {{tramite.numero_tramite}}
-                                            </td>
-
                                             <td style="min-width: 15rem;">
-                                                {{tramite.ciudadano.apellido}}
+                                                {{convocado.apellido}}
                                             </td>
                                             <td style="min-width: 2rem;">
-                                                {{tramite.ciudadano.nombre}}
+                                                {{convocado.nombre}}
                                             </td>
                                             <td style="min-width: 10rem;">
-                                                {{tramite.ciudadano.dni}}
+                                                {{convocado.dni}}
                                             </td>
                                             <td style="min-width: 10rem;">
-                                                {{tramite.objeto.objeto}}
-                                            </td>
-                                            <td style="min-width: 5rem;">
-                                                {{tramite.fecha_tramite| date: 'dd/MM/yyyy'}}
+                                                {{convocado.sexo}}
                                             </td>
                                             <td style="min-width: 15rem;">
-                                                {{tramite.expediente}}
+                                                {{convocado.provincia}}
                                             </td>
-                                            <td style="min-width: 5rem;">
-                                                {{tramite.fecha_expediente| date: 'dd/MM/yyyy'}}
-                                            </td>
-                                            <td style="min-width: 10rem;">
-                                                {{tramite.centro_mediacion.centro_mediacion}}
-                                            </td>
-                                        </tr> -->
+                                        </tr>
                                     </ng-template>
 
                                     <ng-template pTemplate="emptymessage">
                                         <tr>
-                                            <td colspan="8">No se encontraron tramites finalizados.</td>
+                                            <td colspan="8">No se encontraron convocados agregados.</td>
                                         </tr>
                                     </ng-template>
                                     <ng-template pTemplate="loadingbody">
                                         <tr>
-                                            <td colspan="8">Cargando tramites... .</td>
+                                            <td colspan="8">Cargando convocados... .</td>
                                         </tr>
                                     </ng-template>
                                 </p-table>

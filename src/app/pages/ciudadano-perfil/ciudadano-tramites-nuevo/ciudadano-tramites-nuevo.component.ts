@@ -16,12 +16,10 @@ import { ObjetoModel } from 'src/app/models/objeto.model';
 import { SexoModel } from 'src/app/models/sexo.model';
 import { TramiteModel } from 'src/app/models/tramite.model';
 import { CentrosMediacionService } from 'src/app/service/centros-mediacion.service';
-import { CiudadanosService } from 'src/app/service/ciudadanos.service';
 import { DataService } from 'src/app/service/data.service';
 import { TramitesService } from 'src/app/service/tramites.service';
-import { globalConstants } from '../../../common/global-constants';
 import { ElementoModel } from 'src/app/models/elemento.model';
-import { ConvocadoModel } from '../../../models/convocado.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ciudadano-tramites-nuevo',
@@ -32,12 +30,12 @@ import { ConvocadoModel } from '../../../models/convocado.model';
 export class CiudadanoTramitesNuevoComponent implements OnInit {
   config: AppConfig;  
   subscription: Subscription;
-  selectedState:any;
-  
+  selectedState:any;  
 
   msgs: Message[] = []; 
 
   //listas  
+  elementosCentroMediacion: ElementoModel[]=[];
   listaCentrosMediacion: CentroMediacionModel[]=[];
   listaMunicipios: MunicipioModel[] = [];
   listaDepartamentos: DepartamentoModel[] = [];
@@ -48,9 +46,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   listCiudadano: CiudadanoModel[]=[]; 
   listConvocados: any[]=[]; 
   listConvocadosNoSalta: any[]=[];
-  listConvocadosAux: any[]=[]; 
-
-  elementosCentroMediacion: ElementoModel[]=[];
+  listConvocadosAux: any[]=[];   
 
   //modelos 
   ciudadanoData: CiudadanoModel;
@@ -74,18 +70,16 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
 
   posicion: string = "top";
 
-
   constructor(
     private fb: FormBuilder,
     private readonly datePipe: DatePipe,
     private serviceMensajes: MessageService,
     private centroMediacionService: CentrosMediacionService,
-    private ciudadanoService: CiudadanosService,
     private tramiteService: TramitesService,
     public dataService: DataService,
+    private router: Router,
   ) {
     this.formaTramite = this.fb.group({
-      //ciudadano_id: [,[]],
       esta_asesorado: [false,[Validators.requiredTrue]],
       departamento_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(2)]],      
       municipio_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(2)]],
@@ -273,8 +267,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   }
   //FIN VALIDACIONES DE FORMULARIO...............................................................
 
-  ngOnInit(): void {
-    
+  ngOnInit(): void {    
     this.ciudadanoData = this.dataService.ciudadanoData
 
     //CARGA DE LISTADOS DESDE DATA MOKEADA
@@ -283,71 +276,62 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.listSiNo = opcionSiNo;
     this.listaProvincias = provincias;
     this.listaDepartamentos = departamentos;
-    this.cargarMunicipios(1);    
-    
+    this.cargarMunicipios(1);        
   }
   //FIN ONINIT.................................
 
-  //GUARDAR Tramite  
+  //GUARDAR NUEVO TRAMITE  
   submitFormTramite(){
     if(this.formaTramite.invalid){                        
         Swal.fire('Formulario incompleto',`Complete correctamente todos los campos del formulario`,"error");
         let fechaAuxiliar = this.datePipe.transform(this.formaTramite.get('fecha_nac')?.value,"yyyy-MM-dd")!;
-        console.log("errores formulario", this.formaTramite.controls);
         return Object.values(this.formaTramite.controls).forEach(control => control.markAsDirty());
     }
-
-    let dataTramite: Partial<TramiteModel>;
     
     let data:any;
     data ={
-    dataTramite : {
-      ciudadano_id: this.ciudadanoData.id_ciudadano,
-      esta_asesorado: this.formaTramite.get('esta_asesorado')?.value,
-      departamento_id: parseInt(this.formaTramite.get('departamento_id')?.value),
-      municipio_id: parseInt(this.formaTramite.get('municipio_id')?.value),
-      localidad_barrio: this.formaTramite.get('localidad_barrio')?.value,
-      calle_direccion: this.formaTramite.get('calle_direccion')?.value,
-      numero_dom: parseInt(this.formaTramite.get('numero_dom')?.value),
-      centro_mediacion_id: parseInt(this.formaTramite.get('centro_mediacion_id')?.value),
-      objeto_id: parseInt(this.formaTramite.get('objeto_id')?.value),
-      violencia_genero: this.formaTramite.get('violencia_genero')?.value,
-      violencia_partes: this.formaTramite.get('violencia_genero')?.value,
-      existe_denuncia: this.formaTramite.get('existe_denuncia')?.value,
-      medida_cautelar: this.formaTramite.get('medida_cautelar')?.value,
-      pdf_denuncia: this.formaTramite.get('pdf_denuncia')?.value,
-      pdf_cautelar: this.formaTramite.get('pdf_cautelar')?.value,
-      pdf_ingresos: this.formaTramite.get('pdf_ingresos')?.value,
-      pdf_negativa: this.formaTramite.get('pdf_negativa')?.value,
-      // modalidad_id: parseInt(this.formaTramite.get('modalidad_id')?.value),
-      // variante_id: parseInt(this.formaTramite.get('variante_id')?.value),
-    },
-    createConvocadoSaltaDto: this.listConvocados,
-    createConvocadoNoSaltaDto: this.listConvocadosNoSalta,
-    createVinculadoTramiteDto:[
-      {
-          "apellido": "Leguizamon",
-          "nombre": "Sebastian",
-          "dni": 33505001,
-          "sexo_id": 2,
-          "telefono": "3874853487",
-          "categoria_id": 1
-      }
-  ]
-
-
-  }
-    
-    console.log("form tramite", this.formaTramite);
+      dataTramite : {
+        ciudadano_id: this.ciudadanoData.id_ciudadano,
+        esta_asesorado: this.formaTramite.get('esta_asesorado')?.value,
+        departamento_id: parseInt(this.formaTramite.get('departamento_id')?.value),
+        municipio_id: parseInt(this.formaTramite.get('municipio_id')?.value),
+        localidad_barrio: this.formaTramite.get('localidad_barrio')?.value,
+        calle_direccion: this.formaTramite.get('calle_direccion')?.value,
+        numero_dom: parseInt(this.formaTramite.get('numero_dom')?.value),
+        centro_mediacion_id: parseInt(this.formaTramite.get('centro_mediacion_id')?.value),
+        objeto_id: parseInt(this.formaTramite.get('objeto_id')?.value),
+        violencia_genero: this.formaTramite.get('violencia_genero')?.value,
+        violencia_partes: this.formaTramite.get('violencia_genero')?.value,
+        existe_denuncia: this.formaTramite.get('existe_denuncia')?.value,
+        medida_cautelar: this.formaTramite.get('medida_cautelar')?.value,
+        pdf_denuncia: this.formaTramite.get('pdf_denuncia')?.value,
+        pdf_cautelar: this.formaTramite.get('pdf_cautelar')?.value,
+        pdf_ingresos: this.formaTramite.get('pdf_ingresos')?.value,
+        pdf_negativa: this.formaTramite.get('pdf_negativa')?.value,
+        // modalidad_id: parseInt(this.formaTramite.get('modalidad_id')?.value),
+        // variante_id: parseInt(this.formaTramite.get('variante_id')?.value),
+      },
+      createConvocadoSaltaDto: this.listConvocados,
+      createConvocadoNoSaltaDto: this.listConvocadosNoSalta,
+      createVinculadoTramiteDto:[
+        {
+            "apellido": "Leguizamon",
+            "nombre": "Sebastian",
+            "dni": 33505001,
+            "sexo_id": 2,
+            "telefono": "3874853487",
+            "categoria_id": 1
+        }
+      ]
+    }
     
     //GUARDAR NUEVO TRAMITE
     this.tramiteService.guardarTramite(data)
       .subscribe({
         next: (resultado) => {
           let tramiteRes: TramiteModel = resultado;
-          
-
           Swal.fire('Exito',`La solicitud se registró con exito`,"success");
+          this.router.navigateByUrl("ciudadano/tramites/nuevos");
         },
         error: (err) => {
           Swal.fire('Error',`Error al guardar el tramite: ${err.error.message}`,"error")
@@ -355,36 +339,34 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       });          
     //FIN GUARDAR NUEVO TRAMITE 
   }    
-  //FIN GUARDAR Tramite............................................................
+  //FIN GUARDAR NUEVO TRAMITE............................................................
   
   //AGREGAR CONVOCADOS
   agregarConvocado(){
     let id_provincia: number = parseInt(this.formaProvincia.get('provincia_id')?.value);
-    console.log("id_proncia", id_provincia);
     
+    //SIN SELECCIONAR PROVINCIA
     if(id_provincia == 1){
-
       //VAIDACIONES DE FORMULARIOS
       if(this.formaProvincia.invalid){        
         this.msgs = [];                
         return Object.values(this.formaProvincia.controls).forEach(control => control.markAsTouched());
       }
     }
+    //SIN SELECCIONAR PROVINCIA
 
+    //PROVINCIA SALTA SELECCIONADA
     if(id_provincia == 18 ){
       //VAIDACIONES DE FORMULARIOS
       if(this.formaConvocado.invalid){        
         this.msgs = [];                
         this.msgs.push({ severity: 'error', summary: 'Datos invalidos', detail: 'Revise los datos personales. ' });
         Object.values(this.formaConvocado.controls).forEach(control => control.markAsTouched());
-        //return Object.values(this.formaTramite.controls).forEach(control => control.markAsDirty());
       }
       if(this.formaDomicilioSalta.invalid){           
         this.msgs.push({ severity: 'error', summary: 'Datos invalidos', detail: 'Revise los datos de domicilio salta. ' });
         Object.values(this.formaDomicilioSalta.controls).forEach(control => control.markAsTouched());
-        //return Object.values(this.formaTramite.controls).forEach(control => control.markAsDirty());
       }      
-      console.log("id_proncia", id_provincia);
       if(this.formaConvocado.invalid || this.formaDomicilioSalta.invalid) return;      
       //FIN VAIDACIONES DE FORMULARIOS...........
 
@@ -402,36 +384,28 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
         punto_referencia: this.formaDomicilioSalta.get('punto_referencia')?.value,
         telefono: this.formaDomicilioSalta.get('telefono')?.value,
         email: this.formaDomicilioSalta.get('email')?.value,
-      }
-  
+      }  
       this.listConvocados.push(this.convocado);
-      //ARMAR ARRAY AUXILIAR
-      // this.convocadoAux = {
-      //   apellido: this.convocado.apellido,
-      //   nombre: this.convocado.nombre,
-      //   dni: this.convocado.dni,
-      //   sexo: aux.nombre,
-      //   provincia: parseInt(this.formaProvincia.get('provincia_id')?),
-      //   orden_origen: posicion,
-      //   posicion: posicion,
-      //   tipo: "salta"
-      // }
 
-      let posicion: number = 0;      
-      for (let aux of this.listConvocados){
-        this.convocadoAux = {
-          apellido: aux.apellido,
-          nombre: aux.nombre,
-          dni: aux.dni,
-          sexo_id: aux.nombre,
-          departamento_id: parseInt(this.formaDomicilioSalta.get('departamento_id')?.value),
-          orden_origen: posicion,
-          posicion: posicion,
-          tipo: "salta"
-        }
+      //ARMAR ARRAY AUXILIAR
+      let sexoAux = sexo.filter(sexo => sexo.id_sexo == this.convocado.sexo_id);
+      let provinciaAux = provincias.filter(provincia => provincia.id_provincia == id_provincia);
+      this.convocadoAux = {
+        apellido: this.convocado.apellido,
+        nombre: this.convocado.nombre,
+        dni: this.convocado.dni,
+        sexo: sexoAux[0].sexo,
+        provincia: provinciaAux[0].provincia,
+        posicion: (this.listConvocados.length -1),
+        tipo: "salta"
       }
+      this.listConvocadosAux.push(this.convocadoAux);
+      this.convocadoAux = {};
+      //FIN ARMAR ARRAY AUXILIAR
+      
     }
 
+    //PROVINCIA SELECCIONADA NO ES SALTA
     if(parseInt(this.formaProvincia.get('provincia_id')?.value) != 18 && id_provincia != 1){
       //VAIDACIONES DE FORMULARIOS
       if(this.formaConvocado.invalid){        
@@ -441,11 +415,9 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       }
       if(this.formaDomicilioNoSalta.invalid){     
         this.msgs.push({ severity: 'error', summary: 'Datos invalidos', detail: 'Revise los datos de domicilio. ' });
-        Object.values(this.formaDomicilioNoSalta.controls).forEach(control => control.markAsTouched());
-        
+        Object.values(this.formaDomicilioNoSalta.controls).forEach(control => control.markAsTouched());        
       }      
 
-      console.log("id_proncia", id_provincia);
       if(this.formaConvocado.invalid || this.formaDomicilioNoSalta.invalid) return;
       //FIN VAIDACIONES DE FORMULARIOS...........      
 
@@ -461,13 +433,31 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       }
   
       this.listConvocadosNoSalta.push(this.convocado);
+
+       //ARMAR ARRAY AUXILIAR
+       let sexoAux = sexo.filter(sexo => sexo.id_sexo == this.convocado.sexo_id);
+      let provinciaAux = provincias.filter(provincia => provincia.id_provincia == id_provincia);
+      this.convocadoAux = {
+        apellido: this.convocado.apellido,
+        nombre: this.convocado.nombre,
+        dni: this.convocado.dni,
+        sexo: sexoAux[0].sexo,
+        provincia: provinciaAux[0].provincia,
+        posicion: (this.listConvocados.length -1),
+        tipo: "noSalta"
+      }
+      this.listConvocadosAux.push(this.convocadoAux);
+      this.convocadoAux = {};
+       //FIN ARMAR ARRAY AUXILIAR
     }
     
     this.convocado = {};
     console.log("lista convocados", this.listConvocados);
     console.log("lista convocados no salta", this.listConvocadosNoSalta);
+
+    this.hideDialogConvocado();
   }
-  //AGREGAR CONVOCADOS..................................................
+  //FIN AGREGAR CONVOCADOS..................................................
   
   clavesValidation(): boolean{
     
@@ -512,8 +502,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     //this.elementosUsuarios = [];
     //this.elementosCentroMediacion = [];
     
-    //this.formaProvincia.reset(); 
-    //this.formaProvincia.get('provincia_id')?.setValue(1);
+    this.formaProvincia.reset(); 
+    this.formaProvincia.get('provincia_id')?.setValue(1);
     //Object.values(this.formaProvincia.controls).forEach(control => control.markAsUntouched());
     this.reiniciarformularios();
     
