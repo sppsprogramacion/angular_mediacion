@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { AppConfig } from 'src/app/api/appconfig';
 import Swal from 'sweetalert2';
 
-import { departamentos, municipios, objetos, opcionSiNo, provincias, sexo } from 'src/app/common/data-mokeada';
+import { categorias, departamentos, municipios, objetos, opcionSiNo, provincias, sexo } from 'src/app/common/data-mokeada';
 import { CentroMediacionModel } from 'src/app/models/centro_mediacion.model';
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { ProvinciaModel } from '../../../models/provincia.model';
@@ -20,6 +20,7 @@ import { DataService } from 'src/app/service/data.service';
 import { TramitesService } from 'src/app/service/tramites.service';
 import { ElementoModel } from 'src/app/models/elemento.model';
 import { Router } from '@angular/router';
+import { CategoriaModel } from 'src/app/models/categoria.model';
 
 @Component({
   selector: 'app-ciudadano-tramites-nuevo',
@@ -33,8 +34,10 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   selectedState:any;  
 
   msgs: Message[] = []; 
+  msgsVinculado: Message[] = [];
 
   //listas  
+  listaCategorias: CategoriaModel[] = [];
   elementosCentroMediacion: ElementoModel[]=[];
   listaCentrosMediacion: CentroMediacionModel[]=[];
   listaMunicipios: MunicipioModel[] = [];
@@ -47,6 +50,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   listConvocados: any[]=[]; 
   listConvocadosNoSalta: any[]=[];
   listConvocadosAux: any[]=[];   
+  listVinculados: any[]=[];
+  listVinculadosAux: any[]=[];
 
   //modelos 
   ciudadanoData: CiudadanoModel;
@@ -56,6 +61,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   //variables booleanas 
   formTramiteDialog: boolean = false;
   convocadoTramiteDialog: boolean = false;
+  vinculadoTramiteDialog: boolean = false;
   existe_violencia_genero: boolean = false;
   isDatosPersonales: boolean = false;
   isSalta: boolean = false;
@@ -63,6 +69,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
 
   //FORMULARIOS
   formaTramite: FormGroup;
+  formaVinculado: FormGroup;
   formaConvocado: FormGroup;
   formaDomicilioSalta: FormGroup;
   formaDomicilioNoSalta: FormGroup;
@@ -79,6 +86,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     public dataService: DataService,
     private router: Router,
   ) {
+    //FORMULARIOS
     this.formaTramite = this.fb.group({
       esta_asesorado: [false,[Validators.requiredTrue]],
       departamento_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(2)]],      
@@ -130,7 +138,21 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.formaProvincia = this.fb.group({
       provincia_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(2)]],    
     });
+
+    this.formaVinculado = this.fb.group({
+      apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      dni: ['',[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.minLength(5)]],
+      sexo_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],   
+      telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]], 
+      categoria_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+    });
+    //FIN FORMULARIOS.....................................................................................
+    //....................................................................................................
+
   }
+  //FIN CONSTRUCTOR............................................................................................
+  //...........................................................................................................
 
   //MENSAJES DE VALIDACIONES
   user_validation_messages = {
@@ -239,11 +261,11 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     ],
     'violencia_partes': [
       { type: 'required', message: 'Debe especificar si existe violencia entre las partes.' },
-    ],
-    
+    ],    
     
   }
-  //FIN MENSAJES DE VALIDACIONES...............................................................
+  //FIN MENSAJES DE VALIDACIONES...................................................................
+  //..............................................................................................
 
   //VALIDACIONES DE FORMULARIO
   isValid(campo: string): boolean{     
@@ -265,12 +287,19 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     
     return this.formaProvincia.get(campo)?.invalid && this.formaProvincia.get(campo)?.touched;      
   }
-  //FIN VALIDACIONES DE FORMULARIO...............................................................
+
+  isValidVinculado(campo: string): boolean{     
+    
+    return this.formaVinculado.get(campo)?.invalid && this.formaVinculado.get(campo)?.touched;      
+  }
+  //FIN VALIDACIONES DE FORMULARIO.............................................................................
+  //...........................................................................................................
 
   ngOnInit(): void {    
     this.ciudadanoData = this.dataService.ciudadanoData
 
     //CARGA DE LISTADOS DESDE DATA MOKEADA
+    this.listaCategorias = categorias;
     this.listObjetos = objetos;
     this.listSexo = sexo;
     this.listSiNo = opcionSiNo;
@@ -278,7 +307,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.listaDepartamentos = departamentos;
     this.cargarMunicipios(1);        
   }
-  //FIN ONINIT.................................
+  //FIN ONINIT................................................................
+  //..........................................................................
 
   //GUARDAR NUEVO TRAMITE  
   submitFormTramite(){
@@ -340,7 +370,18 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     //FIN GUARDAR NUEVO TRAMITE 
   }    
   //FIN GUARDAR NUEVO TRAMITE............................................................
+  //.....................................................................................
   
+  //AGREGAR VINCULADOS
+  agregarVinculado(){
+    if(this.formaVinculado.invalid){        
+      this.msgsVinculado = [];                
+      this.msgsVinculado.push({ severity: 'error', summary: 'Datos invalidos', detail: 'Revise los datos personales. ' });
+      Object.values(this.formaVinculado.controls).forEach(control => control.markAsTouched());
+    }
+  }
+  //FIN AGREGAR VINCULADOS
+
   //AGREGAR CONVOCADOS
   agregarConvocado(){
     let id_provincia: number = parseInt(this.formaProvincia.get('provincia_id')?.value);
@@ -353,7 +394,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
         return Object.values(this.formaProvincia.controls).forEach(control => control.markAsTouched());
       }
     }
-    //SIN SELECCIONAR PROVINCIA
+    //FIN SIN SELECCIONAR PROVINCIA
 
     //PROVINCIA SALTA SELECCIONADA
     if(id_provincia == 18 ){
@@ -368,7 +409,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
         Object.values(this.formaDomicilioSalta.controls).forEach(control => control.markAsTouched());
       }      
       if(this.formaConvocado.invalid || this.formaDomicilioSalta.invalid) return;      
-      //FIN VAIDACIONES DE FORMULARIOS...........
+      //FIN VAIDACIONES DE FORMULARIOS
 
       this.convocado = {
         apellido: this.formaConvocado.get('apellido')?.value,
@@ -404,6 +445,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       //FIN ARMAR ARRAY AUXILIAR
       
     }
+    //PROVINCIA SALTA SELECCIONADA
 
     //PROVINCIA SELECCIONADA NO ES SALTA
     if(parseInt(this.formaProvincia.get('provincia_id')?.value) != 18 && id_provincia != 1){
@@ -458,12 +500,9 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.hideDialogConvocado();
   }
   //FIN AGREGAR CONVOCADOS..................................................
+  //........................................................................
   
-  clavesValidation(): boolean{
-    
-    return ((this.formaTramite.get('clave1').value === this.formaTramite.get('clave2').value))?  false: true;
-  }
-
+  
   mostrarDialogTramite(){
     this.formTramiteDialog= true;
   }
@@ -472,9 +511,9 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.formTramiteDialog= false;
   }
 
-  //MANEJO DE FORMULARIO DIALOG
+  //MANEJO DE FORMULARIO DIALOG CONVOCADO
   reiniciarformularios(){
-    this.msgs = [];
+    this.msgsVinculado = [];
     this.formaConvocado.reset();  
     this.formaDomicilioSalta.reset();   
     this.formaDomicilioNoSalta.reset(); 
@@ -487,35 +526,44 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
 
   openDialogConvocado() {
     this.convocadoTramiteDialog = true; 
-    Object.values(this.formaProvincia.controls).forEach(control => control.markAsUntouched());   
-    console.log("formulario reset", this.formaConvocado.controls);
-    console.log("formulario domicilio salta", this.formaDomicilioSalta.controls);
-    console.log("formulario provincia", this.formaProvincia.controls);
-    console.log("formulario domicilio NO salta", this.formaDomicilioNoSalta.controls);
+    Object.values(this.formaProvincia.controls).forEach(control => control.markAsUntouched()); 
     
     // Object.values(this.formaDomicilioSalta.controls).forEach(control => control.markAsUntouched());
     // Object.values(this.formaDomicilioSalta.controls).forEach(control => control.markAsUntouched());
     // Object.values(this.formaConvocado.controls).forEach(control => control.markAsUntouched());
   }
   
-  hideDialogConvocado() {
-    //this.elementosUsuarios = [];
-    //this.elementosCentroMediacion = [];
-    
+  hideDialogConvocado() {    
     this.formaProvincia.reset(); 
     this.formaProvincia.get('provincia_id')?.setValue(1);
     //Object.values(this.formaProvincia.controls).forEach(control => control.markAsUntouched());
     this.reiniciarformularios();
-    
-    console.log("formulario convocado", this.formaConvocado.controls);
-    console.log("formulario provincia", this.formaProvincia.controls);
-    console.log("formulario domicilio salta", this.formaDomicilioSalta.controls);
-    console.log("formulario domicilio NO salta", this.formaDomicilioNoSalta.controls);
     this.convocadoTramiteDialog = false;
     
   }    
-  //FIN MANEJO FORMULARIO DIALOG....................................
+  //FIN MANEJO FORMULARIO DIALOG CONVOCADO....................................
 
+  //MANEJO DE FORMULARIO DIALOG VINCULADO
+  reiniciarFormularioVinculado(){
+    this.msgs = [];
+    this.formaVinculado.reset();  
+  }
+
+  openDialogVinculado() {
+    this.vinculadoTramiteDialog = true; 
+    Object.values(this.formaVinculado.controls).forEach(control => control.markAsUntouched()); 
+  }
+  
+  hideDialogVinculado() {    
+    this.formaVinculado.reset();     
+    //Object.values(this.formaProvincia.controls).forEach(control => control.markAsUntouched());
+    this.reiniciarFormularioVinculado();
+    this.vinculadoTramiteDialog = false;
+    
+  }    
+  //FIN MANEJO FORMULARIO DIALOG VINCULADO....................................
+
+  //CARGA DE DROPDOWN TRAMITES
   cargarMunicipios(id_departamento: number){
     this.listaMunicipios=municipios.filter(municipio => {      
       return municipio.id_municipio == 1 || municipio.departamento_id == id_departamento;
@@ -526,8 +574,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     const id = this.formaTramite.get('departamento_id')?.value;
     if(id != null){               
         this.cargarMunicipios(parseInt(id.toString()));
-        this.formaTramite.get('municipio_id')?.setValue(1);
-        
+        this.formaTramite.get('municipio_id')?.setValue(1);        
     }
   }
   
@@ -553,6 +600,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
         }
     }
   }
+  //FIN CARGA DE DROPDOWN TRAMITES................................
 
   //CARGA DEPARTAMENTOS Y MUNICIPIOS CONVOCADOS
   cargarMunicipiosConvocado(id_departamento: number){
@@ -569,8 +617,9 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
         
     }
   }
-  //FIN CARGA DEPARTAMENTOS Y MUNICIPIOS CONVOCADOS
+  //FIN CARGA DEPARTAMENTOS Y MUNICIPIOS CONVOCADOS...................
 
+  //CARGA DE DROPDOWN CENTROS DE MEDIACION
   cargarCentrosMediacion(id_departamento: number){
     this.centroMediacionService.listarCentroMediacionXDepartamento(id_departamento)
       .subscribe({
@@ -600,6 +649,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
         
     }
   }
+  //FIN CARGA DE DROPDOWN CENTROS DE MEDIACION......................................
 
   changeFormatoFechaGuardar(nuevaFecha: Date){
     let fechaAuxiliar:any = null;

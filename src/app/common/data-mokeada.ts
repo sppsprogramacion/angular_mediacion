@@ -1,4 +1,27 @@
 
+export const categorias = [
+    {
+        "id_categoria": 3,
+        "categoria": "abogado"
+    },
+    {
+        "id_categoria": 4,
+        "categoria": "acompañante"
+    },
+    {
+        "id_categoria": 2,
+        "categoria": "convocado"
+    },
+    {
+        "id_categoria": 5,
+        "categoria": "otro"
+    },
+    {
+        "id_categoria": 1,
+        "categoria": "solicitante adicional"
+    }
+];
+
 export const opcionSiNo = [
     {
         "id_opcion_sino": false,

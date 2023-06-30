@@ -62,12 +62,8 @@ export class LoginComponent implements OnInit {
   //GUARDAR CIUDADANO  
   submitFormLogin(){
     
-    if(this.formaLogin.invalid){                        
-        // this.msgs = [];
-        // this.msgs.push({ severity: 'warn', summary: 'Errores en formulario', detail: 'Cargue correctamente los datos' });
-        // this.serviceMensajes.add({key: 'tst', severity: 'warn', summary: 'Errores en formulario', detail: 'Cargue correctamente los dato'});
-        Swal.fire('Formulario con errores',`Complete correctamente todos los campos del formulario`,"warning");
-        
+    if(this.formaLogin.invalid){ 
+        Swal.fire('Formulario con errores',`Complete correctamente todos los campos del formulario`,"warning");        
         console.log("errores formulario");
         return Object.values(this.formaLogin.controls).forEach(control => control.markAsTouched());
     }    
@@ -80,7 +76,7 @@ export class LoginComponent implements OnInit {
     };
     
     
-    //GUARDAR NUEVO CIUDADANO
+    //LOGIN
     this.authService.loginCiudadano(dataLogin)
       .subscribe({
         next: (resultado) => {
@@ -99,10 +95,10 @@ export class LoginComponent implements OnInit {
         }           
       
       });         
-    //FIN GUARDAR NUEVO CIUDADANO 
+    //FIN LOGIN
 
   }    
-  //FIN GUARDAR CIUDADANO............................................................
+  //FIN LOGIN............................................................
 
   //IR A REGISTRARME
   irARegisrtarme(){
