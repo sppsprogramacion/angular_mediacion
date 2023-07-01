@@ -57,6 +57,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   ciudadanoData: CiudadanoModel;
   convocado: any;
   convocadoAux: any;
+  vinculado: any;
+  vinculadoAux: any;
 
   //variables booleanas 
   formTramiteDialog: boolean = false;
@@ -196,7 +198,9 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       { type: 'required', message: 'El correo electrónico es requerido' },
       { type: 'pattern', message: 'El formato del correo electrónico no es correcto.' }
     ],
-     
+    'esta_asesorado': [
+      { type: 'requiredTrue', message: 'Debe estar asesorado para continuar con la solicitud' },
+    ],
     'existe_denuncia': [
       { type: 'required', message: 'Debe especificar si existe denuncia.' },
     ],  
@@ -269,6 +273,11 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
 
   //VALIDACIONES DE FORMULARIO
   isValid(campo: string): boolean{     
+    
+    return this.formaTramite.get(campo)?.invalid && this.formaTramite.get(campo)?.touched;      
+  }
+
+  isValidConvocado(campo: string): boolean{     
     
     return this.formaConvocado.get(campo)?.invalid && this.formaConvocado.get(campo)?.touched;      
   }
@@ -343,16 +352,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       },
       createConvocadoSaltaDto: this.listConvocados,
       createConvocadoNoSaltaDto: this.listConvocadosNoSalta,
-      createVinculadoTramiteDto:[
-        {
-            "apellido": "Leguizamon",
-            "nombre": "Sebastian",
-            "dni": 33505001,
-            "sexo_id": 2,
-            "telefono": "3874853487",
-            "categoria_id": 1
-        }
-      ]
+      createVinculadoTramiteDto: this.listVinculados      
     }
     
     //GUARDAR NUEVO TRAMITE
@@ -377,8 +377,34 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     if(this.formaVinculado.invalid){        
       this.msgsVinculado = [];                
       this.msgsVinculado.push({ severity: 'error', summary: 'Datos invalidos', detail: 'Revise los datos personales. ' });
-      Object.values(this.formaVinculado.controls).forEach(control => control.markAsTouched());
+      return Object.values(this.formaVinculado.controls).forEach(control => control.markAsTouched());
     }
+
+    this.vinculado = {
+      apellido: this.formaVinculado.get('apellido')?.value,
+      nombre: this.formaVinculado.get('nombre')?.value,
+      dni: parseInt(this.formaVinculado.get('dni')?.value),
+      sexo_id: parseInt(this.formaVinculado.get('sexo_id')?.value),      
+      telefono: this.formaVinculado.get('telefono')?.value,
+      categoria_id: parseInt(this.formaVinculado.get('categoria_id')?.value),   
+    }  
+    this.listVinculados.push(this.vinculado);
+
+    //ARMAR ARRAY AUXILIAR
+    let sexoAux = sexo.filter(sexo => sexo.id_sexo == this.vinculado.sexo_id);
+    this.vinculadoAux = {
+      apellido: this.vinculado.apellido,
+      nombre: this.vinculado.nombre,
+      dni: this.vinculado.dni,
+      sexo: sexoAux[0].sexo,
+      posicion: (this.listVinculados.length -1)
+    }
+    this.listVinculadosAux.push(this.vinculadoAux);
+    this.vinculado = {};
+    this.vinculadoAux = {};
+    //FIN ARMAR ARRAY AUXILIAR  
+
+    this.hideDialogVinculado();
   }
   //FIN AGREGAR VINCULADOS
 
@@ -441,6 +467,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
         tipo: "salta"
       }
       this.listConvocadosAux.push(this.convocadoAux);
+      this.convocado = {};
       this.convocadoAux = {};
       //FIN ARMAR ARRAY AUXILIAR
       
@@ -448,7 +475,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     //PROVINCIA SALTA SELECCIONADA
 
     //PROVINCIA SELECCIONADA NO ES SALTA
-    if(parseInt(this.formaProvincia.get('provincia_id')?.value) != 18 && id_provincia != 1){
+    if(id_provincia != 18 && id_provincia != 1){
       //VAIDACIONES DE FORMULARIOS
       if(this.formaConvocado.invalid){        
         this.msgs = [];
@@ -476,8 +503,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   
       this.listConvocadosNoSalta.push(this.convocado);
 
-       //ARMAR ARRAY AUXILIAR
-       let sexoAux = sexo.filter(sexo => sexo.id_sexo == this.convocado.sexo_id);
+      //ARMAR ARRAY AUXILIAR
+      let sexoAux = sexo.filter(sexo => sexo.id_sexo == this.convocado.sexo_id);
       let provinciaAux = provincias.filter(provincia => provincia.id_provincia == id_provincia);
       this.convocadoAux = {
         apellido: this.convocado.apellido,
