@@ -65,6 +65,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   convocadoTramiteDialog: boolean = false;
   vinculadoTramiteDialog: boolean = false;
   existe_violencia_genero: boolean = false;
+  estaAsesorado: boolean = false;
   isDatosPersonales: boolean = false;
   isSalta: boolean = false;
   isNoSalta: boolean = false;
@@ -91,9 +92,9 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     //FORMULARIOS
     this.formaTramite = this.fb.group({
       esta_asesorado: [false,[Validators.requiredTrue]],
-      departamento_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(2)]],      
-      municipio_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(2)]],
-      departamento_id_centro: [1,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(2)]],
+      departamento_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(2)]],      
+      municipio_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(2)]],
+      departamento_id_centro: [0,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(2)]],
       centro_mediacion_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(1)]],
       localidad_barrio: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       calle_direccion: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],        
@@ -197,9 +198,6 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     'email': [
       { type: 'required', message: 'El correo electrónico es requerido' },
       { type: 'pattern', message: 'El formato del correo electrónico no es correcto.' }
-    ],
-    'esta_asesorado': [
-      { type: 'requiredTrue', message: 'Debe estar asesorado para continuar con la solicitud' },
     ],
     'existe_denuncia': [
       { type: 'required', message: 'Debe especificar si existe denuncia.' },
@@ -324,7 +322,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     if(this.formaTramite.invalid){                        
         Swal.fire('Formulario incompleto',`Complete correctamente todos los campos del formulario`,"error");
         let fechaAuxiliar = this.datePipe.transform(this.formaTramite.get('fecha_nac')?.value,"yyyy-MM-dd")!;
-        return Object.values(this.formaTramite.controls).forEach(control => control.markAsDirty());
+        console.log(this.formaTramite.controls);
+        return Object.values(this.formaTramite.controls).forEach(control => control.markAsTouched());
     }
     
     let data:any;
@@ -407,6 +406,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.hideDialogVinculado();
   }
   //FIN AGREGAR VINCULADOS
+  //.......................................................................
 
   //AGREGAR CONVOCADOS
   agregarConvocado(){
@@ -696,6 +696,23 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       this.formaTramite.get('existe_denuncia')?.setValue(false);
       this.formaTramite.get('medida_cautelar')?.setValue(false);
       this.existe_violencia_genero= false;
+    }
+  }
+
+  onChangeAsesorado(){
+    if(this.formaTramite.get('esta_asesorado')?.value == true){
+      Object.values(this.formaTramite.controls).forEach(control => control.markAsUntouched());
+      this.estaAsesorado = true;
+      
+    }
+    else{
+      this.reiniciarformularios();
+      this.reiniciarFormularioVinculado();
+      this.formaTramite.reset(); 
+      this.formaTramite.get('esta_asesorado')?.setValue(false);
+       
+
+      this.estaAsesorado = false;
     }
   }
   
