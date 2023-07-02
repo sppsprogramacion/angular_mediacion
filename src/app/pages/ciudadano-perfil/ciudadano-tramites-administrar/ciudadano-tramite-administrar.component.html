@@ -6,65 +6,272 @@
         </h5>
     </p-toolbar>
 
-    <div class="col-12 border-bottom-1 surface-border mt-4">
-        <div class="grid">
-            <div class="col-12 lg:col-3 xl:col-3">
-                <span class="text font-medium text-1xl">Tramite N°:<span class="text ml-2 font-medium"> {{dataTramite.numero_tramite}} </span></span>
+    <!-- CARD PRINCIPAL -->
+    <div class="card p-fluid">
+        <p-toolbar styleClass="mb-3 bg-orange-500">
+            <h5 class="block text-white  font-bold font-medium mb-1">Datos principales</h5>
+        </p-toolbar>
+        <div class="bg-cyan-600">
+
+        </div>
+        <div class="col-12 border-bottom-1 surface-border mt-4">
+            <div class="grid">
+                <div class="col-12 lg:col-3 xl:col-3">
+                    <span class="text font-medium text-1xl">Tramite N°:<span class="text ml-2 font-medium"> {{dataTramite.numero_tramite}} </span></span>
+                </div>
+                <div class="col-12 lg:col-3 xl:col-3 py-2">
+                    <span class="text font-medium text-1xl">Fecha inicia:<span class="text ml-1 font-medium"> {{dataTramite.fecha_tramite| date: 'dd/MM/yyyy'}}</span></span>
+                </div>
+                <div class="col-12 lg:col-3 xl:col-3 py-2">
+                    <span class="text font-medium text-1xl">N° expediente:<span class="text ml-1 font-medium"> {{dataTramite.expediente}}</span></span>
+                </div>
+                <div class="col-12 lg:col-3 xl:col-3 py-2">
+                    <span class="text font-medium text-1xl">Fecha exp.:<span class="text ml-1 font-medium"> {{dataTramite.fecha_expediente| date: 'dd/MM/yyyy'}}</span></span>
+                </div>
+
             </div>
-            <div class="col-12 lg:col-3 xl:col-3 py-2">
-                <span class="text font-medium text-1xl">Fecha inicia:<span class="text ml-1 font-medium"> {{dataTramite.fecha_tramite| date: 'dd/MM/yyyy'}}</span></span>
+        </div>
+    </div>
+    <!-- FIN CARD PRINCIPAL-->
+
+    <!-- CARD SOLICITANTE -->
+    <div class="card p-fluid">
+        <p-toolbar styleClass="mb-3 bg-orange-500">
+            <h5 class="block text-white  font-bold font-medium mb-1">Solicitante</h5>
+        </p-toolbar>
+        <div class="bg-cyan-600">
+
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12 lg:col-4 xl:col-4">
+                    <span class="text font-medium text-1xl">Nombre:<span class="text ml-1 font-medium"> {{dataTramite.ciudadano?.apellido}} {{dataTramite.ciudadano?.nombre}}</span></span>
+                </div>
+                <div class="col-12 lg:col-4 xl:col-4">
+                    <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{dataTramite.ciudadano?.dni}}</span></span>
+                </div>
+                <div class="col-12 lg:col-4 xl:col-4">
+                    <span class="text font-medium text-1xl">Sexo:<span class="text ml-1 font-medium"> {{dataTramite.ciudadano?.sexo.sexo}}</span></span>
+                </div>
+
             </div>
-            <div class="col-12 lg:col-3 xl:col-3 py-2">
-                <span class="text font-medium text-1xl">N° expediente:<span class="text ml-1 font-medium"> {{dataTramite.expediente}}</span></span>
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-medium text-1xl">Departamento:<span class="text ml-1 font-medium"> {{dataTramite.departamento?.departamento}} </span></span>
+                </div>
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-medium text-1xl">Municipio:<span class="text ml-1 font-medium"> {{dataTramite.municipio?.municipio}} </span></span>
+                </div>
+                <div class="col-12">
+                    <span class="text font-medium text-1xl">Dirección:<span class="text ml-1 font-medium"> Barrio: {{dataTramite.localidad_barrio}} - Calle/Dirección: {{dataTramite.calle_direccion}} - Número: {{dataTramite.numero_dom}}</span></span>
+                </div>
             </div>
-            <div class="col-12 lg:col-3 xl:col-3 py-2">
-                <span class="text font-medium text-1xl">Fecha exp.:<span class="text ml-1 font-medium"> {{dataTramite.fecha_expediente| date: 'dd/MM/yyyy'}}</span></span>
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-medium text-1xl">Telefono:<span class="text ml-1 font-medium"> {{dataTramite.ciudadano?.telefono}} </span></span>
+                </div>
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-medium text-1xl">Email:<span class="text ml-1 font-medium"> {{dataTramite.ciudadano?.email}} </span></span>
+                </div>
             </div>
 
         </div>
     </div>
-    <div class="col-12 border-bottom-1 surface-border">
-        <div class="grid">
-            <div class="col-12 lg:col-4 xl:col-4">
-                <span class="text font-medium text-1xl">Solicitante:<span class="text ml-1 font-medium"> {{dataTramite.ciudadano?.apellido}} {{dataTramite.ciudadano?.nombre}}</span></span>
+    <!-- FIN CARD SOLICITANTE-->
+
+    <!-- CARD MOTIVO -->
+    <div class="card p-fluid">
+        <p-toolbar styleClass="mb-3 bg-orange-500">
+            <h5 class="block text-white  font-bold font-medium mb-1">Motivo</h5>
+        </p-toolbar>
+        <div class="bg-cyan-600">
+
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12 lg:col-6 xl:col-6 py-2">
+                    <span class="text font-medium text-1xl">Motivo de la solicitud:<span class="text ml-1 font-medium"> {{dataTramite.objeto?.objeto}}</span></span>
+                </div>
             </div>
-            <div class="col-12 lg:col-4 xl:col-4">
-                <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{dataTramite.ciudadano?.dni}}</span></span>
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12">
+                    <span class="text font-medium text-1xl">Existe violencia entre las partes:<span class="text ml-1 font-medium"> {{dataTramite.violencia_partes}}</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12">
+                    <span class="text font-bold font-medium text-1xl">Violencia de género</span>
+                </div>
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-medium text-1xl">Existe violencia de género:<span class="text ml-1 font-medium"> {{dataTramite.violencia_genero}} </span></span>
+                </div>
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-medium text-1xl">Existe denucnia:<span class="text ml-1 font-medium"> {{dataTramite.existe_denuncia}} </span></span>
+                </div>
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-medium text-1xl">Existe medida cautelar?:<span class="text ml-1 font-medium"> {{dataTramite.medida_cautelar}} </span></span>
+                </div>
             </div>
 
         </div>
     </div>
-    <div class="col-12 border-bottom-1 surface-border">
-        <div class="grid">
-            <div class="col-12 lg:col-6 xl:col-6 py-2">
-                <span class="text font-medium text-1xl">Motivo de la solicitud:<span class="text ml-1 font-medium"> {{dataTramite.objeto?.objeto}}</span></span>
+    <!-- FIN CARD MOTIVO-->
+
+    <!-- CARD CENTRO DE MEDIACION -->
+    <div class="card p-fluid">
+        <p-toolbar styleClass="mb-3 bg-orange-500">
+            <h5 class="block text-white  font-bold font-medium mb-1">Centro de mediación</h5>
+        </p-toolbar>
+        <div class="bg-cyan-600">
+
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12">
+                    <span class="text font-medium text-1xl">Centro de Mediación:<span class="text ml-1 font-medium"> {{dataTramite.centro_mediacion?.centro_mediacion}}</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-medium text-1xl">Departamento:<span class="text ml-1 font-medium"> {{dataTramite.centro_mediacion?.departamento.departamento}} </span></span>
+                </div>
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-medium text-1xl">Municipio:<span class="text ml-1 font-medium"> {{dataTramite.centro_mediacion?.municipio.municipio}} </span></span>
+                </div>
+                <div class="col-12">
+                    <span class="text font-medium text-1xl">Dirección:<span class="text ml-1 font-medium"> Barrio: {{dataTramite.centro_mediacion?.localidad_barrio}} - Calle/Dirección: {{dataTramite.centro_mediacion?.calle_direccion}} - Número: {{dataTramite.centro_mediacion?.numero_dom}}</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-medium text-1xl">Telefono:<span class="text ml-1 font-medium"> {{dataTramite.centro_mediacion?.telefono}} </span></span>
+                </div>
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-medium text-1xl">Email:<span class="text ml-1 font-medium"> {{dataTramite.centro_mediacion?.email}} </span></span>
+                </div>
             </div>
 
         </div>
     </div>
-    <div class="col-12 border-bottom-1 surface-border">
-        <div class="grid">
-            <div class="col-12">
-                <span class="text font-medium text-1xl">Centro de Mediación:<span class="text ml-1 font-medium"> {{dataTramite.centro_mediacion?.centro_mediacion}}</span></span>
-            </div>
-            <div class="col-12 lg:col-6 xl:col-6">
-                <span class="text font-medium text-1xl">Departamento:<span class="text ml-1 font-medium"> {{dataTramite.centro_mediacion?.departamento.departamento}} </span></span>
-            </div>
-            <div class="col-12 lg:col-6 xl:col-6">
-                <span class="text font-medium text-1xl">Municipio:<span class="text ml-1 font-medium"> {{dataTramite.centro_mediacion?.municipio.municipio}} </span></span>
-            </div>
-            <div class="col-12">
-                <span class="text font-medium text-1xl">Dirección:<span class="text ml-1 font-medium"> Barrio: {{dataTramite.centro_mediacion?.localidad_barrio}} - Calle/Dirección: {{dataTramite.centro_mediacion?.calle_direccion}} - Número: {{dataTramite.centro_mediacion?.numero_dom}}</span></span>
-            </div>
+    <!-- FIN CARD CENTRO DE MEDIACION-->
 
-        </div>
-    </div>
+
 
 </div>
 <!-- FIN Card Tramite -->
 
-<!-- Card Usuarios -->
+<!-- Card CONVOCADOS -->
+<div class="card p-fluid mb-0 mt-2">
+    <p-toolbar styleClass="mb-3 bg-cyan-500">
+        <h5 class="block text-white font-bold font-medium mb-1 ">
+            Personas convocadas
+        </h5>
+    </p-toolbar>
 
+    <!-- TABLA DE CONVOCADOS -->
+    <p-table #dt1 [value]="dataTramite.convocados" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem"></th>
+                <th>
+                    <div style="width: 6rem" class="flex justify-content-between align-items-left">
+                        Apellido
+                    </div>
+                </th>
+                <th>
+                    <div class="flex justify-content-between align-items-center">
+                        Nombre
+                    </div>
+                </th>
+                <th>
+                    <div class="flex justify-content-between align-items-center">
+                        DNI
+                    </div>
+                </th>
+                <th>
+                    <div class="flex justify-content-between align-items-center">
+                        Sexo
+                    </div>
+                </th>
+                <th>
+                    <div class="flex justify-content-between align-items-center">
+                        Provincia
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-convocado>
+            <tr>
+                <td>
+                    <button pButton pRipple type="button" icon="pi pi-folder-open text-orange-100" class="p-button-secondary p-button-rounded bg-orange-500 mr-1 mb-1"></button>
+                </td>
+                <td style="min-width: 15rem;">
+                    {{convocado.apellido}}
+                </td>
+                <td style="min-width: 2rem;">
+                    {{convocado.nombre}}
+                </td>
+                <td style="min-width: 10rem;">
+                    {{convocado.dni}}
+                </td>
+                <td style="min-width: 10rem;">
+                    {{convocado.sexo.sexo}}
+                </td>
+                <td style="min-width: 15rem;">
+                    {{convocado.provincia.provincia}}
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">No se encontraron convocados agregados.</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="loadingbody">
+            <tr>
+                <td colspan="8">Cargando convocados... .</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <!-- FIN TABLA DE CONVOCADOS -->
+
+
+</div>
+<!-- Fin Card CONVOCADOS -->
+
+<!-- Card VINCULADOS -->
+<div class="card p-fluid mb-0 mt-2">
+    <p-toolbar styleClass="mb-3 bg-cyan-500">
+        <h5 class="block text-white font-bold font-medium mb-1 ">
+            Personas vinculadas
+        </h5>
+    </p-toolbar>
+
+    <div class="col-12 border-bottom-1 surface-border">
+        <div class="grid">
+            <div class="col-12 lg:col-6 xl:col-6">
+                <span class="text font-bold font-medium text-1xl">Mediador Actual:<span class="text ml-2 font-medium"> {{dataUsuarioTramite.usuario?.apellido}} {{dataUsuarioTramite.usuario?.nombre}}</span></span>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Fin Card VINCULADOS -->
+
+<!-- Card Usuarios -->
 <div class="card p-fluid mb-0 mt-2">
     <p-toolbar styleClass="mb-3 bg-cyan-500">
         <h5 class="block text-white font-bold font-medium mb-1 ">
@@ -81,3 +288,4 @@
         </div>
     </div>
 </div>
+<!-- Fin Card Usuarios -->

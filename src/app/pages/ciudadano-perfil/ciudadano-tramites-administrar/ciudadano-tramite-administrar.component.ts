@@ -51,7 +51,7 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
     this.dataTramite= this.dataService.tramiteData;
     if(this.dataTramite){
       this.buscarAsignacionByNumTramiteActivo();
-      
+      console.log(this.dataTramite.convocados);
     }
   }
   //FIN ONINIT......................................................................................

@@ -191,12 +191,12 @@
                                 </div>
                                 <div class="field col-6">
                                     <label for="id_opcion_sino">¿Existe denuncia?</label>
-                                    <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="existe_denuncia" placeholder="Seleccionar...">
+                                    <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="existe_denuncia">
                                     </p-dropdown>
                                 </div>
                                 <div class="field col-6">
                                     <label for="id_opcion_sino">¿Existe una medida cautelar?</label>
-                                    <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="medida_cautelar" placeholder="Seleccionar...">
+                                    <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="medida_cautelar">
                                     </p-dropdown>
                                 </div>
                             </div>
@@ -373,6 +373,13 @@
                                                         <label for="sexo_id">Sexo</label>
                                                         <p-dropdown id="sexo_id" [options]="listSexo" optionLabel="sexo" optionValue="id_sexo" formControlName="sexo_id" placeholder="Seleccionar...">
                                                         </p-dropdown>
+                                                        <small *ngIf="isValidConvocado('sexo_id')" class="p-error">
+                                                            <div *ngFor="let validation of user_validation_messages.sexo_id" >
+                                                                <div  *ngIf="formaConvocado.get('sexo_id')?.hasError(validation.type)">
+                                                                    {{validation.message}}
+                                                                </div>
+                                                            </div>
+                                                        </small>
                                                     </div>
                                                     <div class="field col-12 md:col-6 lg:col-6">
                                                         <label for="dni">DNI</label>
@@ -411,7 +418,7 @@
                                                     </div>
                                                     <div class="field col-12 md:col-6">
                                                         <label for="municipio_id">Municipio</label>
-                                                        <p-dropdown id="municipio_id" [options]="listaMunicipios" optionLabel="municipio" optionValue="id_municipio" formControlName="municipio_id" placeholder="Seleccionar...">
+                                                        <p-dropdown id="municipio_id" [options]="listaMunicipiosConvocado" optionLabel="municipio" optionValue="id_municipio" formControlName="municipio_id" placeholder="Seleccionar...">
                                                         </p-dropdown>
                                                         <small *ngIf="isValidDomicilioSalta('municipio_id')" class="p-error">
                                                             <div *ngFor="let validation of user_validation_messages.municipio_id" >
@@ -707,6 +714,13 @@
                                                         <label for="sexo_id">Sexo</label>
                                                         <p-dropdown id="sexo_id" [options]="listSexo" optionLabel="sexo" optionValue="id_sexo" formControlName="sexo_id" placeholder="Seleccionar...">
                                                         </p-dropdown>
+                                                        <small *ngIf="isValidVinculado('sexo_id')" class="p-error">
+                                                            <div *ngFor="let validation of user_validation_messages.sexo_id" >
+                                                                <div  *ngIf="formaVinculado.get('sexo_id')?.hasError(validation.type)">
+                                                                    {{validation.message}}
+                                                                </div>
+                                                            </div>
+                                                        </small>
                                                     </div>
                                                     <div class="field col-12 md:col-6 lg:col-6">
                                                         <label for="dni">DNI</label>

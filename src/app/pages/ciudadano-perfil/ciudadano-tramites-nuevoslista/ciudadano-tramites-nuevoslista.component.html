@@ -11,7 +11,7 @@
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-between flex-column sm:flex-row">
                         <button pButton label="Solicitar tramite" icon="pi pi-plus" class="p-button-success mr-2" (click)="abrirNuevoTramite()"></button>
-                        
+
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header">
@@ -21,20 +21,6 @@
                             <div class="flex justify-content-between align-items-center">
                                 Nº Tramite
                                 <p-columnFilter type="text" field="numero_tramite" display="menu" placeholder="Buscar por tramite"></p-columnFilter>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="flex justify-content-between align-items-center">
-                                Apellido
-                                <p-columnFilter type="text" field="ciudadano.apellido" display="menu" placeholder="Buscar por apellido"></p-columnFilter>
-
-                            </div>
-                        </th>
-                        <th>
-                            <div class="flex justify-content-between align-items-center">
-                                Nombre
-                                <p-columnFilter type="text" field="ciudadano.nombre" display="menu" placeholder="Buscar por nombre"></p-columnFilter>
-
                             </div>
                         </th>
                         <th>
@@ -87,13 +73,6 @@
                         <td style="min-width: 10rem;">
                             {{tramite.numero_tramite}}
                         </td>
-
-                        <td style="min-width: 15rem;">
-                            {{tramite.ciudadano.apellido}}
-                        </td>
-                        <td style="min-width: 2rem;">
-                            {{tramite.ciudadano.nombre}}
-                        </td>
                         <td style="min-width: 10rem;">
                             {{tramite.ciudadano.dni}}
                         </td>
@@ -127,7 +106,7 @@
                 </ng-template>
             </p-table>
             <!-- FIN TABLA DE TRAMITES -->
-           
+
         </div>
 
     </div>

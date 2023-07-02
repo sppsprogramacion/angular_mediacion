@@ -41,6 +41,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   elementosCentroMediacion: ElementoModel[]=[];
   listaCentrosMediacion: CentroMediacionModel[]=[];
   listaMunicipios: MunicipioModel[] = [];
+  listaMunicipiosConvocado: MunicipioModel[] = [];
   listaDepartamentos: DepartamentoModel[] = [];
   listaProvincias: ProvinciaModel[] = []
   listObjetos: ObjetoModel[] = [];
@@ -108,8 +109,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       pdf_cautelar: [false,[Validators.required]],
       pdf_ingresos: [false,[Validators.required]],
       pdf_negativa: [false,[Validators.required]],
-      modalidad_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-      variante_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/)]],     
+      // modalidad_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      // variante_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/)]],     
     
     });
 
@@ -117,7 +118,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
       nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
       dni: ['',[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.minLength(5)]],
-      sexo_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],   
+      sexo_id: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],   
     });
 
     this.formaDomicilioSalta = this.fb.group({      
@@ -146,7 +147,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
       nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
       dni: ['',[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.minLength(5)]],
-      sexo_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],   
+      sexo_id: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],   
       telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]], 
       categoria_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
     });
@@ -604,6 +605,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
         this.formaTramite.get('municipio_id')?.setValue(1);        
     }
   }
+  //FIN CARGA DE DROPDOWN TRAMITES................................
   
   onChangeProvincia(){
     this.reiniciarformularios();
@@ -626,12 +628,11 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
           this.isDatosPersonales = false;
         }
     }
-  }
-  //FIN CARGA DE DROPDOWN TRAMITES................................
+  }  
 
   //CARGA DEPARTAMENTOS Y MUNICIPIOS CONVOCADOS
   cargarMunicipiosConvocado(id_departamento: number){
-    this.listaMunicipios=municipios.filter(municipio => {      
+    this.listaMunicipiosConvocado=municipios.filter(municipio => {      
       return municipio.id_municipio == 1 || municipio.departamento_id == id_departamento;
     });    
   }
