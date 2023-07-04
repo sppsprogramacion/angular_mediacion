@@ -586,8 +586,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.formaVinculado.reset();     
     //Object.values(this.formaProvincia.controls).forEach(control => control.markAsUntouched());
     this.reiniciarFormularioVinculado();
-    this.vinculadoTramiteDialog = false;
-    
+    this.vinculadoTramiteDialog = false;    
   }    
   //FIN MANEJO FORMULARIO DIALOG VINCULADO....................................
 

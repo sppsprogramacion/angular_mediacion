@@ -8,6 +8,7 @@ import { FuncionTramiteService } from 'src/app/service/funcion-tramite.service';
 import { UsuariosCentroService } from 'src/app/service/usuarios-centro.service';
 import { UsuariosTramiteService } from 'src/app/service/usuarios-tramite.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
+import { ConvocadoModel } from '../../../models/convocado.model';
 @Component({
   selector: 'app-ciudadano-tramite-administrar',
   templateUrl: './ciudadano-tramite-administrar.component.html',
@@ -18,14 +19,17 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
   //MODELOS
   dataTramite: TramiteModel= new TramiteModel;
   dataUsuarioTramite: UsuarioTramiteModel= {};
+  dataConvocado: ConvocadoModel = {};
 
   //listas
   listUsuariosTramite: UsuarioTramiteModel[]=[];
 
-  //variables
+  //variables booleanas
+  convocadoDialog: boolean = false;
   loadingMediadores: boolean = true;
   loadingFuncionTramite: boolean = true;
   loadingUsuariosTramite: boolean = true;
+  vinculadoDialog: boolean = false;
 
   //FORMULARIOS
   
@@ -71,5 +75,36 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
         }
       });       
   }
+
+  //MANEJO DE FORMULARIO DIALOG VINCULADO
+  reiniciarFormularioConvocado(){
+    
+  }
+
+  openDialogConvocado(convocado: ConvocadoModel) {
+    this.dataConvocado = convocado;
+    this.convocadoDialog = true; 
+    
+  }
+  
+  hideDialogConvocado() {    
+    this.convocadoDialog = false;    
+  }    
+  //FIN MANEJO FORMULARIO DIALOG VINCULADO....................................
+
+  //MANEJO DE FORMULARIO DIALOG VINCULADO
+  reiniciarFormularioVinculado(){
+    
+  }
+
+  openDialogVinculado() {
+    this.vinculadoDialog = true; 
+
+  }
+  
+  hideDialogVinculado() {    
+    this.vinculadoDialog = false;    
+  }    
+  //FIN MANEJO FORMULARIO DIALOG VINCULADO....................................
 
 }
