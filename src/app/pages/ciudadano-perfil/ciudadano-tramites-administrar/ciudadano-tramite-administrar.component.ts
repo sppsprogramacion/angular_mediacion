@@ -77,10 +77,6 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
   }
 
   //MANEJO DE FORMULARIO DIALOG VINCULADO
-  reiniciarFormularioConvocado(){
-    
-  }
-
   openDialogConvocado(convocado: ConvocadoModel) {
     this.dataConvocado = convocado;
     this.convocadoDialog = true; 
