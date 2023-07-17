@@ -167,10 +167,134 @@
     </div>
     <!-- FIN CARD CENTRO DE MEDIACION-->
 
+    <!-- Card CONVOCADOS -->
+    <div class="card p-fluid mb-0 mt-2">
+        <p-toolbar styleClass="mb-3 bg-orange-500">
+            <h5 class="block text-white font-bold font-medium mb-1 ">
+                Personas convocadas
+            </h5>
+        </p-toolbar>
 
+        <!-- TABLA DE CONVOCADOS -->
+        <p-table #dt1 [value]="dataTramite.convocados" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 3rem"></th>
+                    <th>
+                        <div style="width: 6rem" class="flex justify-content-between align-items-left">
+                            Apellido
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            Nombre
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            DNI
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            Sexo
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            Provincia
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-convocado>
+                <tr>
+                    <td>
+                        <p-button icon="pi pi-search-plus" styleClass="p-button-rounded mb-1" (click)="openDialogConvocado(convocado)"></p-button>
+                    </td>
+                    <td style="min-width: 15rem;">
+                        {{convocado.apellido}}
+                    </td>
+                    <td style="min-width: 2rem;">
+                        {{convocado.nombre}}
+                    </td>
+                    <td style="min-width: 10rem;">
+                        {{convocado.dni}}
+                    </td>
+                    <td style="min-width: 10rem;">
+                        {{convocado.sexo.sexo}}
+                    </td>
+                    <td style="min-width: 15rem;">
+                        {{convocado.provincia.provincia}}
+                    </td>
+                </tr>
+            </ng-template>
 
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">No se encontraron convocados agregados.</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+                <tr>
+                    <td colspan="8">Cargando convocados... .</td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <!-- FIN TABLA DE CONVOCADOS -->
+
+        <!-- DIALOG FORMULARIO CONVOCADOS -->
+        <p-dialog id="convocadoDialog" [(visible)]="convocadoDialog" [style]="{width: '500px','min-height':'400px'}" class="p-fluid" header="Datos de convocado" [closable]="false" [modal]="true">
+            <h6 class="block font-bold font-medium">Datos personales</h6>
+
+            <ng-template pTemplate="content">
+                <div class="col-12 border-bottom-1 surface-border">
+                    <div class="grid">
+                        <div class="col-12 lg:col-6 xl:col-6">
+                            <span class="text font-medium text-1xl">Nombre:<span class="text ml-1 font-medium"> {{dataConvocado.apellido}} {{dataConvocado.nombre}}</span></span>
+                        </div>
+                        <div class="col-12 lg:col-6 xl:col-6">
+                            <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{dataConvocado.dni}}</span></span>
+                        </div>
+
+                    </div>
+                    <div class="grid">
+                        <div class="col-12 lg:col-6 xl:col-6">
+                            <span class="text font-medium text-1xl">Sexo:<span class="text ml-1 font-medium"> {{dataConvocado.sexo.sexo}}</span></span>
+                        </div>
+
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer" class="mt-1">
+                <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogConvocado()"></button>
+            </ng-template>
+        </p-dialog>
+        <!-- FIN DIALOG FORMULARIO  CONVOCADOS -->
+    </div>
+    <!-- Fin Card CONVOCADOS -->
+
+    <!-- Card VINCULADOS -->
+    <div class="card p-fluid mb-0 mt-2">
+        <p-toolbar styleClass="mb-3 bg-orange-500">
+            <h5 class="block text-white font-bold font-medium mb-1 ">
+                Personas vinculadas
+            </h5>
+        </p-toolbar>
+
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-bold font-medium text-1xl">Mediador Actual:<span class="text ml-2 font-medium"> {{dataUsuarioTramite.usuario?.apellido}} {{dataUsuarioTramite.usuario?.nombre}}</span></span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Fin Card VINCULADOS -->
 </div>
-<!-- FIN Card Tramite -->
+<!-- FIN Card Tramite ------ -->
 
 <!-- Card CONVOCADOS -->
 <div class="card p-fluid mb-0 mt-2">
