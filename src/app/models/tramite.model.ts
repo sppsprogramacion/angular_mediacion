@@ -10,6 +10,7 @@ import { CiudadanoModel } from './ciudadano.model';
 import { UsuarioTramiteModel } from './usuario_tramite.model';
 import { CentroMediacionModel } from './centro_mediacion.model';
 import { ConvocadoModel } from './convocado.model';
+import { VinculadoModel } from './vinculado.model';
 
 
 export class TramiteModel{
@@ -51,6 +52,7 @@ export class TramiteModel{
         public estado_tramite_id?: number,
         public estado_tramite?: EstadoTramiteModel,
         public asignaciones?: UsuarioTramiteModel[],
-        public convocados?: ConvocadoModel[]
+        public convocados?: ConvocadoModel[],
+        public vinculados?: VinculadoModel[]
     ){}
 }

@@ -9,6 +9,7 @@ import { UsuariosCentroService } from 'src/app/service/usuarios-centro.service';
 import { UsuariosTramiteService } from 'src/app/service/usuarios-tramite.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
 import { ConvocadoModel } from '../../../models/convocado.model';
+import { VinculadoModel } from '../../../models/vinculado.model';
 @Component({
   selector: 'app-ciudadano-tramite-administrar',
   templateUrl: './ciudadano-tramite-administrar.component.html',
@@ -20,6 +21,7 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
   dataTramite: TramiteModel= new TramiteModel;
   dataUsuarioTramite: UsuarioTramiteModel= {};
   dataConvocado: ConvocadoModel = {};
+  dataVinculado: VinculadoModel = {};
 
   //listas
   listUsuariosTramite: UsuarioTramiteModel[]=[];
@@ -79,7 +81,6 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
   //MANEJO DE FORMULARIO DIALOG VINCULADO
   openDialogConvocado(convocado: ConvocadoModel) {
     this.dataConvocado = convocado;
-    console.log("convocado", this.dataConvocado);
     this.convocadoDialog = true; 
     
   }
@@ -94,7 +95,8 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
     
   }
 
-  openDialogVinculado() {
+  openDialogVinculado(vinculado: VinculadoModel) {
+    this.dataVinculado = vinculado;
     this.vinculadoDialog = true; 
 
   }
