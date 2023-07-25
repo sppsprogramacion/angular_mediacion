@@ -181,15 +181,11 @@
                 <tr>
                     <th style="width: 3rem"></th>
                     <th>
-                        <div style="width: 6rem" class="flex justify-content-between align-items-left">
-                            Apellido
+                        <div class="flex justify-content-between align-items-left">
+                            Apellido y nombre
                         </div>
                     </th>
-                    <th>
-                        <div class="flex justify-content-between align-items-center">
-                            Nombre
-                        </div>
-                    </th>
+
                     <th>
                         <div class="flex justify-content-between align-items-center">
                             DNI
@@ -212,11 +208,8 @@
                     <td>
                         <p-button icon="pi pi-search-plus" styleClass="p-button-rounded mb-1" (click)="openDialogConvocado(convocado)"></p-button>
                     </td>
-                    <td style="min-width: 15rem;">
-                        {{convocado.apellido}}
-                    </td>
-                    <td style="min-width: 2rem;">
-                        {{convocado.nombre}}
+                    <td style="min-width: 20rem;">
+                        {{convocado.apellido}} {{convocado.nombre}}
                     </td>
                     <td style="min-width: 10rem;">
                         {{convocado.dni}}
@@ -289,7 +282,6 @@
                         <div class="col-12 lg:col-12 xl:col-12">
                             <span class="text font-medium text-1xl">Punto de Referencia:<span class="text ml-1 font-medium"> {{dataConvocado.punto_referencia}}</span></span>
                         </div>
-
                     </div>
                 </div>
                 <div class="col-12 border-bottom-1 surface-border">
@@ -329,13 +321,8 @@
                 <tr>
                     <th style="width: 3rem"></th>
                     <th>
-                        <div style="width: 6rem" class="flex justify-content-between align-items-left">
-                            Apellido
-                        </div>
-                    </th>
-                    <th>
-                        <div class="flex justify-content-between align-items-center">
-                            Nombre
+                        <div class="flex justify-content-between align-items-left">
+                            Apellido y nombre
                         </div>
                     </th>
                     <th>
@@ -358,109 +345,72 @@
             <ng-template pTemplate="body" let-vinculado>
                 <tr>
                     <td>
-                        <p-button icon="pi pi-search-plus" styleClass="p-button-rounded mb-1" (click)="openDialogConvocado(convocado)"></p-button>
+                        <p-button icon="pi pi-search-plus" styleClass="p-button-rounded mb-1" (click)="openDialogVinculado(vinculado)"></p-button>
                     </td>
-                    <td style="min-width: 15rem;">
-                        {{convocado.apellido}}
-                    </td>
-                    <td style="min-width: 2rem;">
-                        {{convocado.nombre}}
+                    <td style="min-width: 20rem;">
+                        {{vinculado.apellido}} {{vinculado.nombre}}
                     </td>
                     <td style="min-width: 10rem;">
-                        {{convocado.dni}}
+                        {{vinculado.dni}}
                     </td>
                     <td style="min-width: 10rem;">
-                        {{convocado.sexo.sexo}}
+                        {{vinculado.sexo.sexo}}
                     </td>
                     <td style="min-width: 15rem;">
-                        {{convocado.provincia.provincia}}
+                        {{vinculado.categoria.categoria}}
                     </td>
                 </tr>
             </ng-template>
 
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td colspan="8">No se encontraron convocados agregados.</td>
+                    <td colspan="8">No se encontraron vinculados agregados.</td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="loadingbody">
                 <tr>
-                    <td colspan="8">Cargando convocados... .</td>
+                    <td colspan="8">Cargando vinculados... .</td>
                 </tr>
             </ng-template>
         </p-table>
         <!-- FIN TABLA DE VINCULADOS -->
 
         <!-- DIALOG VINCULADOS -->
-        <p-dialog id="convocadoDialog" [(visible)]="convocadoDialog" [style]="{width: '500px','min-height':'400px'}" class="p-fluid" header="Datos de convocado" [closable]="false" [modal]="true">
+        <p-dialog id="vinculadoDialog" [(visible)]="vinculadoDialog" [style]="{width: '500px','min-height':'350px'}" class="p-fluid" header="Datos de vinculado" [closable]="false" [modal]="true">
 
             <ng-template pTemplate="content">
                 <div class="col-12 border-bottom-1 surface-border">
                     <h6 class="block font-bold font-medium">Datos personales</h6>
                     <div class="grid">
                         <div class="col-12 lg:col-12 xl:col-12">
-                            <span class="text font-medium text-1xl">Nombre:<span class="text ml-1 font-medium"> {{dataConvocado.apellido}} {{dataConvocado.nombre}}</span></span>
+                            <span class="text font-medium text-1xl">Nombre:<span class="text ml-1 font-medium"> {{dataVinculado.apellido}} {{dataVinculado.nombre}}</span></span>
                         </div>
                     </div>
                     <div class="grid">
                         <div class="col-12 lg:col-6 xl:col-6">
-                            <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{dataConvocado.dni}}</span></span>
-                        </div>
-                        <div class="col-12 lg:col-6 xl:col-6">
-                            <span class="text font-medium text-1xl">Sexo:<span class="text ml-1 font-medium"> {{dataConvocado.sexo.sexo}}</span></span>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-12 border-bottom-1 surface-border">
-                    <h6 class="block font-bold font-medium">Domicilio</h6>
-                    <div class="grid">
-                        <div class="col-12 lg:col-6 xl:col-6">
-                            <span class="text font-medium text-1xl">Provincia:<span class="text ml-1 font-medium"> {{dataConvocado.provincia.provincia}} </span></span>
-                        </div>
-                        <div class="col-12 lg:col-6 xl:col-6">
-                            <span class="text font-medium text-1xl">Departamento:<span class="text ml-1 font-medium"> {{dataConvocado.departamento.departamento}}</span></span>
+                            <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{dataVinculado.dni}}</span></span>
                         </div>
                     </div>
                     <div class="grid">
                         <div class="col-12 lg:col-6 xl:col-6">
-                            <span class="text font-medium text-1xl">Municipio:<span class="text ml-1 font-medium"> {{dataConvocado.municipio.municipio}}</span></span>
-                        </div>
-                        <div class="col-12 lg:col-6 xl:col-6">
-                            <span class="text font-medium text-1xl">Codigo Postal:<span class="text ml-1 font-medium"> {{dataConvocado.codigo_postal}}</span></span>
+                            <span class="text font-medium text-1xl">Sexo:<span class="text ml-1 font-medium"> {{dataVinculado.sexo.sexo}}</span></span>
                         </div>
                     </div>
                     <div class="grid">
                         <div class="col-12 lg:col-12 xl:col-12">
-                            <span class="text font-medium text-1xl">B°:<span class="text ml-1 font-medium"> {{dataConvocado.localidad_barrio}} - Direccion: {{dataConvocado.calle_direccion}} - N° {{dataConvocado.numero_dom}}</span></span>
-                        </div>
-                        <div class="col-12 lg:col-12 xl:col-12">
-                            <span class="text font-medium text-1xl">Punto de Referencia:<span class="text ml-1 font-medium"> {{dataConvocado.punto_referencia}}</span></span>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-12 border-bottom-1 surface-border">
-                    <h6 class="block font-bold font-medium">Contacto</h6>
-                    <div class="grid">
-                        <div class="col-12 lg:col-12 xl:col-12">
-                            <span class="text font-medium text-1xl">Telefono:<span class="text ml-1 font-medium"> {{dataConvocado.telefono}}</span></span>
+                            <span class="text font-medium text-1xl">Telefono:<span class="text ml-1 font-medium"> {{dataVinculado.telefono}}</span></span>
                         </div>
                     </div>
                     <div class="grid">
-                        <div class="col-12 lg:col-6 xl:col-6">
-                            <span class="text font-medium text-1xl">Correo Electronico:<span class="text ml-1 font-medium"> {{dataConvocado.email}}</span></span>
+                        <div class="col-12 lg:col-12 xl:col-12">
+                            <span class="text font-medium text-1xl">Categoría:<span class="text ml-1 font-medium"> {{dataVinculado.categoria.categoria}}</span></span>
                         </div>
-                        <div class="col-12 lg:col-6 xl:col-6">
-                            <span class="text font-medium text-1xl">Sexo:<span class="text ml-1 font-medium"> {{dataConvocado.sexo.sexo}}</span></span>
-                        </div>
-
                     </div>
                 </div>
             </ng-template>
 
             <ng-template pTemplate="footer" class="mt-1">
-                <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogConvocado()"></button>
+                <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogVinculado()"></button>
             </ng-template>
         </p-dialog>
         <!-- FIN DIALOG VINCULADOS -->
@@ -469,25 +419,6 @@
 </div>
 <!-- FIN Card Tramite ------ -->
 
-
-<!-- Card VINCULADOS -->
-<div class="card p-fluid mb-0 mt-2">
-    <p-toolbar styleClass="mb-3 bg-cyan-500">
-        <h5 class="block text-white font-bold font-medium mb-1 ">
-            Personas vinculadas
-        </h5>
-    </p-toolbar>
-
-    <div class="col-12 border-bottom-1 surface-border">
-        <div class="grid">
-            <div class="col-12 lg:col-6 xl:col-6">
-                <span class="text font-bold font-medium text-1xl">Mediador Actual:<span class="text ml-2 font-medium"> {{dataUsuarioTramite.usuario?.apellido}} {{dataUsuarioTramite.usuario?.nombre}}</span></span>
-            </div>
-
-        </div>
-    </div>
-</div>
-<!-- Fin Card VINCULADOS -->
 
 <!-- Card Usuarios -->
 <div class="card p-fluid mb-0 mt-2">

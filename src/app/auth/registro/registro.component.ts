@@ -32,6 +32,9 @@ export class RegistroComponent implements OnInit {
   
 
   msgs: Message[] = []; 
+  
+  //iidiomas
+  es: any = {};
 
   //listas
   listaSexo: SexoModel[] = [];
@@ -143,6 +146,20 @@ export class RegistroComponent implements OnInit {
     this.listaSexo = sexo;
     this.listaDepartamentos = departamentos;
     this.cargarMunicipios(1);
+    
+    //configuracion de idioma español
+    this.es = {
+      firstDayOfWeek: 0,
+      dayNames: ["Domingo", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      dayNamesShort: ["Dom", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+      dayNamesMin: ["Su","Mo","Tu","We","Th","Fr","Sa"],
+      monthNames: [ "Enero","February","March","April","May","June","July","August","September","October","November","December" ],
+      monthNamesShort: [ "Ene", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ],
+      today: 'Today',
+      clear: 'Clear',
+      dateFormat: 'mm/dd/yy',
+      weekHeader: 'Wk'
+  };
   }
   //FIN ONINIT...................................................
 
