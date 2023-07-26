@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient  } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { LocationStrategy, HashLocationStrategy, DatePipe } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -143,6 +143,10 @@ import { AccessComponent } from './components/access/access.component';
 import { PagesModule } from './pages/pages.module';
 import { AuthModule } from './auth/auth.module';
 
+//traslate - lenguaje ... tambien debe estar import { HttpClientModule, HttpClient  } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -233,8 +237,18 @@ import { AuthModule } from './auth/auth.module';
         AppCodeModule,
         StyleClassModule,
         
+        //traslate - lenguaje
+        TranslateModule.forRoot(),
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [ HttpClient ]
+            }
+        }),
+
         AuthModule,
-        PagesModule
+        PagesModule,
     ],
     declarations: [
         AppComponent,
@@ -287,3 +301,9 @@ import { AuthModule } from './auth/auth.module';
     bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+// AOT compilation support - traslate lenguaje
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http);
+}
