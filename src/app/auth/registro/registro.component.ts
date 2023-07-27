@@ -240,4 +240,10 @@ export class RegistroComponent implements OnInit {
     return fechaAuxiliar;
   }
 
+  //IR A REGISTRARME
+  irALogin(){
+    this.router.navigateByUrl("login");
+  }
+  //FIN IR A REGISTRARME
+
 }

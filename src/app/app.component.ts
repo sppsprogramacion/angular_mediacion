@@ -26,6 +26,7 @@ export class AppComponent {
         this.translate('es');    
     }
 
+    //traslate lenguaje
     translate(lang: string) {
         this.translateService.use(lang);
         this.translateService.get('primeng').subscribe(res => this.config.setTranslation(res));
