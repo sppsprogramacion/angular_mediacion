@@ -3,17 +3,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, Message, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { AppConfig } from 'src/app/api/appconfig';
-import { CiudadanosService } from '../../service/ciudadanos.service';
-import { CiudadanoModel } from '../../models/ciudadano.model';
 import Swal from 'sweetalert2';
 import { ConfigService } from 'src/app/service/app.config.service';
+import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
+
+import { CiudadanosService } from '../../service/ciudadanos.service';
+import { CiudadanoModel } from '../../models/ciudadano.model';
 import { DepartamentoModel } from '../../models/departamento.model';
 import { departamentos, sexo } from 'src/app/common/data-mokeada';
 import { MunicipioModel } from 'src/app/models/municipio.model';
 import { municipios } from '../../common/data-mokeada';
 import { SexoModel } from 'src/app/models/sexo.model';
-import { DatePipe } from '@angular/common';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registro',
@@ -26,7 +27,7 @@ import { Router } from '@angular/router';
 
 export class RegistroComponent implements OnInit {
 
-  config: AppConfig;  
+  //config: AppConfig;  
   subscription: Subscription;
   selectedState:any;
   
@@ -55,7 +56,8 @@ export class RegistroComponent implements OnInit {
     private readonly datePipe: DatePipe,
     private router: Router,
     private serviceMensajes: MessageService,
-    private ciudadanoService: CiudadanosService
+    private ciudadanoService: CiudadanosService,
+    
   ){ 
     this.formaRegistro = this.fb.group({
       dni: ['',[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.minLength(5)]],
@@ -137,29 +139,17 @@ export class RegistroComponent implements OnInit {
   //FIN VALIDACIONES DE FORMULARIO......................................................
 
   ngOnInit(): void {
-    this.config = this.configService.config;
-    this.subscription = this.configService.configUpdate$.subscribe(config => {
-      this.config = config;
-    });
+    // this.config = this.configService.config;
+    // this.subscription = this.configService.configUpdate$.subscribe(config => {
+    //   this.config = config;
+    // });
 
+    
     //CARGA DE LISTADOS DESDE DATA MOKEADA
     this.listaSexo = sexo;
     this.listaDepartamentos = departamentos;
-    this.cargarMunicipios(1);
+    this.cargarMunicipios(1);    
     
-    //configuracion de idioma español
-    this.es = {
-      firstDayOfWeek: 0,
-      dayNames: ["Domingo", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      dayNamesShort: ["Dom", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-      dayNamesMin: ["Su","Mo","Tu","We","Th","Fr","Sa"],
-      monthNames: [ "Enero","February","March","April","May","June","July","August","September","October","November","December" ],
-      monthNamesShort: [ "Ene", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ],
-      today: 'Today',
-      clear: 'Clear',
-      dateFormat: 'mm/dd/yy',
-      weekHeader: 'Wk'
-  };
   }
   //FIN ONINIT...................................................
 
