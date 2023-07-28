@@ -29,6 +29,7 @@ export class UsuariosCentroService {
   }
 
   listarUsuariosXCentro(id_centro:number){
+    console.log("ide centro en servicio", id_centro);
     return this.http.get<[usuarioCentro: UsuarioCentroModel[], total: number]>(`${base_url}/usuarios-centros/buscar-xcentro-mediacion?id_centro=${id_centro}`)
   }
 

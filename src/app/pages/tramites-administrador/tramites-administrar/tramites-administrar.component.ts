@@ -53,6 +53,7 @@ export class TramitesAdministrarComponent implements OnInit {
 
   //FORMULARIOS
   formaMediadorAsignado: FormGroup;  
+  formaAudiencia: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -77,6 +78,14 @@ export class TramitesAdministrarComponent implements OnInit {
       funcion_tramite_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
       usuario_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]]
       //departamento_id_centro: [1,[Validators.required, Validators.pattern(/^(?!1)\d+$/)]],
+    });
+
+    this.formaAudiencia = this.fb.group({
+      centro_mediacion_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
+      detalles: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(200)]],        
+      departamento_id_centro: [1,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(2)]],     
+      funcion_tramite_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
+      usuario_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]]
     });
   }
   //FIN CONSTRUCTOR................................................................................
@@ -253,6 +262,13 @@ export class TramitesAdministrarComponent implements OnInit {
     }
   }
 
+  onChangeDepartamentoParaAudiencia(){
+    const id = this.formaAudiencia.get('departamento_id_centro')?.value;
+    if(id != null){               
+        this.cargarCentrosMediacion(parseInt(id.toString()));        
+    }
+  }
+
   cargarCentrosMediacion(id_departamento: number){
     this.centroMediacionService.listarCentroMediacionXDepartamento(id_departamento)
     .subscribe({
@@ -262,7 +278,7 @@ export class TramitesAdministrarComponent implements OnInit {
         this.elementosCentroMediacion = this.listCentrosMediacion.map(centro => {
           return {
             clave: centro.id_centro_mediacion,
-            value: centro.centro_mediacion + " (municipio: " + centro.municipio.municipio + " - dirección: " + centro.localidad_barrio + " - " + centro.calle_direccion + " n° " + centro.numero_dom + ")"
+            value: centro.centro_mediacion + " (Municipio: " + centro.municipio.municipio + " - Barrio: " + centro.localidad_barrio + " - Dirección: " + centro.calle_direccion + " n° " + centro.numero_dom + ")"
           }
         });   
         if(this.elementosCentroMediacion.length > 0 ){
@@ -290,9 +306,12 @@ export class TramitesAdministrarComponent implements OnInit {
   }
 
   cargarUsuarios(id_centro_mediacion: number){
+    
     this.usuariosCentroService.listarUsuariosActivosXCentro(id_centro_mediacion)
     .subscribe({
       next: (resultado) => {
+        console.log("id centro cargar usuario", id_centro_mediacion);
+        console.log("resultado", resultado);
         this.listUsuariosCentro = resultado[0]
         this.elementosUsuariosCentro = [];
         this.elementosUsuariosCentro = this.listUsuariosCentro.map(usuarioCentro => {
@@ -302,6 +321,7 @@ export class TramitesAdministrarComponent implements OnInit {
             
           }
         });
+        console.log("elementos usuqarios", this.listUsuariosCentro);
       },
       error: (err) => {
         Swal.fire('Error al listar los usuarios',`${err.error.message}`,"error");

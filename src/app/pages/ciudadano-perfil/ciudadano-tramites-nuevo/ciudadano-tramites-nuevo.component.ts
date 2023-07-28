@@ -655,7 +655,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
           this.elementosCentroMediacion = this.listaCentrosMediacion.map(centro => {
             return {
               clave: centro.id_centro_mediacion,
-              value: centro.centro_mediacion + " (municipio: " + centro.municipio.municipio + " - dirección: " + centro.localidad_barrio + " - " + centro.calle_direccion + " - n° " + centro.numero_dom + ")"
+              value: centro.centro_mediacion + " (Municipio: " + centro.municipio.municipio + " - Barrio: " + centro.localidad_barrio + " - Dirección: " + centro.calle_direccion + " - n° " + centro.numero_dom + ")"
               }
           });
           if(this.elementosCentroMediacion.length > 0 ){
