@@ -298,7 +298,7 @@ export class TramitesAdministrarComponent implements OnInit {
   onChangeCentroMediacion(){
     // const id = this.formaMediadorAsignado.get('centro_mediacion_id')?.value;
     const id = this.formaAudiencia.get('centro_mediacion_id')?.value;
-    console.log("centro de mediacion", id);
+    console.log("centro de mediacion onChange", id);
     if(id != null){               
         this.cargarUsuarios(parseInt(id.toString()));
         this.formaMediadorAsignado.get('usuario_id')?.setValue(0);               
