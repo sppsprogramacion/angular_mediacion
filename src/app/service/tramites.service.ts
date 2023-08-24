@@ -29,7 +29,11 @@ export class TramitesService {
     return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/buscar-xciudadano?id_ciudadano=${id_ciudadano}`)
   }
 
-  listarTramitesNuevos( id_usuario: number){
+  listarTramitesNuevos( id_ciudadano: number){
+    return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/nuevos-xciudadano?id_ciudadano=${id_ciudadano}`)
+  }
+
+  listarTramitesNuevosAdministrador( id_usuario: number){
     return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/nuevos-xusuario?id_usuario=${id_usuario}`)
   }
 

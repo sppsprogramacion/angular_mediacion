@@ -61,7 +61,7 @@ export class TramitesNuevoslisComponent implements OnInit {
 
   //LISTADO DE TRAMITES ADMINISTRADOR NUEVOS
   listarTramitesAdministrador(){        
-    this.tramitesService.listarTramitesNuevos(0).
+    this.tramitesService.listarTramitesNuevosAdministrador(globalConstants.usuarioLogin.id_usuario).
         subscribe(respuesta => {
         this.listTramites= respuesta[0];
         this.loading = false;  
@@ -70,14 +70,14 @@ export class TramitesNuevoslisComponent implements OnInit {
   }
   //FIN LISTADO DE TRAMITES ADMINISTRADOR NUEVOS....................................................... 
   
-   //LISTADO DE TRAMITES CIUDADANOS
-   listarTramitesCiudadano(){   
+  //LISTADO DE TRAMITES CIUDADANOS
+  listarTramitesCiudadano(){   
 
     let id_ciudadano: number = globalConstants.ciudadanoLogin.id_ciudadano; 
     this.tramitesService.listarTramitesNuevos(id_ciudadano).
-        subscribe(respuesta => {
-        this.listTramites= respuesta[0];
-        this.loading = false;      
+      subscribe(respuesta => {
+      this.listTramites= respuesta[0];
+      this.loading = false;      
     });
   }
   //FIN LISTADO DE TRAMITES CIUDADANOS.......................................................
