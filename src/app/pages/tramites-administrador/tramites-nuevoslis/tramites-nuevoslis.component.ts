@@ -46,8 +46,8 @@ export class TramitesNuevoslisComponent implements OnInit {
     
     if (globalConstants.isAdministrador) {
       console.log("administrador ", globalConstants.isAdministrador);
-      this.tituloPagina ="Usuario: Administrador"
-      this.listarTramitesAdministrador();
+      // this.tituloPagina ="Usuario: Administrador"
+      // this.listarTramitesAdministrador();
     }
     
     if (globalConstants.usuarioLogin) {
@@ -104,6 +104,7 @@ export class TramitesNuevoslisComponent implements OnInit {
   //ACCEDER A DATA SERVICE
   administrarTramite(data: TramiteModel){
     this.dataService.tramiteData = data;
+    console.log("tramite en lista", this.dataService.tramiteData);
     if( globalConstants.isAdministrador ){
       this.router.navigateByUrl("admin/tramites/administrar");
     }

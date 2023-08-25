@@ -19,6 +19,7 @@ import { CentroMediacionModel } from 'src/app/models/centro_mediacion.model';
 import { CentrosMediacionService } from '../../../service/centros-mediacion.service';
 import { UsuariosCentroService } from '../../../service/usuarios-centro.service';
 import { UsuarioCentroModel } from '../../../models/usuario_centro.model ';
+import { TramitesService } from 'src/app/service/tramites.service';
 
 @Component({
   selector: 'app-tramites-administrar',
@@ -33,6 +34,7 @@ export class TramitesAdministrarComponent implements OnInit {
   
   //MODELOS
   dataTramite: TramiteModel= new TramiteModel;
+  dataTramiteAux: TramiteModel= new TramiteModel;
   dataUsuarioTramite: UsuarioTramiteModel= {};
   //listas
   listCentrosMediacion: CentroMediacionModel[]=[];
@@ -59,17 +61,16 @@ export class TramitesAdministrarComponent implements OnInit {
     private fb: FormBuilder,
     private readonly datePipe: DatePipe,
     public dataService: DataService,
-    private usuarioService: UsuariosService,
     private centroMediacionService: CentrosMediacionService,
+    private funcionTramiteService: FuncionTramiteService,
+    private tramiteService: TramitesService,
     private usuariosCentroService: UsuariosCentroService,
+    private usuarioService: UsuariosService,
     private usuarioTramiteService: UsuariosTramiteService,
-    private funcionTramiteService: FuncionTramiteService
     
   ) { 
     //FIN CONSTRUCTOR
     
-    console.log("tramite recibido", this.dataTramite);
-
     //FORMULARIO 
     this.formaMediadorAsignado = this.fb.group({
       centro_mediacion_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
@@ -129,8 +130,11 @@ export class TramitesAdministrarComponent implements OnInit {
 
   ngOnInit(): void {
     //obtener tramite
-    this.dataTramite= this.dataService.tramiteData;
-    if(this.dataTramite){
+    this.dataTramiteAux= this.dataService.tramiteData;
+    this.buscarTramite();
+    
+
+    if(this.dataTramiteAux){
       this.buscarAsignacionByNumTramiteActivo();      
     }    
     this.listDepartamentos = departamentos;
@@ -177,7 +181,7 @@ export class TramitesAdministrarComponent implements OnInit {
 
   //BUSCAR TRAMITE X NUMERO TRAMITE ACTIVO
   buscarAsignacionByNumTramiteActivo(){
-    this.usuarioTramiteService.buscarByNumTramiteActivo(this.dataTramite.numero_tramite)
+    this.usuarioTramiteService.buscarByNumTramiteActivo(this.dataService.tramiteData.numero_tramite)
       .subscribe({
         next: (resultado) => {
           this.listUsuariosTramite = resultado[0];  
@@ -190,6 +194,20 @@ export class TramitesAdministrarComponent implements OnInit {
         }
       });       
   }
+
+  //BUSCAR TRAMITE 
+  buscarTramite(){  
+    this.dataTramite = {};  
+    this.tramiteService.buscarTramiteNumTram(this.dataService.tramiteData.numero_tramite)
+      .subscribe({
+        next: (resultado) => {          
+          this.dataTramite = {};
+          this.dataTramite = resultado[0];      
+          console.log("tramite recibido", this.dataTramite);    
+        }
+      });    
+  }
+  //FIN BUSCAR TRAMITE 
 
   //CONFIRMAR DESHABILITACION USUARIO-TRAMITE
   confirmarDeshabilitarUsuario(dataUsuarioTramite:UsuarioTramiteModel){    

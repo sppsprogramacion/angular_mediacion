@@ -21,6 +21,11 @@ export class TramitesService {
     return this.http.post(`${base_url}/tramites/nuevo-tramite`, this.tramite);
   }
 
+  buscarTramiteNumTram(num_tramite: number){
+    //return this.http.get<TramiteModel>(`${base_url}/tramites/buscar-xnumtramite?numero_tramite=${num_tramite}`)
+    return this.http.get<TramiteModel>(`${base_url}/tramites/buscar-xnumtramite?numero_tramite=${num_tramite}`)
+  }
+
   listarTramitesTodos(){
     return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites`)
   }
