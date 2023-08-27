@@ -166,6 +166,7 @@ export class TramitesAdministrarComponent implements OnInit {
         next: (resultado) => {
           let usuarioTramiteRes: UsuarioTramiteModel = resultado;
           this.hideDialogUsuarioTramite();
+          this.buscarMediadorByNumTramiteActivo();
           this.buscarAsignacionByNumTramiteActivo();
           Swal.fire('Exito',`La asignacion de usuario se realizo con exito`,"success");
         },
@@ -195,6 +196,24 @@ export class TramitesAdministrarComponent implements OnInit {
       });       
   }
 
+  //BUSCAR MEDIADOR DEL TRAMITE X NUMERO TRAMITE ACTIVO
+  buscarMediadorByNumTramiteActivo(){
+    this.usuarioTramiteService.buscarMediadorByNumTramiteActivo(this.dataService.tramiteData.numero_tramite)
+      .subscribe({
+        next: (resultado) => {
+          this.dataUsuarioTramite = resultado; 
+          console.log("mediador del tramite", this.dataUsuarioTramite); 
+          this.loadingUsuariosTramite = false;     
+        },
+        error: (err) => {
+          this.dataUsuarioTramite= {};
+          this.loadingUsuariosTramite = false;  
+          //Swal.fire('Error',`Error al buscar tramite asignado: ${err.error.message}`,"error") 
+        }
+      });       
+  }
+  //FIN BUSCAR MEDIADOR DEL TRAMITE X NUMERO TRAMITE ACTIVO...................................
+
   //BUSCAR TRAMITE 
   buscarTramite(){  
     this.dataTramite = {};  
@@ -202,12 +221,15 @@ export class TramitesAdministrarComponent implements OnInit {
       .subscribe({
         next: (resultado) => {          
           this.dataTramite = {};
-          this.dataTramite = resultado[0];      
+          this.dataTramite = resultado[0];     
+          if(this.dataTramite.estado_tramite_id === 2) {
+            this.buscarMediadorByNumTramiteActivo();
+          }
           console.log("tramite recibido", this.dataTramite);    
         }
       });    
   }
-  //FIN BUSCAR TRAMITE 
+  //FIN BUSCAR TRAMITE................................................................... 
 
   //CONFIRMAR DESHABILITACION USUARIO-TRAMITE
   confirmarDeshabilitarUsuario(dataUsuarioTramite:UsuarioTramiteModel){    

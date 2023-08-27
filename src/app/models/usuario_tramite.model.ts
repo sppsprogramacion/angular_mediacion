@@ -11,7 +11,10 @@ export class UsuarioTramiteModel{
         public usuario_id?: number,
         public usuario?: UsuarioModel,
         public detalles?: string,
+        public fecha_asignacion?: Date,
+        public fecha_sece?: Date,
         public funcion_tramite_id?: number,
         public funcion_tramite?: FuncionTtramiteModel,
+        public activo?: boolean
     ){}
 }

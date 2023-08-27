@@ -25,6 +25,10 @@ export class UsuariosTramiteService {
     return this.http.get<[usuarioTramite:UsuarioTramiteModel[], total: number]>(`${base_url}/usuarios-tramite/buscar-xnumtramite-activo?numero_tramite=${num_tramite}`)
   }
 
+  buscarMediadorByNumTramiteActivo(num_tramite: number){
+    return this.http.get<UsuarioTramiteModel>(`${base_url}/usuarios-tramite/buscar-mediador-xnumtramite-activo?numero_tramite=${num_tramite}`)
+  }
+
   listarTramitesAsignadosTodos(){
     return this.http.get<[usuarioTramite:UsuarioTramiteModel[], total: number]>(`${base_url}/usuarios-tramite`)
   }
