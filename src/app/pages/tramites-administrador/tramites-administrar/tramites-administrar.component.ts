@@ -47,11 +47,12 @@ export class TramitesAdministrarComponent implements OnInit {
   elementosUsuarios: ElementoModel[]=[];
   elementosUsuariosCentro: ElementoModel[]=[];
 
-  //variables
+  //variables booleanas
   loadingUsuariosTramite: boolean = true;
   loadingMediadores: boolean = true;
   loadingFuncionTramite: boolean = true;
   usuarioTramiteDialog: boolean = false;
+  audienciaDialog: boolean = false;
 
   //FORMULARIOS
   formaMediadorAsignado: FormGroup;  
@@ -78,7 +79,6 @@ export class TramitesAdministrarComponent implements OnInit {
       departamento_id_centro: [1,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(2)]],     
       funcion_tramite_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
       usuario_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]]
-      //departamento_id_centro: [1,[Validators.required, Validators.pattern(/^(?!1)\d+$/)]],
     });
 
     this.formaAudiencia = this.fb.group({
@@ -335,9 +335,18 @@ export class TramitesAdministrarComponent implements OnInit {
     });  
   }
 
-  onChangeCentroMediacion(){
+  onChangeCentroMediacion(formulario: string){
     // const id = this.formaMediadorAsignado.get('centro_mediacion_id')?.value;
-    const id = this.formaAudiencia.get('centro_mediacion_id')?.value;
+    let id: string;
+    if(formulario == "usuario"){
+      id = this.formaMediadorAsignado.get('centro_mediacion_id')?.value;
+    }
+
+    if(formulario == "audiencia"){
+      id = this.formaAudiencia.get('centro_mediacion_id')?.value;
+    }
+    
+    console.log("formulario usado", formulario);
     console.log("centro de mediacion onChange", id);
     if(id != null){               
         this.cargarUsuarios(parseInt(id.toString()));
@@ -378,7 +387,6 @@ export class TramitesAdministrarComponent implements OnInit {
   openDialogUsuarioTramite() {
     this.usuarioTramiteDialog = true;
     this.formaMediadorAsignado.reset();    
-    console.log("formulario abrir", this.formaMediadorAsignado.controls);
     return Object.values(this.formaMediadorAsignado.controls).forEach(control => control.markAsUntouched());
     
   }
@@ -387,9 +395,23 @@ export class TramitesAdministrarComponent implements OnInit {
     this.elementosUsuarios = [];
     this.elementosCentroMediacion = [];
     this.msgs = [];
-    console.log("formulario reset", this.formaMediadorAsignado.controls);
     this.usuarioTramiteDialog = false;
     
   }    
+
+  openDialogAudiencia() {
+    this.audienciaDialog = true;
+    this.formaMediadorAsignado.reset();    
+
+    return Object.values(this.formaMediadorAsignado.controls).forEach(control => control.markAsUntouched());    
+  }
+  
+  hideDialogAudiencia() {
+    this.elementosUsuarios = [];
+    this.elementosCentroMediacion = [];
+    this.msgs = [];
+    this.audienciaDialog = false;
+    
+  }
   //FIN MANEJO FORMULARIO DIALOG....................................
 }
