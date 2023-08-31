@@ -224,7 +224,7 @@
                                     </small>
                             </div>
                         </div>
-                        <div class="formgrid grid">
+                        <!-- <div class="formgrid grid">
                             <div class="field col-12">
                                 <label for="centro_mediacion_id">Centro Mediacion</label>
                                 <p-dropdown id="centro_mediacion_id" [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" formControlName="centro_mediacion_id" placeholder="Seleccionar..." (onChange)="onChangeCentroMediacion('usuario')">
@@ -237,6 +237,19 @@
                                     </div>
                                 </small>
                             </div>
+                        </div> -->
+                        <div class="formgrid grid">
+                            <div class="field col-12">
+                                <label for="centro_mediacion_id">Centro Mediación</label>
+                                <p-listbox [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" formControlName="centro_mediacion_id" styleClass="listbox1" [listStyle]="{'max-height':'250px'}" (onChange)="onChangeCentroMediacion('usuario')"></p-listbox>
+                                <!-- <small *ngIf="isValid('centro_mediacion_id')" class="p-error">
+                                    <div *ngFor="let validation of user_validation_messages.centro_mediacion_id" >
+                                        <div  *ngIf="formaTramite.get('centro_mediacion_id')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small> -->
+                            </div>
                         </div>
                         <div class="formgrid grid">
                             <div class="field col-12">
@@ -244,12 +257,12 @@
                                 <p-dropdown id="usuario_id" [options]="elementosUsuariosCentro" optionLabel="value" optionValue="clave" formControlName="usuario_id" placeholder="Seleccionar...">
                                 </p-dropdown>
                                 <small *ngIf="isValid('usuario_id')" class="p-error">
-                                        <div *ngFor="let validation of user_validation_messages.usuario_id" >
-                                            <div  *ngIf="formaMediadorAsignado.get('usuario_id')?.hasError(validation.type)">
-                                                {{validation.message}}
-                                            </div>
+                                    <div *ngFor="let validation of user_validation_messages.usuario_id" >
+                                        <div  *ngIf="formaMediadorAsignado.get('usuario_id')?.hasError(validation.type)">
+                                            {{validation.message}}
                                         </div>
-                                    </small>
+                                    </div>
+                                </small>
                             </div>
                         </div>
                         <div class="formgrid grid">
@@ -363,6 +376,7 @@
                                 </small>
                             </div>
                         </div>
+
                         <div class="formgrid grid">
                             <div class="field col-12">
                                 <label for="usuario_id" class="text font-medium">Seleccionar un usuario</label>
@@ -498,7 +512,7 @@
         <!-- FIN TABLA DE AUDIENCIA -->
     </div>
 
-    <!-- DIALOG FORMULARIO USUARIOS -->
+    <!-- DIALOG FORMULARIO AUDIENCIAS -->
     <!-- <p-dialog id="usuarioTramiteDialog" [(visible)]="usuarioTramiteDialog" [style]="{width: '500px'}" header="Asignar Usuario" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}"></p-dialog> -->
     <p-dialog id="audienciaDialog" [(visible)]="audienciaDialog" [style]="{width: '500px'}" header="Generar audiencia" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}">
         <!-- MENSAJE DE ERROR -->
@@ -536,6 +550,7 @@
                                     </small>
                             </div>
                         </div>
+
                         <div class="formgrid grid">
                             <div class="field col-12">
                                 <label for="usuario_id" class="text font-medium">Seleccionar un usuario</label>
@@ -588,7 +603,7 @@
             <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogAudiencia()"></button>
         </ng-template>
     </p-dialog>
-    <!-- FIN DIALOG FORMULARIO  USUARIOS -->
+    <!-- FIN DIALOG FORMULARIO  AUDIENCIAS -->
 
 </div>
 <!-- FIN CARD GENERAR AUDIENCIA -->
