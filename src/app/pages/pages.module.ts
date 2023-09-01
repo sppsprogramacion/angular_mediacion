@@ -44,7 +44,7 @@ import { CiudadanoTramitesNuevoslistaComponent } from './ciudadano-perfil/ciudad
 import { CiudadanoTramitesFinalizadosComponent } from './ciudadano-perfil/ciudadano-tramites-finalizados/ciudadano-tramites-finalizados.component';
 import { CiudadanoDatospersonalesComponent } from './ciudadano-perfil/ciudadano-datospersonales/ciudadano-datospersonales.component';
 import { CiudadanosBuscarComponent } from './ciudadanos/ciudadanos-buscar/ciudadanos-buscar.component';
-
+import { InputMaskModule } from 'primeng/inputmask';
 
 @NgModule({
   imports: [
@@ -56,6 +56,7 @@ import { CiudadanosBuscarComponent } from './ciudadanos/ciudadanos-buscar/ciudad
     ButtonModule,
     DialogModule,
     DropdownModule,
+    InputMaskModule,
     InputTextModule,
     InputTextareaModule,
     ListboxModule,

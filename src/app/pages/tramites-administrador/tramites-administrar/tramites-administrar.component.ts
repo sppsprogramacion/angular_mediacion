@@ -20,6 +20,9 @@ import { CentrosMediacionService } from '../../../service/centros-mediacion.serv
 import { UsuariosCentroService } from '../../../service/usuarios-centro.service';
 import { UsuarioCentroModel } from '../../../models/usuario_centro.model ';
 import { TramitesService } from 'src/app/service/tramites.service';
+import { ModalidadModel } from 'src/app/models/modalidad.model';
+import { TipoAudienciaModel } from 'src/app/models/tipo_audiencia.model';
+import { TiposAudienciaService } from 'src/app/service/tipos-audiencia.service';
 
 @Component({
   selector: 'app-tramites-administrar',
@@ -36,14 +39,20 @@ export class TramitesAdministrarComponent implements OnInit {
   dataTramite: TramiteModel= new TramiteModel;
   dataTramiteAux: TramiteModel= new TramiteModel;
   dataUsuarioTramite: UsuarioTramiteModel= {};
+
   //listas
   listCentrosMediacion: CentroMediacionModel[]=[];
+  listModalidad: ModalidadModel[] = [];
+  listUsuarioCentrosMediacion: UsuarioCentroModel[]=[];
   listDepartamentos: DepartamentoModel[] = [];
   listFuncionTramite: FuncionTtramiteModel[] = [];
+  listTipoAudiencia: TipoAudienciaModel[] = [];
   listUsuarios: UsuarioModel[]=[];
   listUsuariosCentro: UsuarioCentroModel[]=[];
   listUsuariosTramite: UsuarioTramiteModel[]=[];
   elementosCentroMediacion: ElementoModel[]=[];  
+  elementosModalidad: ModalidadModel[] = [];
+  elementosTipoAudiencia: TipoAudienciaModel[] = [];
   elementosUsuarios: ElementoModel[]=[];
   elementosUsuariosCentro: ElementoModel[]=[];
 
@@ -64,6 +73,7 @@ export class TramitesAdministrarComponent implements OnInit {
     public dataService: DataService,
     private centroMediacionService: CentrosMediacionService,
     private funcionTramiteService: FuncionTramiteService,
+    private tiposAudienciaService: TiposAudienciaService,
     private tramiteService: TramitesService,
     private usuariosCentroService: UsuariosCentroService,
     private usuarioService: UsuariosService,
@@ -74,8 +84,8 @@ export class TramitesAdministrarComponent implements OnInit {
     
     //FORMULARIO 
     this.formaMediadorAsignado = this.fb.group({
-      centro_mediacion_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
-      detalles: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(200)]],        
+      detalles: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(200)]],     
+      centro_mediacion_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]],         
       departamento_id_centro: [1,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(2)]],     
       funcion_tramite_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
       usuario_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]]
@@ -83,10 +93,12 @@ export class TramitesAdministrarComponent implements OnInit {
 
     this.formaAudiencia = this.fb.group({
       centro_mediacion_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
-      detalles: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(200)]],        
-      departamento_id_centro: [1,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(2)]],     
-      funcion_tramite_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
-      usuario_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]]
+      detalles: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(200)]], 
+      fecha_inicio: [,[Validators.required]],   
+      hora_inicio: [,[Validators.required]],     
+      hora_fin: [,[Validators.required]],          
+      modalidad_id: [1,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(2)]],     
+      tipo_audiencia_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(1)]]
     });
   }
   //FIN CONSTRUCTOR................................................................................
@@ -294,6 +306,16 @@ export class TramitesAdministrarComponent implements OnInit {
   }
   //FIN LISTADO DE TRAMITES............................
 
+  //LISTADO DE TIPO AUDIENCIAS
+  listarTiposAudiencia(){    
+    this.tiposAudienciaService.listarTodos().
+        subscribe(respuesta => {
+        this.listTipoAudiencia= respuesta[0];
+    
+    });
+  }
+  //FIN LISTADO DE TIPO AUDIENCIAS............................
+
   
   onChangeDepartamentoParaCentros(){
     const id = this.formaMediadorAsignado.get('departamento_id_centro')?.value;
@@ -332,6 +354,20 @@ export class TramitesAdministrarComponent implements OnInit {
       error: (err) => {
         Swal.fire('Error al listar los centros de mediacón',`${err.error.message}`,"error");
       } 
+    });  
+  }
+
+  cargarCentrosMediacionXUsuario(id_usuario: number){
+    this.usuariosCentroService.listarCentrosActivosXUsuario(id_usuario).
+      subscribe(respuesta => {
+        this.listUsuarioCentrosMediacion= respuesta[0];
+        this.elementosCentroMediacion = this.listUsuarioCentrosMediacion.map(centro => {
+          return {
+            clave: centro.centro_mediacion.id_centro_mediacion,
+            value: centro.centro_mediacion.centro_mediacion + " (Municipio: " + centro.centro_mediacion.municipio.municipio + " - Barrio: " + centro.centro_mediacion.localidad_barrio + " - Dirección: " + centro.centro_mediacion.calle_direccion + " n°" + centro.centro_mediacion.numero_dom + ")"
+            }
+        });        
+    
     });  
   }
 
@@ -400,6 +436,7 @@ export class TramitesAdministrarComponent implements OnInit {
   }    
 
   openDialogAudiencia() {
+    this.cargarCentrosMediacionXUsuario(this.dataUsuarioTramite.usuario_id)
     this.audienciaDialog = true;
     this.formaMediadorAsignado.reset();    
 

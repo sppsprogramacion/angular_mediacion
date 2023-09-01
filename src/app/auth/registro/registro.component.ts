@@ -65,7 +65,7 @@ export class RegistroComponent implements OnInit {
       nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
       sexo_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
-      fecha_nac: [,[Validators.required, Validators.maxLength(100)]],  
+      fecha_nac: [,[Validators.required]],  
       email: ['',[Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],    
       clave1: ['',[Validators.required,  Validators.minLength(8),Validators.maxLength(16),Validators.pattern(/[^'"`=+\s]+$/)]],
       clave2: ['',[Validators.required,  Validators.minLength(8)]]
