@@ -110,6 +110,17 @@ export const sexo = [
     }
 ];
 
+export const tiposAudiencia = [
+    {
+        "id_tipo_audiencia": 1,
+        "tipo_audiencia": "presencial"
+    },
+    {
+        "id_tipo_audiencia": 2,
+        "tipo_audiencia": "virtual"
+    }
+];
+
 
 export const provincias = [
     {

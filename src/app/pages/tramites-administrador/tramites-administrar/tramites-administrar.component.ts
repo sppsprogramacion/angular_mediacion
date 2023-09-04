@@ -14,7 +14,7 @@ import { FuncionTramiteService } from '../../../service/funcion-tramite.service'
 import { FuncionTtramiteModel } from 'src/app/models/funcion_tramite.model';
 import { ElementoModel } from '../../../models/elemento.model';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
-import { departamentos } from 'src/app/common/data-mokeada';
+import { departamentos, modalidad, tiposAudiencia } from 'src/app/common/data-mokeada';
 import { CentroMediacionModel } from 'src/app/models/centro_mediacion.model';
 import { CentrosMediacionService } from '../../../service/centros-mediacion.service';
 import { UsuariosCentroService } from '../../../service/usuarios-centro.service';
@@ -93,9 +93,9 @@ export class TramitesAdministrarComponent implements OnInit {
 
     this.formaAudiencia = this.fb.group({
       centro_mediacion_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
-      detalles: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(200)]], 
+      detalles: ['',[Validators.required, Validators.minLength(5), Validators.maxLength(200)]], 
       fecha_inicio: [,[Validators.required]],   
-      hora_inicio: [,[Validators.required]],     
+      hora_inicio: [,[Validators.required, Validators.pattern(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/)]],     
       hora_fin: [,[Validators.required]],          
       modalidad_id: [1,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(2)]],     
       tipo_audiencia_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(1)]]
@@ -113,7 +113,7 @@ export class TramitesAdministrarComponent implements OnInit {
     ],    
     'detalles': [
       { type: 'required', message: 'El detalle es requerido.' },
-      { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
+      { type: 'minlength', message: 'La cantidad mínima de caracteres es 5.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 200.' }
     ],  
     'departamento_id_centro': [
@@ -121,10 +121,31 @@ export class TramitesAdministrarComponent implements OnInit {
       { type: 'pattern', message: 'Debe seleccionar un departamento.' },
       { type: 'min', message: 'Debe seleccionar un departamento.' },
     ],
+    'fecha_inicio': [
+      { type: 'required', message: 'La hora  de inicio es requerida.' },
+    ],  
     'funcion_tramite_id': [
       { type: 'required', message: 'La función en el tramite es requerida.' },
       { type: 'pattern', message: 'Debe seleccionar un una función.' },
       { type: 'min', message: 'Debe seleccionar una función.' },
+    ],
+    'hora_inicio': [
+      { type: 'required', message: 'La hora  de inicio es requerida.' },
+      { type: 'pattern', message: 'La hora  de inicio ingresada no es válida.' },
+    ],  
+    'hora_fin': [
+      { type: 'required', message: 'La hora fin es requerida.' },
+      { type: 'pattern', message: 'La hora fin ingresada no es válida.' },
+    ],    
+    'modalidad_id': [
+      { type: 'required', message: 'La modalidad es requerida.' },
+      { type: 'pattern', message: 'Debe seleccionar un una modalidad.' },
+      { type: 'min', message: 'Debe seleccionar una modalidad.' },
+    ],
+    'tipo_audiencia_id': [
+      { type: 'required', message: 'El tipo de audiencia es requerida.' },
+      { type: 'pattern', message: 'Debe seleccionar el tipo de audiencia.' },
+      { type: 'min', message: 'Debe seleccionar el tipo de audiencia.' },
     ],
     'usuario_id': [
       { type: 'required', message: 'El usuario es requerido.' },
@@ -140,6 +161,11 @@ export class TramitesAdministrarComponent implements OnInit {
     return this.formaMediadorAsignado.get(campo)?.invalid && this.formaMediadorAsignado.get(campo)?.touched;      
   }
 
+  isValidAudiencia(campo: string): boolean{     
+    
+    return this.formaAudiencia.get(campo)?.invalid && this.formaAudiencia.get(campo)?.touched;      
+  }
+
   ngOnInit(): void {
     //obtener tramite
     this.dataTramiteAux= this.dataService.tramiteData;
@@ -150,6 +176,8 @@ export class TramitesAdministrarComponent implements OnInit {
       this.buscarAsignacionByNumTramiteActivo();      
     }    
     this.listDepartamentos = departamentos;
+    this.listTipoAudiencia = tiposAudiencia;
+    this.listModalidad = modalidad;
     this.listarMediadores();
     this.listarFuncionTramite();
   }
@@ -191,6 +219,13 @@ export class TramitesAdministrarComponent implements OnInit {
 
   }    
   //FIN GUARDAR USUARIO-TRAMITE............................................................
+
+  //GUARDEAR NUEVA AUDIENCIA
+  submitFormAudiencia(){
+    console.log("Formulario Audiencia", this.formaAudiencia.controls);
+
+  }
+  //GUARDEAR NUEVA AUDIENCIA...............................................................
 
   //BUSCAR TRAMITE X NUMERO TRAMITE ACTIVO
   buscarAsignacionByNumTramiteActivo(){
@@ -331,6 +366,7 @@ export class TramitesAdministrarComponent implements OnInit {
     }
   }
 
+  //CARGA DE CENTROS DE MEDIACION
   cargarCentrosMediacion(id_departamento: number){
     this.centroMediacionService.listarCentroMediacionXDepartamento(id_departamento)
     .subscribe({
@@ -370,9 +406,9 @@ export class TramitesAdministrarComponent implements OnInit {
     
     });  
   }
+  //FI CARGA DE CENTROS DE MEDIACION.............................................
 
   onChangeCentroMediacion(formulario: string){
-    // const id = this.formaMediadorAsignado.get('centro_mediacion_id')?.value;
     let id: string;
     if(formulario == "usuario"){
       id = this.formaMediadorAsignado.get('centro_mediacion_id')?.value;
@@ -436,7 +472,8 @@ export class TramitesAdministrarComponent implements OnInit {
   }    
 
   openDialogAudiencia() {
-    this.cargarCentrosMediacionXUsuario(this.dataUsuarioTramite.usuario_id)
+    this.cargarCentrosMediacionXUsuario(this.dataUsuarioTramite.usuario_id);
+    //this.listarTiposAudiencia()
     this.audienciaDialog = true;
     this.formaMediadorAsignado.reset();    
 
