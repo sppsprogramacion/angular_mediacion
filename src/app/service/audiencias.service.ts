@@ -2,30 +2,35 @@ import { Injectable } from '@angular/core';
 import { CategoriaModel } from '../models/categoria.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { AudienciaModel } from '../models/audiencia.model';
 
 const base_url = environment.URL_BASE;
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriasService {
+export class AudienciasService {
 
-  categoria: CategoriaModel = new CategoriaModel();
+  audiencia: AudienciaModel = new AudienciaModel();
   constructor(
     private readonly http: HttpClient
   ) { }
 
-  guardarCategoria(data: Partial<CategoriaModel>){    
-    this.categoria={...data};
-    return this.http.post(`${base_url}/categorias`, this.categoria);
+  guardarAudiencia(data: Partial<AudienciaModel>){    
+    this.audiencia={...data};
+    return this.http.post(`${base_url}/audiencias`, this.audiencia);
   }
 
-  guardarEdicionCategoria(id: number, data: Partial<CategoriaModel>){    
-    this.categoria={...data};
-    return this.http.put(`${base_url}/categorias/${id}`, this.categoria);
+  guardarEdicionAudiencia(id: number, data: Partial<AudienciaModel>){    
+    this.audiencia={...data};
+    return this.http.put(`${base_url}/audiencias/${id}`, this.audiencia);
   }
 
-  listarCategoriasTodos(){
-    return this.http.get<[categorias:CategoriaModel[], total: number]>(`${base_url}/categorias`)
+  listarAudienciasTodos(){
+    return this.http.get<[audiencias:AudienciaModel[], total: number]>(`${base_url}/audiencias`)
+  }
+
+  listarAudienciasByTramite(num_tramite: number){
+    return this.http.get<[audiencias:AudienciaModel[], total: number]>(`${base_url}/audiencias/buscar-xtramite?id_tramite=${num_tramite}`)
   }
 }

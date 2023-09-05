@@ -23,6 +23,8 @@ import { TramitesService } from 'src/app/service/tramites.service';
 import { ModalidadModel } from 'src/app/models/modalidad.model';
 import { TipoAudienciaModel } from 'src/app/models/tipo_audiencia.model';
 import { TiposAudienciaService } from 'src/app/service/tipos-audiencia.service';
+import { AudienciaModel } from 'src/app/models/audiencia.model';
+import { AudienciasService } from '../../../service/audiencias.service';
 
 @Component({
   selector: 'app-tramites-administrar',
@@ -36,11 +38,13 @@ export class TramitesAdministrarComponent implements OnInit {
   msgs: Message[] = []; 
   
   //MODELOS
+  dataAudiencia: AudienciaModel = new AudienciaModel;
   dataTramite: TramiteModel= new TramiteModel;
   dataTramiteAux: TramiteModel= new TramiteModel;
   dataUsuarioTramite: UsuarioTramiteModel= {};
 
   //listas
+  listAudiencias: AudienciaModel[] = [];
   listCentrosMediacion: CentroMediacionModel[]=[];
   listModalidad: ModalidadModel[] = [];
   listUsuarioCentrosMediacion: UsuarioCentroModel[]=[];
@@ -57,9 +61,10 @@ export class TramitesAdministrarComponent implements OnInit {
   elementosUsuariosCentro: ElementoModel[]=[];
 
   //variables booleanas
+  loadingAudiencia: boolean = true;
   loadingUsuariosTramite: boolean = true;
   loadingMediadores: boolean = true;
-  loadingFuncionTramite: boolean = true;
+  loadingFuncionTramite: boolean = true;  
   usuarioTramiteDialog: boolean = false;
   audienciaDialog: boolean = false;
 
@@ -71,6 +76,7 @@ export class TramitesAdministrarComponent implements OnInit {
     private fb: FormBuilder,
     private readonly datePipe: DatePipe,
     public dataService: DataService,
+    private audienciaService: AudienciasService,
     private centroMediacionService: CentrosMediacionService,
     private funcionTramiteService: FuncionTramiteService,
     private tiposAudienciaService: TiposAudienciaService,
@@ -122,7 +128,7 @@ export class TramitesAdministrarComponent implements OnInit {
       { type: 'min', message: 'Debe seleccionar un departamento.' },
     ],
     'fecha_inicio': [
-      { type: 'required', message: 'La hora  de inicio es requerida.' },
+      { type: 'required', message: 'La fecha de inicio es requerida.' },
     ],  
     'funcion_tramite_id': [
       { type: 'required', message: 'La función en el tramite es requerida.' },
@@ -173,7 +179,8 @@ export class TramitesAdministrarComponent implements OnInit {
     
 
     if(this.dataTramiteAux){
-      this.buscarAsignacionByNumTramiteActivo();      
+      this.buscarAsignacionByNumTramiteActivo(); 
+      this.buscarAudienciasByNumTramiteActivo()     
     }    
     this.listDepartamentos = departamentos;
     this.listTipoAudiencia = tiposAudiencia;
@@ -194,7 +201,7 @@ export class TramitesAdministrarComponent implements OnInit {
 
     let dataMediadorAsignado: Partial<UsuarioTramiteModel>;
     dataMediadorAsignado = {
-      tramite_numero: this.dataTramite.numero_tramite,
+      tramite_numero: this.dataTramite.numero_tramite,      
       usuario_id: parseInt(this.formaMediadorAsignado.get('usuario_id')?.value),
       detalles: this.formaMediadorAsignado.get('detalles')?.value,
       funcion_tramite_id: parseInt(this.formaMediadorAsignado.get('funcion_tramite_id')?.value),             
@@ -222,7 +229,43 @@ export class TramitesAdministrarComponent implements OnInit {
 
   //GUARDEAR NUEVA AUDIENCIA
   submitFormAudiencia(){
-    console.log("Formulario Audiencia", this.formaAudiencia.controls);
+    if(this.formaAudiencia.invalid){
+      this.msgs = [];
+      this.msgs.push({ severity: 'error', summary: 'Datos inválidos', detail: 'Revise los datos cargados. ' });
+      console.log("formulario Audiencia", this.formaAudiencia.controls);
+      return Object.values(this.formaAudiencia.controls).forEach(control => control.markAsTouched());
+    }
+
+    let dataAudiencia: Partial<AudienciaModel>;
+    dataAudiencia = {
+      tramite_numero: this.dataTramite.numero_tramite,
+
+      fecha_inicio: this.changeFormatoFechaGuardar(this.formaAudiencia.get('fecha_inicio')?.value),
+      hora_inicio: this.formaAudiencia.get('hora_inicio')?.value,
+      hora_fin: this.formaAudiencia.get('hora_fin')?.value,
+      tipo_audiencia_id: parseInt(this.formaAudiencia.get('tipo_audiencia_id')?.value), 
+      modalidad_id: parseInt(this.formaAudiencia.get('modalidad_id')?.value), 
+      centro_mediacion_id: parseInt(this.formaAudiencia.get('centro_mediacion_id')?.value), 
+      detalles: this.formaAudiencia.get('detalles')?.value,
+      usuario_id: this.dataUsuarioTramite.usuario_id,
+                  
+    }; 
+
+    //GUARDAR NUEVO AUDIENCIA
+    this.audienciaService.guardarAudiencia(dataAudiencia)
+      .subscribe({
+        next: (resultado) => {
+          let audienciaRes: AudienciaModel = resultado;
+          this.hideDialogAudiencia();
+          this.buscarAudienciasByNumTramiteActivo();
+          Swal.fire('Exito',`La audiencia se generó con exito`,"success");
+        },
+        error: (err) => {
+          this.msgs = [];
+          this.msgs.push({ severity: 'error', summary: 'Error al guardar', detail: ` ${err.error.message}` });
+        }
+      });         
+    //FIN GUARDAR NUEVO AUDIENCIA
 
   }
   //GUARDEAR NUEVA AUDIENCIA...............................................................
@@ -277,6 +320,23 @@ export class TramitesAdministrarComponent implements OnInit {
       });    
   }
   //FIN BUSCAR TRAMITE................................................................... 
+
+  //BUSCAR AUDIENCIA POR NUMERO DE TRAMITE
+  buscarAudienciasByNumTramiteActivo(){
+    this.audienciaService.listarAudienciasByTramite(this.dataService.tramiteData.numero_tramite)
+      .subscribe({
+        next: (resultado) => {
+          this.listAudiencias = resultado[0]; 
+          this.loadingAudiencia = false;     
+        },
+        error: (err) => {
+          this.listAudiencias = [];
+          this.loadingAudiencia = false;  
+          //Swal.fire('Error',`Error al buscar tramite asignado: ${err.error.message}`,"error") 
+        }
+      });       
+  }
+  //FIN BUSCAR MEDIADOR DEL TRAMITE X NUMERO TRAMITE ACTIVO...................................
 
   //CONFIRMAR DESHABILITACION USUARIO-TRAMITE
   confirmarDeshabilitarUsuario(dataUsuarioTramite:UsuarioTramiteModel){    
@@ -475,9 +535,9 @@ export class TramitesAdministrarComponent implements OnInit {
     this.cargarCentrosMediacionXUsuario(this.dataUsuarioTramite.usuario_id);
     //this.listarTiposAudiencia()
     this.audienciaDialog = true;
-    this.formaMediadorAsignado.reset();    
+    this.formaAudiencia.reset();    
 
-    return Object.values(this.formaMediadorAsignado.controls).forEach(control => control.markAsUntouched());    
+    return Object.values(this.formaAudiencia.controls).forEach(control => control.markAsUntouched());    
   }
   
   hideDialogAudiencia() {
@@ -488,4 +548,13 @@ export class TramitesAdministrarComponent implements OnInit {
     
   }
   //FIN MANEJO FORMULARIO DIALOG....................................
+
+  changeFormatoFechaGuardar(nuevaFecha: Date){
+    let fechaAuxiliar:any = null;
+    if(nuevaFecha != null){
+      fechaAuxiliar = this.datePipe.transform(nuevaFecha,"yyyy-MM-dd")!;
+      
+    }
+    return fechaAuxiliar;
+  }
 }

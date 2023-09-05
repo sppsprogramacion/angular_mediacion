@@ -108,7 +108,7 @@
         <p-toolbar styleClass="mb-4">
             <ng-template pTemplate="left">
                 <div class="my-2">
-                    <button pButton pRipple label="Asignar usuario" icon="pi pi-plus" class="p-button-success mr-2" (click)="openDialogUsuarioTramite()"></button>
+                    <button pButton pRipple label="Asignar usuario" icon="pi pi-plus" class="p-button-info mr-2" (click)="openDialogUsuarioTramite()"></button>
                 </div>
             </ng-template>
 
@@ -305,13 +305,13 @@
         <p-toolbar styleClass="mb-4">
             <ng-template pTemplate="left">
                 <div class="my-2">
-                    <button pButton pRipple label="Generar Audiencia" icon="pi pi-plus" class="p-button-success mr-2" (click)="openDialogAudiencia()"></button>
+                    <button pButton pRipple label="Generar Audiencia" icon="pi pi-plus" class="p-button-info mr-2" (click)="openDialogAudiencia()"></button>
                 </div>
             </ng-template>
         </p-toolbar>
 
         <!-- TABLA DE AUDIENCIA -->
-        <p-table #dt1 [value]="listUsuariosTramite" [rows]="10" [loading]="loadingUsuariosTramite" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['usuario.dni','usuario.apellido','usuario.nombre','usuario.telefono','objeto.objeto','expediente']"
+        <p-table #dt1 [value]="listAudiencias" [rows]="10" [loading]="loadingAudiencia" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['usuario.dni','usuario.apellido','usuario.nombre','usuario.telefono','objeto.objeto','expediente']"
             responsiveLayout="scroll">
 
             <ng-template pTemplate="header">
@@ -319,66 +319,67 @@
                     <th style="width: 3rem"></th>
                     <th>
                         <div class="flex justify-content-between align-items-center">
-                            DNI
+                            NUM-AUDIENCIA
                         </div>
                     </th>
                     <th>
                         <div class="flex justify-content-between align-items-center">
-                            Apellido - Nombre
+                            F-AUDIENCIA
                         </div>
                     </th>
                     <th>
                         <div class="flex justify-content-between align-items-center">
-                            Sexo
+                            HORA INI
                         </div>
                     </th>
                     <th>
                         <div class="flex justify-content-between align-items-center">
-                            Fecha Asing
+                            HORA-FIN
                         </div>
                     </th>
                     <th>
                         <div class="flex justify-content-between align-items-center">
-                            Funcion
+                            CENTRO MEDIACION
                         </div>
                     </th>
                     <th>
                         <div class="flex justify-content-between align-items-center">
-                            Detalles
+                            TIPO
                         </div>
                     </th>
                     <th>
                         <div class="flex justify-content-between align-items-center">
-                            Activo
+                            MODALIDAD
                         </div>
                     </th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-usuariotramite>
+            <ng-template pTemplate="body" let-audiencia>
                 <tr>
                     <td>
                         <button type="button" pButton pRipple class="p-button-danger p-button-rounded mr-2 mb-2" icon="pi pi-times" (click)="confirmarDeshabilitarUsuario(usuariotramite)"></button>
                     </td>
-                    <td style="min-width: 8rem;">
-                        {{usuariotramite.usuario.dni}}
-                    </td>
-                    <td style="min-width: 20rem;">
-                        {{usuariotramite.usuario.apellido}} {{usuariotramite.usuario.nombre}}
-                    </td>
-                    <td style="min-width: 7rem;">
-                        {{usuariotramite.usuario.sexo.sexo}}
+                    <td style="min-width: 10rem;">
+                        {{audiencia.num_audiencia}}
                     </td>
                     <td style="min-width: 10rem;">
-                        {{usuariotramite.fecha_asignacion | date: 'dd/MM/yyyy'}}
+                        {{audiencia.fecha_inicio | date: 'dd/MM/yyyy'}}
                     </td>
+                    <td style="min-width: 10rem;">
+                        {{audiencia.hora_inicio}}
+                    </td>
+                    <td style="min-width: 10rem;">
+                        {{hora_fin}}
+                    </td>
+
                     <td style="min-width: 7rem;">
-                        {{usuariotramite.funcion_tramite.funcion_tramite}}
+                        {{audiencia.centro_mediacion.centro_mediacion}}
                     </td>
                     <td style="min-width: 15rem;">
-                        {{usuariotramite.detalles}}
+                        {{audiencia.tipo_audiencia.tipo_audiencia}}
                     </td>
                     <td style="min-width: 5rem;">
-                        {{usuariotramite.activo}}
+                        {{audiencia.modalidad.modalidad}}
                     </td>
                 </tr>
             </ng-template>
@@ -390,7 +391,7 @@
             </ng-template>
             <ng-template pTemplate="loadingbody">
                 <tr>
-                    <td colspan="8">Cargando usuarios... .</td>
+                    <td colspan="8">Cargando audiencias... .</td>
                 </tr>
             </ng-template>
         </p-table>
@@ -427,7 +428,7 @@
                                 <p-calendar p-inputtext formControlName="fecha_inicio" dateFormat="dd/mm/yy" view="" styleClass="" [locale]="es"></p-calendar>
                                 <small *ngIf="isValidAudiencia('fecha_inicio')" class="p-error">
                                     <div *ngFor="let validation of user_validation_messages.fecha_inicio" >
-                                        <div  *ngIf="formaMediadorAsignado.get('fecha_inicio')?.hasError(validation.type)">
+                                        <div  *ngIf="formaAudiencia.get('fecha_inicio')?.hasError(validation.type)">
                                             {{validation.message}}
                                         </div>
                                     </div>

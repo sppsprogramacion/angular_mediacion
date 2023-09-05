@@ -8,7 +8,7 @@ import { ModalidadModel } from './modalidad.model';
 import { CentroMediacionModel } from './centro_mediacion.model';
 
 
-export class AidienciaModel{
+export class AudienciaModel{
     constructor(
         public id_audiencia?: number,
         public num_audiencia?: number,
