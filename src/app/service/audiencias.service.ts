@@ -33,4 +33,8 @@ export class AudienciasService {
   listarAudienciasByTramite(num_tramite: number){
     return this.http.get<[audiencias:AudienciaModel[], total: number]>(`${base_url}/audiencias/buscar-xtramite?id_tramite=${num_tramite}`)
   }
+
+  listarAudienciasByUsuario(id_usuario: number){
+    return this.http.get<[audiencias:AudienciaModel[], total: number]>(`${base_url}/audiencias/buscar-xusuario?id_usuario=${id_usuario}`)
+  }
 }

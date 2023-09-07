@@ -45,6 +45,7 @@ export class TramitesAdministrarComponent implements OnInit {
 
   //listas
   listAudiencias: AudienciaModel[] = [];
+  listAudienciasUsuario: AudienciaModel[] = [];
   listCentrosMediacion: CentroMediacionModel[]=[];
   listModalidad: ModalidadModel[] = [];
   listUsuarioCentrosMediacion: UsuarioCentroModel[]=[];
@@ -62,11 +63,13 @@ export class TramitesAdministrarComponent implements OnInit {
 
   //variables booleanas
   loadingAudiencia: boolean = true;
+  loadingAudienciaUsuario: boolean = true;
   loadingUsuariosTramite: boolean = true;
   loadingMediadores: boolean = true;
   loadingFuncionTramite: boolean = true;  
   usuarioTramiteDialog: boolean = false;
   audienciaDialog: boolean = false;
+  audienciaUsuarioDialog: boolean = false;
 
   //FORMULARIOS
   formaMediadorAsignado: FormGroup;  
@@ -338,6 +341,23 @@ export class TramitesAdministrarComponent implements OnInit {
   }
   //FIN BUSCAR MEDIADOR DEL TRAMITE X NUMERO TRAMITE ACTIVO...................................
 
+  //BUSCAR AUDIENCIA POR NUMERO DE TRAMITE
+  buscarAudienciasByUsuario(){
+    this.audienciaService.listarAudienciasByUsuario(this.dataUsuarioTramite.usuario_id)
+      .subscribe({
+        next: (resultado) => {
+          this.listAudienciasUsuario = resultado[0]; 
+          this.loadingAudienciaUsuario = false;     
+        },
+        error: (err) => {
+          this.listAudienciasUsuario = [];
+          this.loadingAudienciaUsuario = false;  
+          //Swal.fire('Error',`Error al buscar tramite asignado: ${err.error.message}`,"error") 
+        }
+      });       
+  }
+  //FIN BUSCAR MEDIADOR DEL TRAMITE X NUMERO TRAMITE ACTIVO...................................
+
   //CONFIRMAR DESHABILITACION USUARIO-TRAMITE
   confirmarDeshabilitarUsuario(dataUsuarioTramite:UsuarioTramiteModel){    
     Swal.fire({
@@ -545,6 +565,21 @@ export class TramitesAdministrarComponent implements OnInit {
     this.elementosCentroMediacion = [];
     this.msgs = [];
     this.audienciaDialog = false;
+    
+  }
+
+  openDialogAudienciaUsuario() {
+    this.buscarAudienciasByUsuario();
+    this.audienciaUsuarioDialog = true;
+    // this.formaAudiencia.reset();    
+
+    // return Object.values(this.formaAudiencia.controls).forEach(control => control.markAsUntouched());    
+  }
+  
+  hideDialogAudienciaUsuario() {
+    
+    this.msgs = [];
+    this.audienciaUsuarioDialog = false;
     
   }
   //FIN MANEJO FORMULARIO DIALOG....................................
