@@ -38,21 +38,22 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
 
   //listas  
   listaCategorias: CategoriaModel[] = [];
-  elementosCentroMediacion: ElementoModel[]=[];
   listaCentrosMediacion: CentroMediacionModel[]=[];
+  listaDepartamentos: DepartamentoModel[] = [];
+  listaDepartamentosConCentros: DepartamentoModel[] = [];
   listaMunicipios: MunicipioModel[] = [];
   listaMunicipiosConvocado: MunicipioModel[] = [];
-  listaDepartamentos: DepartamentoModel[] = [];
   listaProvincias: ProvinciaModel[] = []
-  listObjetos: ObjetoModel[] = [];
-  listSexo: SexoModel[] = [];
-  listSiNo: any[] = [];
   listCiudadano: CiudadanoModel[]=[]; 
   listConvocados: any[]=[]; 
   listConvocadosNoSalta: any[]=[];
   listConvocadosAux: any[]=[];   
+  listObjetos: ObjetoModel[] = [];
+  listSexo: SexoModel[] = [];
+  listSiNo: any[] = [];
   listVinculados: any[]=[];
   listVinculadosAux: any[]=[];
+  elementosCentroMediacion: ElementoModel[]=[];
 
   //modelos 
   ciudadanoData: CiudadanoModel;
@@ -313,6 +314,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.listSiNo = opcionSiNo;
     this.listaProvincias = provincias;
     this.listaDepartamentos = departamentos;
+    this.cargarDepartamentosconCentroMediacion();
     this.cargarMunicipios(1);        
   }
   //FIN ONINIT................................................................
@@ -522,8 +524,6 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     }
     
     this.convocado = {};
-    console.log("lista convocados", this.listConvocados);
-    console.log("lista convocados no salta", this.listConvocadosNoSalta);
 
     this.hideDialogConvocado();
   }
@@ -556,15 +556,11 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.convocadoTramiteDialog = true; 
     Object.values(this.formaProvincia.controls).forEach(control => control.markAsUntouched()); 
     
-    // Object.values(this.formaDomicilioSalta.controls).forEach(control => control.markAsUntouched());
-    // Object.values(this.formaDomicilioSalta.controls).forEach(control => control.markAsUntouched());
-    // Object.values(this.formaConvocado.controls).forEach(control => control.markAsUntouched());
   }
   
   hideDialogConvocado() {    
     this.formaProvincia.reset(); 
     this.formaProvincia.get('provincia_id')?.setValue(1);
-    //Object.values(this.formaProvincia.controls).forEach(control => control.markAsUntouched());
     this.reiniciarformularios();
     this.convocadoTramiteDialog = false;
     
@@ -584,11 +580,18 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   
   hideDialogVinculado() {    
     this.formaVinculado.reset();     
-    //Object.values(this.formaProvincia.controls).forEach(control => control.markAsUntouched());
     this.reiniciarFormularioVinculado();
     this.vinculadoTramiteDialog = false;    
   }    
   //FIN MANEJO FORMULARIO DIALOG VINCULADO....................................
+
+  //CARGA DEPARTAMENTOS CON CENTRO DE EMDIACION
+  cargarDepartamentosconCentroMediacion(){
+    this.listaDepartamentosConCentros=departamentos.filter(departamento => {      
+      return departamento.tiene_centro_mediacion == true;
+    });    
+  }
+  //FIN CARGA DEPARTAMENTOS CON CENTRO DE EMDIACION
 
   //CARGA DE DROPDOWN TRAMITES
   cargarMunicipios(id_departamento: number){

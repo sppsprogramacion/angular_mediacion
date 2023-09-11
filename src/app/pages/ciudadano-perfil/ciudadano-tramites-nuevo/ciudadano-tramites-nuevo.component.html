@@ -120,7 +120,7 @@
                             <div class="formgrid grid">
                                 <div class="field col-12 md:col-8 lg:col-6">
                                     <label for="departamento_id_centro">Departamento</label>
-                                    <p-dropdown id="departamento_id_centro" [options]="listaDepartamentos" optionLabel="departamento" optionValue="id_departamento" formControlName="departamento_id_centro" placeholder="Seleccionar..." (onChange)="onChangeDepartamentoParaCentros()">
+                                    <p-dropdown id="departamento_id_centro" [options]="listaDepartamentosConCentros" optionLabel="departamento" optionValue="id_departamento" formControlName="departamento_id_centro" placeholder="Seleccionar..." (onChange)="onChangeDepartamentoParaCentros()">
                                     </p-dropdown>
                                     <small *ngIf="isValid('departamento_id_centro')" class="p-error">
                                         <div *ngFor="let validation of user_validation_messages.departamento_id_centro" >

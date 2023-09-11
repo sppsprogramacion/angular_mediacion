@@ -80,7 +80,7 @@ export class CiudadanosAdministrarComponent implements OnInit {
 
   //ABRIR NUEVO TRAMITE
   abrirNuevoTramite(){
-    this.router.navigateByUrl("ciudadano/tramites/nuevo");
+    this.router.navigateByUrl("admin/ciudadanos/tramites/nuevo");
   }
   //FIN ABRIR NUEVO TRAMITE
 

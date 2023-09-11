@@ -231,6 +231,7 @@ export const departamentos = [
         "id_departamento": 2,
         "departamento": "Anta",
         "provincia_id": 18,
+        "tiene_centro_mediacion": false,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -240,6 +241,7 @@ export const departamentos = [
         "id_departamento": 3,
         "departamento": "Cachi",
         "provincia_id": 18,
+        "tiene_centro_mediacion": false,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -249,6 +251,7 @@ export const departamentos = [
         "id_departamento": 4,
         "departamento": "Cafayate",
         "provincia_id": 18,
+        "tiene_centro_mediacion": false,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -258,6 +261,7 @@ export const departamentos = [
         "id_departamento": 5,
         "departamento": "Capital",
         "provincia_id": 18,
+        "tiene_centro_mediacion": true,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -267,6 +271,7 @@ export const departamentos = [
         "id_departamento": 6,
         "departamento": "Cerrillos",
         "provincia_id": 18,
+        "tiene_centro_mediacion": false,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -276,6 +281,7 @@ export const departamentos = [
         "id_departamento": 7,
         "departamento": "Chicoana",
         "provincia_id": 18,
+        "tiene_centro_mediacion": false,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -285,6 +291,7 @@ export const departamentos = [
         "id_departamento": 8,
         "departamento": "General Gûemes",
         "provincia_id": 18,
+        "tiene_centro_mediacion": false,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -294,6 +301,7 @@ export const departamentos = [
         "id_departamento": 9,
         "departamento": "General José de San Martín",
         "provincia_id": 18,
+        "tiene_centro_mediacion": false,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -303,6 +311,7 @@ export const departamentos = [
         "id_departamento": 10,
         "departamento": "Guachipas",
         "provincia_id": 18,
+        "tiene_centro_mediacion": false,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -312,6 +321,7 @@ export const departamentos = [
         "id_departamento": 11,
         "departamento": "Iruya",
         "provincia_id": 18,
+        "tiene_centro_mediacion": false,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -321,6 +331,7 @@ export const departamentos = [
         "id_departamento": 12,
         "departamento": "La Caldera",
         "provincia_id": 18,
+        "tiene_centro_mediacion": false,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -330,6 +341,7 @@ export const departamentos = [
         "id_departamento": 13,
         "departamento": "La Candelaria",
         "provincia_id": 18,
+        "tiene_centro_mediacion": false,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -339,6 +351,7 @@ export const departamentos = [
         "id_departamento": 14,
         "departamento": "La Poma",
         "provincia_id": 18,
+        "tiene_centro_mediacion": false,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -348,6 +361,7 @@ export const departamentos = [
         "id_departamento": 15,
         "departamento": "La Viña",
         "provincia_id": 18,
+        "tiene_centro_mediacion": false,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -357,6 +371,7 @@ export const departamentos = [
         "id_departamento": 16,
         "departamento": "Los Andes",
         "provincia_id": 18,
+        "tiene_centro_mediacion": false,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -366,6 +381,7 @@ export const departamentos = [
         "id_departamento": 17,
         "departamento": "Metán",
         "provincia_id": 18,
+        "tiene_centro_mediacion": false,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -375,6 +391,7 @@ export const departamentos = [
         "id_departamento": 18,
         "departamento": "Molinos",
         "provincia_id": 18,
+        "tiene_centro_mediacion": true,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -384,6 +401,7 @@ export const departamentos = [
         "id_departamento": 19,
         "departamento": "Orán",
         "provincia_id": 18,
+        "tiene_centro_mediacion": false,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -393,6 +411,7 @@ export const departamentos = [
         "id_departamento": 20,
         "departamento": "Rivadavia",
         "provincia_id": 18,
+        "tiene_centro_mediacion": false,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -402,6 +421,7 @@ export const departamentos = [
         "id_departamento": 21,
         "departamento": "Rosario de la Frontera",
         "provincia_id": 18,
+        "tiene_centro_mediacion": false,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -411,6 +431,7 @@ export const departamentos = [
         "id_departamento": 22,
         "departamento": "Rosario de Lerma",
         "provincia_id": 18,
+        "tiene_centro_mediacion": true,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -420,6 +441,7 @@ export const departamentos = [
         "id_departamento": 23,
         "departamento": "San Carlos",
         "provincia_id": 18,
+        "tiene_centro_mediacion": false,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -429,6 +451,7 @@ export const departamentos = [
         "id_departamento": 24,
         "departamento": "Santa Victoria",
         "provincia_id": 18,
+        "tiene_centro_mediacion": true,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"
@@ -438,6 +461,7 @@ export const departamentos = [
         "id_departamento": 1,
         "departamento": "sin departamento",
         "provincia_id": 18,
+        "tiene_centro_mediacion": false,
         "provincia": {
             "id_provincia": 18,
             "provincia": "Salta"

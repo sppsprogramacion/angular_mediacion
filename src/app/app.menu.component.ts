@@ -106,7 +106,7 @@ export class AppMenuComponent implements OnInit {
                 {
                     label: 'Home',
                     items:[
-                        {label: 'Principal',icon: 'pi pi-fw pi-home', routerLink: ['/']}
+                        {label: 'Principal',icon: 'pi pi-fw pi-home', routerLink: ['/admin/principal']}
                     ]
                 },
                 {

@@ -74,6 +74,7 @@ import { CiudadanosBuscarComponent } from './pages/ciudadanos/ciudadanos-buscar/
                     {path: 'ciudadanos/administrar', component: CiudadanosAdministrarComponent},
                     {path: 'ciudadanos/buscar', component: CiudadanosBuscarComponent},
                     {path: 'ciudadanos/lista', component: CiudadanosListaComponent},
+                    {path: 'ciudadanos/tramites/nuevo', component: CiudadanoTramitesNuevoComponent},
                     {path: 'ciudadanos-usuarios/administrar', component: CiudadanoUsuarioComponent},
                     
                     {path: 'centro-mediacion/lista', component: CentrosMediacionListaComponent},

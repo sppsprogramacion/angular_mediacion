@@ -25,6 +25,8 @@ import { TipoAudienciaModel } from 'src/app/models/tipo_audiencia.model';
 import { TiposAudienciaService } from 'src/app/service/tipos-audiencia.service';
 import { AudienciaModel } from 'src/app/models/audiencia.model';
 import { AudienciasService } from '../../../service/audiencias.service';
+import { ConvocadoModel } from 'src/app/models/convocado.model';
+import { VinculadoModel } from 'src/app/models/vinculado.model';
 
 @Component({
   selector: 'app-tramites-administrar',
@@ -39,9 +41,11 @@ export class TramitesAdministrarComponent implements OnInit {
   
   //MODELOS
   dataAudiencia: AudienciaModel = new AudienciaModel;
+  dataConvocado: ConvocadoModel = {};
   dataTramite: TramiteModel= new TramiteModel;
   dataTramiteAux: TramiteModel= new TramiteModel;
-  dataUsuarioTramite: UsuarioTramiteModel= {};
+  dataUsuarioTramite: UsuarioTramiteModel= {};  
+  dataVinculado: VinculadoModel = {};
 
   //listas
   listAudiencias: AudienciaModel[] = [];
@@ -66,10 +70,12 @@ export class TramitesAdministrarComponent implements OnInit {
   loadingAudienciaUsuario: boolean = true;
   loadingUsuariosTramite: boolean = true;
   loadingMediadores: boolean = true;
-  loadingFuncionTramite: boolean = true;  
-  usuarioTramiteDialog: boolean = false;
+  loadingFuncionTramite: boolean = true;
   audienciaDialog: boolean = false;
-  audienciaUsuarioDialog: boolean = false;
+  audienciaUsuarioDialog: boolean = false;  
+  convocadoDialog: boolean = false;  
+  usuarioTramiteDialog: boolean = false;
+  vinculadoDialog: boolean = false;
 
   //FORMULARIOS
   formaMediadorAsignado: FormGroup;  
@@ -532,8 +538,35 @@ export class TramitesAdministrarComponent implements OnInit {
     })   
        
   }
-
   
+
+  //MANEJO DE FORMULARIO DIALOG VINCULADO
+  openDialogConvocado(convocado: ConvocadoModel) {
+    this.dataConvocado = convocado;
+    this.convocadoDialog = true; 
+    
+  }
+  
+  hideDialogConvocado() {    
+    this.convocadoDialog = false;    
+  }    
+  //FIN MANEJO FORMULARIO DIALOG VINCULADO....................................
+
+  //MANEJO DE FORMULARIO DIALOG VINCULADO
+  reiniciarFormularioVinculado(){
+    
+  }
+
+  openDialogVinculado(vinculado: VinculadoModel) {
+    this.dataVinculado = vinculado;
+    this.vinculadoDialog = true; 
+
+  }
+  
+  hideDialogVinculado() {    
+    this.vinculadoDialog = false;    
+  }    
+  //FIN MANEJO FORMULARIO DIALOG VINCULADO....................................
 
   //MANEJO DE FORMULARIO DIALOG
   openDialogUsuarioTramite() {
