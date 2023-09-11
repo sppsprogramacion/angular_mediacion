@@ -34,7 +34,7 @@ export class AudienciasService {
     return this.http.get<[audiencias:AudienciaModel[], total: number]>(`${base_url}/audiencias/buscar-xtramite?id_tramite=${num_tramite}`)
   }
 
-  listarAudienciasByUsuario(id_usuario: number){
-    return this.http.get<[audiencias:AudienciaModel[], total: number]>(`${base_url}/audiencias/buscar-xusuario?id_usuario=${id_usuario}`)
+  listarAudienciasAbiertasByUsuario(id_usuario: number){
+    return this.http.get<[audiencias:AudienciaModel[], total: number]>(`${base_url}/audiencias/buscar-abiertas-xusuario?id_usuario=${id_usuario}`)
   }
 }

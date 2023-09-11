@@ -343,7 +343,7 @@ export class TramitesAdministrarComponent implements OnInit {
 
   //BUSCAR AUDIENCIA POR NUMERO DE TRAMITE
   buscarAudienciasByUsuario(){
-    this.audienciaService.listarAudienciasByUsuario(this.dataUsuarioTramite.usuario_id)
+    this.audienciaService.listarAudienciasAbiertasByUsuario(this.dataUsuarioTramite.usuario_id)
       .subscribe({
         next: (resultado) => {
           this.listAudienciasUsuario = resultado[0]; 
