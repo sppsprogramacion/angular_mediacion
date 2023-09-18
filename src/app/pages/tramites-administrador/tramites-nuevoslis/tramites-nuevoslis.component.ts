@@ -64,6 +64,7 @@ export class TramitesNuevoslisComponent implements OnInit {
     this.tramitesService.listarTramitesNuevosAdministrador(globalConstants.usuarioLogin.id_usuario).
         subscribe(respuesta => {
         this.listTramites= respuesta[0];
+        console.log("tramites nuevos", this.listTramites);
         this.loading = false;  
     
     });
