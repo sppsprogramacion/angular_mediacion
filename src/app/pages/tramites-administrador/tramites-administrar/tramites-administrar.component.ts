@@ -195,7 +195,7 @@ export class TramitesAdministrarComponent implements OnInit {
     this.listTipoAudiencia = tiposAudiencia;
     this.listModalidad = modalidad;
     this.listarMediadores();
-    this.listarFuncionTramite();
+    
   }
   //FIN ONINIT......................................................................................
 
@@ -411,8 +411,17 @@ export class TramitesAdministrarComponent implements OnInit {
             value: usuario.apellido + " " + usuario.nombre + " (" + usuario.dni + ")"
             }
         });
+
+        //BUSCAR FUNCIONES
+        this.funcionTramiteService.listarFuncionTramitesTodos()
+          .subscribe(respuesta => {
+            this.listFuncionTramite= respuesta[0];
+            console.log("funciones", this.listFuncionTramite);
+            this.loadingFuncionTramite = false;  
+          
+          });
     
-    });
+      });
   }  
   //FIN LISTADO DE MEDIADORES............................
 
@@ -421,6 +430,7 @@ export class TramitesAdministrarComponent implements OnInit {
     this.funcionTramiteService.listarFuncionTramitesTodos().
         subscribe(respuesta => {
         this.listFuncionTramite= respuesta[0];
+        console.log("funciones", this.listFuncionTramite);
         this.loadingFuncionTramite = false;  
     
     });
@@ -570,6 +580,7 @@ export class TramitesAdministrarComponent implements OnInit {
 
   //MANEJO DE FORMULARIO DIALOG
   openDialogUsuarioTramite() {
+    //this.listarFuncionTramite();
     this.usuarioTramiteDialog = true;
     this.formaMediadorAsignado.reset();    
     return Object.values(this.formaMediadorAsignado.controls).forEach(control => control.markAsUntouched());
@@ -585,6 +596,13 @@ export class TramitesAdministrarComponent implements OnInit {
   }    
 
   openDialogAudiencia() {
+    if(!this.dataUsuarioTramite.id_usuario_tramite){
+      Swal.fire('Tramite sin mediador',`El tramite no tiene un mediador asignado`,"warning");
+      return
+    }
+
+    console.log("usuariotramite", this.dataUsuarioTramite);
+
     this.cargarCentrosMediacionXUsuario(this.dataUsuarioTramite.usuario_id);
     //this.listarTiposAudiencia()
     this.audienciaDialog = true;
