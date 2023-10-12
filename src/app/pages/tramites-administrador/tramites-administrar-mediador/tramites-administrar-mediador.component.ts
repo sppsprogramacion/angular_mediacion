@@ -21,6 +21,8 @@ import { UsuariosCentroService } from '../../../service/usuarios-centro.service'
 import { UsuarioCentroModel } from '../../../models/usuario_centro.model ';
 import { TramitesService } from 'src/app/service/tramites.service';
 import { globalConstants } from '../../../common/global-constants';
+import { ConvocadoModel } from 'src/app/models/convocado.model';
+import { VinculadoModel } from 'src/app/models/vinculado.model';
 
 @Component({
   selector: 'app-tramites-administrar-mediador',
@@ -31,9 +33,12 @@ import { globalConstants } from '../../../common/global-constants';
 export class TramitesAdministrarMediadorComponent implements OnInit {
 
   //MODELOS
+  dataConvocado: ConvocadoModel = {};
   dataTramite: TramiteModel= new TramiteModel;
   dataTramiteAux: TramiteModel= new TramiteModel;
   dataUsuarioTramite: UsuarioTramiteModel= {};
+  dataVinculado: VinculadoModel = {};
+
   //listas
   listCentrosMediacion: UsuarioCentroModel[]=[];
   listDepartamentos: DepartamentoModel[] = [];
@@ -52,6 +57,8 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
 
   //booleans
   isNuevo: boolean = false;
+  convocadoDialog: boolean = false;  
+  vinculadoDialog: boolean = false;
 
   //FORMULARIOS
   formaMediadorAsignado: FormGroup;  
@@ -83,8 +90,10 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     //obtener tramite
     this.dataTramiteAux= this.dataService.tramiteData;
     this.buscarTramite();
+    console.log("tramite recibido onini", this.dataService.tramiteData);
     console.log("tramite encontrado onini", this.dataTramite);
-    if(this.dataTramite){
+
+    if(this.dataTramiteAux){
       this.buscarAsignacionByNumTramiteActivo();
       
     }   
@@ -174,7 +183,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
 
   //BUSCAR TRAMITE X NUMERO TRAMITE ACTIVO
   buscarAsignacionByNumTramiteActivo(){
-    this.usuarioTramiteService.buscarByNumTramiteActivo(this.dataTramite.numero_tramite)
+    this.usuarioTramiteService.buscarByNumTramiteActivo(this.dataService.tramiteData.numero_tramite)
       .subscribe({
         next: (resultado) => {
           this.listUsuariosTramite = resultado[0];  
@@ -247,5 +256,33 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     })   
        
   }
+
+  //MANEJO DE FORMULARIO DIALOG CONVOCADO
+  openDialogConvocado(convocado: ConvocadoModel) {
+    this.dataConvocado = convocado;
+    this.convocadoDialog = true; 
+    
+  }
+  
+  hideDialogConvocado() {    
+    this.convocadoDialog = false;    
+  }    
+  //FIN MANEJO FORMULARIO DIALOG CONVOCADO....................................
+
+  //MANEJO DE FORMULARIO DIALOG VINCULADO
+  reiniciarFormularioVinculado(){
+    
+  }
+
+  openDialogVinculado(vinculado: VinculadoModel) {
+    this.dataVinculado = vinculado;
+    this.vinculadoDialog = true; 
+
+  }
+  
+  hideDialogVinculado() {    
+    this.vinculadoDialog = false;    
+  }    
+  //FIN MANEJO FORMULARIO DIALOG VINCULADO....................................
   
 }

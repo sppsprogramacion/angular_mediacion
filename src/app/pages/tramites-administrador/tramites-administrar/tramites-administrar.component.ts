@@ -550,7 +550,7 @@ export class TramitesAdministrarComponent implements OnInit {
   }
   
 
-  //MANEJO DE FORMULARIO DIALOG VINCULADO
+  //MANEJO DE FORMULARIO DIALOG CONVOCADO
   openDialogConvocado(convocado: ConvocadoModel) {
     this.dataConvocado = convocado;
     this.convocadoDialog = true; 
@@ -560,7 +560,7 @@ export class TramitesAdministrarComponent implements OnInit {
   hideDialogConvocado() {    
     this.convocadoDialog = false;    
   }    
-  //FIN MANEJO FORMULARIO DIALOG VINCULADO....................................
+  //FIN MANEJO FORMULARIO DIALOG CONVOCADO....................................
 
   //MANEJO DE FORMULARIO DIALOG VINCULADO
   reiniciarFormularioVinculado(){
