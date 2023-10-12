@@ -47,6 +47,9 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   listUsuariosCentro: UsuarioCentroModel[]=[];
   listUsuariosTramite: UsuarioTramiteModel[]=[];
   elementosCentroMediacion: ElementoModel[]=[];  
+
+
+  
   elementosUsuarios: ElementoModel[]=[];
   elementosUsuariosCentro: ElementoModel[]=[];
 
