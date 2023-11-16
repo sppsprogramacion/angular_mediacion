@@ -25,7 +25,7 @@ export class UsuariosCentroService {
     let data: Partial<UsuarioCentroModel>;
     
     let habilitado: boolean = false;
-    return this.http.put(`${base_url}/usuarios-centros/deshabilitar-usuario?id_usuario_centro=${id_usuario_centro}`,data);
+    return this.http.patch(`${base_url}/usuarios-centros/deshabilitar-usuario?id_usuario_centro=${id_usuario_centro}`,data);
   }
 
   listarUsuariosXCentro(id_centro:number){

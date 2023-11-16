@@ -22,7 +22,7 @@ export class CategoriasService {
 
   guardarEdicionCategoria(id: number, data: Partial<CategoriaModel>){    
     this.categoria={...data};
-    return this.http.put(`${base_url}/categorias/${id}`, this.categoria);
+    return this.http.patch(`${base_url}/categorias/${id}`, this.categoria);
   }
 
   listarCategoriasTodos(){

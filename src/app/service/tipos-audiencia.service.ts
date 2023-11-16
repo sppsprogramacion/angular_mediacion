@@ -24,10 +24,10 @@ export class TiposAudienciaService {
 
   guardarEdicion(id: number, data: Partial<TipoAudienciaModel>){    
     this.tiposAudiencia={...data};
-    return this.http.put(`${base_url}/tipos-audiencia/${id}`, this.tiposAudiencia);
+    return this.http.patch(`${base_url}/tipos-audiencia/${id}`, this.tiposAudiencia);
   }
 
   listarTodos(){
-    return this.http.get<[categorias:TipoAudienciaModel[], total: number]>(`${base_url}/tipos-audiencia`)
+    return this.http.get<[tiposAudiencia:TipoAudienciaModel[], total: number]>(`${base_url}/tipos-audiencia`)
   }
 }

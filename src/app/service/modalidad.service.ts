@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { CategoriaModel } from '../models/categoria.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+
 import { ModalidadModel } from '../models/modalidad.model';
 
 const base_url = environment.URL_BASE;
@@ -23,10 +23,10 @@ export class ModalidadService {
 
   guardarEdicionModalidad(id: number, data: Partial<ModalidadModel>){    
     this.modalidad={...data};
-    return this.http.put(`${base_url}/modalidad/${id}`, this.modalidad);
+    return this.http.patch(`${base_url}/modalidad/${id}`, this.modalidad);
   }
 
   listarModalidadTodos(){
-    return this.http.get<[categorias:ModalidadModel[], total: number]>(`${base_url}/modalidad`)
+    return this.http.get<[modalidad:ModalidadModel[], total: number]>(`${base_url}/modalidad`)
   }
 }

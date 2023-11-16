@@ -22,7 +22,7 @@ export class CentrosMediacionService {
 
   guardarEdicionCentroMediacion(id: number, data: Partial<CentroMediacionModel>){    
     this.centroMediacion={...data};
-    return this.http.put(`${base_url}/centros-mediacion/${id}`, this.centroMediacion);
+    return this.http.patch(`${base_url}/centros-mediacion/${id}`, this.centroMediacion);
   }
 
   listarCentroMediacionTodos(){
