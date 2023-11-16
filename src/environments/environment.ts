@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  //URL_BASE: "http://localhost:3000"
-  URL_BASE: "http://sppsprogramacion.online"
+  URL_BASE: "http://localhost:3000"
+  //URL_BASE: "http://sppsprogramacion.online"
 };
 
 /*

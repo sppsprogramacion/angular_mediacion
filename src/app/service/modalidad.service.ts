@@ -23,7 +23,7 @@ export class ModalidadService {
 
   guardarEdicionModalidad(id: number, data: Partial<ModalidadModel>){    
     this.modalidad={...data};
-    return this.http.put(`${base_url}/modalidad/${id}`, this.modalidad);
+    return this.http.patch(`${base_url}/modalidad/${id}`, this.modalidad);
   }
 
   listarModalidadTodos(){

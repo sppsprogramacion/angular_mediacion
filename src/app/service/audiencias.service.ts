@@ -23,7 +23,7 @@ export class AudienciasService {
 
   guardarEdicionAudiencia(id: number, data: Partial<AudienciaModel>){    
     this.audiencia={...data};
-    return this.http.put(`${base_url}/audiencias/${id}`, this.audiencia);
+    return this.http.patch(`${base_url}/audiencias/${id}`, this.audiencia);
   }
 
   listarAudienciasTodos(){
