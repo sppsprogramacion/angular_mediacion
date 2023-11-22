@@ -43,7 +43,7 @@ export class AppComponent {
         this.translateService.get('primeng').subscribe(res => this.config.setTranslation(res));
     }
 
-    
+    //
     //LISTADO DE CATEGORIAS
     listarCategorias(){    
     this.categoriasService.listarCategoriasTodos().
