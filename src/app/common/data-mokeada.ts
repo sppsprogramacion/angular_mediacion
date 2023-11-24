@@ -1,26 +1,36 @@
+import { CategoriaModel } from "../models/categoria.model";
+import { CategoriasService } from "../service/categorias.service";
 
-export const categorias = [
-    {
-        "id_categoria": 3,
-        "categoria": "abogado"
-    },
-    {
-        "id_categoria": 4,
-        "categoria": "acompañante"
-    },
-    {
-        "id_categoria": 2,
-        "categoria": "convocado"
-    },
-    {
-        "id_categoria": 5,
-        "categoria": "otro"
-    },
-    {
-        "id_categoria": 1,
-        "categoria": "solicitante adicional"
-    }
-];
+export class DataMokeada {
+    
+    public static categorias: CategoriaModel[]=[];
+}
+
+// export let categorias = [
+//     // {
+//     //     "id_categoria": 3,
+//     //     "categoria": "abogado"
+//     // },
+//     // {
+//     //     "id_categoria": 4,
+//     //     "categoria": "acompañante"
+//     // },
+//     // {
+//     //     "id_categoria": 2,
+//     //     "categoria": "convocado"
+//     // },
+//     // {
+//     //     "id_categoria": 5,
+//     //     "categoria": "otro"
+//     // },
+//     // {
+//     //     "id_categoria": 1,
+//     //     "categoria": "solicitante adicional"
+//     // }
+
+    
+
+// ];
 
 export const opcionSiNo = [
     {
@@ -1327,3 +1337,6 @@ export const municipios = [
     }
     
 ];
+
+
+

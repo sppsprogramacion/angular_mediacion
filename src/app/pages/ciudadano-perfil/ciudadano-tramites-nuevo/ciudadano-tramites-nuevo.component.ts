@@ -6,7 +6,8 @@ import { Subscription } from 'rxjs';
 import { AppConfig } from 'src/app/api/appconfig';
 import Swal from 'sweetalert2';
 
-import { categorias, departamentos, municipios, objetos, opcionSiNo, provincias, sexo } from 'src/app/common/data-mokeada';
+//import { categorias, departamentos, municipios, objetos, opcionSiNo, provincias, sexo } from 'src/app/common/data-mokeada';
+import { DataMokeada, departamentos, municipios, objetos, opcionSiNo, provincias, sexo } from 'src/app/common/data-mokeada';
 import { CentroMediacionModel } from 'src/app/models/centro_mediacion.model';
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { ProvinciaModel } from '../../../models/provincia.model';
@@ -308,7 +309,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.ciudadanoData = this.dataService.ciudadanoData
 
     //CARGA DE LISTADOS DESDE DATA MOKEADA
-    this.listaCategorias = categorias;
+    this.listaCategorias = DataMokeada.categorias;
     this.listObjetos = objetos;
     this.listSexo = sexo;
     this.listSiNo = opcionSiNo;

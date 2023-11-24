@@ -28,6 +28,6 @@ export class TiposAudienciaService {
   }
 
   listarTodos(){
-    return this.http.get<[categorias:TipoAudienciaModel[], total: number]>(`${base_url}/tipos-audiencia`)
+    return this.http.get<[tiposAudiencia:TipoAudienciaModel[], total: number]>(`${base_url}/tipos-audiencia`)
   }
 }
