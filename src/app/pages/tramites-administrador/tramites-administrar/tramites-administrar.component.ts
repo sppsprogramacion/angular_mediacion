@@ -189,7 +189,7 @@ export class TramitesAdministrarComponent implements OnInit {
 
     if(this.dataTramiteAux){
       this.buscarAsignacionByNumTramiteActivo(); 
-      this.buscarAudienciasByNumTramiteActivo()     
+      this.buscarAudienciasByNumTramiteActivo();     
     }    
     this.listDepartamentos = departamentos;
     this.listTipoAudiencia = tiposAudiencia;
@@ -347,7 +347,7 @@ export class TramitesAdministrarComponent implements OnInit {
   }
   //FIN BUSCAR MEDIADOR DEL TRAMITE X NUMERO TRAMITE ACTIVO...................................
 
-  //BUSCAR AUDIENCIA POR NUMERO DE TRAMITE
+  //BUSCAR AUDIENCIAS ABIERTAS POR USUARIO
   buscarAudienciasByUsuario(){
     this.audienciaService.listarAudienciasAbiertasByUsuario(this.dataUsuarioTramite.usuario_id)
       .subscribe({
@@ -362,7 +362,7 @@ export class TramitesAdministrarComponent implements OnInit {
         }
       });       
   }
-  //FIN BUSCAR MEDIADOR DEL TRAMITE X NUMERO TRAMITE ACTIVO...................................
+  //FIN BUSCAR AUDIENCIAS ABIERTAS POR USUARIO...................................
 
   //CONFIRMAR DESHABILITACION USUARIO-TRAMITE
   confirmarDeshabilitarUsuario(dataUsuarioTramite:UsuarioTramiteModel){    
@@ -488,7 +488,7 @@ export class TramitesAdministrarComponent implements OnInit {
       } 
     });  
   }
-
+  
   cargarCentrosMediacionXUsuario(id_usuario: number){
     this.usuariosCentroService.listarCentrosActivosXUsuario(id_usuario).
       subscribe(respuesta => {
@@ -595,6 +595,7 @@ export class TramitesAdministrarComponent implements OnInit {
     
   }    
 
+  //MANEJO DE FORMULARIO DIALOG AUDIENCIAS
   openDialogAudiencia() {
     if(!this.dataUsuarioTramite.id_usuario_tramite){
       Swal.fire('Tramite sin mediador',`El tramite no tiene un mediador asignado`,"warning");
@@ -633,7 +634,7 @@ export class TramitesAdministrarComponent implements OnInit {
     this.audienciaUsuarioDialog = false;
     
   }
-  //FIN MANEJO FORMULARIO DIALOG....................................
+  //FIN MANEJO FORMULARIO DIALOG AUDIENCIAS....................................
 
   changeFormatoFechaGuardar(nuevaFecha: Date){
     let fechaAuxiliar:any = null;
