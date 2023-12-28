@@ -119,7 +119,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.formaConvocado = this.fb.group({
       apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
       nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
-      dni: ['',[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.minLength(5)]],
+      dni: ['',[Validators.pattern(/^[0-9]*$/), Validators.minLength(5)]],
       sexo_id: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],   
     });
 
