@@ -198,6 +198,49 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   }    
   //FIN GUARDAR USUARIO-TRAMITE............................................................
 
+  //GUARDEAR NUEVA AUDIENCIA
+  submitFormAudiencia(){
+    if(this.formaAudiencia.invalid){
+      this.msgs = [];
+      this.msgs.push({ severity: 'error', summary: 'Datos inválidos', detail: 'Revise los datos cargados. ' });
+      console.log("formulario Audiencia", this.formaAudiencia.controls);
+      return Object.values(this.formaAudiencia.controls).forEach(control => control.markAsTouched());
+    }
+
+    let dataAudiencia: Partial<AudienciaModel>;
+    dataAudiencia = {
+      tramite_numero: this.dataTramite.numero_tramite,
+
+      fecha_inicio: this.changeFormatoFechaGuardar(this.formaAudiencia.get('fecha_inicio')?.value),
+      hora_inicio: this.formaAudiencia.get('hora_inicio')?.value,
+      hora_fin: this.formaAudiencia.get('hora_fin')?.value,
+      tipo_audiencia_id: parseInt(this.formaAudiencia.get('tipo_audiencia_id')?.value), 
+      modalidad_id: parseInt(this.formaAudiencia.get('modalidad_id')?.value), 
+      centro_mediacion_id: parseInt(this.formaAudiencia.get('centro_mediacion_id')?.value), 
+      detalles: this.formaAudiencia.get('detalles')?.value,
+      usuario_id: this.dataUsuarioTramite.usuario_id,
+                  
+    }; 
+
+    //GUARDAR NUEVO AUDIENCIA
+    this.audienciaService.guardarAudiencia(dataAudiencia)
+      .subscribe({
+        next: (resultado) => {
+          let audienciaRes: AudienciaModel = resultado;
+          this.hideDialogAudiencia();
+          this.buscarAudienciasByNumTramiteActivo();
+          Swal.fire('Exito',`La audiencia se generó con exito`,"success");
+        },
+        error: (err) => {
+          this.msgs = [];
+          this.msgs.push({ severity: 'error', summary: 'Error al guardar', detail: ` ${err.error.message}` });
+        }
+      });         
+    //FIN GUARDAR NUEVO AUDIENCIA
+
+  }
+  //GUARDEAR NUEVA AUDIENCIA...............................................................
+
   //BUSCAR TRAMITE 
   buscarTramite(){  
     this.dataTramite = {};  
@@ -212,7 +255,11 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
             //cargar datos formulario recibir tramite
             this.cargarCentrosMediacion(globalConstants.usuarioLogin.id_usuario);
             this.listarFuncionTramite();
-          }      
+          }  
+          
+          if(this.dataTramite.estado_tramite_id === 2) {
+            this.buscarMediadorByNumTramiteActivo();
+          }
         }
       });    
   }
@@ -234,6 +281,22 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   }
   //FIN BUSCAR TRAMITE X NUMERO TRAMITE ACTIVO..................................................
 
+  //BUSCAR MEDIADOR DEL TRAMITE X NUMERO TRAMITE ACTIVO
+  buscarMediadorByNumTramiteActivo(){
+    this.usuarioTramiteService.buscarMediadorByNumTramiteActivo(this.dataService.tramiteData.numero_tramite)
+      .subscribe({
+        next: (resultado) => {
+          this.dataUsuarioTramite = resultado; 
+          this.loadingUsuariosTramite = false;     
+        },
+        error: (err) => {
+          this.dataUsuarioTramite= {};
+          this.loadingUsuariosTramite = false;  
+          //Swal.fire('Error',`Error al buscar tramite asignado: ${err.error.message}`,"error") 
+        }
+      });       
+  }
+  //FIN BUSCAR MEDIADOR DEL TRAMITE X NUMERO TRAMITE ACTIVO...................................
 
   //BUSCAR AUDIENCIA POR NUMERO DE TRAMITE
   buscarAudienciasByNumTramiteActivo(){
@@ -424,6 +487,13 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   }
   //FIN MANEJO FORMULARIO DIALOG AUDIENCIAS....................................
 
-  //IMPLEMENTAR BUSCAR USUARIO DEL TRAMITE 
+  changeFormatoFechaGuardar(nuevaFecha: Date){
+    let fechaAuxiliar:any = null;
+    if(nuevaFecha != null){
+      fechaAuxiliar = this.datePipe.transform(nuevaFecha,"yyyy-MM-dd")!;
+      
+    }
+    return fechaAuxiliar;
+  }
   
 }

@@ -279,7 +279,7 @@ export class TramitesAdministrarComponent implements OnInit {
   }
   //GUARDEAR NUEVA AUDIENCIA...............................................................
 
-  //BUSCAR TRAMITE X NUMERO TRAMITE ACTIVO
+  //BUSCAR ASIGNACIONES DE USUARIOS X NUMERO TRAMITE ACTIVO
   buscarAsignacionByNumTramiteActivo(){
     this.usuarioTramiteService.buscarByNumTramiteActivo(this.dataService.tramiteData.numero_tramite)
       .subscribe({
@@ -294,6 +294,7 @@ export class TramitesAdministrarComponent implements OnInit {
         }
       });       
   }
+  //FIN BUSCAR ASIGNACIONES DE USUARIOS X NUMERO TRAMITE ACTIVO.................................
 
   //BUSCAR MEDIADOR DEL TRAMITE X NUMERO TRAMITE ACTIVO
   buscarMediadorByNumTramiteActivo(){
@@ -330,7 +331,7 @@ export class TramitesAdministrarComponent implements OnInit {
   }
   //FIN BUSCAR TRAMITE................................................................... 
 
-  //BUSCAR AUDIENCIA POR NUMERO DE TRAMITE
+  //BUSCAR AUDIENCIAS POR NUMERO DE TRAMITE
   buscarAudienciasByNumTramiteActivo(){
     this.audienciaService.listarAudienciasByTramite(this.dataService.tramiteData.numero_tramite)
       .subscribe({
@@ -345,7 +346,7 @@ export class TramitesAdministrarComponent implements OnInit {
         }
       });       
   }
-  //FIN BUSCAR MEDIADOR DEL TRAMITE X NUMERO TRAMITE ACTIVO...................................
+  //FIN BUSCAR AUDIENCIAS POR NUMERO DE TRAMITE...................................
 
   //BUSCAR AUDIENCIAS ABIERTAS POR USUARIO
   buscarAudienciasByUsuario(){
