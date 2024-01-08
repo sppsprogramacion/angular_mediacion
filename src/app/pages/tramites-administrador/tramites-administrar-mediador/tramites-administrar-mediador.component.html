@@ -586,7 +586,8 @@
             <ng-template pTemplate="body" let-audiencia>
                 <tr>
                     <td>
-                        <button type="button" pButton pRipple class="p-button-danger p-button-rounded mr-2 mb-2" icon="pi pi-times" (click)="confirmarDeshabilitarUsuario(usuariotramite)"></button>
+                        <button *ngIf="!audiencia.esta_cerrada" type="button" pButton pRipple class="p-button-warning p-button-rounded mr-2 mb-2" icon="pi pi-book" (click)="confirmarDeshabilitarUsuario(usuariotramite)"></button>
+                        <button *ngIf="audiencia.esta_cerrada" type="button" pButton pRipple class="p-button-secondary p-button-rounded mr-2 mb-2" icon="pi pi-search-plus" (click)="confirmarDeshabilitarUsuario(usuariotramite)"></button>
                     </td>
                     <td style="min-width: 10rem;">
                         {{audiencia.num_audiencia}}
@@ -863,6 +864,86 @@
         </ng-template>
     </p-dialog>
     <!-- FIN DIALOG TABLA  AUDIENCIAS -->
+
+    <!-- DIALOG VER AUDIENCIA -->
+    <p-dialog id="vinculadoDialog" [(visible)]="vinculadoDialog" [style]="{width: '500px','min-height':'350px'}" class="p-fluid" header="Datos de vinculado" [closable]="false" [modal]="true">
+
+        <ng-template pTemplate="content">
+            <div class="col-12 border-bottom-1 surface-border">
+                <h6 class="block font-bold font-medium">Datos personales</h6>
+                <div class="grid">
+                    <div class="col-12 lg:col-12 xl:col-12">
+                        <span class="text font-medium text-1xl">Nombre:<span class="text ml-1 font-medium"> {{dataVinculado.apellido}} {{dataVinculado.nombre}}</span></span>
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{dataVinculado.dni}}</span></span>
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Sexo:<span class="text ml-1 font-medium"> {{dataVinculado.sexo.sexo}}</span></span>
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="col-12 lg:col-12 xl:col-12">
+                        <span class="text font-medium text-1xl">Telefono:<span class="text ml-1 font-medium"> {{dataVinculado.telefono}}</span></span>
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="col-12 lg:col-12 xl:col-12">
+                        <span class="text font-medium text-1xl">Categoría:<span class="text ml-1 font-medium"> {{dataVinculado.categoria.categoria}}</span></span>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="footer" class="mt-1">
+            <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogVinculado()"></button>
+        </ng-template>
+    </p-dialog>
+    <!-- FIN DIALOG VER AUDIENCIA -->
+
+    <!-- DIALOG FINALIZAR AUDIENCIA -->
+    <p-dialog id="vinculadoDialog" [(visible)]="vinculadoDialog" [style]="{width: '500px','min-height':'350px'}" class="p-fluid" header="Datos de vinculado" [closable]="false" [modal]="true">
+
+        <ng-template pTemplate="content">
+            <div class="col-12 border-bottom-1 surface-border">
+                <h6 class="block font-bold font-medium">Datos personales</h6>
+                <div class="grid">
+                    <div class="col-12 lg:col-12 xl:col-12">
+                        <span class="text font-medium text-1xl">Nombre:<span class="text ml-1 font-medium"> {{dataVinculado.apellido}} {{dataVinculado.nombre}}</span></span>
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{dataVinculado.dni}}</span></span>
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Sexo:<span class="text ml-1 font-medium"> {{dataVinculado.sexo.sexo}}</span></span>
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="col-12 lg:col-12 xl:col-12">
+                        <span class="text font-medium text-1xl">Telefono:<span class="text ml-1 font-medium"> {{dataVinculado.telefono}}</span></span>
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="col-12 lg:col-12 xl:col-12">
+                        <span class="text font-medium text-1xl">Categoría:<span class="text ml-1 font-medium"> {{dataVinculado.categoria.categoria}}</span></span>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="footer" class="mt-1">
+            <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogVinculado()"></button>
+        </ng-template>
+    </p-dialog>
+    <!-- FIN DIALOG FINALIZAR AUDIENCIA -->
 
 </div>
 <!-- FIN CARD GENERAR AUDIENCIA -->
