@@ -40,6 +40,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   msgs: Message[] = []; 
 
   //MODELOS
+  dataAudiencia: AudienciaModel = {};
   dataConvocado: ConvocadoModel = {};
   dataTramite: TramiteModel= new TramiteModel;
   dataTramiteAux: TramiteModel= new TramiteModel;
@@ -71,7 +72,10 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   loadingFuncionTramite: boolean = true;
   loadingUsuariosTramite: boolean = true;
   audienciaDialog: boolean = false;
+  audienciaCerrarDialog: boolean = false;
+  audienciaFinalizadaDialog: boolean = false;
   audienciaUsuarioDialog: boolean = false;
+  
 
   //booleans
   isNuevo: boolean = false;
@@ -470,7 +474,9 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     this.audienciaDialog = false;
     
   }
+  //FIN MANEJO FORMULARIO DIALOG AUDIENCIAS....................................
 
+  //MANEJO FORMULARIO DIALOG AUDIENCIAS DEL USUARIO
   openDialogAudienciaUsuario() {
     this.buscarAudienciasByUsuario();
     this.audienciaUsuarioDialog = true;
@@ -485,7 +491,41 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     this.audienciaUsuarioDialog = false;
     
   }
-  //FIN MANEJO FORMULARIO DIALOG AUDIENCIAS....................................
+  //FIN MANEJO FORMULARIO DIALOG AUDIENCIAS DEL USUARIO....................................
+
+  //MANEJO FORMULARIO DIALOG VER AUDIENCIA FINALIZADA
+  openDialogAudienciaFinalizada(audiencia: AudienciaModel) {
+    this.dataAudiencia = audiencia;
+    this.audienciaFinalizadaDialog = true;
+    // this.formaAudiencia.reset();    
+
+    // return Object.values(this.formaAudiencia.controls).forEach(control => control.markAsUntouched());    
+  }
+  
+  hideDialogAudienciaFinalizada() {
+    
+    this.msgs = [];
+    this.audienciaFinalizadaDialog = false;
+    
+  }
+  //FIN MANEJO FORMULARIO DIALOG VER AUDIENCIA FINALIZADA................................................
+
+  //MANEJO FORMULARIO DIALOG CERRAR AUDIENCIA
+  openDialogAudienciaCerrar(audiencia: AudienciaModel) {
+    this.dataAudiencia = audiencia;
+    this.audienciaCerrarDialog = true;
+    // this.formaAudiencia.reset();    
+
+    // return Object.values(this.formaAudiencia.controls).forEach(control => control.markAsUntouched());    
+  }
+  
+  hideDialogAudienciaCerrar() {
+    
+    this.msgs = [];
+    this.audienciaCerrarDialog = false;
+    
+  }
+  //FIN MANEJO FORMULARIO DIALOG CERRAR AUDIENCIA................................................
 
   changeFormatoFechaGuardar(nuevaFecha: Date){
     let fechaAuxiliar:any = null;
