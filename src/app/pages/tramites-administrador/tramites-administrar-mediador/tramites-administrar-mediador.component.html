@@ -519,7 +519,7 @@
 </div>
 <!-- FIN Card Usuarios -->
 
-<!-- CARD GENERAR AUDIENCIA -->
+<!-- CARD AUDIENCIAS -->
 <div class="card p-fluid mb-0 mt-2">
     <p-toolbar styleClass="mb-3 bg-cyan-500">
         <h5 class="block text-white font-bold font-medium mb-1 ">
@@ -745,7 +745,7 @@
     </p-dialog>
     <!-- FIN DIALOG FORMULARIO  AUDIENCIAS -->
 
-    <!-- DIALOG TABLA AUDIENCIAS -->
+    <!-- DIALOG TABLA AUDIENCIAS DEL USUARIO-->
     <p-dialog id="audienciaUsuarioDialog" [(visible)]="audienciaUsuarioDialog" [style]="{width: '600px'}" header="Audiencias del usuario" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}">
 
         <ng-template pTemplate="content">
@@ -863,7 +863,7 @@
             <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogAudienciaUsuario()"></button>
         </ng-template>
     </p-dialog>
-    <!-- FIN DIALOG TABLA  AUDIENCIAS -->
+    <!-- FIN DIALOG TABLA  AUDIENCIAS DEL USUARIO-->
 
     <!-- DIALOG VER AUDIENCIA FINALIZADA-->
     <p-dialog id="audienciaFinalizadaDialog" [(visible)]="audienciaFinalizadaDialog" [style]="{width: '500px','min-height':'350px'}" class="p-fluid" header="Datos de la audiencia" [closable]="false" [modal]="true">
@@ -994,4 +994,4 @@
     <!-- FIN DIALOG CERRAR AUDIENCIA -->
 
 </div>
-<!-- FIN CARD GENERAR AUDIENCIA -->
+<!-- FIN CARD  AUDIENCIAS -->
