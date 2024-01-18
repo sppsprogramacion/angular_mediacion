@@ -53,6 +53,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   listCentrosMediacion: UsuarioCentroModel[]=[];
   listDepartamentos: DepartamentoModel[] = [];
   listFuncionTramite: FuncionTtramiteModel[] = [];
+  listModalidad: FuncionTtramiteModel[] = [];
   listTipoAudiencia: TipoAudienciaModel[] = [];
   listUsuarios: UsuarioModel[]=[];
   listUsuariosCentro: UsuarioCentroModel[]=[];
@@ -347,6 +348,16 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     });
   }
   //FIN LISTADO DE FUNCIONES TRAMITES............................
+
+  //LISTADO DE TIPO AUDIENCIAS
+  listarModalidad(){    
+    this.tiposAudienciaService.listarTodos().
+        subscribe(respuesta => {
+        this.listTipoAudiencia= respuesta[0];
+    
+    });
+  }
+  //FIN LISTADO DE TIPO AUDIENCIAS............................
 
   //LISTADO DE TIPO AUDIENCIAS
   listarTiposAudiencia(){    
