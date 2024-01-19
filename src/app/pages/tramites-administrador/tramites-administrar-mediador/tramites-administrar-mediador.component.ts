@@ -27,6 +27,9 @@ import { AudienciasService } from 'src/app/service/audiencias.service';
 import { AudienciaModel } from 'src/app/models/audiencia.model';
 import { TiposAudienciaService } from 'src/app/service/tipos-audiencia.service';
 import { TipoAudienciaModel } from 'src/app/models/tipo_audiencia.model';
+import { ModalidadModel } from '../../../models/modalidad.model';
+import { ModalidadService } from 'src/app/service/modalidad.service';
+import { modalidad } from '../../../common/data-mokeada';
 
 @Component({
   selector: 'app-tramites-administrar-mediador',
@@ -53,7 +56,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   listCentrosMediacion: UsuarioCentroModel[]=[];
   listDepartamentos: DepartamentoModel[] = [];
   listFuncionTramite: FuncionTtramiteModel[] = [];
-  listModalidad: FuncionTtramiteModel[] = [];
+  listModalidad: ModalidadModel[] = [];
   listTipoAudiencia: TipoAudienciaModel[] = [];
   listUsuarios: UsuarioModel[]=[];
   listUsuariosCentro: UsuarioCentroModel[]=[];
@@ -94,6 +97,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     private audienciaService: AudienciasService,
     private centroMediacionService: CentrosMediacionService,
     private funcionTramiteService: FuncionTramiteService,
+    private modalidadService: ModalidadService,
     private tiposAudienciaService: TiposAudienciaService,
     private tramiteService: TramitesService,
     private usuariosCentroService: UsuariosCentroService,
@@ -112,12 +116,12 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
 
     this.formaAudiencia = this.fb.group({
       centro_mediacion_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
-      detalles: ['',[Validators.required, Validators.minLength(5), Validators.maxLength(200)]], 
+      detalles: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(300)]], 
       fecha_inicio: [,[Validators.required]],   
       hora_inicio: [,[Validators.required, Validators.pattern(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/)]],     
       hora_fin: [,[Validators.required]],          
       modalidad_id: [1,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(2)]],     
-      tipo_audiencia_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(1)]]
+      tipo_audiencia_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(1)]]
     });
   }
   //FIN CONSTRUCTOR................................................................................
@@ -126,16 +130,16 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     //obtener tramite
     this.dataTramiteAux= this.dataService.tramiteData;
     this.buscarTramite();
-    console.log("tramite recibido onini", this.dataService.tramiteData);
-    console.log("tramite encontrado onini", this.dataTramite);
 
     if(this.dataTramiteAux){
       this.buscarAsignacionByNumTramiteActivo();
       this.buscarAudienciasByNumTramiteActivo(); 
       
     }   
-    console.log("estado tramite", this.dataTramite.estado_tramite_id);
-    
+    //fin obtener tramite
+
+    this.listarTiposAudiencia();
+    this.listarModalidad();    
     
   }
   //FIN ONINIT......................................................................................
@@ -147,11 +151,31 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
       { type: 'required', message: 'La función en el tramite es requerida.' },
       { type: 'pattern', message: 'Debe seleccionar un una función.' },
     ],
+    'fecha_inicio': [
+      { type: 'required', message: 'La fecha de inicio es requerida.' },
+    ],
+    'hora': [
+      { type: 'required', message: 'La hora de inicio es requerida.' },
+      { type: 'pattern', message: 'El formato de la hora no es correcto.' },
+    ],
     'detalles': [
       { type: 'required', message: 'El detalle es requerido.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 200.' }
     ],  
+    'detalles_nueva_audiencia': [
+      { type: 'required', message: 'El detalle es requerido ahora.' },
+      { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
+      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 300.' }
+    ],  
+    'modalidad_id': [
+      { type: 'required', message: 'La modalidad es requerida.' },
+      { type: 'pattern', message: 'Debe seleccionar una modalidad.' },
+    ],
+    'tipo_audiencia_id': [
+      { type: 'required', message: 'El tipo de audiencia es requerido.' },
+      { type: 'pattern', message: 'Debe seleccionar un tipo de audiencia.' },
+    ],
   }
   //FIN MENSAJES DE VALIDACIONES...............................................................
 
@@ -351,9 +375,9 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
 
   //LISTADO DE TIPO AUDIENCIAS
   listarModalidad(){    
-    this.tiposAudienciaService.listarTodos().
+    this.modalidadService.listarModalidadTodos().
         subscribe(respuesta => {
-        this.listTipoAudiencia= respuesta[0];
+        this.listModalidad= respuesta[0];
     
     });
   }

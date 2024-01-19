@@ -671,7 +671,7 @@
                                 <label for="hora_inicio">Hora Inicio</label>
                                 <p-inputMask mask="99:99:99" placeholder="00:00:00" formControlName="hora_inicio"></p-inputMask>
                                 <small *ngIf="isValidAudiencia('hora_inicio')" class="p-error">
-                                    <div *ngFor="let validation of user_validation_messages.hora_inicio" >
+                                    <div *ngFor="let validation of user_validation_messages.hora" >
                                         <div  *ngIf="formaAudiencia.get('hora_inicio')?.hasError(validation.type)">
                                             {{validation.message}}
                                         </div>
@@ -682,7 +682,7 @@
                                 <label for="hora_fin">Hora Fin</label>
                                 <p-inputMask mask="99:99:99" placeholder="00:00:00" formControlName="hora_fin"></p-inputMask>
                                 <small *ngIf="isValidAudiencia('hora_fin')" class="p-error">
-                                    <div *ngFor="let validation of user_validation_messages.hora_fin" >
+                                    <div *ngFor="let validation of user_validation_messages.hora" >
                                         <div  *ngIf="formaAudiencia.get('hora_fin')?.hasError(validation.type)">
                                             {{validation.message}}
                                         </div>
@@ -724,7 +724,7 @@
                                 <label for="detalles" class="text font-medium">Detalles</label>
                                 <input type="text" pInputText id="detalles" formControlName="detalles" />
                                 <small *ngIf="isValidAudiencia('detalles')" class="p-error">
-                                        <div *ngFor="let validation of user_validation_messages.detalles" >
+                                        <div *ngFor="let validation of user_validation_messages.detalles_nueva_audiencia" >
                                             <div  *ngIf="formaAudiencia.get('detalles')?.hasError(validation.type)">
                                                 {{validation.message}}
                                             </div>
