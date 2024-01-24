@@ -474,3 +474,524 @@
 </div>
 
 <!-- FIN Card Recibir Tramite -->
+
+<!-- Card Usuarios -->
+<div class="card p-fluid mb-0 mt-2">
+    <p-toolbar styleClass="mb-3 bg-cyan-500">
+        <h5 class="block text-white font-bold font-medium mb-1 ">
+            Asignacion de usuario
+        </h5>
+    </p-toolbar>
+
+    <!-- CARD MEDIADOR -->
+    <div class="card p-fluid">
+        <p-toolbar styleClass="mb-3 bg-orange-500">
+            <h5 class="block text-white  font-bold font-medium mb-1">Mediador actual</h5>
+        </p-toolbar>
+        <div class="bg-cyan-600">
+
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12 lg:col-4 xl:col-4">
+                    <span class="text font-medium text-1xl">Mediador:<span class="text ml-1 font-medium"> {{dataUsuarioTramite.usuario?.apellido}} {{dataUsuarioTramite.usuario?.nombre}}</span></span>
+                </div>
+                <div class="col-12 lg:col-4 xl:col-4">
+                    <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{dataUsuarioTramite.usuario?.dni}}</span></span>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12 lg:col-4 xl:col-4">
+                    <span class="text font-medium text-1xl">Fecha asignacion:<span class="text ml-1 font-medium"> {{dataUsuarioTramite.activo| date: 'dd/MM/yyyy'}}</span></span>
+                </div>
+                <div class="col-12 lg:col-4 xl:col-4">
+                    <span class="text font-medium text-1xl">Detalle:<span class="text ml-1 font-medium"> {{dataUsuarioTramite.detalles}}</span></span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- FIN CARD MEDIADOR -->
+
+</div>
+<!-- FIN Card Usuarios -->
+
+<!-- CARD AUDIENCIAS -->
+<div class="card p-fluid mb-0 mt-2">
+    <p-toolbar styleClass="mb-3 bg-cyan-500">
+        <h5 class="block text-white font-bold font-medium mb-1 ">
+            Audiencia
+        </h5>
+    </p-toolbar>
+
+    <div class="col-12 border-bottom-1 surface-border">
+        <p-toolbar styleClass="mb-4">
+            <ng-template pTemplate="left">
+                <div class="my-2">
+                    <button pButton pRipple label="Generar Audiencia" icon="pi pi-plus" class="p-button-info mr-2" (click)="openDialogAudiencia()"></button>
+                </div>
+                <div class="my-2">
+                    <button pButton pRipple label="Agenda usuario" icon="pi pi-calendar" class="p-button mr-2" (click)="openDialogAudienciaUsuario()"></button>
+                </div>
+            </ng-template>
+        </p-toolbar>
+
+        <!-- TABLA DE AUDIENCIA -->
+        <p-table #dt1 [value]="listAudiencias" [rows]="10" [loading]="loadingAudiencia" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['usuario.dni','usuario.apellido','usuario.nombre','usuario.telefono','objeto.objeto','expediente']"
+            responsiveLayout="scroll">
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 3rem"></th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            NUM-AUDIENCIA
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            F-AUDIENCIA
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            HORA INI
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            HORA-FIN
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            CENTRO MEDIACION
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            TIPO
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            MODALIDAD
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-audiencia>
+                <tr>
+                    <td>
+                        <button *ngIf="!audiencia.esta_cerrada" type="button" pButton pRipple class="p-button-warning p-button-rounded mr-2 mb-2" icon="pi pi-book" (click)="openDialogAudienciaCerrar(audiencia)"></button>
+                        <button *ngIf="audiencia.esta_cerrada" type="button" pButton pRipple class="p-button-secondary p-button-rounded mr-2 mb-2" icon="pi pi-search-plus" (click)="openDialogAudienciaFinalizada(audiencia)"></button>
+                    </td>
+                    <td style="min-width: 10rem;">
+                        {{audiencia.num_audiencia}}
+                    </td>
+                    <td style="min-width: 10rem;">
+                        {{audiencia.fecha_inicio | date: 'dd/MM/yyyy'}}
+                    </td>
+                    <td style="min-width: 10rem;">
+                        {{audiencia.hora_inicio}}
+                    </td>
+                    <td style="min-width: 10rem;">
+                        {{audiencia.hora_fin}}
+                    </td>
+
+                    <td style="min-width: 7rem;">
+                        {{audiencia.centro_mediacion.centro_mediacion}}
+                    </td>
+                    <td style="min-width: 15rem;">
+                        {{audiencia.tipo_audiencia.tipo_audiencia}}
+                    </td>
+                    <td style="min-width: 5rem;">
+                        {{audiencia.modalidad.modalidad}}
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">No se encontraron audiencias para este tramite.</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+                <tr>
+                    <td colspan="8">Cargando audiencias... .</td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <!-- FIN TABLA DE AUDIENCIA -->
+    </div>
+
+    <!-- DIALOG FORMULARIO GENERAR AUDIENCIAS -->
+    <!-- <p-dialog id="usuarioTramiteDialog" [(visible)]="usuarioTramiteDialog" [style]="{width: '500px'}" header="Asignar Usuario" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}"></p-dialog> -->
+    <p-dialog id="audienciaDialog" [(visible)]="audienciaDialog" [style]="{width: '500px'}" header="Generar audiencia" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}">
+        <!-- MENSAJE DE ERROR -->
+        <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
+        <ng-template pTemplate="content">
+            <div class="p-formgrid grid">
+                <!-- FORMULARIO TRAMITES -->
+                <div class="col-12">
+                    <form [formGroup]="formaAudiencia">
+
+                        <div class="formgrid grid">
+                            <div class="field col-12">
+                                <label for="centro_mediacion_id">Centro Mediación</label>
+                                <p-listbox [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" formControlName="centro_mediacion_id" styleClass="listbox1" [listStyle]="{'max-height':'250px'}" (onChange)="onChangeCentroMediacion('audiencia')"></p-listbox>
+                                <small *ngIf="isValidAudiencia('centro_mediacion_id')" class="p-error">
+                                    <div *ngFor="let validation of user_validation_messages.centro_mediacion_id" >
+                                        <div  *ngIf="formaAudiencia.get('centro_mediacion_id')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
+                            </div>
+                        </div>
+                        <div class="formgrid grid">
+                            <div class="field col-12 md:col-6 lg:col-6">
+                                <label for="fecha_inicio">Fecha de audiencia</label>
+                                <p-calendar p-inputtext formControlName="fecha_inicio" dateFormat="dd/mm/yy" styleClass=""></p-calendar>
+                                <small *ngIf="isValidAudiencia('fecha_inicio')" class="p-error">
+                                    <div *ngFor="let validation of user_validation_messages.fecha_inicio" >
+                                        <div  *ngIf="formaAudiencia.get('fecha_inicio')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="formgrid grid">
+                            <div class="field col-6">
+                                <label for="hora_inicio">Hora Inicio</label>
+                                <p-inputMask mask="99:99:99" placeholder="00:00:00" formControlName="hora_inicio"></p-inputMask>
+                                <small *ngIf="isValidAudiencia('hora_inicio')" class="p-error">
+                                    <div *ngFor="let validation of user_validation_messages.hora" >
+                                        <div  *ngIf="formaAudiencia.get('hora_inicio')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
+                            </div>
+                            <div class="field col-6">
+                                <label for="hora_fin">Hora Fin</label>
+                                <p-inputMask mask="99:99:99" placeholder="00:00:00" formControlName="hora_fin"></p-inputMask>
+                                <small *ngIf="isValidAudiencia('hora_fin')" class="p-error">
+                                    <div *ngFor="let validation of user_validation_messages.hora" >
+                                        <div  *ngIf="formaAudiencia.get('hora_fin')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="formgrid grid">
+                            <div class="field col-12">
+                                <label for="modalidad_id" class="text font-medium">Modalidad</label>
+                                <p-dropdown id="modalidad_id" [options]="listModalidad" optionLabel="modalidad" optionValue="id_modalidad" formControlName="modalidad_id" placeholder="Seleccionar...">
+                                </p-dropdown>
+                                <small *ngIf="isValidAudiencia('modalidad_id')" class="p-error">
+                                    <div *ngFor="let validation of user_validation_messages.usuario_id" >
+                                        <div  *ngIf="formaAudiencia.get('modalidad_id')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
+                            </div>
+                        </div>
+                        <div class="formgrid grid">
+                            <div class="field col-12">
+                                <label for="tipo_audiencia_id" class="text font-medium">Tipo audiencia</label>
+                                <p-dropdown id="tipo_audiencia_id" [options]="listTipoAudiencia" optionLabel="tipo_audiencia" optionValue="id_tipo_audiencia" formControlName="tipo_audiencia_id" placeholder="Seleccionar...">
+                                </p-dropdown>
+                                <small *ngIf="isValidAudiencia('tipo_audiencia_id')" class="p-error">
+                                    <div *ngFor="let validation of user_validation_messages.tipo_audiencia_id" >
+                                        <div  *ngIf="formaAudiencia.get('tipo_audiencia_id')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
+                            </div>
+                        </div>
+                        <div class="formgrid grid">
+                            <div class="field col-12">
+                                <label for="detalles" class="text font-medium">Detalles</label>
+                                <input type="text" pInputText id="detalles" formControlName="detalles" />
+                                <small *ngIf="isValidAudiencia('detalles')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.detalles_nueva_audiencia" >
+                                            <div  *ngIf="formaAudiencia.get('detalles')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!--  FIN FORMULARIO TRAMITES -->
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="footer" class="mt-1">
+            <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormAudiencia()"></button>
+            <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogAudiencia()"></button>
+        </ng-template>
+    </p-dialog>
+    <!-- FIN DIALOG FORMULARIO  GENERAR AUDIENCIAS -->
+
+    <!-- DIALOG TABLA AUDIENCIAS DEL USUARIO-->
+    <p-dialog id="audienciaUsuarioDialog" [(visible)]="audienciaUsuarioDialog" [style]="{width: '600px'}" header="Audiencias del usuario" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}">
+
+        <ng-template pTemplate="content">
+            <!-- TABLA DE AUDIENCIA -->
+            <p-table #dt1 [value]="listAudienciasUsuario" [rows]="10" [loading]="loadingAudienciaUsuario" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['usuario.dni','usuario.apellido','usuario.nombre','usuario.telefono','objeto.objeto','expediente']"
+                responsiveLayout="scroll">
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <div class="flex justify-content-between align-items-center">
+                                TRAMITE
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                NUM-AUD
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                FECHA
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                HORA INI
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                HORA-FIN
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                TIPO
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                MODALIDAD
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                CENTRO MEDIACION
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                DEPARTAMENTO
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                MUNICIPIO
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-audiencia>
+                    <tr>
+
+                        <td style="min-width: 8rem;">
+                            {{audiencia.tramite_numero}}
+                        </td>
+
+                        <td style="min-width: 8rem;">
+                            {{audiencia.num_audiencia}}
+                        </td>
+                        <td style="min-width: 8rem;">
+                            {{audiencia.fecha_inicio | date: 'dd/MM/yyyy'}}
+                        </td>
+                        <td style="min-width: 8rem;">
+                            {{audiencia.hora_inicio}}
+                        </td>
+                        <td style="min-width: 8rem;">
+                            {{audiencia.hora_fin}}
+                        </td>
+                        <td style="min-width: 8rem;">
+                            {{audiencia.tipo_audiencia.tipo_audiencia}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{audiencia.modalidad.modalidad}}
+                        </td>
+                        <td style="min-width: 12rem;">
+                            {{audiencia.centro_mediacion.centro_mediacion}}
+                        </td>
+                        <td style="min-width: 12rem;">
+                            {{audiencia.centro_mediacion.departamento.departamento}}
+                        </td>
+                        <td style="min-width: 12rem;">
+                            {{audiencia.centro_mediacion.municipio.municipio}}
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="8">No se encontraron audiencias para este tramite.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="8">Cargando audiencias... .</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <!-- FIN TABLA DE AUDIENCIA -->
+        </ng-template>
+
+        <ng-template pTemplate="footer" class="mt-1">
+            <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormAudiencia()"></button>
+            <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogAudienciaUsuario()"></button>
+        </ng-template>
+    </p-dialog>
+    <!-- FIN DIALOG TABLA  AUDIENCIAS DEL USUARIO-->
+
+    <!-- DIALOG VER AUDIENCIA FINALIZADA-->
+    <p-dialog id="audienciaFinalizadaDialog" [(visible)]="audienciaFinalizadaDialog" [style]="{width: '500px','min-height':'350px'}" class="p-fluid" header="Datos de la audiencia" [closable]="false" [modal]="true">
+
+        <ng-template pTemplate="content">
+            <div class="col-12 border-bottom-1 surface-border">
+                <div class="grid">
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Tramite:<span class="text ml-1 font-medium"> {{dataAudiencia.tramite_numero}}</span></span>
+                    </div>
+
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Audiencia N°:<span class="text ml-1 font-medium"> {{dataAudiencia.num_audiencia}}</span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 border-bottom-1 surface-border">
+                <div class="grid">
+                    <div class="col-12 lg:col-12 xl:col-12">
+                        <span class="text font-medium text-1xl">Fecha:<span class="text ml-1 font-medium"> {{dataAudiencia.fecha_inicio| date: 'dd/MM/yyyy'}}</span></span>
+                    </div>
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Hora inicio:<span class="text ml-1 font-medium"> {{dataAudiencia.hora_inicio}}</span></span>
+                    </div>
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Hora fin:<span class="text ml-1 font-medium"> {{dataAudiencia.hora_fin}}</span></span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-12 border-bottom-1 surface-border">
+                <div class="grid">
+                    <div class="col-12 lg:col-12 xl:col-12">
+                        <span class="text font-medium text-1xl">Centro de mediacion:<span class="text ml-1 font-medium"> {{dataAudiencia.centro_mediacion.centro_mediacion}}</span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 border-bottom-1 surface-border">
+                <div class="grid">
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Departamento:<span class="text ml-1 font-medium"> {{dataAudiencia.centro_mediacion?.departamento.departamento}} </span></span>
+                    </div>
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Municipio:<span class="text ml-1 font-medium"> {{dataAudiencia.centro_mediacion?.municipio.municipio}} </span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 border-bottom-1 surface-border">
+                <div class="grid">
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Tipo audiencia:<span class="text ml-1 font-medium"> {{dataAudiencia.tipo_audiencia?.tipo_audiencia}} </span></span>
+                    </div>
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Modalidad:<span class="text ml-1 font-medium"> {{dataAudiencia.modalidad?.modalidad}} </span></span>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="footer" class="mt-1">
+            <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogAudienciaFinalizada()"></button>
+        </ng-template>
+    </p-dialog>
+    <!-- FIN DIALOG VER AUDIENCIA FINALIZADA -->
+
+    <!-- DIALOG CERRAR AUDIENCIA -->
+    <p-dialog id="audienciaCerrarDialog" [(visible)]="audienciaCerrarDialog" [style]="{width: '500px','min-height':'350px'}" class="p-fluid" header="Finalizar audiencia" [closable]="false" [modal]="true">
+
+        <ng-template pTemplate="content">
+            <div class="col-12 border-bottom-1 surface-border">
+                <div class="grid">
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Tramite:<span class="text ml-1 font-medium"> {{dataAudiencia.tramite_numero}}</span></span>
+                    </div>
+
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Audiencia N°:<span class="text ml-1 font-medium"> {{dataAudiencia.num_audiencia}}</span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 border-bottom-1 surface-border">
+                <div class="grid">
+                    <div class="col-12 lg:col-12 xl:col-12">
+                        <span class="text font-medium text-1xl">Fecha:<span class="text ml-1 font-medium"> {{dataAudiencia.fecha_inicio| date: 'dd/MM/yyyy'}}</span></span>
+                    </div>
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Hora inicio:<span class="text ml-1 font-medium"> {{dataAudiencia.hora_inicio}}</span></span>
+                    </div>
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Hora fin:<span class="text ml-1 font-medium"> {{dataAudiencia.hora_fin}}</span></span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-12 border-bottom-1 surface-border">
+                <div class="grid">
+                    <div class="col-12 lg:col-12 xl:col-12">
+                        <span class="text font-medium text-1xl">Centro de mediacion:<span class="text ml-1 font-medium"> {{dataAudiencia.centro_mediacion.centro_mediacion}}</span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 border-bottom-1 surface-border">
+                <div class="grid">
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Departamento:<span class="text ml-1 font-medium"> {{dataAudiencia.centro_mediacion?.departamento.departamento}} </span></span>
+                    </div>
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Municipio:<span class="text ml-1 font-medium"> {{dataAudiencia.centro_mediacion?.municipio.municipio}} </span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 border-bottom-1 surface-border">
+                <div class="grid">
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Tipo audiencia:<span class="text ml-1 font-medium"> {{dataAudiencia.tipo_audiencia?.tipo_audiencia}} </span></span>
+                    </div>
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Modalidad:<span class="text ml-1 font-medium"> {{dataAudiencia.modalidad?.modalidad}} </span></span>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="footer" class="mt-1">
+            <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogAudienciaCerrar()"></button>
+        </ng-template>
+    </p-dialog>
+    <!-- FIN DIALOG CERRAR AUDIENCIA -->
+
+</div>
+<!-- FIN CARD  AUDIENCIAS -->
