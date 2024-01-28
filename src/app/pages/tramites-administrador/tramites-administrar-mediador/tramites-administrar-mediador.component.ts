@@ -89,8 +89,9 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   vinculadoDialog: boolean = false;
 
   //FORMULARIOS
-  formaMediadorAsignado: FormGroup;  
   formaAudiencia: FormGroup;
+  formaAudienciaCerrar: FormGroup;
+  formaMediadorAsignado: FormGroup;  
 
   constructor(
     private fb: FormBuilder,
@@ -126,6 +127,12 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
       modalidad_id: [1,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(2)]],     
       tipo_audiencia_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(1)]]
     });
+
+    this.formaAudienciaCerrar = this.fb.group({
+      resultado_audiencia_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],       
+      observacion_resultado: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(500)]],      
+      
+    });
   }
   //FIN CONSTRUCTOR................................................................................
 
@@ -142,7 +149,8 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     //fin obtener tramite
 
     this.listarTiposAudiencia();
-    this.listarModalidad();    
+    this.listarModalidad();  
+      
     
   }
   //FIN ONINIT......................................................................................
@@ -561,6 +569,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
 
   //MANEJO FORMULARIO DIALOG CERRAR AUDIENCIA
   openDialogAudienciaCerrar(audiencia: AudienciaModel) {
+    this.listarResultadosAudiencia();
     this.dataAudiencia = audiencia;
     this.audienciaCerrarDialog = true;
     // this.formaAudiencia.reset();    
