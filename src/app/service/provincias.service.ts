@@ -28,6 +28,7 @@ export class ProvinciasService {
   }
 
   listarProvicicaTodos(){
+    
     return this.http.get<[provincia:ProvinciaModel[], total: number]>(`${base_url}/provincias`)
   }
 

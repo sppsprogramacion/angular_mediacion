@@ -30,6 +30,8 @@ import { TipoAudienciaModel } from 'src/app/models/tipo_audiencia.model';
 import { ModalidadModel } from '../../../models/modalidad.model';
 import { ModalidadService } from 'src/app/service/modalidad.service';
 import { modalidad } from '../../../common/data-mokeada';
+import { ResultadoAudienciaModel } from '../../../models/resultadoAudiencia.model';
+import { ResultadosAudienciaService } from '../../../service/resultados-audiencia.service';
 
 @Component({
   selector: 'app-tramites-administrar-mediador',
@@ -45,6 +47,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   //MODELOS
   dataAudiencia: AudienciaModel = {};
   dataConvocado: ConvocadoModel = {};
+  dataResultadoAudiencia: ResultadoAudienciaModel = {};
   dataTramite: TramiteModel= new TramiteModel;
   dataTramiteAux: TramiteModel= new TramiteModel;
   dataUsuarioTramite: UsuarioTramiteModel= {};
@@ -57,15 +60,14 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   listDepartamentos: DepartamentoModel[] = [];
   listFuncionTramite: FuncionTtramiteModel[] = [];
   listModalidad: ModalidadModel[] = [];
+  listResultadosAudiencia: ResultadoAudienciaModel[]=[];
   listTipoAudiencia: TipoAudienciaModel[] = [];
   listUsuarios: UsuarioModel[]=[];
   listUsuariosCentro: UsuarioCentroModel[]=[];
   listUsuarioCentrosMediacion: UsuarioCentroModel[]=[];
   listUsuariosTramite: UsuarioTramiteModel[]=[];
-  elementosCentroMediacion: ElementoModel[]=[];  
 
-
-  
+  elementosCentroMediacion: ElementoModel[]=[];    
   elementosUsuarios: ElementoModel[]=[];
   elementosUsuariosCentro: ElementoModel[]=[];
 
@@ -98,8 +100,9 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     private centroMediacionService: CentrosMediacionService,
     private funcionTramiteService: FuncionTramiteService,
     private modalidadService: ModalidadService,
+    private resultadosAudienciaService: ResultadosAudienciaService,
     private tiposAudienciaService: TiposAudienciaService,
-    private tramiteService: TramitesService,
+    private tramiteService: TramitesService,   
     private usuariosCentroService: UsuariosCentroService,
     private usuarioService: UsuariosService,
     private usuarioTramiteService: UsuariosTramiteService,
@@ -384,7 +387,18 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   //FIN LISTADO DE TIPO AUDIENCIAS............................
 
   //LISTADO DE TIPO AUDIENCIAS
+  listarResultadosAudiencia(){    
+    this.resultadosAudienciaService.listarResultadoAudienciaTodos().
+        subscribe(respuesta => {
+        this.listResultadosAudiencia= respuesta[0];
+    
+    });
+  }
+  //FIN LISTADO DE TIPO AUDIENCIAS............................
+
+  //LISTADO DE TIPO AUDIENCIAS
   listarTiposAudiencia(){    
+    
     this.tiposAudienciaService.listarTodos().
         subscribe(respuesta => {
         this.listTipoAudiencia= respuesta[0];
