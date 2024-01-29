@@ -694,7 +694,7 @@
                         <div class="formgrid grid">
                             <div class="field col-12">
                                 <label for="modalidad_id" class="text font-medium">Modalidad</label>
-                                <p-dropdown id="modalidad_id" [options]="listModalidad" optionLabel="modalidad" optionValue="id_modalidad" formControlName="modalidad_id" placeholder="Seleccionar...">
+                                <p-dropdown id="modalidad_id" [options]="listModalidad" optionLabel="modalidad" optionValue="id_modalidad" formControlName="modalidad_id" >
                                 </p-dropdown>
                                 <small *ngIf="isValidAudiencia('modalidad_id')" class="p-error">
                                     <div *ngFor="let validation of user_validation_messages.usuario_id" >
@@ -708,7 +708,7 @@
                         <div class="formgrid grid">
                             <div class="field col-12">
                                 <label for="tipo_audiencia_id" class="text font-medium">Tipo audiencia</label>
-                                <p-dropdown id="tipo_audiencia_id" [options]="listTipoAudiencia" optionLabel="tipo_audiencia" optionValue="id_tipo_audiencia" formControlName="tipo_audiencia_id" placeholder="Seleccionar...">
+                                <p-dropdown id="tipo_audiencia_id" [options]="listTipoAudiencia" optionLabel="tipo_audiencia" optionValue="id_tipo_audiencia" formControlName="tipo_audiencia_id" >
                                 </p-dropdown>
                                 <small *ngIf="isValidAudiencia('tipo_audiencia_id')" class="p-error">
                                     <div *ngFor="let validation of user_validation_messages.tipo_audiencia_id" >
@@ -722,7 +722,7 @@
                         <div class="formgrid grid">
                             <div class="field col-12">
                                 <label for="detalles" class="text font-medium">Detalles</label>
-                                <input type="text" pInputText id="detalles" formControlName="detalles" />
+                                <textarea pInputTextarea id="observacion_resultado" [autoResize]="false" rows="5" cols="30" formControlName="detalles"></textarea>
                                 <small *ngIf="isValidAudiencia('detalles')" class="p-error">
                                         <div *ngFor="let validation of user_validation_messages.detalles_nueva_audiencia" >
                                             <div  *ngIf="formaAudiencia.get('detalles')?.hasError(validation.type)">
@@ -867,28 +867,30 @@
 
     <!-- DIALOG VER AUDIENCIA FINALIZADA-->
     <p-dialog id="audienciaFinalizadaDialog" [(visible)]="audienciaFinalizadaDialog" [style]="{width: '500px','min-height':'350px'}" class="p-fluid" header="Datos de la audiencia" [closable]="false" [modal]="true">
+        <!-- MENSAJE DE ERROR -->
+        <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
 
         <ng-template pTemplate="content">
             <div class="col-12 border-bottom-1 surface-border">
                 <div class="grid">
-                    <div class="col-12 lg:col-6 xl:col-6">
+                    <div class="col-12 md:col-6 lg:col-6 xl:col-6">
                         <span class="text font-medium text-1xl">Tramite:<span class="text ml-1 font-medium"> {{dataAudiencia.tramite_numero}}</span></span>
                     </div>
 
-                    <div class="col-12 lg:col-6 xl:col-6">
+                    <div class="col-12 md:col-6 lg:col-6 xl:col-6">
                         <span class="text font-medium text-1xl">Audiencia N°:<span class="text ml-1 font-medium"> {{dataAudiencia.num_audiencia}}</span></span>
                     </div>
                 </div>
             </div>
             <div class="col-12 border-bottom-1 surface-border">
                 <div class="grid">
-                    <div class="col-12 lg:col-12 xl:col-12">
+                    <div class="col-12 md:col-12 lg:col-12 xl:col-12">
                         <span class="text font-medium text-1xl">Fecha:<span class="text ml-1 font-medium"> {{dataAudiencia.fecha_inicio| date: 'dd/MM/yyyy'}}</span></span>
                     </div>
-                    <div class="col-12 lg:col-6 xl:col-6">
+                    <div class="col-12 md:col-6 lg:col-6 xl:col-6">
                         <span class="text font-medium text-1xl">Hora inicio:<span class="text ml-1 font-medium"> {{dataAudiencia.hora_inicio}}</span></span>
                     </div>
-                    <div class="col-12 lg:col-6 xl:col-6">
+                    <div class="col-12 md:col-6 lg:col-6 xl:col-6">
                         <span class="text font-medium text-1xl">Hora fin:<span class="text ml-1 font-medium"> {{dataAudiencia.hora_fin}}</span></span>
                     </div>
 
@@ -918,6 +920,22 @@
                     </div>
                     <div class="col-12 lg:col-6 xl:col-6">
                         <span class="text font-medium text-1xl">Modalidad:<span class="text ml-1 font-medium"> {{dataAudiencia.modalidad?.modalidad}} </span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 border-bottom-1 surface-border">
+                <div class="grid">
+                    <div class="col-12">
+                        <span class="text font-medium text-1xl">Resultado de la audiencia:<span class="text ml-1 font-medium"> {{dataAudiencia.resultado_audiencia?.resultado_audiencia}} </span></span>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-12 border-bottom-1 surface-border">
+                <div class="grid">
+                    
+                    <div class="col-12 ">
+                        <span class="text font-medium text-1xl">Observaciones del resultado:<span class="text ml-1 font-medium"> {{dataAudiencia.observacion_resultado}} </span></span>
                     </div>
                 </div>
             </div>
@@ -935,24 +953,24 @@
         <ng-template pTemplate="content">
             <div class="col-12 border-bottom-1 surface-border">
                 <div class="grid">
-                    <div class="col-12 lg:col-6 xl:col-6">
+                    <div class="col-12 md:col-6 lg:col-6 xl:col-6">
                         <span class="text font-medium text-1xl">Tramite:<span class="text ml-1 font-medium"> {{dataAudiencia.tramite_numero}}</span></span>
                     </div>
 
-                    <div class="col-12 lg:col-6 xl:col-6">
+                    <div class="col-12 md:col-6 lg:col-6 xl:col-6">
                         <span class="text font-medium text-1xl">Audiencia N°:<span class="text ml-1 font-medium"> {{dataAudiencia.num_audiencia}}</span></span>
                     </div>
                 </div>
             </div>
             <div class="col-12 border-bottom-1 surface-border">
                 <div class="grid">
-                    <div class="col-12 lg:col-12 xl:col-12">
+                    <div class="col-12 md:col-12 lg:col-12 xl:col-12">
                         <span class="text font-medium text-1xl">Fecha:<span class="text ml-1 font-medium"> {{dataAudiencia.fecha_inicio| date: 'dd/MM/yyyy'}}</span></span>
                     </div>
-                    <div class="col-12 lg:col-6 xl:col-6">
+                    <div class="col-12 md:col-6 lg:col-6 xl:col-6">
                         <span class="text font-medium text-1xl">Hora inicio:<span class="text ml-1 font-medium"> {{dataAudiencia.hora_inicio}}</span></span>
                     </div>
-                    <div class="col-12 lg:col-6 xl:col-6">
+                    <div class="col-12 md:col-6  lg:col-6 xl:col-6">
                         <span class="text font-medium text-1xl">Hora fin:<span class="text ml-1 font-medium"> {{dataAudiencia.hora_fin}}</span></span>
                     </div>
 
@@ -984,7 +1002,7 @@
                         <span class="text font-medium text-1xl">Modalidad:<span class="text ml-1 font-medium"> {{dataAudiencia.modalidad?.modalidad}} </span></span>
                     </div>
                 </div>
-            </div>
+            </div>            
 
             <div class="p-formgrid grid">
                 <!-- FORMULARIO CERRAR AUDIENCIA -->
@@ -994,11 +1012,11 @@
                         <div class="formgrid grid">
                             <div class="field col-12">
                                 <label for="resultado_audiencia_id" class="text font-medium">Resultado de la audiencia</label>
-                                <p-dropdown id="resultado_audiencia_id" [options]="listResultadosAudiencia" optionLabel="resultado_audiencia" optionValue="id_resultado_audiencia" formControlName="resultado_audiencia_id" placeholder="Seleccionar...">
+                                <p-dropdown id="resultado_audiencia_id" [options]="listResultadosAudiencia" optionLabel="resultado_audiencia" optionValue="id_resultado_audiencia" formControlName="resultado_audiencia_id">
                                 </p-dropdown>
-                                <small *ngIf="isValidAudiencia('resultado_audiencia_id')" class="p-error">
+                                <small *ngIf="isValidAudienciaCerrar('resultado_audiencia_id')" class="p-error">
                                     <div *ngFor="let validation of user_validation_messages.resultado_audiencia_id" >
-                                        <div  *ngIf="formaAudiencia.get('resultado_audiencia_id')?.hasError(validation.type)">
+                                        <div  *ngIf="formaAudienciaCerrar.get('resultado_audiencia_id')?.hasError(validation.type)">
                                             {{validation.message}}
                                         </div>
                                     </div>
@@ -1008,55 +1026,17 @@
                         <div class="formgrid grid">
                             <div class="field col-12">
                                 <label for="observacion_resultado" class="text font-medium">Observacion resultado</label>
-                                <input type="text" pInputText id="observacion_resultado" formControlName="observacion_resultado" />
-                                <small *ngIf="isValidAudiencia('detalles')" class="p-error">
-                                        <div *ngFor="let validation of user_validation_messages.detalles_nueva_audiencia" >
-                                            <div  *ngIf="formaAudiencia.get('detalles')?.hasError(validation.type)">
+                                <textarea pInputTextarea id="observacion_resultado" [autoResize]="false" rows="8" cols="30" formControlName="observacion_resultado"></textarea>
+                                <small *ngIf="isValidAudienciaCerrar('observacion_resultado')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.observacion_resultado" >
+                                            <div  *ngIf="formaAudienciaCerrar.get('observacion_resultado')?.hasError(validation.type)">
                                                 {{validation.message}}
                                             </div>
                                         </div>
                                     </small>
                             </div>
                         </div>
-                        <div class="formgrid grid">
-                            <div class="field col-12">
-                                <label for="observacion_resultado" class="text font-medium">Observacion resultado</label>
-                                <input type="text" pInputText id="observacion_resultado" formControlName="observacion_resultado" />
-                                <small *ngIf="isValidAudiencia('detalles')" class="p-error">
-                                        <div *ngFor="let validation of user_validation_messages.detalles_nueva_audiencia" >
-                                            <div  *ngIf="formaAudiencia.get('detalles')?.hasError(validation.type)">
-                                                {{validation.message}}
-                                            </div>
-                                        </div>
-                                    </small>
-                            </div>
-                        </div>
-                        <div class="formgrid grid">
-                            <div class="field col-12">
-                                <label for="observacion_resultado" class="text font-medium">Observacion resultado</label>
-                                <input type="text" pInputText id="observacion_resultado" formControlName="observacion_resultado" />
-                                <small *ngIf="isValidAudiencia('detalles')" class="p-error">
-                                        <div *ngFor="let validation of user_validation_messages.detalles_nueva_audiencia" >
-                                            <div  *ngIf="formaAudiencia.get('detalles')?.hasError(validation.type)">
-                                                {{validation.message}}
-                                            </div>
-                                        </div>
-                                    </small>
-                            </div>
-                        </div>
-                        <div class="formgrid grid">
-                            <div class="field col-12">
-                                <label for="observacion_resultado" class="text font-medium">Observacion resultado</label>
-                                <input type="text" pInputText id="observacion_resultado" formControlName="observacion_resultado" />
-                                <small *ngIf="isValidAudiencia('detalles')" class="p-error">
-                                        <div *ngFor="let validation of user_validation_messages.detalles_nueva_audiencia" >
-                                            <div  *ngIf="formaAudiencia.get('detalles')?.hasError(validation.type)">
-                                                {{validation.message}}
-                                            </div>
-                                        </div>
-                                    </small>
-                            </div>
-                        </div>
+                        
                     </form>
                 </div>
                 <!--  FIN FORMULARIO CERRAR AUDIENCIA -->
@@ -1064,6 +1044,7 @@
         </ng-template>
 
         <ng-template pTemplate="footer" class="mt-1">
+            <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormAudienciaCerrar()"></button>
             <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogAudienciaCerrar()"></button>
         </ng-template>
     </p-dialog>

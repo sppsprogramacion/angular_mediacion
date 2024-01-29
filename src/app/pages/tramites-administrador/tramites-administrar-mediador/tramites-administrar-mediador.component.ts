@@ -130,7 +130,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
 
     this.formaAudienciaCerrar = this.fb.group({
       resultado_audiencia_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],       
-      observacion_resultado: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(500)]],      
+      observacion_resultado: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(1000)]],      
       
     });
   }
@@ -148,8 +148,8 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     }   
     //fin obtener tramite
 
-    this.listarTiposAudiencia();
-    this.listarModalidad();  
+    // this.listarTiposAudiencia();
+    // this.listarModalidad();  
       
     
   }
@@ -158,35 +158,47 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   //MENSAJES DE VALIDACIONES
   user_validation_messages = {
     //datos tramite 
-    'funcion_tramite_id': [
-      { type: 'required', message: 'La función en el tramite es requerida.' },
-      { type: 'pattern', message: 'Debe seleccionar un una función.' },
-    ],
-    'fecha_inicio': [
-      { type: 'required', message: 'La fecha de inicio es requerida.' },
-    ],
-    'hora': [
-      { type: 'required', message: 'La hora de inicio es requerida.' },
-      { type: 'pattern', message: 'El formato de la hora no es correcto.' },
-    ],
+    
     'detalles': [
       { type: 'required', message: 'El detalle es requerido.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 200.' }
     ],  
     'detalles_nueva_audiencia': [
-      { type: 'required', message: 'El detalle es requerido ahora.' },
+      { type: 'required', message: 'El detalle es requerido.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 300.' }
     ],  
+    'fecha_inicio': [
+      { type: 'required', message: 'La fecha de inicio es requerida.' },
+    ],
+    'funcion_tramite_id': [
+      { type: 'required', message: 'La función en el tramite es requerida.' },
+      { type: 'pattern', message: 'Debe seleccionar un una función.' },
+    ],
+    'hora': [
+      { type: 'required', message: 'La hora de inicio es requerida.' },
+      { type: 'pattern', message: 'El formato de la hora no es correcto.' },
+    ],
+    
     'modalidad_id': [
       { type: 'required', message: 'La modalidad es requerida.' },
       { type: 'pattern', message: 'Debe seleccionar una modalidad.' },
+    ],
+    'observacion_resultado': [
+      { type: 'required', message: 'La observacion es requerida.' },
+      { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
+      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 1000.' }
+    ],  
+    'resultado_audiencia_id': [
+      { type: 'required', message: 'El resultado de la audiencia es requerido.' },
+      { type: 'pattern', message: 'Debe seleccionar un resultado de la audiencia.' },
     ],
     'tipo_audiencia_id': [
       { type: 'required', message: 'El tipo de audiencia es requerido.' },
       { type: 'pattern', message: 'Debe seleccionar un tipo de audiencia.' },
     ],
+
   }
   //FIN MENSAJES DE VALIDACIONES...............................................................
 
@@ -199,6 +211,11 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   isValidAudiencia(campo: string): boolean{     
     
     return this.formaAudiencia.get(campo)?.invalid && this.formaAudiencia.get(campo)?.touched;      
+  }
+
+  isValidAudienciaCerrar(campo: string): boolean{     
+    
+    return this.formaAudienciaCerrar.get(campo)?.invalid && this.formaAudienciaCerrar.get(campo)?.touched;      
   }
   //FIN VALIDACIONES DE FORMULARIO...............................................
 
@@ -238,7 +255,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   }    
   //FIN GUARDAR USUARIO-TRAMITE............................................................
 
-  //GUARDEAR NUEVA AUDIENCIA
+  //GUARDAR NUEVA AUDIENCIA
   submitFormAudiencia(){
     if(this.formaAudiencia.invalid){
       this.msgs = [];
@@ -279,7 +296,42 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     //FIN GUARDAR NUEVO AUDIENCIA
 
   }
-  //GUARDEAR NUEVA AUDIENCIA...............................................................
+  //GUARDAR NUEVA AUDIENCIA...............................................................
+
+  //GUARDAR CERRAR AUDIENCIA
+  submitFormAudienciaCerrar(){
+    if(this.formaAudienciaCerrar.invalid){
+      this.msgs = [];
+      this.msgs.push({ severity: 'error', summary: 'Datos inválidos', detail: 'Revise los datos cargados. ' });
+      return Object.values(this.formaAudienciaCerrar.controls).forEach(control => control.markAsTouched());
+    }
+
+    let dataAudienciaAux: Partial<AudienciaModel>;
+    dataAudienciaAux = {      
+      resultado_audiencia_id: parseInt(this.formaAudienciaCerrar.get('resultado_audiencia_id')?.value), 
+      observacion_resultado: this.formaAudienciaCerrar.get('observacion_resultado')?.value,
+      usuario_id: this.dataUsuarioTramite.usuario_id,
+                  
+    }; 
+
+    //GUARDAR NUEVO AUDIENCIA
+    this.audienciaService.guardarAudienciaCerrar(this.dataAudiencia.id_audiencia, dataAudienciaAux)
+      .subscribe({
+        next: (resultado) => {
+          let audienciaRes: AudienciaModel = resultado;
+          this.hideDialogAudienciaCerrar();
+          this.buscarAudienciasByNumTramiteActivo();
+          Swal.fire('Exito',`La audiencia se cerró con exito`,"success");
+        },
+        error: (err) => {
+          this.msgs = [];
+          this.msgs.push({ severity: 'error', summary: 'Error al guardar', detail: ` ${err.error.message}` });
+        }
+      });         
+    //FIN GUARDAR NUEVO AUDIENCIA
+
+  }
+  //GUARDAR CERRAR AUDIENCIA...............................................................
 
   //BUSCAR TRAMITE 
   buscarTramite(){  
@@ -415,21 +467,6 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   }
   //FIN LISTADO DE TIPO AUDIENCIAS............................
 
-
-  // cargarCentrosMediacion(id_departamento: number){
-  //   this.centroMediacionService.listarCentroMediacionXDepartamento(id_departamento).
-  //     subscribe(respuesta => {
-  //       this.listCentrosMediacion= respuesta[0];
-  //       this.elementosCentroMediacion = this.listCentrosMediacion.map(centro => {
-  //         return {
-  //           clave: centro.id_centro_mediacion,
-  //           value: centro.centro_mediacion + " (" + centro.municipio.municipio + " - " + centro.localidad_barrio + " - " + centro.calle_direccion + " " + centro.numero_dom + ")"
-  //           }
-  //       });        
-    
-  //   });  
-  // }
-
   cargarCentrosMediacion(id_usuario: number){
     this.usuariosCentroService.listarCentrosActivosXUsuario(id_usuario).
       subscribe(respuesta => {
@@ -517,6 +554,8 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     console.log("usuariotramite", this.dataUsuarioTramite);
 
     this.cargarCentrosMediacionXUsuario(this.dataUsuarioTramite.usuario_id);
+    this.listarTiposAudiencia();
+    this.listarModalidad(); 
     //this.listarTiposAudiencia()
     this.audienciaDialog = true;
     this.formaAudiencia.reset();    
@@ -572,9 +611,9 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     this.listarResultadosAudiencia();
     this.dataAudiencia = audiencia;
     this.audienciaCerrarDialog = true;
-    // this.formaAudiencia.reset();    
+    this.formaAudienciaCerrar.reset();    
 
-    // return Object.values(this.formaAudiencia.controls).forEach(control => control.markAsUntouched());    
+    return Object.values(this.formaAudienciaCerrar.controls).forEach(control => control.markAsUntouched());    
   }
   
   hideDialogAudienciaCerrar() {

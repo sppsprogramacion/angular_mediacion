@@ -21,6 +21,11 @@ export class AudienciasService {
     return this.http.post(`${base_url}/audiencias`, this.audiencia);
   }
 
+  guardarAudienciaCerrar(id: number, data: Partial<AudienciaModel>){    
+    this.audiencia={...data};
+    return this.http.patch(`${base_url}/audiencias/resultado/${id}`, this.audiencia);
+  }
+
   guardarEdicionAudiencia(id: number, data: Partial<AudienciaModel>){    
     this.audiencia={...data};
     return this.http.patch(`${base_url}/audiencias/${id}`, this.audiencia);
