@@ -53,6 +53,7 @@ export class TramiteModel{
         public estado_tramite?: EstadoTramiteModel,
         public asignaciones?: UsuarioTramiteModel[],
         public convocados?: ConvocadoModel[],
-        public vinculados?: VinculadoModel[]
+        public vinculados?: VinculadoModel[],
+        public observacion_finalizacion?: string
     ){}
 }

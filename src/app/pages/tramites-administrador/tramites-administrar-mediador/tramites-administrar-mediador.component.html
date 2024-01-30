@@ -1052,3 +1052,40 @@
 
 </div>
 <!-- FIN CARD  AUDIENCIAS -->
+
+<!-- CARD FINALIZAR TRAMITE -->
+<div class="card p-fluid mb-0 mt-2">
+    <p-toolbar styleClass="mb-3 bg-cyan-500">
+        <h5 class="block text-white font-bold font-medium mb-1 ">
+            Finalizar tramite
+        </h5>
+    </p-toolbar>
+
+    <div class="col-12 border-bottom-1 surface-border">
+        <div class="p-formgrid grid">
+            <!-- FORMULARIO FINALIZAR TRAMITE-->
+            <div class="col-12">
+                <form [formGroup]="formaFinalizarTramite">
+                    <div class="formgrid grid">
+                        <div class="field col-12">
+                            <label for="observacion_finalizacion" class="text font-medium">Observacion</label>
+                            <textarea pInputTextarea id="observacion_finalizacion" [autoResize]="false" rows="5" cols="30" formControlName="observacion_finalizacion"></textarea>
+                            <!-- <small *ngIf="isValidRecibirTramite('detalles')" class="p-error">
+                                <div *ngFor="let validation of user_validation_messages.detalles" >
+                                    <div  *ngIf="formaMediadorAsignado.get('detalles')?.hasError(validation.type)">
+                                        {{validation.message}}
+                                    </div>
+                                </div>
+                            </small> -->
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--  FIN FORMULARIO FINALIZAR TRAMITE -->
+            <div class="col-6">
+                <button pButton pRipple type="button" label="Finalizar tramite" class="p-button-danger mr-2 mb-2" (click)="submitFormFinalizarTramite()"></button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FIN CARD FINALIZAR TRAMITE -->

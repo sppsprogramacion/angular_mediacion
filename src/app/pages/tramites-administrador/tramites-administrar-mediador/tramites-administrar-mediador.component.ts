@@ -91,6 +91,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   //FORMULARIOS
   formaAudiencia: FormGroup;
   formaAudienciaCerrar: FormGroup;
+  formaFinalizarTramite: FormGroup;
   formaMediadorAsignado: FormGroup;  
 
   constructor(
@@ -132,6 +133,11 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
       resultado_audiencia_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],       
       observacion_resultado: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(1000)]],      
       
+    });
+
+    this.formaFinalizarTramite = this.fb.group({             
+      //observacion_finalizacion: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(1000)]],      
+      observacion_finalizacion: ['',],
     });
   }
   //FIN CONSTRUCTOR................................................................................
@@ -332,6 +338,39 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
 
   }
   //GUARDAR CERRAR AUDIENCIA...............................................................
+
+  //GUARDAR FINALIZAR TRAMITE
+  submitFormFinalizarTramite(){
+    // if(this.formaFinalizarTramite.invalid){
+    //   this.msgs = [];
+    //   this.msgs.push({ severity: 'error', summary: 'Datos inválidos', detail: 'Revise los datos cargados. ' });
+    //   return Object.values(this.formaFinalizarTramite.controls).forEach(control => control.markAsTouched());
+    // }
+
+    let dataTramiteAux: Partial<TramiteModel>;
+    dataTramiteAux = {     
+      
+      observacion_finalizacion: this.formaFinalizarTramite.get('observacion_finalizacion')?.value,
+                  
+    }; 
+
+    //GUARDAR FINALIZAR TRAMITE
+    this.tramiteService.guardarFinalizarTramite(this.dataTramite.numero_tramite, dataTramiteAux)
+      .subscribe({
+        next: (resultado) => {
+          let tramite: TramiteModel = resultado;
+          
+          Swal.fire('Exito',`El tramite se finalizó con exito`,"success");
+        },
+        error: (err) => {
+          this.msgs = [];
+          this.msgs.push({ severity: 'error', summary: 'Error al finalizar el tramite', detail: ` ${err.error.message}` });
+        }
+      });         
+    //FIN GUARDAR FINALIZAR TRAMITE
+
+  }
+  //FIN GUARDAR FINALIZAR TRAMITE...............................................................
 
   //BUSCAR TRAMITE 
   buscarTramite(){  
