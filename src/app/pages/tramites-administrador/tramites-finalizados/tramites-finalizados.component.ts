@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { globalConstants } from 'src/app/common/global-constants';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
 import { MunicipioModel } from 'src/app/models/municipio.model';
 import { SexoModel } from 'src/app/models/sexo.model';
@@ -50,6 +51,21 @@ export class TramitesFinalizadosComponent implements OnInit {
     });
   }
   //FIN LISTADO DE TRAMITES FINALIZADOS.......................................................
+
+  //LISTADO DE TRANITES USUARIO
+  listarTramitesUsuarioFinalizados(){
+    let id_usuario: number = globalConstants.usuarioLogin.id_usuario;
+
+    //REVISAR PARA LISTAR TRAMITES FINALIZADOS
+    // this.usuariosTramitesService.listarTramitesAsignadosXUsuario(id_usuario).
+    //     subscribe(respuesta => {
+    //     this.listUsuariosTramites= respuesta[0];
+    //     this.loading = false;  
+    
+    // });
+  }
+  //FIN LISTADO DE TRAMITES USUARIO.......................................................
+  
   //ACCEDER A DATA SERVICE
   administrarTramite(data: TramiteModel){
     this.dataService.tramiteData = data;
