@@ -14,10 +14,9 @@
             <h5>Tramites finalizados</h5>
 
             <!-- TABLA DE TRAMITES -->
-            <p-table #dt1 [value]="listTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
+            <p-table #dt1 [value]="listUsuariosTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
                 <ng-template pTemplate="caption">
-                    <div class="flex justify-content-between flex-column sm:flex-row">
-                        <button pButton label="Solicitar tramite" icon="pi pi-plus" class="p-button-success mr-2" (click)="abrirNuevoTramite()"></button>
+                    <div class="flex justify-content-between flex-column sm:flex-row">                        
                         <div>
                             <button pButton label="Limpiar" icon="pi pi-filter-slash" class="p-button-outlined mr-1" (click)="clear(dt1)"></button>
                             <span class="p-input-icon-left">
@@ -82,45 +81,72 @@
                                 <p-columnFilter type="date" field="fecha_tramite" display="menu" placeholder="dd/mm/yyyy"></p-columnFilter>
                             </div>
                         </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Fecha asignacion
+                                <p-columnFilter type="date" field="fecha_tramite" display="menu" placeholder="dd/mm/yyyy"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Usuario
+                                <p-columnFilter type="date" field="fecha_tramite" display="menu" placeholder="dd/mm/yyyy"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Funcion
+                                <p-columnFilter type="date" field="fecha_tramite" display="menu" placeholder="dd/mm/yyyy"></p-columnFilter>
+                            </div>
+                        </th>
 
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-tramite>
+                <ng-template pTemplate="body" let-asignacion>
                     <tr>
                         <td>
-                            <button *ngIf="tramite.estado_tramite_id==3" pButton pRipple type="button" icon="pi pi-folder-open text-bluegray-100" class="p-button-secondary p-button-rounded bg-bluegray-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
+                            <button *ngIf="asignacion.tramite.estado_tramite_id==2" pButton pRipple type="button" icon="pi pi-folder-open text-orange-100" class="p-button-secondary p-button-rounded bg-orange-500 mr-1 mb-1" (click)="administrarTramite(asignacion)"></button>
                         </td>
                         <td style="min-width: 10rem;">
-                            {{tramite.numero_tramite}}
+                            {{asignacion.tramite.numero_tramite}}
                         </td>
 
                         <td style="min-width: 15rem;">
-                            {{tramite.ciudadano.apellido}}
-                        </td>
-                        <td style="min-width: 2rem;">
-                            {{tramite.ciudadano.nombre}}
-                        </td>
-                        <td style="min-width: 10rem;">
-                            {{tramite.dni_ciudadano}}
-                        </td>
-                        <td style="min-width: 10rem;">
-                            {{tramite.objeto.objeto}}
-                        </td>
-                        <td style="min-width: 5rem;">
-                            {{tramite.fecha_tramite| date: 'dd/MM/yyyy'}}
+                            {{asignacion.tramite.ciudadano.apellido}}
                         </td>
                         <td style="min-width: 15rem;">
-                            {{tramite.expediente}}
+                            {{asignacion.tramite.ciudadano.nombre}}
                         </td>
-                        <td style="min-width: 5rem;">
-                            {{tramite.fecha_expediente| date: 'dd/MM/yyyy'}}
+                        <td style="min-width: 10rem;">
+                            {{asignacion.tramite.ciudadano.dni}}
+                        </td>
+                        <td style="min-width: 15rem;">
+                            {{asignacion.tramite.objeto.objeto}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{asignacion.tramite.fecha_tramite| date: 'dd/MM/yyyy'}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{asignacion.tramite.expediente}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{asignacion.tramite.fecha_expediente| date: 'dd/MM/yyyy'}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{asignacion.fecha_asignacion| date: 'dd/MM/yyyy'}}
+                        </td>
+                        <td style="min-width: 15rem;">
+                            {{asignacion.usuario.apellido}} {{asignacion.usuario.nombre}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{asignacion.funcion_tramite.funcion_tramite}}
                         </td>
                     </tr>
                 </ng-template>
 
                 <ng-template pTemplate="emptymessage">
                     <tr>
-                        <td colspan="8">No se encontraron tramites finalizados.</td>
+                        <td colspan="8">No se encontraron tramites asignados.</td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="loadingbody">
