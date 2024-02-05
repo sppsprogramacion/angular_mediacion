@@ -363,8 +363,8 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
           Swal.fire('Exito',`El tramite se finalizó con exito`,"success");
         },
         error: (err) => {
-          this.msgs = [];
-          this.msgs.push({ severity: 'error', summary: 'Error al finalizar el tramite', detail: ` ${err.error.message}` });
+
+          Swal.fire('No se finalizó el tramite', `Error: ${err.error.message}`,"error");
         }
       });         
     //FIN GUARDAR FINALIZAR TRAMITE

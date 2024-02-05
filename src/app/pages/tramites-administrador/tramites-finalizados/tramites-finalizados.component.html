@@ -105,7 +105,7 @@
                 <ng-template pTemplate="body" let-asignacion>
                     <tr>
                         <td>
-                            <button *ngIf="asignacion.tramite.estado_tramite_id==2" pButton pRipple type="button" icon="pi pi-folder-open text-orange-100" class="p-button-secondary p-button-rounded bg-orange-500 mr-1 mb-1" (click)="administrarTramite(asignacion)"></button>
+                            <button *ngIf="asignacion.tramite.estado_tramite_id==3" pButton pRipple type="button" icon="pi pi-folder-open" class="p-button-secondary p-button-rounded mr-1 mb-1" (click)="administrarTramite(asignacion)"></button>
                         </td>
                         <td style="min-width: 10rem;">
                             {{asignacion.tramite.numero_tramite}}
