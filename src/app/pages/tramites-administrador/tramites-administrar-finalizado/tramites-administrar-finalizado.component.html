@@ -521,10 +521,10 @@
                     </th>
                 </tr>
             </ng-template>
+
             <ng-template pTemplate="body" let-audiencia>
                 <tr>
                     <td>
-                        <button *ngIf="!audiencia.esta_cerrada" type="button" pButton pRipple class="p-button-warning p-button-rounded mr-2 mb-2" icon="pi pi-book" (click)="openDialogAudienciaCerrar(audiencia)"></button>
                         <button *ngIf="audiencia.esta_cerrada" type="button" pButton pRipple class="p-button-secondary p-button-rounded mr-2 mb-2" icon="pi pi-search-plus" (click)="openDialogAudienciaFinalizada(audiencia)"></button>
                     </td>
                     <td style="min-width: 10rem;">
@@ -565,10 +565,6 @@
         </p-table>
         <!-- FIN TABLA DE AUDIENCIA -->
     </div>
-
-    
-
-    
 
     <!-- DIALOG VER AUDIENCIA FINALIZADA-->
     <p-dialog id="audienciaFinalizadaDialog" [(visible)]="audienciaFinalizadaDialog" [style]="{width: '500px','min-height':'350px'}" class="p-fluid" header="Datos de la audiencia" [closable]="false" [modal]="true">

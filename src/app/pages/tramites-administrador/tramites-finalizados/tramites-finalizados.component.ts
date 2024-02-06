@@ -71,9 +71,9 @@ export class TramitesFinalizadosComponent implements OnInit {
   //FIN LISTADO DE TRAMITES USUARIO.......................................................
   
   //ACCEDER A DATA SERVICE
-  administrarTramite(data: TramiteModel){
-    this.dataService.tramiteData = data;
-    this.router.navigateByUrl("admin/tramites/administrar");
+  administrarTramite(data: UsuarioTramiteModel){
+    this.dataService.tramiteData = data.tramite;    
+    this.router.navigateByUrl("admin/tramites/administrar-finalizado");
   }
   //FIN ACCEDER A DATA SERVICE
 

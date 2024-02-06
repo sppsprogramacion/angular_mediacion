@@ -57,6 +57,7 @@ import { CiudadanoTramitesNuevoslistaComponent } from './pages/ciudadano-perfil/
 import { CiudadanoTramitesFinalizadosComponent } from './pages/ciudadano-perfil/ciudadano-tramites-finalizados/ciudadano-tramites-finalizados.component';
 import { CiudadanoDatospersonalesComponent } from './pages/ciudadano-perfil/ciudadano-datospersonales/ciudadano-datospersonales.component';
 import { CiudadanosBuscarComponent } from './pages/ciudadanos/ciudadanos-buscar/ciudadanos-buscar.component';
+import { TramitesAdministrarFinalizadoComponent } from './pages/tramites-administrador/tramites-administrar-finalizado/tramites-administrar-finalizado.component';
 
 @NgModule({
     imports: [
@@ -84,6 +85,7 @@ import { CiudadanosBuscarComponent } from './pages/ciudadanos/ciudadanos-buscar/
                     {path: 'usuarios/lista', component: UsuariosListaComponent},
                     
                     {path: 'tramites/administrar', component: TramitesAdministrarComponent},
+                    {path: 'tramites/administrar-finalizado', component: TramitesAdministrarFinalizadoComponent},
                     {path: 'tramites/administrar-med', component: TramitesAdministrarMediadorComponent},
                     {path: 'tramites/asignados', component: TramitesAsignadosComponent},
                     {path: 'tramites/finalizados', component: TramitesFinalizadosComponent},

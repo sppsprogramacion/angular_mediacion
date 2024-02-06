@@ -69,11 +69,11 @@ export class TramitesAdministrarFinalizadoComponent implements OnInit {
 
   ngOnInit(): void {
 
-    //obtener tramite
+    //obtener tramite    
     this.dataTramiteAux= this.dataService.tramiteData;
     this.buscarTramite();
 
-    if(this.dataTramiteAux){
+    if(this.dataTramiteAux){      
       this.buscarAsignacionByNumTramiteActivo();
       this.buscarAudienciasByNumTramiteActivo(); 
       
@@ -122,6 +122,8 @@ export class TramitesAdministrarFinalizadoComponent implements OnInit {
   //BUSCAR TRAMITE 
   buscarTramite(){  
     this.dataTramite = {};  
+    console.log("numero tramite finalizado", this.dataService.tramiteData.numero_tramite);
+    console.log("tramite finalizado ", this.dataService.tramiteData);
     this.tramiteService.buscarTramiteNumTram(this.dataService.tramiteData.numero_tramite)
       .subscribe({
         next: (resultado) => {          
@@ -153,6 +155,54 @@ export class TramitesAdministrarFinalizadoComponent implements OnInit {
       });       
   }
   //FIN BUSCAR MEDIADOR DEL TRAMITE X NUMERO TRAMITE ACTIVO...................................
+
+
+  //MANEJO DE FORMULARIO DIALOG CONVOCADO
+  openDialogConvocado(convocado: ConvocadoModel) {
+    this.dataConvocado = convocado;
+    this.convocadoDialog = true; 
+    
+  }
+  
+  hideDialogConvocado() {    
+    this.convocadoDialog = false;    
+  }    
+  //FIN MANEJO FORMULARIO DIALOG CONVOCADO....................................
+
+  //MANEJO DE FORMULARIO DIALOG VINCULADO
+  reiniciarFormularioVinculado(){
+    
+  }
+
+  openDialogVinculado(vinculado: VinculadoModel) {
+    this.dataVinculado = vinculado;
+    this.vinculadoDialog = true; 
+
+  }
+  
+  hideDialogVinculado() {    
+    this.vinculadoDialog = false;    
+  }    
+  //FIN MANEJO FORMULARIO DIALOG VINCULADO....................................
+
+  //MANEJO FORMULARIO DIALOG VER AUDIENCIA FINALIZADA
+  openDialogAudienciaFinalizada(audiencia: AudienciaModel) {
+    this.dataAudiencia = audiencia;
+    this.audienciaFinalizadaDialog = true;
+    // this.formaAudiencia.reset();    
+
+    // return Object.values(this.formaAudiencia.controls).forEach(control => control.markAsUntouched());    
+  }
+  
+  hideDialogAudienciaFinalizada() {    
+    
+    this.audienciaFinalizadaDialog = false;
+    
+  }
+  //FIN MANEJO FORMULARIO DIALOG VER AUDIENCIA FINALIZADA................................................
+
+
+  
 
 
 }

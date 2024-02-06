@@ -1004,7 +1004,7 @@
                 </div>
             </div>            
 
-            <div class="p-formgrid grid">
+            <div class="p-formgrid grid mt-2">
                 <!-- FORMULARIO CERRAR AUDIENCIA -->
                 <div class="col-12">
                     <form [formGroup]="formaAudienciaCerrar">
@@ -1070,13 +1070,13 @@
                         <div class="field col-12">
                             <label for="observacion_finalizacion" class="text font-medium">Observacion</label>
                             <textarea pInputTextarea id="observacion_finalizacion" [autoResize]="false" rows="5" cols="30" formControlName="observacion_finalizacion"></textarea>
-                            <!-- <small *ngIf="isValidRecibirTramite('detalles')" class="p-error">
-                                <div *ngFor="let validation of user_validation_messages.detalles" >
-                                    <div  *ngIf="formaMediadorAsignado.get('detalles')?.hasError(validation.type)">
+                            <small *ngIf="isValidFinalizarTramite('observacion_finalizacion')" class="p-error">
+                                <div *ngFor="let validation of user_validation_messages.observacion_finalizacion" >
+                                    <div  *ngIf="formaFinalizarTramite.get('observacion_finalizacion')?.hasError(validation.type)">
                                         {{validation.message}}
                                     </div>
                                 </div>
-                            </small> -->
+                            </small>
                         </div>
                     </div>
                 </form>

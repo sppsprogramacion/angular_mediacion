@@ -32,6 +32,7 @@ import { ModalidadService } from 'src/app/service/modalidad.service';
 import { modalidad } from '../../../common/data-mokeada';
 import { ResultadoAudienciaModel } from '../../../models/resultadoAudiencia.model';
 import { ResultadosAudienciaService } from '../../../service/resultados-audiencia.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tramites-administrar-mediador',
@@ -97,6 +98,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private readonly datePipe: DatePipe,
+    private router: Router,
     public dataService: DataService,
     private audienciaService: AudienciasService,
     private centroMediacionService: CentrosMediacionService,
@@ -136,8 +138,8 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     });
 
     this.formaFinalizarTramite = this.fb.group({             
-      //observacion_finalizacion: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(1000)]],      
-      observacion_finalizacion: ['',],
+      observacion_finalizacion: ['',[Validators.required, Validators.nullValidator, Validators.minLength(1), Validators.maxLength(1000)]],      
+      
     });
   }
   //FIN CONSTRUCTOR................................................................................
@@ -196,6 +198,12 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 1000.' }
     ],  
+    'observacion_finalizacion': [
+      { type: 'required', message: 'La observacion es requerida.' },
+      { type: 'nullValidator', message: 'Debe ingresar caracteres no vacios.' },
+      { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
+      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 1000.' }
+    ], 
     'resultado_audiencia_id': [
       { type: 'required', message: 'El resultado de la audiencia es requerido.' },
       { type: 'pattern', message: 'Debe seleccionar un resultado de la audiencia.' },
@@ -209,10 +217,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   //FIN MENSAJES DE VALIDACIONES...............................................................
 
   //VALIDACIONES DE FORMULARIO
-  isValidRecibirTramite(campo: string): boolean{     
-    
-    return this.formaMediadorAsignado.get(campo)?.invalid && this.formaMediadorAsignado.get(campo)?.touched;      
-  }
+  
 
   isValidAudiencia(campo: string): boolean{     
     
@@ -222,6 +227,16 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   isValidAudienciaCerrar(campo: string): boolean{     
     
     return this.formaAudienciaCerrar.get(campo)?.invalid && this.formaAudienciaCerrar.get(campo)?.touched;      
+  }
+
+  isValidFinalizarTramite(campo: string): boolean{     
+    
+    return this.formaFinalizarTramite.get(campo)?.invalid && this.formaFinalizarTramite.get(campo)?.touched;      
+  }
+
+  isValidRecibirTramite(campo: string): boolean{     
+    
+    return this.formaMediadorAsignado.get(campo)?.invalid && this.formaMediadorAsignado.get(campo)?.touched;      
   }
   //FIN VALIDACIONES DE FORMULARIO...............................................
 
@@ -341,16 +356,15 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
 
   //GUARDAR FINALIZAR TRAMITE
   submitFormFinalizarTramite(){
-    // if(this.formaFinalizarTramite.invalid){
-    //   this.msgs = [];
-    //   this.msgs.push({ severity: 'error', summary: 'Datos inválidos', detail: 'Revise los datos cargados. ' });
-    //   return Object.values(this.formaFinalizarTramite.controls).forEach(control => control.markAsTouched());
-    // }
+    if(this.formaFinalizarTramite.invalid){
+      Swal.fire('No se finalizó el tramite', "Error: complete correctamente los campos del formulario" ,"warning");
+      return Object.values(this.formaFinalizarTramite.controls).forEach(control => control.markAsTouched());
+    }
 
     let dataTramiteAux: Partial<TramiteModel>;
     dataTramiteAux = {     
       
-      observacion_finalizacion: this.formaFinalizarTramite.get('observacion_finalizacion')?.value,
+      observacion_finalizacion: this.formaFinalizarTramite.get('observacion_finalizacion')?.value.trim(),
                   
     }; 
 
@@ -361,6 +375,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
           let tramite: TramiteModel = resultado;
           
           Swal.fire('Exito',`El tramite se finalizó con exito`,"success");
+          this.irTramitesFinalizados();
         },
         error: (err) => {
 
@@ -671,5 +686,11 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     }
     return fechaAuxiliar;
   }
+
+  //ACCEDER A TRAMITES FINALIZADOS
+  irTramitesFinalizados(){
+    this.router.navigateByUrl("admin/tramites/finalizados");    
+  }
+  //FIN ACCEDER A DATA SERVICE
   
 }
