@@ -2,7 +2,7 @@
 <div class="card mb-0 ">
     <p-toolbar styleClass="mb-3 bg-cyan-500">
         <h5 class="block text-white font-bold font-medium mb-1 ">
-            Datos del Tramite
+            Datos del tramite finalizado
         </h5>
     </p-toolbar>
 
@@ -101,7 +101,7 @@
         <div class="col-12 border-bottom-1 surface-border">
             <div class="grid">
                 <div class="col-12">
-                    <span class="text font-medium text-1xl">Existe violencia entre las partes:<span class="text ml-1 font-medium"> {{dataTramite.violencia_partes}}</span></span>
+                    <span class="text font-medium text-1xl">Existe violencia entre las partes:<span class="text ml-1 font-medium"> {{dataTramite.violencia_partes === true?"SI": "NO"}}</span></span>
                 </div>
             </div>
         </div>
@@ -111,13 +111,13 @@
                     <span class="text font-bold font-medium text-1xl">Violencia de género</span>
                 </div>
                 <div class="col-12 lg:col-6 xl:col-6">
-                    <span class="text font-medium text-1xl">Existe violencia de género:<span class="text ml-1 font-medium"> {{dataTramite.violencia_genero}} </span></span>
+                    <span class="text font-medium text-1xl">Existe violencia de género:<span class="text ml-1 font-medium"> {{dataTramite.violencia_genero === true?"SI": "NO" }} </span></span>
                 </div>
                 <div class="col-12 lg:col-6 xl:col-6">
-                    <span class="text font-medium text-1xl">Existe denucnia:<span class="text ml-1 font-medium"> {{dataTramite.existe_denuncia}} </span></span>
+                    <span class="text font-medium text-1xl">Existe denucnia:<span class="text ml-1 font-medium"> {{dataTramite.existe_denuncia === true?"SI": "NO"}} </span></span>
                 </div>
                 <div class="col-12 lg:col-6 xl:col-6">
-                    <span class="text font-medium text-1xl">Existe medida cautelar?:<span class="text ml-1 font-medium"> {{dataTramite.medida_cautelar}} </span></span>
+                    <span class="text font-medium text-1xl">Existe medida cautelar?:<span class="text ml-1 font-medium"> {{dataTramite.medida_cautelar === true?"SI": "NO"}} </span></span>
                 </div>
             </div>
 
@@ -452,7 +452,7 @@
         <div class="col-12 border-bottom-1 surface-border">
             <div class="grid">
                 <div class="col-12 lg:col-4 xl:col-4">
-                    <span class="text font-medium text-1xl">Fecha asignacion:<span class="text ml-1 font-medium"> {{dataUsuarioTramite.activo| date: 'dd/MM/yyyy'}}</span></span>
+                    <span class="text font-medium text-1xl">Fecha asignacion:<span class="text ml-1 font-medium"> {{dataUsuarioTramite.fecha_asignacion| date: 'dd/MM/yyyy'}}</span></span>
                 </div>
                 <div class="col-12 lg:col-4 xl:col-4">
                     <span class="text font-medium text-1xl">Detalle:<span class="text ml-1 font-medium"> {{dataUsuarioTramite.detalles}}</span></span>
@@ -655,21 +655,39 @@
 <div class="card p-fluid mb-0 mt-2">
     <p-toolbar styleClass="mb-3 bg-cyan-500">
         <h5 class="block text-white font-bold font-medium mb-1 ">
-            Finalizar tramite
+            Datos de finalización
         </h5>
     </p-toolbar>
 
     <div class="col-12 border-bottom-1 surface-border">
-        <div class="p-formgrid grid">
-            <!-- FORMULARIO FINALIZAR TRAMITE-->
-            <div class="col-12">
-                DATOS
+        <div class="grid">
+            <div class="col-12 lg:col-12 xl:col-12">
+                <span class="text font-medium text-1xl">Fecha de finalización:<span class="text ml-2 font-medium"> {{dataTramite.fecha_finalizacion| date: 'dd/MM/yyyy'}} </span></span>
             </div>
-            <!--  FIN FORMULARIO FINALIZAR TRAMITE -->
+            
+        </div>
+    </div>
+    <div class="col-12 border-bottom-1 surface-border">
+        <div class="grid">
+            <div class="col-12 lg:col-12 xl:col-12">
+                <span class="text font-medium text-1xl">Observación:<span class="text ml-2 font-medium"> {{dataTramite.observacion_finalizacion}} </span></span>
+            </div>
+
+        </div>
+    </div>
+    
+</div>
+<!-- FIN CARD FINALIZAR TRAMITE -->
+
+<!-- CARD PIE -->
+<div class="card p-fluid mb-0 mt-2">
+    
+    <div class="col-12 border-bottom-1 surface-border">
+        <div class="p-formgrid grid">            
             <div class="col-6">
                 <button pButton pRipple type="button" label="IMPRIMIR tramite" class="p-button mr-2 mb-2" ></button>
             </div>
         </div>
     </div>
 </div>
-<!-- FIN CARD FINALIZAR TRAMITE -->
+<!-- FIN CARD PIE -->

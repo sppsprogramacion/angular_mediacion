@@ -54,6 +54,7 @@ export class TramiteModel{
         public asignaciones?: UsuarioTramiteModel[],
         public convocados?: ConvocadoModel[],
         public vinculados?: VinculadoModel[],
+        public fecha_finalizacion?: Date,
         public observacion_finalizacion?: string
     ){}
 }
