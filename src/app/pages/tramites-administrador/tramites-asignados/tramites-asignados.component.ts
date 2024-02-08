@@ -45,7 +45,7 @@ export class TramitesAsignadosComponent implements OnInit {
     if (globalConstants.isAdministrador) {
       console.log("administrador ", globalConstants.isAdministrador);
       this.tituloPagina ="Usuario: Administrador"
-      this.listarTramitesAdministrador();
+      this.listarTramitesUsuario();
     }
 
     if (globalConstants.ciudadanoLogin) {
