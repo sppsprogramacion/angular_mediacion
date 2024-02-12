@@ -425,6 +425,15 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       }
     }
     //FIN SIN SELECCIONAR PROVINCIA
+    
+    //PARA VERIFICAR SI EL DNI ES VACIO PARA COLOCAR CERO
+    let dni_aux: number = 0  
+    if (this.formaConvocado.get('dni')?.value === "") {
+      dni_aux = 0;
+    }  
+    else{
+      dni_aux = parseInt(this.formaConvocado.get('dni')?.value)
+    }
 
     //PROVINCIA SALTA SELECCIONADA
     if(id_provincia == 18 ){
@@ -440,11 +449,11 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       }      
       if(this.formaConvocado.invalid || this.formaDomicilioSalta.invalid) return;      
       //FIN VAIDACIONES DE FORMULARIOS
-
+      
       this.convocado = {
         apellido: this.formaConvocado.get('apellido')?.value,
         nombre: this.formaConvocado.get('nombre')?.value,
-        dni: parseInt(this.formaConvocado.get('dni')?.value),
+        dni: dni_aux,
         sexo_id: parseInt(this.formaConvocado.get('sexo_id')?.value),
         departamento_id: parseInt(this.formaDomicilioSalta.get('departamento_id')?.value),
         municipio_id: parseInt(this.formaDomicilioSalta.get('municipio_id')?.value),
@@ -497,7 +506,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       this.convocado = {
         apellido: this.formaConvocado.get('apellido')?.value,
         nombre: this.formaConvocado.get('nombre')?.value,
-        dni: parseInt(this.formaConvocado.get('dni')?.value),
+        dni: dni_aux,
         sexo_id: parseInt(this.formaConvocado.get('sexo_id')?.value),
         provincia_id: parseInt(this.formaProvincia.get('provincia_id')?.value),        
         codigo_postal: parseInt(this.formaDomicilioNoSalta.get('codigo_postal')?.value),

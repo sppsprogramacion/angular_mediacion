@@ -266,6 +266,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
         next: (resultado) => {
           let usuarioTramiteRes: UsuarioTramiteModel = resultado;
           Swal.fire('Exito',`La asignacion de mediador se realizo con exito`,"success");
+
         },
         error: (err) => {
           Swal.fire('Error',`Error al realizar la asignacion: ${err.error.message}`,"error") 
@@ -394,7 +395,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
       .subscribe({
         next: (resultado) => {          
           this.dataTramite = {};
-          this.dataTramite = resultado[0];  
+          this.dataTramite = resultado;  
           if(this.dataTramite.estado_tramite_id === 1){
       
             this.isNuevo = true;
@@ -689,6 +690,12 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
 
   //ACCEDER A TRAMITES FINALIZADOS
   irTramitesFinalizados(){
+    this.router.navigateByUrl("admin/tramites/finalizados");    
+  }
+  //FIN ACCEDER A DATA SERVICE
+
+  //ACCEDER A TRAMITES FINALIZADOS
+  irTramitesAsignados(){
     this.router.navigateByUrl("admin/tramites/finalizados");    
   }
   //FIN ACCEDER A DATA SERVICE
