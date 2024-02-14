@@ -265,6 +265,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
       .subscribe({
         next: (resultado) => {
           let usuarioTramiteRes: UsuarioTramiteModel = resultado;
+          this.buscarTramite();
           Swal.fire('Exito',`La asignacion de mediador se realizo con exito`,"success");
 
         },
@@ -405,6 +406,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
           }  
           
           if(this.dataTramite.estado_tramite_id === 2) {
+            this.isNuevo= false;
             this.buscarMediadorByNumTramiteActivo();
           }
         }

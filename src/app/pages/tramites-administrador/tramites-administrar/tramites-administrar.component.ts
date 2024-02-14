@@ -222,7 +222,7 @@ export class TramitesAdministrarComponent implements OnInit {
         next: (resultado) => {
           let usuarioTramiteRes: UsuarioTramiteModel = resultado;
           this.hideDialogUsuarioTramite();
-          this.buscarMediadorByNumTramiteActivo();
+          this.buscarTramite();
           this.buscarAsignacionByNumTramiteActivo();
           Swal.fire('Exito',`La asignacion de usuario se realizo con exito`,"success");
         },
