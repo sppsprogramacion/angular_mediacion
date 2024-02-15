@@ -695,11 +695,5 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     this.router.navigateByUrl("admin/tramites/finalizados");    
   }
   //FIN ACCEDER A DATA SERVICE
-
-  //ACCEDER A TRAMITES FINALIZADOS
-  irTramitesAsignados(){
-    this.router.navigateByUrl("admin/tramites/finalizados");    
-  }
-  //FIN ACCEDER A DATA SERVICE
   
 }
