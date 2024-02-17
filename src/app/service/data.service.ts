@@ -41,4 +41,13 @@ export class DataService {
     }
     return fechaAuxiliar;
   }
+
+  getchangeFormatoFechaRetornar(nuevaFecha: Date){
+    let fechaAuxiliar:Date = null;
+    if(nuevaFecha != null){
+      fechaAuxiliar = new Date(this.datePipe.transform(this.ciudadanoData.fecha_nac, "MM-dd-yyyy"))
+      
+    }
+    return fechaAuxiliar;
+  }
 }
