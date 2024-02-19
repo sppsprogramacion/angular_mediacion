@@ -15,6 +15,10 @@
 
         </div>
         <div class="col-12 border-bottom-1 surface-border mt-4">
+            <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
+        </div>
+
+        <div class="col-12 border-bottom-1 surface-border mt-4">
             <div class="grid">
                 <div class="col-12 lg:col-3 xl:col-3">
                     <span class="text font-medium text-1xl">Tramite N°:<span class="text ml-2 font-medium"> {{dataTramite.numero_tramite}} </span></span>

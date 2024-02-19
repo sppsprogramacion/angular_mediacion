@@ -95,6 +95,8 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   formaFinalizarTramite: FormGroup;
   formaMediadorAsignado: FormGroup;  
 
+  posicion: string = "top";
+
   constructor(
     private fb: FormBuilder,
     private readonly datePipe: DatePipe,

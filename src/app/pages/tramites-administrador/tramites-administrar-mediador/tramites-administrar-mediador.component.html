@@ -630,7 +630,7 @@
 
     <!-- DIALOG FORMULARIO GENERAR AUDIENCIAS -->
     <!-- <p-dialog id="usuarioTramiteDialog" [(visible)]="usuarioTramiteDialog" [style]="{width: '500px'}" header="Asignar Usuario" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}"></p-dialog> -->
-    <p-dialog id="audienciaDialog" [(visible)]="audienciaDialog" [style]="{width: '500px'}" header="Generar audiencia" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}">
+    <p-dialog id="audienciaDialog" [(visible)]="audienciaDialog" [style]="{width: '500px','min-height':'400px'}" [position]="posicion" header="Generar audiencia" class="p-fluid" [closable]="false" [modal]="true" >
         <!-- MENSAJE DE ERROR -->
         <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
         <ng-template pTemplate="content">
