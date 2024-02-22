@@ -118,7 +118,9 @@
                 </div>
                 <!--  FIN FORMULARIO CIUDADANO -->
                 <div  class="col-12 grid justify-content-center">
-                    <button pButton pRipple type="button" label="Guardar" class="p-button-success mr-2 mb-2" style="width: 80%;" ></button>
+                    <button pButton pRipple type="button" label="Guardar" class="p-button-success mr-2 mb-2" style="width: 80%;" (click)="submitFormCiudadano()" ></button>
+                    <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mt-2 " style="width: 80%;" (click)="irAPrincipal()"></button>
+                    
                 </div>
             </div>
         </div>
