@@ -10,6 +10,7 @@ import { UsuariosTramiteService } from 'src/app/service/usuarios-tramite.service
 import { UsuariosService } from 'src/app/service/usuarios.service';
 import { ConvocadoModel } from '../../../models/convocado.model';
 import { VinculadoModel } from '../../../models/vinculado.model';
+import { TramitesService } from 'src/app/service/tramites.service';
 @Component({
   selector: 'app-ciudadano-tramite-administrar',
   templateUrl: './ciudadano-tramite-administrar.component.html',
@@ -39,11 +40,12 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
   constructor(
     private readonly datePipe: DatePipe,
     public dataService: DataService,
-    private usuarioService: UsuariosService,
     private centroMediacionService: CentrosMediacionService,
+    private funcionTramiteService: FuncionTramiteService,
+    private tramiteService: TramitesService,   
     private usuariosCentroService: UsuariosCentroService,
+    private usuarioService: UsuariosService,
     private usuarioTramiteService: UsuariosTramiteService,
-    private funcionTramiteService: FuncionTramiteService
     
   ) { 
     //OBTENER EL TRAMITE
@@ -78,6 +80,49 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
       });       
   }
 
+  //BUSCAR MEDIADOR DEL TRAMITE X NUMERO TRAMITE ACTIVO
+  buscarMediadorByNumTramiteActivo(){
+    this.usuarioTramiteService.buscarMediadorByNumTramiteActivo(this.dataService.tramiteData.numero_tramite)
+      .subscribe({
+        next: (resultado) => {
+          this.dataUsuarioTramite = resultado; 
+          this.loadingUsuariosTramite = false;     
+        },
+        error: (err) => {
+          this.dataUsuarioTramite= {};
+          this.loadingUsuariosTramite = false;  
+          //Swal.fire('Error',`Error al buscar tramite asignado: ${err.error.message}`,"error") 
+        }
+      });       
+  }
+  //FIN BUSCAR MEDIADOR DEL TRAMITE X NUMERO TRAMITE ACTIVO...................................
+  
+
+  //BUSCAR TRAMITE 
+  buscarTramite(){  
+    this.dataTramite = {};  
+    this.tramiteService.buscarTramiteNumTram(this.dataService.tramiteData.numero_tramite)
+      .subscribe({
+        next: (resultado) => {          
+          this.dataTramite = {};
+          this.dataTramite = resultado;  
+          if(this.dataTramite.estado_tramite_id === 1){
+      
+            
+            //cargar datos formulario recibir tramite
+            // this.cargarCentrosMediacion(globalConstants.usuarioLogin.id_usuario);
+            // this.listarFuncionTramite();
+          }  
+          
+          if(this.dataTramite.estado_tramite_id === 2) {
+            
+            this.buscarMediadorByNumTramiteActivo();
+          }
+        }
+      });    
+  }
+  //FIN BUSCAR TRAMITE................................................................... 
+
   //MANEJO DE FORMULARIO DIALOG VINCULADO
   openDialogConvocado(convocado: ConvocadoModel) {
     this.dataConvocado = convocado;
@@ -90,6 +135,7 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
   }    
   //FIN MANEJO FORMULARIO DIALOG VINCULADO....................................
 
+  
   //MANEJO DE FORMULARIO DIALOG VINCULADO
   reiniciarFormularioVinculado(){
     
