@@ -10,13 +10,17 @@ import { UsuariosTramiteService } from 'src/app/service/usuarios-tramite.service
 import { UsuariosService } from 'src/app/service/usuarios.service';
 import { ConvocadoModel } from '../../../models/convocado.model';
 import { VinculadoModel } from '../../../models/vinculado.model';
+import { Message, MessageService } from 'primeng/api';
 import { TramitesService } from 'src/app/service/tramites.service';
 @Component({
   selector: 'app-ciudadano-tramite-administrar',
   templateUrl: './ciudadano-tramite-administrar.component.html',
+  providers: [MessageService,],
   styleUrls: ['./ciudadano-tramite-administrar.component.scss']
 })
 export class CiudadanoTramitesAdministrarComponent implements OnInit {
+
+  msgs: Message[] = []; 
 
   //MODELOS
   dataTramite: TramiteModel= new TramiteModel;
@@ -58,6 +62,11 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
   ngOnInit(): void {
     this.dataTramite= this.dataService.tramiteData;
     if(this.dataTramite){
+      this.msgs = []; 
+      if (this.dataTramite.es_expediente){
+        this.msgs.push({ severity: 'success', summary: 'Expediente', detail: 'Se generó el número de expediente para su tramite' });
+      }
+
       this.buscarAsignacionByNumTramiteActivo();
       console.log(this.dataTramite.convocados);
     }

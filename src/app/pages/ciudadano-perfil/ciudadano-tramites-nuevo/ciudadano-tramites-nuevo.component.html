@@ -312,7 +312,7 @@
 
                             <!-- DIALOG FORMULARIO CONVOCADOS -->
                             <!-- <p-dialog id="usuarioTramiteDialog" [(visible)]="convocadoTramiteDialog" [style]="{width: '500px'}"  class="p-fluid" header="Nuevo Convocado" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}"> -->
-                            <p-dialog id="usuarioTramiteDialog" [(visible)]="convocadoTramiteDialog" [style]="{width: '500px','min-height':'400px'}" [position]="posicion" class="p-fluid" header="Nuevo Convocado" [closable]="false" [modal]="true">
+                            <p-dialog id="convocadoTramiteDialog" [(visible)]="convocadoTramiteDialog" [style]="{width: '500px','min-height':'400px'}" [position]="posicion" class="p-fluid"  [closable]="false" [modal]="true">
                                 <!-- MENSAJE DE ERROR -->
                                 <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
                                 <ng-template pTemplate="content">
