@@ -128,7 +128,7 @@ export class TramitesAdministrarFinalizadoComponent implements OnInit {
       .subscribe({
         next: (resultado) => {          
           this.dataTramite = {};
-          this.dataTramite = resultado[0]; 
+          this.dataTramite = resultado; 
           
           if(this.dataTramite.estado_tramite_id === 3) {
             this.buscarMediadorByNumTramiteActivo();

@@ -49,9 +49,55 @@ export class CiudadanoDatospersonalesComponent implements OnInit {
       fecha_nac: [,[Validators.required]],  
       email: ['',[Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],    
       
-    
     });
-   }
+  }
+  //FIN CONSTRUCTOR....................................................
+
+  //MENSAJES DE VALIDACIONES
+  user_validation_messages = {
+    //datos tramite
+    'dni': [
+      { type: 'required', message: 'El dni es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' },
+      { type: 'minlength', message: 'El número ingresado debe tener mas de 5 digitos.' }
+    ],
+    'apellido': [
+      { type: 'required', message: 'El apellido es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
+      { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
+      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
+    ],
+    'nombre': [
+      { type: 'required', message: 'El nombre es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
+      { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
+      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
+    ],
+    'sexo_id': [
+      { type: 'required', message: 'El sexo es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
+    ],
+    'telefono': [
+      { type: 'required', message: 'El télefono es requerido.' },
+        { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
+        { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
+    ],
+    'fecha_nac': [
+      { type: 'required', message: 'La fecha de nacimiento es requerida.' },
+    ],
+    'email': [
+      { type: 'required', message: 'El e-mail es requerido' },
+      { type: 'pattern', message: 'El formato del e-mail no es correcto.' }
+    ],
+    
+  }
+  //FIN MENSAJES DE VALIDACIONES...............................................................
+
+  //VALIDACIONES DE FORMULARIO
+  isValid(campo: string): boolean{     
+    
+    return this.formaCiudadano.get(campo)?.invalid && this.formaCiudadano.get(campo)?.touched;      
+  }
 
   ngOnInit(): void {
     
@@ -92,7 +138,6 @@ export class CiudadanoDatospersonalesComponent implements OnInit {
       telefono: this.formaCiudadano.get('telefono')?.value,
       fecha_nac: this.dataService.getchangeFormatoFechaGuardar(this.formaCiudadano.get('fecha_nac')?.value),  
       email: this.formaCiudadano.get('email')?.value,    
-      
        
     };
     

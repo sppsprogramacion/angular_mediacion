@@ -73,6 +73,7 @@ export class RegistroComponent implements OnInit {
     });
     
   }
+  //FIN CONSTRUCTOR..............................................................
 
   //MENSAJES DE VALIDACIONES
   user_validation_messages = {

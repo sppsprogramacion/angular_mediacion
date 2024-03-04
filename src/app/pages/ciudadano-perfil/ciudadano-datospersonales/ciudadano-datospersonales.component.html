@@ -25,13 +25,13 @@
                                 <div class="field col-12 md:col-6 lg:col-6">
                                     <label for="dni">DNI usuario</label>
                                     <input type="text" pInputText id="dni" formControlName="dni" />
-                                    <!-- <small *ngIf="isValid('dni')" class="p-error">
+                                    <small *ngIf="isValid('dni')" class="p-error">
                                         <div *ngFor="let validation of user_validation_messages.dni" >
-                                            <div  *ngIf="formaRegistro.get('dni')?.hasError(validation.type)">
+                                            <div  *ngIf="formaCiudadano.get('dni')?.hasError(validation.type)">
                                                 {{validation.message}}
                                             </div>
                                         </div>
-                                    </small> -->
+                                    </small>
                                 </div>
                             </div>
 
@@ -39,24 +39,24 @@
                                 <div class="field col-12 md:col-6 lg:col-6">
                                     <label for="apellido">Apellido</label>
                                     <input type="text" pInputText id="apellido" formControlName="apellido" />
-                                    <!-- <small *ngIf="isValid('apellido')" class="p-error">
+                                    <small *ngIf="isValid('apellido')" class="p-error">
                                         <div *ngFor="let validation of user_validation_messages.apellido" >
-                                            <div  *ngIf="formaRegistro.get('apellido')?.hasError(validation.type)">
+                                            <div  *ngIf="formaCiudadano.get('apellido')?.hasError(validation.type)">
                                                 {{validation.message}}
                                             </div>
                                         </div>
-                                    </small> -->
+                                    </small>
                                 </div>
                                 <div class="field col-12 md:col-6 lg:col-6">
                                     <label for="nombre">Nombre</label>
                                     <input type="text" pInputText id="nombre" formControlName="nombre" />
-                                    <!-- <small *ngIf="isValid('nombre')" class="p-error">
+                                    <small *ngIf="isValid('nombre')" class="p-error">
                                         <div *ngFor="let validation of user_validation_messages.nombre" >
-                                            <div  *ngIf="formaRegistro.get('nombre')?.hasError(validation.type)">
+                                            <div  *ngIf="formaCiudadano.get('nombre')?.hasError(validation.type)">
                                                 {{validation.message}}
                                             </div>
                                         </div>
-                                    </small> -->
+                                    </small>
                                 </div>
                             </div>
     
@@ -83,18 +83,17 @@
                             </p-toolbar>
                             <div class="bg-cyan-600"></div>
 
-                            
                             <div class="formgrid grid">
                                 <div class="field col">
                                     <label for="telefono">Teléfono</label>
                                     <input type="text" pInputText id="telefono" formControlName="telefono" />
-                                    <!-- <small *ngIf="isValid('telefono')" class="p-error">
+                                    <small *ngIf="isValid('telefono')" class="p-error">
                                         <div *ngFor="let validation of user_validation_messages.telefono" >
-                                            <div  *ngIf="formaRegistro.get('telefono')?.hasError(validation.type)">
+                                            <div  *ngIf="formaCiudadano.get('telefono')?.hasError(validation.type)">
                                                 {{validation.message}}
                                             </div>
                                         </div>
-                                    </small> -->
+                                    </small>
                                 </div>
                             </div>
                             <div class="formgrid grid">
@@ -102,13 +101,13 @@
                             <div class="field col">
                                 <label for="email">Correo electrónico</label>
                                 <input type="text" pInputText id="email" formControlName="email" />
-                                <!-- <small *ngIf="isValid('email')" class="p-error">
+                                <small *ngIf="isValid('email')" class="p-error">
                                     <div *ngFor="let validation of user_validation_messages.email" >
-                                        <div  *ngIf="formaRegistro.get('email')?.hasError(validation.type)">
+                                        <div  *ngIf="formaCiudadano.get('email')?.hasError(validation.type)">
                                             {{validation.message}}
                                         </div>
                                     </div>
-                                </small> -->
+                                </small>
                             </div>
                             </div>
                             
