@@ -104,7 +104,7 @@
         <div class="col-12 border-bottom-1 surface-border">
             <div class="grid">
                 <div class="col-12">
-                    <span class="text font-medium text-1xl">Existe violencia entre las partes:<span class="text ml-1 font-medium"> {{dataTramite.violencia_partes}}</span></span>
+                    <span class="text font-medium text-1xl">Existe violencia entre las partes:<span class="text ml-1 font-medium"> {{dataTramite.violencia_partes === true?"SI": "NO"}}</span></span>
                 </div>
             </div>
         </div>
@@ -114,13 +114,13 @@
                     <span class="text font-bold font-medium text-1xl">Violencia de género</span>
                 </div>
                 <div class="col-12 lg:col-6 xl:col-6">
-                    <span class="text font-medium text-1xl">Existe violencia de género:<span class="text ml-1 font-medium"> {{dataTramite.violencia_genero}} </span></span>
+                    <span class="text font-medium text-1xl">Existe violencia de género:<span class="text ml-1 font-medium"> {{dataTramite.violencia_genero === true?"SI": "NO"}} </span></span>
                 </div>
                 <div class="col-12 lg:col-6 xl:col-6">
-                    <span class="text font-medium text-1xl">Existe denucnia:<span class="text ml-1 font-medium"> {{dataTramite.existe_denuncia}} </span></span>
+                    <span class="text font-medium text-1xl">Existe denucnia:<span class="text ml-1 font-medium"> {{dataTramite.existe_denuncia === true?"SI": "NO"}} </span></span>
                 </div>
                 <div class="col-12 lg:col-6 xl:col-6">
-                    <span class="text font-medium text-1xl">Existe medida cautelar?:<span class="text ml-1 font-medium"> {{dataTramite.medida_cautelar}} </span></span>
+                    <span class="text font-medium text-1xl">Existe medida cautelar?:<span class="text ml-1 font-medium"> {{dataTramite.medida_cautelar === true?"SI": "NO"}} </span></span>
                 </div>
             </div>
 

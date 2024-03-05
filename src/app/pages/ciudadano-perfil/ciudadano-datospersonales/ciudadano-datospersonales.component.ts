@@ -42,8 +42,8 @@ export class CiudadanoDatospersonalesComponent implements OnInit {
 
     this.formaCiudadano = this.fb.group({
       dni: ['',[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.minLength(5)]],
-      apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
-      nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-zñÑ0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-zñÑ0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
       sexo_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       fecha_nac: [,[Validators.required]],  
@@ -104,8 +104,6 @@ export class CiudadanoDatospersonalesComponent implements OnInit {
     //cargar datos del ciudadano en el formulario
     this.ciudadanoData = globalConstants.ciudadanoLogin;
 
-    console.log("fecha nacimiento",this.ciudadanoData.fecha_nac);
-
     this.cargarFormularioCiudadano();
 
     //fin cargar datos del ciudadano en el formulario
@@ -119,10 +117,8 @@ export class CiudadanoDatospersonalesComponent implements OnInit {
   submitFormCiudadano(){
     
     if(this.formaCiudadano.invalid){       
-        console.log("formulario registro", this.formaCiudadano);
-        //let fechaAuxiliar = this.formaCiudadano.transform(this.formaCiudadano.get('fecha_nac')?.value,"yyyy-MM-dd")!;
         
-        console.log("errores formulario");
+        Swal.fire('Formulario con errores',`Complete correctamente todos los campos del formulario`,"warning");
         return Object.values(this.formaCiudadano.controls).forEach(control => control.markAsTouched());
     }
     
@@ -141,7 +137,6 @@ export class CiudadanoDatospersonalesComponent implements OnInit {
        
     };
     
-    console.log("fecha nacimiento enviada",dataRegistro.fecha_nac); 
     //GUARDAR EDICION CIUDADANO
     this.ciudadanoService.guardarEdicionCiudadano(this.ciudadanoData.id_ciudadano, dataRegistro)
       .subscribe({
