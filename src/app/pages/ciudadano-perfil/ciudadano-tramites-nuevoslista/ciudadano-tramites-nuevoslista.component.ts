@@ -14,10 +14,13 @@ import { UsuariosTramiteService } from 'src/app/service/usuarios-tramite.service
 })
 export class CiudadanoTramitesNuevoslistaComponent implements OnInit {
 
-  loading:boolean = true;
-
+  
   //MODELOS
   dataCiudadano: CiudadanoModel = new CiudadanoModel;
+
+  //BOOLEANAS
+  datosPersonalesDialog:boolean = false;
+  loading:boolean = true;
 
   //LISTAS    
   listTramites: TramiteModel[]=[];
@@ -68,12 +71,31 @@ export class CiudadanoTramitesNuevoslistaComponent implements OnInit {
     });
   }
   //FIN LISTADO DE TRAMITES ASIGNADOS.......................................................
+
+
+  //MANEJO DE FORMULARIO DIALOG DATOS PERSONALES
+  openDialogDatosPersonales() {
+    
+    this.datosPersonalesDialog = true;     
+  }
+  
+  hideDialogDatosPersonales() {    
+    this.datosPersonalesDialog = false;    
+  }    
+  //FIN MANEJO FORMULARIO DIALOG DATOS PERSONALES....................................
+  
   
   //ABRIR NUEVO TRAMITE
   abrirNuevoTramite(){
     this.router.navigateByUrl("ciudadano/tramites/nuevo");
   }
   //FIN ABRIR NUEVO TRAMITE
+
+  //ABRIR MODIFICAR DATOS PERSONALES
+  abrirModificarDatosPersonales(){
+    this.router.navigateByUrl("ciudadano/datospersonales");
+  }
+  //FIN ABRIR MODIFICAR DATOS PERSONALES
 
   //ACCEDER A DATA SERVICE
   administrarTramite(data: TramiteModel){
