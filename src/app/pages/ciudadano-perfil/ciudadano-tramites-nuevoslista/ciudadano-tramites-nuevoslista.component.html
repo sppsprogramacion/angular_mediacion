@@ -107,7 +107,7 @@
             </p-table>
             <!-- FIN TABLA DE TRAMITES -->
             <!-- DIALOG VER AUDIENCIA FINALIZADA-->
-    <p-dialog id="datosPersonalesDialog" [(visible)]="datosPersonalesDialog" [style]="{width: '500px','min-height':'350px'}" class="p-fluid" header="Datos de la audiencia" [closable]="false" [modal]="true">
+    <p-dialog id="datosPersonalesDialog" [(visible)]="datosPersonalesDialog" [style]="{width: '500px','min-height':'350px'}" class="p-fluid" header="Verificar datos personales" [closable]="false" [modal]="true">
         
 
         <ng-template pTemplate="content">
@@ -141,12 +141,14 @@
                     </div>
 
                 </div>
-            </div>           
+            </div>    
+            <p-messages [(value)]="msgsDatosPersonales" [enableService]="false" [closable]="false"></p-messages>       
         </ng-template>
 
-        <ng-template pTemplate="footer" class="mt-1">
-            <button pButton pRipple type="button" label="Coninuar" class="p-button-outlined p-button mr-2 mb-2" (click)="abrirNuevoTramite()"></button>
-            <button pButton pRipple type="button" label="Modificar datos" class="p-button-outlined p-button-secondary mr-2 mb-2" (click)="abrirModificarDatosPersonales()"></button>
+        <ng-template pTemplate="footer" class="mt-1">           
+            
+            <button pButton pRipple type="button" label="Coninuar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="abrirNuevoTramite()"></button>
+            <button pButton pRipple type="button" label="Modificar datos" class="p-button-outlined p-button-help mr-2 mb-2" (click)="abrirModificarDatosPersonales()"></button>
             <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogDatosPersonales()"></button>
         </ng-template>
     </p-dialog>

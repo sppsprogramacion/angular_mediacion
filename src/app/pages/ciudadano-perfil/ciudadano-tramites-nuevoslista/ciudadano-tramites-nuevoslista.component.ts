@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { globalConstants } from 'src/app/common/global-constants';
+import { Message } from 'primeng/api';
+
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
-import { TramiteModel } from 'src/app/models/tramite.model';
 import { DataService } from 'src/app/service/data.service';
+import { globalConstants } from 'src/app/common/global-constants';
+import { TramiteModel } from 'src/app/models/tramite.model';
 import { TramitesService } from 'src/app/service/tramites.service';
 import { UsuariosTramiteService } from 'src/app/service/usuarios-tramite.service';
 
@@ -14,6 +16,8 @@ import { UsuariosTramiteService } from 'src/app/service/usuarios-tramite.service
 })
 export class CiudadanoTramitesNuevoslistaComponent implements OnInit {
 
+
+  msgsDatosPersonales: Message[] = []; 
   
   //MODELOS
   dataCiudadano: CiudadanoModel = new CiudadanoModel;
@@ -75,6 +79,9 @@ export class CiudadanoTramitesNuevoslistaComponent implements OnInit {
 
   //MANEJO DE FORMULARIO DIALOG DATOS PERSONALES
   openDialogDatosPersonales() {
+    this.msgsDatosPersonales = []; 
+    this.msgsDatosPersonales.push({ severity: 'info', detail: 'Si los datos son correctos presione el botón "Continuar" para solicitar un nuevo tramite.'});
+    this.msgsDatosPersonales.push({ severity: 'info', detail: 'Si hay datos incorrectos presione el botón "Modificar datos" para corregir sus datos personales.'});
     
     this.datosPersonalesDialog = true;     
   }

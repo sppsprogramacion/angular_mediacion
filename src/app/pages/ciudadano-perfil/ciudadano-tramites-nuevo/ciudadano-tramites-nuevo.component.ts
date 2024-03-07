@@ -35,6 +35,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   selectedState:any;  
 
   msgs: Message[] = []; 
+  msgsDatosPersonales: Message[] = []; 
   msgsVinculado: Message[] = [];
 
   //listas  
@@ -308,6 +309,9 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   ngOnInit(): void {    
     this.ciudadanoData = this.dataService.ciudadanoData
 
+    this.msgsDatosPersonales = []; 
+    this.msgsDatosPersonales.push({ severity: 'warning', detail: 'Debe estar asesordo/a por un abogado antes de iniciar un tramite de mediación.'});
+
     //CARGA DE LISTADOS DESDE DATA MOKEADA
     this.listaCategorias = DataMokeada.categorias;
     this.listObjetos = objetos;
@@ -324,7 +328,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   //GUARDAR NUEVO TRAMITE  
   submitFormTramite(){
     if(this.formaTramite.invalid){                        
-        Swal.fire('Formulario incompleto',`Complete correctamente todos los campos del formulario`,"error");
+        Swal.fire('Formulario incompleto',`Complete correctamente todos los campos del formulario`,"warning");
         let fechaAuxiliar = this.datePipe.transform(this.formaTramite.get('fecha_nac')?.value,"yyyy-MM-dd")!;
         console.log(this.formaTramite.controls);
         return Object.values(this.formaTramite.controls).forEach(control => control.markAsTouched());
@@ -728,6 +732,12 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       this.estaAsesorado = false;
     }
   }
+
+  //IR A REGISTRARME
+  irAPrincipal(){
+    this.router.navigateByUrl("ciudadano/tramites/nuevos");
+  }
+  //FIN IR A REGISTRARME
   
 }
 

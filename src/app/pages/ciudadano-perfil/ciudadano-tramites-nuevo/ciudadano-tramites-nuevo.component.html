@@ -20,8 +20,10 @@
                             </p-toolbar>
                             <div class="bg-cyan-600">
 
+                                
                             </div>
-                            <div class="formgrid grid">
+
+                            <div class="formgrid grid">                                    
                                 <div class="field col-12 sm:col-6 md:col-6">
                                     <label for="esta_asesorado">¿Está asesorado?</label>
                                     <p-dropdown id="esta_asesorado" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="esta_asesorado" (onChange)="onChangeAsesorado()">
@@ -33,6 +35,7 @@
                             </div>
                         </div>
                         <!-- FIN CARD ASESORADO-->
+
                         <!-- CARD MI DOMICILIO -->
                         <div *ngIf="estaAsesorado" class="card p-fluid">
                             <p-toolbar styleClass="mb-3 bg-orange-500">
@@ -765,8 +768,9 @@
                     </form>
                 </div>
                 <!--  FIN FORMULARIO TRAMITES -->
-                <div *ngIf="estaAsesorado" class="col-12 grid justify-content-center">
-                    <button pButton pRipple type="button" label="Guardar" class="p-button-success mr-2 mb-2" style="width: 80%;" (click)="submitFormTramite()"></button>
+                <div *ngIf="estaAsesorado" class="col-12 grid justify-content-center">                    
+                    <button pButton pRipple type="button" label="Guardar" class="p-button-success" style="width: 47%;" (click)="submitFormTramite()" ></button>
+                    <button pButton pRipple type="button" label="Cancelar" class="p-button-danger ml-2" style="width: 47%;" (click)="irAPrincipal()"></button>
                 </div>
             </div>
         </div>
