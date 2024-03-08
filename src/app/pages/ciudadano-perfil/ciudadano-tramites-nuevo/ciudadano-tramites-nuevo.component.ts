@@ -35,6 +35,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   selectedState:any;  
 
   msgs: Message[] = []; 
+  msgsAsesorado: Message[] = []; 
   msgsDatosPersonales: Message[] = []; 
   msgsVinculado: Message[] = [];
 
