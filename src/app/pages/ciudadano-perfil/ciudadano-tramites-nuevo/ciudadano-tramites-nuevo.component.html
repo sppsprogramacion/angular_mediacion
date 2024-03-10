@@ -244,8 +244,83 @@
                                         </div>
                                     </ng-template>
                                 </p-toolbar>
-                                <!-- TABLA DE CONVOCADOS -->
+
+                                <!-- TABLA DE CONVOCADOS SALTA-->
                                 <p-table #dt1 [value]="listConvocadosAux" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th style="width: 3rem"></th>
+                                            <th>
+                                                <div style="width: 6rem" class="flex justify-content-between align-items-left">
+                                                    Apellido
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="flex justify-content-between align-items-center">
+                                                    Nombre
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="flex justify-content-between align-items-center">
+                                                    DNI
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="flex justify-content-between align-items-center">
+                                                    Sexo
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="flex justify-content-between align-items-center">
+                                                    Provincia
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-convocado>
+                                        <tr>
+                                            <td>
+                                                <button pButton pRipple type="button" icon="pi pi-folder-open text-purple-100" class="p-button-secondary p-button-rounded bg-purple-500 mr-1 mb-1" (click)="quitarConvocado(convocado)"></button>    
+                                            </td>
+                                            <td style="min-width: 15rem;">
+                                                {{convocado.apellido}}
+                                            </td>
+                                            <td style="min-width: 2rem;">
+                                                {{convocado.nombre}}
+                                            </td>
+                                            <td style="min-width: 10rem;">
+                                                {{convocado.dni}}
+                                            </td>
+                                            <td style="min-width: 10rem;">
+                                                {{convocado.sexo }}
+                                            </td>
+                                            <td style="min-width: 15rem;">
+                                                {{convocado.provincia}}
+                                            </td>
+                                            <td style="min-width: 15rem;">
+                                                {{convocado.departamento}}
+                                            </td>
+                                            <td style="min-width: 15rem;">
+                                                {{convocado.municipio}}
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+
+                                    <ng-template pTemplate="emptymessage">
+                                        <tr>
+                                            <td colspan="8">No se encontraron convocados agregados.</td>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="loadingbody">
+                                        <tr>
+                                            <td colspan="8">Cargando convocados... .</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                                <!-- FIN TABLA DE CONVOCADOS SALTA -->
+
+                                <!-- TABLA DE CONVOCADOS NO SALTA-->
+                                <p-table #dt1 [value]="listConvocadosNoSalta" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
                                     <ng-template pTemplate="header">
                                         <tr>
                                             <th style="width: 3rem"></th>
@@ -292,10 +367,10 @@
                                                 {{convocado.dni}}
                                             </td>
                                             <td style="min-width: 10rem;">
-                                                {{convocado.sexo}}
+                                                {{convocado.sexo.sexo}}
                                             </td>
                                             <td style="min-width: 15rem;">
-                                                {{convocado.provincia}}
+                                                {{convocado.provincia.provincia}}
                                             </td>
                                         </tr>
                                     </ng-template>
@@ -311,7 +386,7 @@
                                         </tr>
                                     </ng-template>
                                 </p-table>
-                                <!-- FIN TABLA DE CONVOCADOS -->
+                                <!-- FIN TABLA DE CONVOCADOS NO SALTA -->
 
                             </div>
 

@@ -433,7 +433,9 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     
     //PARA VERIFICAR SI EL DNI ES VACIO PARA COLOCAR CERO
     let dni_aux: number = 0  
-    if (this.formaConvocado.get('dni')?.value === "") {
+    dni_aux = parseInt(this.formaConvocado.get('dni')?.value)
+
+    if (!dni_aux ) {
       dni_aux = 0;
     }  
     else{
@@ -455,6 +457,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       if(this.formaConvocado.invalid || this.formaDomicilioSalta.invalid) return;      
       //FIN VAIDACIONES DE FORMULARIOS
       
+      
       this.convocado = {
         apellido: this.formaConvocado.get('apellido')?.value,
         nombre: this.formaConvocado.get('nombre')?.value,
@@ -470,17 +473,28 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
         telefono: this.formaDomicilioSalta.get('telefono')?.value,
         email: this.formaDomicilioSalta.get('email')?.value,
       }  
+
       this.listConvocados.push(this.convocado);
 
       //ARMAR ARRAY AUXILIAR
       let sexoAux = sexo.filter(sexo => sexo.id_sexo == this.convocado.sexo_id);
       let provinciaAux = provincias.filter(provincia => provincia.id_provincia == id_provincia);
+      let departamentoAux = departamentos.filter(departamento => departamento.id_departamento == this.convocado.departamento_id);
+      let municipioAux = municipios.filter(municipio => municipio.id_municipio == this.convocado.municipio_id);
       this.convocadoAux = {
         apellido: this.convocado.apellido,
         nombre: this.convocado.nombre,
         dni: this.convocado.dni,
         sexo: sexoAux[0].sexo,
-        provincia: provinciaAux[0].provincia,
+        provincia: departamentoAux[0].departamento,
+        departamento: municipioAux[0].municipio,
+        codigo_postal: parseInt(this.formaDomicilioSalta.get('codigo_postal')?.value),
+        localidad_barrio: this.formaDomicilioSalta.get('localidad_barrio')?.value,
+        calle_direccion: this.formaDomicilioSalta.get('calle_direccion')?.value,        
+        numero_dom: parseInt(this.formaDomicilioSalta.get('numero_dom')?.value),
+        punto_referencia: this.formaDomicilioSalta.get('punto_referencia')?.value,
+        telefono: this.formaDomicilioSalta.get('telefono')?.value,
+        email: this.formaDomicilioSalta.get('email')?.value,
         posicion: (this.listConvocados.length -1),
         tipo: "salta"
       }
@@ -733,6 +747,13 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       this.estaAsesorado = false;
     }
   }
+
+  //ACCEDER A DATA SERVICE
+  quitarConvocado(data: any){
+    this.listConvocados = this.listConvocados.filter(convocado => convocado !== data)
+    
+  }
+  //FIN ACCEDER A DATA SERVICE
 
   //IR A REGISTRARME
   irAPrincipal(){
