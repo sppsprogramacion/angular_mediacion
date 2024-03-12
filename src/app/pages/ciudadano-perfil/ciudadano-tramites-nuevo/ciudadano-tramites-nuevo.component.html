@@ -246,7 +246,7 @@
                                 </p-toolbar>
 
                                 <!-- TABLA DE CONVOCADOS SALTA-->
-                                <p-table #dt1 [value]="listConvocadosAux" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
+                                <p-table #dt1 [value]="listConvocados" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
                                     <ng-template pTemplate="header">
                                         <tr>
                                             <th style="width: 3rem"></th>
@@ -264,23 +264,14 @@
                                                 <div class="flex justify-content-between align-items-center">
                                                     DNI
                                                 </div>
-                                            </th>
-                                            <th>
-                                                <div class="flex justify-content-between align-items-center">
-                                                    Sexo
-                                                </div>
-                                            </th>
-                                            <th>
-                                                <div class="flex justify-content-between align-items-center">
-                                                    Provincia
-                                                </div>
-                                            </th>
+                                            </th>                                            
                                         </tr>
                                     </ng-template>
                                     <ng-template pTemplate="body" let-convocado>
                                         <tr>
                                             <td>
-                                                <button pButton pRipple type="button" icon="pi pi-folder-open text-purple-100" class="p-button-secondary p-button-rounded bg-purple-500 mr-1 mb-1" (click)="quitarConvocado(convocado)"></button>    
+                                                <p-button icon="pi pi-search-plus" styleClass="p-button-rounded mb-1" (click)="openDialogVerConvocado(convocado)"></p-button>
+                                                <!-- <button pButton pRipple type="button" icon="pi pi-folder-open text-purple-100" class="p-button-secondary p-button-rounded bg-purple-500 mr-1 mb-1" (click)="quitarConvocado(convocado)"></button>     -->
                                             </td>
                                             <td style="min-width: 15rem;">
                                                 {{convocado.apellido}}
@@ -291,18 +282,7 @@
                                             <td style="min-width: 10rem;">
                                                 {{convocado.dni}}
                                             </td>
-                                            <td style="min-width: 10rem;">
-                                                {{convocado.sexo }}
-                                            </td>
-                                            <td style="min-width: 15rem;">
-                                                {{convocado.provincia}}
-                                            </td>
-                                            <td style="min-width: 15rem;">
-                                                {{convocado.departamento}}
-                                            </td>
-                                            <td style="min-width: 15rem;">
-                                                {{convocado.municipio}}
-                                            </td>
+                                            
                                         </tr>
                                     </ng-template>
 
@@ -318,6 +298,74 @@
                                     </ng-template>
                                 </p-table>
                                 <!-- FIN TABLA DE CONVOCADOS SALTA -->
+                                <!-- DIALOG CONVOCADOS -->
+                                <p-dialog id="convocadoDialog" [(visible)]="convocadoDialog" [style]="{width: '500px','min-height':'400px'}" class="p-fluid" header="Datos de convocado" [closable]="false" [modal]="true">
+
+                                    <ng-template pTemplate="content">
+                                        <div class="col-12 border-bottom-1 surface-border">
+                                            <h6 class="block font-bold font-medium">Datos personales</h6>
+                                            <div class="grid">
+                                                <div class="col-12 lg:col-12 xl:col-12">
+                                                    <span class="text font-medium text-1xl">Nombre:<span class="text ml-1 font-medium"> {{convocadoAux.apellido}} {{convocadoAux.nombre}}</span></span>
+                                                </div>
+                                            </div>
+                                            <div class="grid">
+                                                <div class="col-12 lg:col-6 xl:col-6">
+                                                    <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{convocadoAux.dni}}</span></span>
+                                                </div>
+                                                <div class="col-12 lg:col-6 xl:col-6">
+                                                    <span class="text font-medium text-1xl">Sexo:<span class="text ml-1 font-medium"> {{convocadoAux.sexo}}</span></span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 border-bottom-1 surface-border">
+                                            <h6 class="block font-bold font-medium">Domicilio</h6>
+                                            <div class="grid">
+                                                <div class="col-12 lg:col-6 xl:col-6">
+                                                    <span class="text font-medium text-1xl">Provincia:<span class="text ml-1 font-medium"> {{convocadoAux.provincia}} </span></span>
+                                                </div>
+                                                <div class="col-12 lg:col-6 xl:col-6">
+                                                    <span class="text font-medium text-1xl">Departamento:<span class="text ml-1 font-medium"> {{convocadoAux.departamento}}</span></span>
+                                                </div>
+                                            </div>
+                                            <div class="grid">
+                                                <div class="col-12 lg:col-6 xl:col-6">
+                                                    <span class="text font-medium text-1xl">Municipio:<span class="text ml-1 font-medium"> {{convocadoAux.municipio}}</span></span>
+                                                </div>
+                                                <div class="col-12 lg:col-6 xl:col-6">
+                                                    <span class="text font-medium text-1xl">Codigo Postal:<span class="text ml-1 font-medium"> {{convocadoAux.codigo_postal}}</span></span>
+                                                </div>
+                                            </div>
+                                            <div class="grid">
+                                                <div class="col-12 lg:col-12 xl:col-12">
+                                                    <span class="text font-medium text-1xl">B°:<span class="text ml-1 font-medium"> {{convocadoAux.localidad_barrio}} - Direccion: {{convocadoAux.calle_direccion}} - N° {{convocadoAux.numero_dom}}</span></span>
+                                                </div>
+                                                <div class="col-12 lg:col-12 xl:col-12">
+                                                    <span class="text font-medium text-1xl">Punto de Referencia:<span class="text ml-1 font-medium"> {{convocadoAux.punto_referencia}}</span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 border-bottom-1 surface-border">
+                                            <h6 class="block font-bold font-medium">Contacto</h6>
+                                            <div class="grid">
+                                                <div class="col-12 lg:col-12 xl:col-12">
+                                                    <span class="text font-medium text-1xl">Telefono:<span class="text ml-1 font-medium"> {{convocadoAux.telefono}}</span></span>
+                                                </div>
+                                            </div>
+                                            <div class="grid">
+                                                <div class="col-12 lg:col-12 xl:col-12">
+                                                    <span class="text font-medium text-1xl">Correo Electronico:<span class="text ml-1 font-medium"> {{convocadoAux.email}}</span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+
+                                    <ng-template pTemplate="footer" class="mt-1">
+                                        <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogConvocado()"></button>
+                                    </ng-template>
+                                </p-dialog>
+                                <!-- FIN DIALOG CONVOCADOS -->
 
                                 <!-- TABLA DE CONVOCADOS NO SALTA-->
                                 <p-table #dt1 [value]="listConvocadosNoSalta" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
@@ -339,16 +387,7 @@
                                                     DNI
                                                 </div>
                                             </th>
-                                            <th>
-                                                <div class="flex justify-content-between align-items-center">
-                                                    Sexo
-                                                </div>
-                                            </th>
-                                            <th>
-                                                <div class="flex justify-content-between align-items-center">
-                                                    Provincia
-                                                </div>
-                                            </th>
+                                           
                                         </tr>
                                     </ng-template>
                                     <ng-template pTemplate="body" let-convocado>
@@ -366,12 +405,7 @@
                                             <td style="min-width: 10rem;">
                                                 {{convocado.dni}}
                                             </td>
-                                            <td style="min-width: 10rem;">
-                                                {{convocado.sexo.sexo}}
-                                            </td>
-                                            <td style="min-width: 15rem;">
-                                                {{convocado.provincia.provincia}}
-                                            </td>
+                                            
                                         </tr>
                                     </ng-template>
 
