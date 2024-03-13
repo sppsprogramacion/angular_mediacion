@@ -246,7 +246,7 @@
                                 </p-toolbar>
 
                                 <!-- TABLA DE CONVOCADOS SALTA-->
-                                <p-table #dt1 [value]="listConvocados" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
+                                <p-table #dt1 [value]="listConvocadosAux" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
                                     <ng-template pTemplate="header">
                                         <tr>
                                             <th style="width: 3rem"></th>
@@ -273,13 +273,13 @@
                                                 <p-button icon="pi pi-search-plus" styleClass="p-button-rounded mb-1" (click)="openDialogVerConvocado(convocado)"></p-button>
                                                 <!-- <button pButton pRipple type="button" icon="pi pi-folder-open text-purple-100" class="p-button-secondary p-button-rounded bg-purple-500 mr-1 mb-1" (click)="quitarConvocado(convocado)"></button>     -->
                                             </td>
-                                            <td style="min-width: 15rem;">
+                                            <td style="min-width: 12rem;">
                                                 {{convocado.apellido}}
                                             </td>
-                                            <td style="min-width: 2rem;">
+                                            <td style="min-width: 12rem;">
                                                 {{convocado.nombre}}
                                             </td>
-                                            <td style="min-width: 10rem;">
+                                            <td style="min-width: 5rem;">
                                                 {{convocado.dni}}
                                             </td>
                                             
@@ -298,8 +298,9 @@
                                     </ng-template>
                                 </p-table>
                                 <!-- FIN TABLA DE CONVOCADOS SALTA -->
-                                <!-- DIALOG CONVOCADOS -->
-                                <p-dialog id="convocadoDialog" [(visible)]="convocadoDialog" [style]="{width: '500px','min-height':'400px'}" class="p-fluid" header="Datos de convocado" [closable]="false" [modal]="true">
+
+                                <!-- DIALOG CONVOCADOS SALTA-->
+                                <p-dialog id="convocadoDialog" [(visible)]="convocadoSaltaDialog" [style]="{width: '500px','min-height':'400px'}" class="p-fluid" header="Datos de convocado" [closable]="false" [modal]="true">
 
                                     <ng-template pTemplate="content">
                                         <div class="col-12 border-bottom-1 surface-border">
@@ -362,65 +363,67 @@
                                     </ng-template>
 
                                     <ng-template pTemplate="footer" class="mt-1">
-                                        <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogConvocado()"></button>
+                                        <button pButton pRipple type="button" label="Quitar convocado" class="p-button-outlined p-button-warning mr-2 mb-2" (click)="quitarConvocado()"></button>
+                                        <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogVerConvocado()"></button>
                                     </ng-template>
                                 </p-dialog>
-                                <!-- FIN DIALOG CONVOCADOS -->
+                                <!-- FIN DIALOG CONVOCADOS SALTA -->
 
-                                <!-- TABLA DE CONVOCADOS NO SALTA-->
-                                <p-table #dt1 [value]="listConvocadosNoSalta" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
-                                    <ng-template pTemplate="header">
-                                        <tr>
-                                            <th style="width: 3rem"></th>
-                                            <th>
-                                                <div style="width: 6rem" class="flex justify-content-between align-items-left">
-                                                    Apellido
+                                <!-- DIALOG CONVOCADOS NO SALTA-->
+                                <p-dialog id="convocadoNoSaltaDialog" [(visible)]="convocadoNoSaltaDialog" [style]="{width: '500px','min-height':'400px'}" class="p-fluid" header="Datos de convocado" [closable]="false" [modal]="true">
+
+                                    <ng-template pTemplate="content">
+                                        <div class="col-12 border-bottom-1 surface-border">
+                                            <h6 class="block font-bold font-medium">Datos personales</h6>
+                                            <div class="grid">
+                                                <div class="col-12 lg:col-12 xl:col-12">
+                                                    <span class="text font-medium text-1xl">Nombre:<span class="text ml-1 font-medium"> {{convocadoAux.apellido}} {{convocadoAux.nombre}}</span></span>
                                                 </div>
-                                            </th>
-                                            <th>
-                                                <div class="flex justify-content-between align-items-center">
-                                                    Nombre
+                                            </div>
+                                            <div class="grid">
+                                                <div class="col-12 lg:col-6 xl:col-6">
+                                                    <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{convocadoAux.dni}}</span></span>
                                                 </div>
-                                            </th>
-                                            <th>
-                                                <div class="flex justify-content-between align-items-center">
-                                                    DNI
+                                                <div class="col-12 lg:col-6 xl:col-6">
+                                                    <span class="text font-medium text-1xl">Sexo:<span class="text ml-1 font-medium"> {{convocadoAux.sexo}}</span></span>
                                                 </div>
-                                            </th>
-                                           
-                                        </tr>
-                                    </ng-template>
-                                    <ng-template pTemplate="body" let-convocado>
-                                        <tr>
-                                            <td>
-                                                <!-- <button *ngIf="tramite.estado_tramite_id==1" pButton pRipple type="button" icon="pi pi-folder-open text-purple-100" class="p-button-secondary p-button-rounded bg-purple-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
-                                                <button *ngIf="tramite.estado_tramite_id==2" pButton pRipple type="button" icon="pi pi-folder-open text-orange-100" class="p-button-secondary p-button-rounded bg-orange-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button> -->
-                                            </td>
-                                            <td style="min-width: 15rem;">
-                                                {{convocado.apellido}}
-                                            </td>
-                                            <td style="min-width: 2rem;">
-                                                {{convocado.nombre}}
-                                            </td>
-                                            <td style="min-width: 10rem;">
-                                                {{convocado.dni}}
-                                            </td>
-                                            
-                                        </tr>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 border-bottom-1 surface-border">
+                                            <h6 class="block font-bold font-medium">Domicilio</h6>
+                                            <div class="grid">
+                                                <div class="col-12 lg:col-6 xl:col-6">
+                                                    <span class="text font-medium text-1xl">Provincia:<span class="text ml-1 font-medium"> {{convocadoAux.provincia}} </span></span>
+                                                </div>                                                
+                                            </div>
+                                            <div class="grid">
+                                                <div class="col-12 lg:col-6 xl:col-6">
+                                                    <span class="text font-medium text-1xl">Codigo Postal:<span class="text ml-1 font-medium"> {{convocadoAux.codigo_postal}}</span></span>
+                                                </div>
+                                            </div>                                            
+                                        </div>
+                                        <div class="col-12 border-bottom-1 surface-border">
+                                            <h6 class="block font-bold font-medium">Contacto</h6>
+                                            <div class="grid">
+                                                <div class="col-12 lg:col-12 xl:col-12">
+                                                    <span class="text font-medium text-1xl">Telefono:<span class="text ml-1 font-medium"> {{convocadoAux.telefono}}</span></span>
+                                                </div>
+                                            </div>
+                                            <div class="grid">
+                                                <div class="col-12 lg:col-12 xl:col-12">
+                                                    <span class="text font-medium text-1xl">Correo Electronico:<span class="text ml-1 font-medium"> {{convocadoAux.email}}</span></span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </ng-template>
 
-                                    <ng-template pTemplate="emptymessage">
-                                        <tr>
-                                            <td colspan="8">No se encontraron convocados agregados.</td>
-                                        </tr>
+                                    <ng-template pTemplate="footer" class="mt-1">
+                                        <button pButton pRipple type="button" label="Quitar convocado" class="p-button-outlined p-button-warning mr-2 mb-2" (click)="quitarConvocado()"></button>
+                                        <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogVerConvocado()"></button>
                                     </ng-template>
-                                    <ng-template pTemplate="loadingbody">
-                                        <tr>
-                                            <td colspan="8">Cargando convocados... .</td>
-                                        </tr>
-                                    </ng-template>
-                                </p-table>
-                                <!-- FIN TABLA DE CONVOCADOS NO SALTA -->
+                                </p-dialog>
+                                <!-- FIN DIALOG CONVOCADOS NO SALTA -->
 
                             </div>
 
