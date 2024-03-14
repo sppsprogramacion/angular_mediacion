@@ -80,8 +80,8 @@ export class CiudadanoTramitesNuevoslistaComponent implements OnInit {
   //MANEJO DE FORMULARIO DIALOG DATOS PERSONALES
   openDialogDatosPersonales() {
     this.msgsDatosPersonales = []; 
-    this.msgsDatosPersonales.push({ severity: 'info', detail: 'Si los datos son correctos presione el botón "Continuar" para solicitar un nuevo tramite.'});
-    this.msgsDatosPersonales.push({ severity: 'info', detail: 'Si hay datos incorrectos presione el botón "Modificar datos" para corregir sus datos personales.'});
+    this.msgsDatosPersonales.push({ severity: 'success', detail: 'Si los datos son correctos presione el botón "Continuar" para solicitar un nuevo tramite.'});
+    this.msgsDatosPersonales.push({ severity: 'warn', detail: 'Si hay datos incorrectos presione el botón "Modificar datos" para corregir sus datos personales.'});
     
     this.datosPersonalesDialog = true;     
   }

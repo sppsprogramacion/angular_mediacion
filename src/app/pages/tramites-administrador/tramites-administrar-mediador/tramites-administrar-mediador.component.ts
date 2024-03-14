@@ -44,6 +44,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
 
   //MENSAJES
   msgs: Message[] = []; 
+  msgsModificarConvocado: Message[] = []; 
 
   //MODELOS
   dataAudiencia: AudienciaModel = {};
@@ -87,13 +88,15 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   //booleans
   isNuevo: boolean = false;
   convocadoDialog: boolean = false;  
+  convocadoModificarDialog: boolean = false;
   vinculadoDialog: boolean = false;
 
   //FORMULARIOS
   formaAudiencia: FormGroup;
   formaAudienciaCerrar: FormGroup;
+  formaConvocado: FormGroup; 
   formaFinalizarTramite: FormGroup;
-  formaMediadorAsignado: FormGroup;  
+  formaMediadorAsignado: FormGroup; 
 
   posicion: string = "top";
 
@@ -117,12 +120,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     //OBTENER EL TRAMITE
 
     //FORMULARIO 
-    this.formaMediadorAsignado = this.fb.group({
-      detalles: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(200)]],      
-      funcion_tramite_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],       
-      
-    });
-
+    
     this.formaAudiencia = this.fb.group({
       centro_mediacion_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
       detalles: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(300)]], 
@@ -132,20 +130,33 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
       modalidad_id: [1,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(2)]],     
       tipo_audiencia_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(1)]]
     });
-
+    
     this.formaAudienciaCerrar = this.fb.group({
       resultado_audiencia_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],       
       observacion_resultado: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(1000)]],      
       
     });
 
+    this.formaConvocado = this.fb.group({
+      apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-zñÑ0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-zñÑ0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      dni: ['',[Validators.pattern(/^[0-9]*$/), Validators.minLength(5)]],
+      sexo_id: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],   
+    });
+    
     this.formaFinalizarTramite = this.fb.group({             
       observacion_finalizacion: ['',[Validators.required, Validators.nullValidator, Validators.minLength(1), Validators.maxLength(1000)]],      
       
     });
+
+    this.formaMediadorAsignado = this.fb.group({
+      detalles: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(200)]],      
+      funcion_tramite_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],       
+      
+    });
   }
   //FIN CONSTRUCTOR................................................................................
-
+  
   ngOnInit(): void {
     //obtener tramite
     this.dataTramiteAux= this.dataService.tramiteData;
@@ -168,7 +179,17 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   //MENSAJES DE VALIDACIONES
   user_validation_messages = {
     //datos tramite 
-    
+    'apellido': [
+      { type: 'required', message: 'El apellido es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
+      { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
+      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
+    ],
+    'dni': [
+      { type: 'required', message: 'El dni es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' },
+      { type: 'minlength', message: 'El número ingresado debe tener mas de 5 digitos.' }
+    ],
     'detalles': [
       { type: 'required', message: 'El detalle es requerido.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
@@ -189,11 +210,16 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     'hora': [
       { type: 'required', message: 'La hora de inicio es requerida.' },
       { type: 'pattern', message: 'El formato de la hora no es correcto.' },
-    ],
-    
+    ],    
     'modalidad_id': [
       { type: 'required', message: 'La modalidad es requerida.' },
       { type: 'pattern', message: 'Debe seleccionar una modalidad.' },
+    ],
+    'nombre': [
+      { type: 'required', message: 'El nombre es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
+      { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
+      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
     ],
     'observacion_resultado': [
       { type: 'required', message: 'La observacion es requerida.' },
@@ -209,6 +235,10 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     'resultado_audiencia_id': [
       { type: 'required', message: 'El resultado de la audiencia es requerido.' },
       { type: 'pattern', message: 'Debe seleccionar un resultado de la audiencia.' },
+    ],
+    'sexo_id': [
+      { type: 'required', message: 'El sexo es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
     ],
     'tipo_audiencia_id': [
       { type: 'required', message: 'El tipo de audiencia es requerido.' },
@@ -231,6 +261,11 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     return this.formaAudienciaCerrar.get(campo)?.invalid && this.formaAudienciaCerrar.get(campo)?.touched;      
   }
 
+  isValidConvocado(campo: string): boolean{     
+    
+    return this.formaConvocado.get(campo)?.invalid && this.formaConvocado.get(campo)?.touched;      
+  }
+
   isValidFinalizarTramite(campo: string): boolean{     
     
     return this.formaFinalizarTramite.get(campo)?.invalid && this.formaFinalizarTramite.get(campo)?.touched;      
@@ -241,6 +276,8 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     return this.formaMediadorAsignado.get(campo)?.invalid && this.formaMediadorAsignado.get(campo)?.touched;      
   }
   //FIN VALIDACIONES DE FORMULARIO...............................................
+
+  
 
   //GUARDAR USUARIO-TRAMITE  
   submitFormUsuarioTramite(){
@@ -390,6 +427,22 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
 
   }
   //FIN GUARDAR FINALIZAR TRAMITE...............................................................
+
+  //GUARDAR MODIFICAR CONVOCADO
+  submitFormConvocadoModificar(){
+    //VAIDACIONES DE FORMULARIOS
+    if(this.formaConvocado.invalid){        
+      this.msgs = [];                
+      this.msgs.push({ severity: 'warning', summary: 'Datos invalidos', detail: 'Revise los datos personales. ' });
+      Object.values(this.formaConvocado.controls).forEach(control => control.markAsTouched());
+    }
+       
+    //FIN VAIDACIONES DE FORMULARIOS
+
+    
+  }
+  //FIN GUARDAR MODIFICAR CONVOCADO...................................................
+
 
   //BUSCAR TRAMITE 
   buscarTramite(){  
@@ -583,9 +636,27 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   }
   
   hideDialogConvocado() {    
+    this.dataConvocado = {};
     this.convocadoDialog = false;    
   }    
   //FIN MANEJO FORMULARIO DIALOG CONVOCADO....................................
+
+  //MANEJO DE FORMULARIO DIALOG MODIFICAR CONVOCADO
+  openDialogModificarConvocado(convocado: ConvocadoModel) {
+    this.formaConvocado.get('apellido')?.setValue(this.dataConvocado.apellido);
+    this.formaConvocado.get('nombre')?.setValue(this.dataConvocado.nombre);
+    this.formaConvocado.get('dni')?.setValue(this.dataConvocado.dni);
+    this.formaConvocado.get('sexo_id')?.setValue(this.dataConvocado.sexo_id);  
+
+    this.convocadoModificarDialog = true;     
+  }
+  
+  hideDialogModificarConvocado() {    
+    this.msgsModificarConvocado = [];
+    this.formaConvocado.reset();  
+    this.convocadoModificarDialog = false;    
+  }    
+  //FIN MANEJO FORMULARIO DIALOG MODIFICAR CONVOCADO....................................
 
   //MANEJO DE FORMULARIO DIALOG VINCULADO
   reiniciarFormularioVinculado(){

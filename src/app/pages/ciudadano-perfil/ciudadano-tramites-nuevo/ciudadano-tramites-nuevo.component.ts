@@ -62,7 +62,6 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   ciudadanoData: CiudadanoModel;
   convocado: any;
   convocadoAux: any;
-  convocadoQuitar: any = {};
   vinculado: any;
   vinculadoAux: any;
 
@@ -122,8 +121,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     });
 
     this.formaConvocado = this.fb.group({
-      apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
-      nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-zñÑ0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-zñÑ0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
       dni: ['',[Validators.pattern(/^[0-9]*$/), Validators.minLength(5)]],
       sexo_id: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],   
     });
@@ -746,78 +745,51 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
         
     if(convocado.tipo === "salta"){
 
-      this.convocadoQuitar = {
-        apellido: convocado.apellido,
-        nombre: convocado.nombre,
-        dni: parseInt(convocado.dni),
-        sexo_id: parseInt(convocado.sexo_id),
-        departamento_id: parseInt(convocado.departamento_id),
-        municipio_id: parseInt(convocado.municipio_id),
-        codigo_postal: parseInt(convocado.codigo_postal),
-        localidad_barrio: convocado.localidad_barrio,
-        calle_direccion: convocado.calle_direccion,        
-        numero_dom: parseInt(convocado.numero_dom),
-        punto_referencia: convocado.punto_referencia,
-        telefono: convocado.telefono,
-        email: convocado.email
-      }
       this.convocadoSaltaDialog = true;  
     }
 
     if(convocado.tipo === "noSalta"){
-      this.convocadoQuitar = {
-        apellido: convocado.apellido,
-        nombre: convocado.nombre,
-        dni: parseInt(convocado.dni),
-        sexo_id: parseInt(convocado.sexo_id),
-        provincia_id: parseInt(convocado.provincia_id),
-        codigo_postal: parseInt(convocado.codigo_postal),
-        telefono: convocado.telefono,
-        email: convocado.email
-      }
+      
       this.convocadoNoSaltaDialog = true;  
     }
 
-    console.log("Convocado Quitar", this.convocadoQuitar);
-
-    this.convocadoAux = convocado;
-       
+    this.convocadoAux = convocado;       
   }
   
   
   hideDialogVerConvocado() {
     this.convocadoAux = {};
-    this.convocadoQuitar = {};
     this.convocadoSaltaDialog = false;
     this.convocadoNoSaltaDialog = false;
   }    
   //FIN MANEJO FORMULARIO DIALOG CONVOCADO....................................
 
-  //ACCEDER A DATA SERVICE
+  //QUITAR CONVOCADO
   quitarConvocado(){
 
     if (this.convocadoAux.tipo === "salta") {
-      console.log("Convocado Quitar Salta", this.convocadoQuitar);
-      this.listConvocados = this.listConvocados.filter(convocado1 => convocado1 !== this.convocadoQuitar)
+      
+      console.log("Convocado Quitar Salta", this.convocadoAux);
+      this.listConvocados = this.listConvocados.filter(convocado => convocado.apellido + convocado.nombre !== this.convocadoAux.apellido + this.convocadoAux.nombre)
+      console.log("convocados Salta", this.listConvocados);
     }
 
     if (this.convocadoAux.tipo === "noSalta") {
-      console.log("Convocado Quitar No salta", this.convocadoQuitar);
-      this.listConvocadosNoSalta = this.listConvocadosNoSalta.filter(convocado2 => convocado2 !== this.convocadoQuitar)
+      
+      console.log("Convocado Quitar No salta", this.convocadoAux.apellido + this.convocadoAux.nombre);
+      this.listConvocadosNoSalta = this.listConvocadosNoSalta.filter(convocado => convocado.apellido + convocado.nombre !== this.convocadoAux.apellido + this.convocadoAux.nombre)
+      console.log("convocados No Salta", this.listConvocadosNoSalta);
     }    
 
+    console.log("convocado auxiliar", this.convocadoAux);
     this.listConvocadosAux = this.listConvocadosAux.filter(convocado => convocado !== this.convocadoAux)
-
-    console.log("convocados Salta", this.listConvocados);
-    console.log("convocados No Salta", this.listConvocadosNoSalta);
     console.log("convocados auxiliar", this.listConvocadosAux);
 
     this.convocadoAux = {};
-    this.convocadoQuitar = {};
     this.convocadoSaltaDialog = false;
     this.convocadoNoSaltaDialog = false;
   }
-  //FIN ACCEDER A DATA SERVICE
+  //FIN QUITAR CONVOCADO
 
   //IR A REGISTRARME
   irAPrincipal(){

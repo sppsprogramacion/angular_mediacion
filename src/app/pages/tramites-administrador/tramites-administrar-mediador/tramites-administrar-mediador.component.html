@@ -300,10 +300,91 @@
             </ng-template>
 
             <ng-template pTemplate="footer" class="mt-1">
+                <button pButton pRipple type="button" label="Modificar datos personales" class="p-button-outlined p-button-help mr-2 mb-2" (click)="openDialogModificarConvocado()"></button>
                 <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogConvocado()"></button>
             </ng-template>
         </p-dialog>
         <!-- FIN DIALOG CONVOCADOS -->
+
+        <!-- DIALOG FORMULARIO CONVOCADOS -->
+            <!-- <p-dialog id="usuarioTramiteDialog" [(visible)]="convocadoTramiteDialog" [style]="{width: '500px'}"  class="p-fluid" header="Nuevo Convocado" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}"> -->
+            <p-dialog id="convocadoModificarDialog" [(visible)]="convocadoModificarDialog" [style]="{width: '500px','min-height':'400px'}" [position]="posicion" class="p-fluid"  [closable]="false" [modal]="true">
+                <!-- MENSAJE DE ERROR -->
+                <p-messages [(value)]="msgsModificarConvocado" [enableService]="false"></p-messages>
+                <ng-template pTemplate="content">
+                    <div class="p-formgrid grid">
+                        
+                        <!-- FORMULARIO CONVOCADOS -->
+                        <div class="col-12 " >
+                            <form [formGroup]="formaConvocado">
+                                <h6 class="block font-bold font-medium">Datos personales</h6>
+
+                                <div class="formgrid grid">
+                                    <div class="field col-12 md:col-6 lg:col-6">
+                                        <label for="apellido">Apellido</label>
+                                        <input type="text" pInputText id="apellido" formControlName="apellido" />
+                                        <small *ngIf="isValidConvocado('apellido')" class="p-error">
+                                            <div *ngFor="let validation of user_validation_messages.apellido" >
+                                                <div  *ngIf="formaConvocado.get('apellido')?.hasError(validation.type)">
+                                                    {{validation.message}}
+                                                </div>
+                                            </div>
+                                        </small>
+                                    </div>
+                                    <div class="field col-12 md:col-6 lg:col-6">
+                                        <label for="nombre">Nombre</label>
+                                        <input type="text" pInputText id="nombre" formControlName="nombre" />
+                                        <small *ngIf="isValidConvocado('nombre')" class="p-error">
+                                            <div *ngFor="let validation of user_validation_messages.nombre" >
+                                                <div  *ngIf="formaConvocado.get('nombre')?.hasError(validation.type)">
+                                                    {{validation.message}}
+                                                </div>
+                                            </div>
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="formgrid grid">
+                                    <div class="field col-12 md:col-6 lg:col-6">
+                                        <label for="sexo_id">Sexo</label>
+                                        <p-dropdown id="sexo_id" [options]="listSexo" optionLabel="sexo" optionValue="id_sexo" formControlName="sexo_id" placeholder="Seleccionar...">
+                                        </p-dropdown>
+                                        <small *ngIf="isValidConvocado('sexo_id')" class="p-error">
+                                            <div *ngFor="let validation of user_validation_messages.sexo_id" >
+                                                <div  *ngIf="formaConvocado.get('sexo_id')?.hasError(validation.type)">
+                                                    {{validation.message}}
+                                                </div>
+                                            </div>
+                                        </small>
+                                    </div>
+                                    <div class="field col-12 md:col-6 lg:col-6">
+                                        <label for="dni">DNI</label>
+                                        <input type="text" pInputText id="dni" formControlName="dni" />
+                                        <small *ngIf="isValidConvocado('dni')" class="p-error">
+                                            <div *ngFor="let validation of user_validation_messages.dni" >
+                                                <div  *ngIf="formaConvocado.get('dni')?.hasError(validation.type)">
+                                                    {{validation.message}}
+                                                </div>
+                                            </div>
+                                        </small>
+                                    </div>
+                                </div>
+
+
+                            </form>
+                        </div>
+                        <!--  FIN FORMULARIO CONVOCADOS -->
+                        
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="footer" class="mt-1">
+                    <button pButton pRipple type="button" label="Agregar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormConvocadoModificar()"></button>
+                    <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogModificarConvocado()"></button>
+                </ng-template>
+            </p-dialog>
+        <!-- FIN DIALOG FORMULARIO  CONVOCADOS -->
+
     </div>
     <!-- Fin Card CONVOCADOS -->
 
