@@ -3,6 +3,7 @@ import { ProvinciaModel } from './provincia.model';
 import { DepartamentoModel } from './departamento.model';
 import { MunicipioModel } from './municipio.model';
 import { CentroMediacionModel } from './centro_mediacion.model';
+import { RolModel } from './rol.model';
 
 
 export class UsuarioModel{
@@ -16,7 +17,8 @@ export class UsuarioModel{
         public telefono?: string,
         public email?: string,
         public clave?: string,
-        public rol_id?: number,
+        public rol_id?: string,
+        public rol?: RolModel,
         public centros_mediacion?: CentroMediacionModel[]
 
     ){}

@@ -70,15 +70,16 @@ export class LoginUsuarioComponent implements OnInit {
           let loginRes: UsuarioModel = resultado;
           
           this.dataUsuario = resultado;  
-          console.log("USUARIO", this.dataUsuario);
+          
+          localStorage.setItem('token', this.dataUsuario.id_usuario.toString())
           this.dataService.usuarioData = this.dataUsuario;
           globalConstants.usuarioLogin = this.dataUsuario;          
           globalConstants.ciudadanoLogin = null;
-          if(this.dataUsuario.rol_id == 1){
+          if(this.dataUsuario.rol_id == "administrador"){
             globalConstants.isAdministrador = true;
             this.router.navigateByUrl("admin/principal");
           }
-          if(this.dataUsuario.rol_id == 2){
+          if(this.dataUsuario.rol_id == "mediador"){
             globalConstants.isAdministrador = false;
             this.router.navigateByUrl("admin/tramites/nuevoslis");
           }
