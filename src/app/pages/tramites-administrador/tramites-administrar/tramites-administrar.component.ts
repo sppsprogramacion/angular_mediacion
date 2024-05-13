@@ -222,7 +222,7 @@ export class TramitesAdministrarComponent implements OnInit {
         next: (resultado) => {
           let usuarioTramiteRes: UsuarioTramiteModel = resultado;
           this.hideDialogUsuarioTramite();
-          this.buscarMediadorByNumTramiteActivo();
+          this.buscarTramite();
           this.buscarAsignacionByNumTramiteActivo();
           Swal.fire('Exito',`La asignacion de usuario se realizo con exito`,"success");
         },
@@ -321,7 +321,7 @@ export class TramitesAdministrarComponent implements OnInit {
       .subscribe({
         next: (resultado) => {          
           this.dataTramite = {};
-          this.dataTramite = resultado[0];     
+          this.dataTramite = resultado;     
           if(this.dataTramite.estado_tramite_id === 2) {
             this.buscarMediadorByNumTramiteActivo();
           }

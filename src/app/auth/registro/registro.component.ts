@@ -61,8 +61,8 @@ export class RegistroComponent implements OnInit {
   ){ 
     this.formaRegistro = this.fb.group({
       dni: ['',[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.minLength(5)]],
-      apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
-      nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-zñÑ0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-zñÑ0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
       sexo_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       fecha_nac: [,[Validators.required]],  
@@ -73,6 +73,7 @@ export class RegistroComponent implements OnInit {
     });
     
   }
+  //FIN CONSTRUCTOR..............................................................
 
   //MENSAJES DE VALIDACIONES
   user_validation_messages = {
@@ -158,16 +159,11 @@ export class RegistroComponent implements OnInit {
   submitFormRegistro(){
     
     if(this.formaRegistro.invalid){                        
-        // this.msgs = [];
-        // this.msgs.push({ severity: 'warn', summary: 'Errores en formulario', detail: 'Cargue correctamente los datos' });
-        // this.serviceMensajes.add({key: 'tst', severity: 'warn', summary: 'Errores en formulario', detail: 'Cargue correctamente los dato'});
-        Swal.fire('Formulario con errores',`Complete correctamente todos los campos del formulario`,"warning");
-        console.log("formulario registro", this.formaRegistro);
-        let fechaAuxiliar = this.datePipe.transform(this.formaRegistro.get('fecha_nac')?.value,"yyyy-MM-dd")!;
         
-
-        console.log("errores formulario");
-        return Object.values(this.formaRegistro.controls).forEach(control => control.markAsTouched());
+      let fechaAuxiliar = this.datePipe.transform(this.formaRegistro.get('fecha_nac')?.value,"yyyy-MM-dd")!;
+      
+      Swal.fire('Formulario con errores',`Complete correctamente todos los campos del formulario`,"warning");
+      return Object.values(this.formaRegistro.controls).forEach(control => control.markAsTouched());
     }
     this.validacionClaves = this.clavesValidationIguales();
     if(!this.validacionClaves){

@@ -21,6 +21,11 @@ export class TramitesService {
     return this.http.post(`${base_url}/tramites/nuevo-tramite`, this.tramite);
   }
 
+  guardarFinalizarTramite(num_tramite: number, data: Partial<TramiteModel>){    
+    this.tramite={...data};
+    return this.http.patch(`${base_url}/tramites/finalizar?numero_tramite=${num_tramite}`, this.tramite);
+  }
+
   buscarTramiteNumTram(num_tramite: number){
     //return this.http.get<TramiteModel>(`${base_url}/tramites/buscar-xnumtramite?numero_tramite=${num_tramite}`)
     return this.http.get<TramiteModel>(`${base_url}/tramites/buscar-xnumtramite?numero_tramite=${num_tramite}`)

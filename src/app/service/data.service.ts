@@ -10,10 +10,14 @@ import { CiudadanoModel } from '../models/ciudadano.model';
   providedIn: 'root'
 })
 export class DataService {
+  
   ciudadanoData: CiudadanoModel = {};
-  tramiteData: TramiteModel = {};
-  usuarioData: UsuarioModel ={};
+  
   centroMediacionData: CentroMediacionModel= {};
+  
+  tramiteData: TramiteModel = {};
+  
+  usuarioData: UsuarioModel ={};
 
   constructor(private readonly datePipe: DatePipe,) { }
 
@@ -37,6 +41,15 @@ export class DataService {
     let fechaAuxiliar:any = null;
     if(nuevaFecha != null){
       fechaAuxiliar = this.datePipe.transform(nuevaFecha,"yyyy-MM-dd")!;
+      
+    }
+    return fechaAuxiliar;
+  }
+
+  getchangeFormatoFechaRetornar(nuevaFecha: Date){
+    let fechaAuxiliar:Date = null;
+    if(nuevaFecha != null){
+      fechaAuxiliar = new Date(this.datePipe.transform(this.ciudadanoData.fecha_nac, "MM-dd-yyyy"))
       
     }
     return fechaAuxiliar;

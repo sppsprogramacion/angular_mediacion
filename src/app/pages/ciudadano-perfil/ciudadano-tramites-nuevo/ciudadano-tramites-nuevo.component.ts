@@ -22,6 +22,7 @@ import { TramitesService } from 'src/app/service/tramites.service';
 import { ElementoModel } from 'src/app/models/elemento.model';
 import { Router } from '@angular/router';
 import { CategoriaModel } from 'src/app/models/categoria.model';
+import { AuthService } from '../../../service/auth.service';
 
 @Component({
   selector: 'app-ciudadano-tramites-nuevo',
@@ -35,6 +36,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   selectedState:any;  
 
   msgs: Message[] = []; 
+  msgsAsesorado: Message[] = []; 
+  msgsDatosPersonales: Message[] = []; 
   msgsVinculado: Message[] = [];
 
   //listas  
@@ -65,6 +68,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
 
   //variables booleanas 
   formTramiteDialog: boolean = false;
+  convocadoSaltaDialog: boolean = false;
+  convocadoNoSaltaDialog: boolean = false;
   convocadoTramiteDialog: boolean = false;
   vinculadoTramiteDialog: boolean = false;
   existe_violencia_genero: boolean = false;
@@ -84,13 +89,15 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   posicion: string = "top";
 
   constructor(
-    private fb: FormBuilder,
+    private authService: AuthService,
     private readonly datePipe: DatePipe,
+    private fb: FormBuilder,
+    private router: Router,
     private serviceMensajes: MessageService,
+
     private centroMediacionService: CentrosMediacionService,
     private tramiteService: TramitesService,
     public dataService: DataService,
-    private router: Router,
   ) {
     //FORMULARIOS
     this.formaTramite = this.fb.group({
@@ -117,8 +124,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     });
 
     this.formaConvocado = this.fb.group({
-      apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
-      nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-zñÑ0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-zñÑ0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
       dni: ['',[Validators.pattern(/^[0-9]*$/), Validators.minLength(5)]],
       sexo_id: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],   
     });
@@ -306,7 +313,11 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   //...........................................................................................................
 
   ngOnInit(): void {    
-    this.ciudadanoData = this.dataService.ciudadanoData
+    //OBTENER CIUDADANO LOGUEADO
+    this.ciudadanoData = this.authService.currentCiudadanoLogin;
+
+    this.msgsDatosPersonales = []; 
+    this.msgsDatosPersonales.push({ severity: 'warning', detail: 'Debe estar asesordo/a por un abogado antes de iniciar un tramite de mediación.'});
 
     //CARGA DE LISTADOS DESDE DATA MOKEADA
     this.listaCategorias = DataMokeada.categorias;
@@ -324,7 +335,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   //GUARDAR NUEVO TRAMITE  
   submitFormTramite(){
     if(this.formaTramite.invalid){                        
-        Swal.fire('Formulario incompleto',`Complete correctamente todos los campos del formulario`,"error");
+        Swal.fire('Formulario incompleto',`Complete correctamente todos los campos del formulario`,"warning");
         let fechaAuxiliar = this.datePipe.transform(this.formaTramite.get('fecha_nac')?.value,"yyyy-MM-dd")!;
         console.log(this.formaTramite.controls);
         return Object.values(this.formaTramite.controls).forEach(control => control.markAsTouched());
@@ -425,6 +436,17 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       }
     }
     //FIN SIN SELECCIONAR PROVINCIA
+    
+    //PARA VERIFICAR SI EL DNI ES VACIO PARA COLOCAR CERO
+    let dni_aux: number = 0  
+    dni_aux = parseInt(this.formaConvocado.get('dni')?.value)
+
+    if (!dni_aux ) {
+      dni_aux = 0;
+    }  
+    else{
+      dni_aux = parseInt(this.formaConvocado.get('dni')?.value)
+    }
 
     //PROVINCIA SALTA SELECCIONADA
     if(id_provincia == 18 ){
@@ -440,11 +462,12 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       }      
       if(this.formaConvocado.invalid || this.formaDomicilioSalta.invalid) return;      
       //FIN VAIDACIONES DE FORMULARIOS
-
+      
+      
       this.convocado = {
         apellido: this.formaConvocado.get('apellido')?.value,
         nombre: this.formaConvocado.get('nombre')?.value,
-        dni: parseInt(this.formaConvocado.get('dni')?.value),
+        dni: dni_aux,
         sexo_id: parseInt(this.formaConvocado.get('sexo_id')?.value),
         departamento_id: parseInt(this.formaDomicilioSalta.get('departamento_id')?.value),
         municipio_id: parseInt(this.formaDomicilioSalta.get('municipio_id')?.value),
@@ -456,21 +479,26 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
         telefono: this.formaDomicilioSalta.get('telefono')?.value,
         email: this.formaDomicilioSalta.get('email')?.value,
       }  
+
       this.listConvocados.push(this.convocado);
 
       //ARMAR ARRAY AUXILIAR
       let sexoAux = sexo.filter(sexo => sexo.id_sexo == this.convocado.sexo_id);
-      let provinciaAux = provincias.filter(provincia => provincia.id_provincia == id_provincia);
+      let provinciaAux = provincias.filter(provincia => provincia.id_provincia == 18);
+      let departamentoAux = departamentos.filter(departamento => departamento.id_departamento == this.convocado.departamento_id);
+      let municipioAux = municipios.filter(municipio => municipio.id_municipio == this.convocado.municipio_id);
+      
       this.convocadoAux = {
-        apellido: this.convocado.apellido,
-        nombre: this.convocado.nombre,
-        dni: this.convocado.dni,
+        ...this.convocado,
         sexo: sexoAux[0].sexo,
         provincia: provinciaAux[0].provincia,
-        posicion: (this.listConvocados.length -1),
+        departamento: departamentoAux[0].departamento,
+        municipio: municipioAux[0].municipio,      
         tipo: "salta"
       }
+      console.log("convocado aux", this.convocadoAux);      
       this.listConvocadosAux.push(this.convocadoAux);
+
       this.convocado = {};
       this.convocadoAux = {};
       //FIN ARMAR ARRAY AUXILIAR
@@ -497,7 +525,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       this.convocado = {
         apellido: this.formaConvocado.get('apellido')?.value,
         nombre: this.formaConvocado.get('nombre')?.value,
-        dni: parseInt(this.formaConvocado.get('dni')?.value),
+        dni: dni_aux,
         sexo_id: parseInt(this.formaConvocado.get('sexo_id')?.value),
         provincia_id: parseInt(this.formaProvincia.get('provincia_id')?.value),        
         codigo_postal: parseInt(this.formaDomicilioNoSalta.get('codigo_postal')?.value),
@@ -507,25 +535,21 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   
       this.listConvocadosNoSalta.push(this.convocado);
 
-      //ARMAR ARRAY AUXILIAR
       let sexoAux = sexo.filter(sexo => sexo.id_sexo == this.convocado.sexo_id);
-      let provinciaAux = provincias.filter(provincia => provincia.id_provincia == id_provincia);
+      let provinciaAux = provincias.filter(provincia => provincia.id_provincia == this.convocado.provincia_id);   
       this.convocadoAux = {
-        apellido: this.convocado.apellido,
-        nombre: this.convocado.nombre,
-        dni: this.convocado.dni,
+        ...this.convocado,
         sexo: sexoAux[0].sexo,
         provincia: provinciaAux[0].provincia,
-        posicion: (this.listConvocados.length -1),
         tipo: "noSalta"
       }
       this.listConvocadosAux.push(this.convocadoAux);
+
+      this.convocado = {};
       this.convocadoAux = {};
-       //FIN ARMAR ARRAY AUXILIAR
+
     }
     
-    this.convocado = {};
-
     this.hideDialogConvocado();
   }
   //FIN AGREGAR CONVOCADOS..................................................
@@ -719,6 +743,63 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       this.estaAsesorado = false;
     }
   }
+
+  //MANEJO DE FORMULARIO DIALOG CONVOCADO
+  openDialogVerConvocado(convocado: any) {
+        
+    if(convocado.tipo === "salta"){
+
+      this.convocadoSaltaDialog = true;  
+    }
+
+    if(convocado.tipo === "noSalta"){
+      
+      this.convocadoNoSaltaDialog = true;  
+    }
+
+    this.convocadoAux = convocado;       
+  }
+  
+  
+  hideDialogVerConvocado() {
+    this.convocadoAux = {};
+    this.convocadoSaltaDialog = false;
+    this.convocadoNoSaltaDialog = false;
+  }    
+  //FIN MANEJO FORMULARIO DIALOG CONVOCADO....................................
+
+  //QUITAR CONVOCADO
+  quitarConvocado(){
+
+    if (this.convocadoAux.tipo === "salta") {
+      
+      console.log("Convocado Quitar Salta", this.convocadoAux);
+      this.listConvocados = this.listConvocados.filter(convocado => convocado.apellido + convocado.nombre !== this.convocadoAux.apellido + this.convocadoAux.nombre)
+      console.log("convocados Salta", this.listConvocados);
+    }
+
+    if (this.convocadoAux.tipo === "noSalta") {
+      
+      console.log("Convocado Quitar No salta", this.convocadoAux.apellido + this.convocadoAux.nombre);
+      this.listConvocadosNoSalta = this.listConvocadosNoSalta.filter(convocado => convocado.apellido + convocado.nombre !== this.convocadoAux.apellido + this.convocadoAux.nombre)
+      console.log("convocados No Salta", this.listConvocadosNoSalta);
+    }    
+
+    console.log("convocado auxiliar", this.convocadoAux);
+    this.listConvocadosAux = this.listConvocadosAux.filter(convocado => convocado !== this.convocadoAux)
+    console.log("convocados auxiliar", this.listConvocadosAux);
+
+    this.convocadoAux = {};
+    this.convocadoSaltaDialog = false;
+    this.convocadoNoSaltaDialog = false;
+  }
+  //FIN QUITAR CONVOCADO
+
+  //IR A REGISTRARME
+  irAPrincipal(){
+    this.router.navigateByUrl("ciudadano/tramites/nuevos");
+  }
+  //FIN IR A REGISTRARME
   
 }
 

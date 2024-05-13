@@ -2,15 +2,13 @@
 <div class="card mb-0 ">
     <p-toolbar styleClass="mb-3 bg-cyan-500">
         <h5 class="block text-white font-bold font-medium mb-1 ">
-            Datos del Tramite
+            Datos del tramite finalizado
         </h5>
     </p-toolbar>
-    
-    <p-messages [(value)]="msgsEstadoTramite" [enableService]="false"></p-messages>
-    <p-messages [(value)]="msgsAudienciasTramite" [enableService]="false"></p-messages>
+
     <!-- CARD PRINCIPAL -->
     <div class="card p-fluid">
-        <p-toolbar styleClass="mb-3 bg-orange-500">            
+        <p-toolbar styleClass="mb-3 bg-orange-500">
             <h5 class="block text-white  font-bold font-medium mb-1">Datos principales</h5>
         </p-toolbar>
         <div class="bg-cyan-600">
@@ -18,7 +16,6 @@
         </div>
         <div class="col-12 border-bottom-1 surface-border mt-4">
             <div class="grid">
-                
                 <div class="col-12 lg:col-3 xl:col-3">
                     <span class="text font-medium text-1xl">Tramite N°:<span class="text ml-2 font-medium"> {{dataTramite.numero_tramite}} </span></span>
                 </div>
@@ -34,8 +31,6 @@
 
             </div>
         </div>
-        
-        
     </div>
     <!-- FIN CARD PRINCIPAL-->
 
@@ -116,7 +111,7 @@
                     <span class="text font-bold font-medium text-1xl">Violencia de género</span>
                 </div>
                 <div class="col-12 lg:col-6 xl:col-6">
-                    <span class="text font-medium text-1xl">Existe violencia de género:<span class="text ml-1 font-medium"> {{dataTramite.violencia_genero === true?"SI": "NO"}} </span></span>
+                    <span class="text font-medium text-1xl">Existe violencia de género:<span class="text ml-1 font-medium"> {{dataTramite.violencia_genero === true?"SI": "NO" }} </span></span>
                 </div>
                 <div class="col-12 lg:col-6 xl:col-6">
                     <span class="text font-medium text-1xl">Existe denucnia:<span class="text ml-1 font-medium"> {{dataTramite.existe_denuncia === true?"SI": "NO"}} </span></span>
@@ -133,7 +128,7 @@
     <!-- CARD CENTRO DE MEDIACION -->
     <div class="card p-fluid">
         <p-toolbar styleClass="mb-3 bg-orange-500">
-            <h5 class="block text-white  font-bold font-medium mb-1">Centro de mediación solicitado</h5>
+            <h5 class="block text-white  font-bold font-medium mb-1">Centro de mediación</h5>
         </p-toolbar>
         <div class="bg-cyan-600">
 
@@ -421,42 +416,55 @@
         <!-- FIN DIALOG VINCULADOS -->
     </div>
     <!-- Fin Card VINCULADOS -->
+
+
 </div>
-<!-- FIN Card Tramite ------ -->
+<!-- FIN Card Tramite -->
 
 
 <!-- Card Usuarios -->
 <div class="card p-fluid mb-0 mt-2">
     <p-toolbar styleClass="mb-3 bg-cyan-500">
         <h5 class="block text-white font-bold font-medium mb-1 ">
-            Mediador Asignado
+            Asignacion de usuario
         </h5>
     </p-toolbar>
 
-    <div class="col-12 border-bottom-1 surface-border">
-        <div class="grid">
-            <div class="col-12 lg:col-4 xl:col-4">
-                <span class="text font-medium text-1xl">Mediador:<span class="text ml-1 font-medium"> {{dataUsuarioTramite.usuario?.apellido}} {{dataUsuarioTramite.usuario?.nombre}}</span></span>
-            </div>
-            <div class="col-12 lg:col-4 xl:col-4">
-                <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{dataUsuarioTramite.usuario?.dni}}</span></span>
-            </div>
+    <!-- CARD MEDIADOR -->
+    <div class="card p-fluid">
+        <p-toolbar styleClass="mb-3 bg-orange-500">
+            <h5 class="block text-white  font-bold font-medium mb-1">Mediador actual</h5>
+        </p-toolbar>
+        <div class="bg-cyan-600">
 
         </div>
-    </div>
-    <div class="col-12 border-bottom-1 surface-border">
-        <div class="grid">
-            <div class="col-12 lg:col-4 xl:col-4">
-                <span class="text font-medium text-1xl">Fecha asignacion:<span class="text ml-1 font-medium"> {{dataUsuarioTramite.activo| date: 'dd/MM/yyyy'}}</span></span>
-            </div>
-            <div class="col-12 lg:col-4 xl:col-4">
-                <span class="text font-medium text-1xl">Detalle:<span class="text ml-1 font-medium"> {{dataUsuarioTramite.detalles}}</span></span>
-            </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12 lg:col-4 xl:col-4">
+                    <span class="text font-medium text-1xl">Mediador:<span class="text ml-1 font-medium"> {{dataUsuarioTramite.usuario?.apellido}} {{dataUsuarioTramite.usuario?.nombre}}</span></span>
+                </div>
+                <div class="col-12 lg:col-4 xl:col-4">
+                    <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{dataUsuarioTramite.usuario?.dni}}</span></span>
+                </div>
 
+            </div>
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12 lg:col-4 xl:col-4">
+                    <span class="text font-medium text-1xl">Fecha asignacion:<span class="text ml-1 font-medium"> {{dataUsuarioTramite.fecha_asignacion| date: 'dd/MM/yyyy'}}</span></span>
+                </div>
+                <div class="col-12 lg:col-4 xl:col-4">
+                    <span class="text font-medium text-1xl">Detalle:<span class="text ml-1 font-medium"> {{dataUsuarioTramite.detalles}}</span></span>
+                </div>
+
+            </div>
         </div>
     </div>
+    <!-- FIN CARD MEDIADOR -->
+
 </div>
-<!-- Fin Card Usuarios -->
+<!-- FIN Card Usuarios -->
 
 <!-- CARD AUDIENCIAS -->
 <div class="card p-fluid mb-0 mt-2">
@@ -467,7 +475,8 @@
     </p-toolbar>
 
     <div class="col-12 border-bottom-1 surface-border">
-        
+       
+
         <!-- TABLA DE AUDIENCIA -->
         <p-table #dt1 [value]="listAudiencias" [rows]="10" [loading]="loadingAudiencia" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['usuario.dni','usuario.apellido','usuario.nombre','usuario.telefono','objeto.objeto','expediente']"
             responsiveLayout="scroll">
@@ -512,10 +521,10 @@
                     </th>
                 </tr>
             </ng-template>
+
             <ng-template pTemplate="body" let-audiencia>
                 <tr>
                     <td>
-                        <button *ngIf="!audiencia.esta_cerrada" type="button" pButton pRipple class="p-button-warning p-button-rounded mr-2 mb-2" icon="pi pi-book" (click)="openDialogAudienciaFinalizada(audiencia)"></button>
                         <button *ngIf="audiencia.esta_cerrada" type="button" pButton pRipple class="p-button-secondary p-button-rounded mr-2 mb-2" icon="pi pi-search-plus" (click)="openDialogAudienciaFinalizada(audiencia)"></button>
                     </td>
                     <td style="min-width: 10rem;">
@@ -559,11 +568,9 @@
 
     <!-- DIALOG VER AUDIENCIA FINALIZADA-->
     <p-dialog id="audienciaFinalizadaDialog" [(visible)]="audienciaFinalizadaDialog" [style]="{width: '500px','min-height':'350px'}" class="p-fluid" header="Datos de la audiencia" [closable]="false" [modal]="true">
-        <!-- MENSAJE DE ERROR -->
-        <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
-
+         
         <ng-template pTemplate="content">
-            <div class="col-12 border-bottom-2 surface-border">
+            <div class="col-12 border-bottom-1 surface-border">
                 <div class="grid">
                     <div class="col-12 md:col-6 lg:col-6 xl:col-6">
                         <span class="text font-medium text-1xl">Tramite:<span class="text ml-1 font-medium"> {{dataAudiencia.tramite_numero}}</span></span>
@@ -574,7 +581,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 border-bottom-2 surface-border">
+            <div class="col-12 border-bottom-1 surface-border">
                 <div class="grid">
                     <div class="col-12 md:col-12 lg:col-12 xl:col-12">
                         <span class="text font-medium text-1xl">Fecha:<span class="text ml-1 font-medium"> {{dataAudiencia.fecha_inicio| date: 'dd/MM/yyyy'}}</span></span>
@@ -588,24 +595,14 @@
 
                 </div>
             </div>
-            <div class="col-12 border-bottom-2 surface-border">
+            <div class="col-12 border-bottom-1 surface-border">
                 <div class="grid">
                     <div class="col-12 lg:col-12 xl:col-12">
                         <span class="text font-medium text-1xl">Centro de mediacion:<span class="text ml-1 font-medium"> {{dataAudiencia.centro_mediacion.centro_mediacion}}</span></span>
                     </div>
-                    <div class="col-12">
-                        <span class="text font-medium text-1xl">Dirección:<span class="text ml-1 font-medium"> Barrio: {{dataAudiencia.centro_mediacion.localidad_barrio}} - Calle/Dirección: {{dataAudiencia.centro_mediacion.calle_direccion}} - Número: {{dataAudiencia.centro_mediacion.numero_dom}}</span></span>
-                    </div>
-                    <div class="col-12 lg:col-6 xl:col-6">
-                        <span class="text font-medium text-1xl">Telefono:<span class="text ml-1 font-medium"> {{dataAudiencia.centro_mediacion.telefono}} </span></span>
-                    </div>
-                    <div class="col-12 lg:col-6 xl:col-6">
-                        <span class="text font-medium text-1xl">Email:<span class="text ml-1 font-medium"> {{dataAudiencia.centro_mediacion.email}} </span></span>
-                    </div>
-                    
                 </div>
             </div>
-            <div class="col-12 border-bottom-2 surface-border">
+            <div class="col-12 border-bottom-1 surface-border">
                 <div class="grid">
                     <div class="col-12 lg:col-6 xl:col-6">
                         <span class="text font-medium text-1xl">Departamento:<span class="text ml-1 font-medium"> {{dataAudiencia.centro_mediacion?.departamento.departamento}} </span></span>
@@ -615,7 +612,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 border-bottom-2 surface-border">
+            <div class="col-12 border-bottom-1 surface-border">
                 <div class="grid">
                     <div class="col-12 lg:col-6 xl:col-6">
                         <span class="text font-medium text-1xl">Tipo audiencia:<span class="text ml-1 font-medium"> {{dataAudiencia.tipo_audiencia?.tipo_audiencia}} </span></span>
@@ -625,7 +622,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 border-bottom-2 surface-border">
+            <div class="col-12 border-bottom-1 surface-border">
                 <div class="grid">
                     <div class="col-12">
                         <span class="text font-medium text-1xl">Resultado de la audiencia:<span class="text ml-1 font-medium"> {{dataAudiencia.resultado_audiencia?.resultado_audiencia}} </span></span>
@@ -633,7 +630,7 @@
                     
                 </div>
             </div>
-            <div class="col-12 border-bottom-2 surface-border">
+            <div class="col-12 border-bottom-1 surface-border">
                 <div class="grid">
                     
                     <div class="col-12 ">
@@ -649,11 +646,13 @@
     </p-dialog>
     <!-- FIN DIALOG VER AUDIENCIA FINALIZADA -->
 
+    
+
 </div>
 <!-- FIN CARD  AUDIENCIAS -->
 
 <!-- CARD FINALIZAR TRAMITE -->
-<div *ngIf="isTramiteFinalizado" class="card p-fluid mb-0 mt-2">
+<div class="card p-fluid mb-0 mt-2">
     <p-toolbar styleClass="mb-3 bg-cyan-500">
         <h5 class="block text-white font-bold font-medium mb-1 ">
             Datos de finalización
@@ -686,7 +685,7 @@
     <div class="col-12 border-bottom-1 surface-border">
         <div class="p-formgrid grid">            
             <div class="col-6">
-                <button pButton pRipple type="button" label="Imprimir tramite" class="p-button mr-2 mb-2" ></button>
+                <button pButton pRipple type="button" label="IMPRIMIR tramite" class="p-button mr-2 mb-2" ></button>
             </div>
         </div>
     </div>

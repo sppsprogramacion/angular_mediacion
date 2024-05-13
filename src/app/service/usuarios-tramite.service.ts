@@ -34,7 +34,11 @@ export class UsuariosTramiteService {
   }
 
   listarTramitesAsignadosXUsuario(id_usuariox: number){
-    return this.http.get<[tramite:UsuarioTramiteModel[], total: number]>(`${base_url}/usuarios-tramite/buscar-xusuario?id_usuario=${id_usuariox}`)
+    return this.http.get<[tramite:UsuarioTramiteModel[], total: number]>(`${base_url}/usuarios-tramite/buscar-xusuario-asignados?id_usuario=${id_usuariox}`)
+  }
+
+  listarTramitesFinalizadosXUsuario(id_usuariox: number){
+    return this.http.get<[tramite:UsuarioTramiteModel[], total: number]>(`${base_url}/usuarios-tramite/buscar-xusuario-finalizados?id_usuario=${id_usuariox}`)
   }
 
   listarTramitesAsignadosXCiudadano(id_ciudadanox: number){

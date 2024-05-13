@@ -10,7 +10,7 @@
             <p-table #dt1 [value]="listTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-between flex-column sm:flex-row">
-                        <button pButton label="Solicitar tramite" icon="pi pi-plus" class="p-button-info mr-2" (click)="abrirNuevoTramite()"></button>
+                        <button pButton label="Solicitar tramite" icon="pi pi-plus" class="p-button-info mr-2" (click)="openDialogDatosPersonales()"></button>
 
                     </div>
                 </ng-template>
@@ -76,19 +76,19 @@
                         <td style="min-width: 10rem;">
                             {{tramite.ciudadano.dni}}
                         </td>
-                        <td style="min-width: 10rem;">
+                        <td style="min-width: 15rem;">
                             {{tramite.objeto.objeto}}
                         </td>
-                        <td style="min-width: 5rem;">
+                        <td style="min-width: 8rem;">
                             {{tramite.fecha_tramite| date: 'dd/MM/yyyy'}}
                         </td>
-                        <td style="min-width: 15rem;">
+                        <td style="min-width: 10rem;">
                             {{tramite.expediente}}
                         </td>
-                        <td style="min-width: 5rem;">
+                        <td style="min-width: 8rem;">
                             {{tramite.fecha_expediente| date: 'dd/MM/yyyy'}}
                         </td>
-                        <td style="min-width: 10rem;">
+                        <td style="min-width: 15rem;">
                             {{tramite.centro_mediacion.centro_mediacion}}
                         </td>
                     </tr>
@@ -106,6 +106,54 @@
                 </ng-template>
             </p-table>
             <!-- FIN TABLA DE TRAMITES -->
+            <!-- DIALOG CONFIRMAR DATOS PERSONALES-->
+            <p-dialog id="datosPersonalesDialog" [(visible)]="datosPersonalesDialog" [style]="{width: '500px','min-height':'350px'}" class="p-fluid" header="Verificar datos personales" [closable]="false" [modal]="true">
+                
+
+                <ng-template pTemplate="content">
+                    <p-messages [(value)]="msgsDatosPersonales" [enableService]="false" [closable]="false"></p-messages>
+                    <div class="col-12 border-bottom-2 surface-border">
+                        <div class="grid">
+                            <div class="col-12 lg:col-12 xl:col-12">
+                                <span class="text font-medium text-1xl">Apellido y nombre:<span class="text ml-1 font-medium"> {{dataCiudadano.apellido}} {{dataCiudadano.nombre}}</span></span>
+                            </div>                    
+                        </div>
+                    </div>
+                    <div class="col-12 border-bottom-2 surface-border">
+                        <div class="grid">                    
+                            <div class="col-12 lg:col-12 xl:col-12">
+                                <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{dataCiudadano.dni}}</span></span>
+                            </div>
+                            <div class="col-12 lg:col-12 xl:col-12">
+                                <span class="text font-medium text-1xl">Fecha de Nacimiento:<span class="text ml-1 font-medium"> {{dataCiudadano.fecha_nac| date: 'dd/MM/yyyy' }}</span></span>
+                            </div>
+                            <div class="col-12 lg:col-12 xl:col-12">
+                                <span class="text font-medium text-1xl">Sexo:<span class="text ml-1 font-medium"> {{dataCiudadano.sexo.sexo}}</span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 border-bottom-2 surface-border">
+                        <div class="grid">
+                            <div class="col-12 lg:col-12 xl:col-12">
+                                <span class="text font-medium text-1xl">Telefono:<span class="text ml-1 font-medium"> {{dataCiudadano.telefono}} </span></span>
+                            </div>
+                            <div class="col-12 lg:col-12 xl:col-12">
+                                <span class="text font-medium text-1xl">Email:<span class="text ml-1 font-medium"> {{dataCiudadano.email}} </span></span>
+                            </div>
+
+                        </div>
+                    </div>    
+                        
+                </ng-template>
+
+                <ng-template pTemplate="footer" class="mt-1">           
+                    
+                    <button pButton pRipple type="button" label="Coninuar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="abrirNuevoTramite()"></button>
+                    <button pButton pRipple type="button" label="Modificar datos" class="p-button-outlined p-button-warning mr-2 mb-2" (click)="abrirModificarDatosPersonales()"></button>
+                    <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogDatosPersonales()"></button>
+                </ng-template>
+            </p-dialog>
+            <!-- FIN DIALOG CONFIRMAR DATOS PERSONALES -->
 
         </div>
 

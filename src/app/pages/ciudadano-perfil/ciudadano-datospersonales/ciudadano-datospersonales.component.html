@@ -1,1 +1,129 @@
-<p>ciudadano-datospersonales works!</p>
+
+<div class="grid justify-content-center">
+    <div class="col-12">
+        <div class="card p-fluid">
+            <p-toolbar styleClass="mb-3 bg-cyan-500">
+                <h5 class="block text-white  font-bold font-medium mb-1">Datos personales</h5>
+            </p-toolbar>
+            <div class="bg-cyan-600">
+
+            </div>
+
+            <div class="p-formgrid grid">                
+                <!-- FORMULARIO CIUDADANO -->
+                <div class="col-12">  
+                    <form [formGroup]="formaCiudadano">
+                        <!-- CARD DATOS PERSONALES-->
+                        <div class="card p-fluid">
+                            <p-toolbar styleClass="mb-3 bg-orange-500">
+                                <h5 class="block text-white  font-bold font-medium mb-1">Datos basicos</h5>
+                            </p-toolbar>
+                            <div class="bg-cyan-600"></div>
+
+                            <div class="formgrid grid">
+
+                                <div class="field col-12 md:col-6 lg:col-6">
+                                    <label for="dni">DNI usuario</label>
+                                    <input type="text" pInputText id="dni" formControlName="dni" />
+                                    <small *ngIf="isValid('dni')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.dni" >
+                                            <div  *ngIf="formaCiudadano.get('dni')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="formgrid grid">
+                                <div class="field col-12 md:col-6 lg:col-6">
+                                    <label for="apellido">Apellido</label>
+                                    <input type="text" pInputText id="apellido" formControlName="apellido" />
+                                    <small *ngIf="isValid('apellido')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.apellido" >
+                                            <div  *ngIf="formaCiudadano.get('apellido')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
+                                </div>
+                                <div class="field col-12 md:col-6 lg:col-6">
+                                    <label for="nombre">Nombre</label>
+                                    <input type="text" pInputText id="nombre" formControlName="nombre" />
+                                    <small *ngIf="isValid('nombre')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.nombre" >
+                                            <div  *ngIf="formaCiudadano.get('nombre')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
+                                </div>
+                            </div>
+    
+                            <div class="formgrid grid">
+                                <div class="field col-12 md:col-6 lg:col-6">
+                                    <label for="sexo_id">Sexo</label>
+                                    <p-dropdown id="sexo_id" [options]="listaSexo" optionLabel="sexo" optionValue="id_sexo" formControlName="sexo_id" placeholder="Seleccionar...">
+                                    </p-dropdown>
+                                </div>
+                                <div class="field col-12 md:col-6 lg:col-6">
+                                    <label for="fecha_nac">Fecha Nacimiento</label>
+                                    <p-calendar p-inputtext formControlName="fecha_nac" dateFormat="dd/mm/yy" view="" styleClass="" ></p-calendar>
+    
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <!-- FIN CARD DATOS PERSONALES -->
+
+                        <!-- CARD DATOS DE CONTACTO -->
+                        <div  class="card p-fluid">
+                            <p-toolbar styleClass="mb-3 bg-orange-500">
+                                <h5 class="block text-white  font-bold font-medium mb-1">Datos de contacto</h5>
+                            </p-toolbar>
+                            <div class="bg-cyan-600"></div>
+
+                            <div class="formgrid grid">
+                                <div class="field col">
+                                    <label for="telefono">Teléfono</label>
+                                    <input type="text" pInputText id="telefono" formControlName="telefono" />
+                                    <small *ngIf="isValid('telefono')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.telefono" >
+                                            <div  *ngIf="formaCiudadano.get('telefono')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="formgrid grid">
+
+                            <div class="field col">
+                                <label for="email">Correo electrónico</label>
+                                <input type="text" pInputText id="email" formControlName="email" />
+                                <small *ngIf="isValid('email')" class="p-error">
+                                    <div *ngFor="let validation of user_validation_messages.email" >
+                                        <div  *ngIf="formaCiudadano.get('email')?.hasError(validation.type)">
+                                            {{validation.message}}
+                                        </div>
+                                    </div>
+                                </small>
+                            </div>
+                            </div>
+                            
+                        </div>
+                        <!-- FIN CARD CENTRO MEDICAION -->
+                    </form>
+                </div>
+                <!--  FIN FORMULARIO CIUDADANO -->
+                <div  class="col-12 grid justify-content-center">
+                    <button pButton pRipple type="button" label="Guardar" class="p-button-success" style="width: 47%;" (click)="submitFormCiudadano()" ></button>
+                    <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger ml-2" style="width: 47%;" (click)="irAPrincipal()"></button>
+                    
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

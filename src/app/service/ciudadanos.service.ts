@@ -19,12 +19,21 @@ export class CiudadanosService {
     return this.http.post(`${base_url}/ciudadanos`, this.ciudadano);
   }
 
+  guardarEdicionCiudadano(id: number, data: Partial<CiudadanoModel>){    
+    this.ciudadano={...data};
+    return this.http.patch(`${base_url}/ciudadanos/${id}`, this.ciudadano);
+  }
+
   listarCiudadanosTodos(){
     return this.http.get<[ciudadano:CiudadanoModel[], total: number]>(`${base_url}/ciudadanos`)
   }
 
   buscarXDni(dni: number){
     return this.http.get<CiudadanoModel>(`${base_url}/ciudadanos/buscar-xdni?dni=${dni}`)
+  }
+
+  buscarXId(id: number){
+    return this.http.get<CiudadanoModel>(`${base_url}/ciudadanos/${id}`)
   }
 
   

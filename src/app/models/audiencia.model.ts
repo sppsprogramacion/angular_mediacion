@@ -6,6 +6,7 @@ import { TramiteModel } from './tramite.model';
 import { TipoAudienciaModel } from './tipo_audiencia.model';
 import { ModalidadModel } from './modalidad.model';
 import { CentroMediacionModel } from './centro_mediacion.model';
+import { ResultadoAudienciaModel } from './resultadoAudiencia.model';
 
 
 export class AudienciaModel{
@@ -28,6 +29,9 @@ export class AudienciaModel{
         public centro_mediacion?: CentroMediacionModel,
         public usuario_id?: number,
         public usuario?: CentroMediacionModel,
+        public resultado_audiencia_id?: number,
+        public resultado_audiencia?: ResultadoAudienciaModel,
+        public observacion_resultado?: string
 
 
     ){}

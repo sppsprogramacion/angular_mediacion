@@ -6,6 +6,7 @@ import { UsuarioTramiteModel } from 'src/app/models/usuario_tramite.model';
 import { TramiteModel } from 'src/app/models/tramite.model';
 import { globalConstants } from 'src/app/common/global-constants';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../service/auth.service';
 
 @Component({
   selector: 'app-usuarios-administrar',
@@ -23,6 +24,7 @@ export class UsuariosAdministrarComponent implements OnInit {
   listTramitesAsignados: UsuarioTramiteModel[]=[];
 
   constructor(
+    private authService: AuthService,
     public dataService: DataService,
     private usuarioTramiteService: UsuariosTramiteService,
     private router: Router
@@ -51,7 +53,7 @@ export class UsuariosAdministrarComponent implements OnInit {
   //ACCEDER A DATA SERVICE
   administrarTramite(data: TramiteModel){
     this.dataService.tramiteData = data;
-    if (globalConstants.usuarioLogin) {
+    if (this.authService.currentUserLogin) {
       this.router.navigateByUrl("admin/tramites/administrar");
       
     }

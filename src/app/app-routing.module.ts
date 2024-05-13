@@ -57,13 +57,16 @@ import { CiudadanoTramitesNuevoslistaComponent } from './pages/ciudadano-perfil/
 import { CiudadanoTramitesFinalizadosComponent } from './pages/ciudadano-perfil/ciudadano-tramites-finalizados/ciudadano-tramites-finalizados.component';
 import { CiudadanoDatospersonalesComponent } from './pages/ciudadano-perfil/ciudadano-datospersonales/ciudadano-datospersonales.component';
 import { CiudadanosBuscarComponent } from './pages/ciudadanos/ciudadanos-buscar/ciudadanos-buscar.component';
+import { TramitesAdministrarFinalizadoComponent } from './pages/tramites-administrador/tramites-administrar-finalizado/tramites-administrar-finalizado.component';
+import { AuthCiudadanoGuard } from './auth/guards/auth-ciudadano.guard';
+import { AuthUsuarioGuard } from './auth/guards/auth-usuario.guard';
 
 @NgModule({
     imports: [
         RouterModule.forRoot([
             {path: '', redirectTo: 'login', pathMatch: 'full'},
             {
-                path: 'admin', component: AppMainComponent,
+                path: 'admin', component: AppMainComponent, canActivate: [AuthUsuarioGuard],
                 children: [
                     {path: '', component: TramitesPrincipalComponent},
                     {path: 'principal', component: TramitesPrincipalComponent},
@@ -84,6 +87,7 @@ import { CiudadanosBuscarComponent } from './pages/ciudadanos/ciudadanos-buscar/
                     {path: 'usuarios/lista', component: UsuariosListaComponent},
                     
                     {path: 'tramites/administrar', component: TramitesAdministrarComponent},
+                    {path: 'tramites/administrar-finalizado', component: TramitesAdministrarFinalizadoComponent},
                     {path: 'tramites/administrar-med', component: TramitesAdministrarMediadorComponent},
                     {path: 'tramites/asignados', component: TramitesAsignadosComponent},
                     {path: 'tramites/finalizados', component: TramitesFinalizadosComponent},
@@ -93,7 +97,7 @@ import { CiudadanosBuscarComponent } from './pages/ciudadanos/ciudadanos-buscar/
                 ],                
             },
             {
-                path: 'ciudadano', component: AppMainComponent,
+                path: 'ciudadano', component: AppMainComponent, canActivate: [AuthCiudadanoGuard],
                 children: [
                     {path: '', component: CiudadanoPrincipalComponent},
                     {path: 'principal', component: CiudadanoPrincipalComponent},
