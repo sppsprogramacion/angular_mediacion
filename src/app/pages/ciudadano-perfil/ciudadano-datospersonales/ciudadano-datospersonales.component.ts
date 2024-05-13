@@ -10,6 +10,7 @@ import { CiudadanosService } from 'src/app/service/ciudadanos.service';
 import Swal from 'sweetalert2';
 import { DataService } from '../../../service/data.service';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-ciudadano-datospersonales',
@@ -36,6 +37,7 @@ export class CiudadanoDatospersonalesComponent implements OnInit {
     private readonly datePipe: DatePipe,
     private router: Router,
 
+    private authService: AuthService,
     private dataService: DataService,    
     private ciudadanoService: CiudadanosService,
   ) {
@@ -102,7 +104,7 @@ export class CiudadanoDatospersonalesComponent implements OnInit {
   ngOnInit(): void {
     
     //cargar datos del ciudadano en el formulario
-    this.ciudadanoData = globalConstants.ciudadanoLogin;
+    this.ciudadanoData = this.authService.currentCiudadanoLogin;
 
     this.cargarFormularioCiudadano();
 
@@ -141,6 +143,7 @@ export class CiudadanoDatospersonalesComponent implements OnInit {
     this.ciudadanoService.guardarEdicionCiudadano(this.ciudadanoData.id_ciudadano, dataRegistro)
       .subscribe({
         next: (resultado) => {
+            location.reload();
             this.buscarCiudadano();
             Swal.fire('Exito',`Se modificó los datos con exito`,"success");   
         },
@@ -174,7 +177,6 @@ export class CiudadanoDatospersonalesComponent implements OnInit {
           this.ciudadanoData = {};
           this.ciudadanoData = resultado;  
           this.dataService.ciudadanoData = this.ciudadanoData;
-          globalConstants.ciudadanoLogin = this.ciudadanoData;
           this.cargarFormularioCiudadano();
         }
       });    

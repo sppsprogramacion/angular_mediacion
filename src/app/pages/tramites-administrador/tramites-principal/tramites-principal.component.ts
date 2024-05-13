@@ -10,6 +10,7 @@ import { TotalesTramitesModel } from '../../../models/totales_tramites.model';
 import { globalConstants } from '../../../common/global-constants';
 import { UsuariosTramiteService } from '../../../service/usuarios-tramite.service';
 import { UsuarioTramiteModel } from '../../../models/usuario_tramite.model';
+import { AuthService } from '../../../service/auth.service';
 
 @Component({
   selector: 'app-tramites-principal',
@@ -38,6 +39,7 @@ export class TramitesPrincipalComponent implements OnInit {
   listSexo: SexoModel[]=[];
 
   constructor(
+    private authService: AuthService,
     private tramitesService: TramitesService,
     private usuariosTramitesService: UsuariosTramiteService,
     public dataService: DataService,
@@ -45,20 +47,20 @@ export class TramitesPrincipalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (globalConstants.isAdministrador) {
+    if (this.authService.currentUserLogin.rol_id == "administrador") {
       this.tituloPagina ="Usuario: Administrador";
       this.listarTramitesAdministrador();
     }
 
-    if (globalConstants.ciudadanoLogin) {
-      this.tituloPagina ="Ciudadano: " + globalConstants.ciudadanoLogin.apellido + " " + globalConstants.ciudadanoLogin.nombre;
+    if (this.authService.currentCiudadanoLogin) {
+      this.tituloPagina ="Ciudadano: " + this.authService.currentCiudadanoLogin.apellido + " " + this.authService.currentCiudadanoLogin.nombre;
       this.listTramites = [];
       this.loading = false;
       //this.listarTramitesCiudadano();
     }
     
-    if (globalConstants.usuarioLogin) {
-      this.tituloPagina ="Usuario: " + globalConstants.usuarioLogin.apellido + " " + globalConstants.usuarioLogin.nombre;
+    if (this.authService.currentUserLogin) {
+      this.tituloPagina ="Usuario: " + this.authService.currentUserLogin.apellido + " " + this.authService.currentUserLogin.nombre;
       this.listTramites = [];
       this.loading = false;
     }
@@ -83,7 +85,7 @@ export class TramitesPrincipalComponent implements OnInit {
   //LISTADO DE TRANITES USUARIO
   listarTramitesUsuario(){
     let id_usuario: number = 0;
-    id_usuario = globalConstants.usuarioLogin.id_usuario;
+    id_usuario = this.authService.currentUserLogin.id_usuario;
 
     this.usuariosTramitesService.listarTramitesAsignadosXUsuario(id_usuario).
         subscribe(respuesta => {

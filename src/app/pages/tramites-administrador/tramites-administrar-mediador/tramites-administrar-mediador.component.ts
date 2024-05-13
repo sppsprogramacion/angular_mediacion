@@ -33,6 +33,7 @@ import { modalidad } from '../../../common/data-mokeada';
 import { ResultadoAudienciaModel } from '../../../models/resultadoAudiencia.model';
 import { ResultadosAudienciaService } from '../../../service/resultados-audiencia.service';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-tramites-administrar-mediador',
@@ -101,6 +102,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   posicion: string = "top";
 
   constructor(
+    private authService: AuthService,
     private fb: FormBuilder,
     private readonly datePipe: DatePipe,
     private router: Router,
@@ -293,7 +295,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
 
     dataMediadorAsignado = {
       tramite_numero: this.dataTramite.numero_tramite,
-      usuario_id: globalConstants.usuarioLogin.id_usuario,
+      usuario_id: this.authService.currentUserLogin.id_usuario,
       detalles: this.formaMediadorAsignado.get('detalles')?.value,
       funcion_tramite_id: parseInt(this.formaMediadorAsignado.get('funcion_tramite_id')?.value),             
     };
@@ -456,7 +458,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
       
             this.isNuevo = true;
             //cargar datos formulario recibir tramite
-            this.cargarCentrosMediacion(globalConstants.usuarioLogin.id_usuario);
+            this.cargarCentrosMediacion(this.authService.currentUserLogin.id_usuario);
             this.listarFuncionTramite();
           }  
           

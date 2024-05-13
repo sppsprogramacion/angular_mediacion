@@ -9,6 +9,7 @@ import { UsuarioTramiteModel } from 'src/app/models/usuario_tramite.model';
 import { DataService } from 'src/app/service/data.service';
 import { TramitesService } from 'src/app/service/tramites.service';
 import { UsuariosTramiteService } from '../../../service/usuarios-tramite.service';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-tramites-asignados',
@@ -34,6 +35,7 @@ export class TramitesAsignadosComponent implements OnInit {
   listSexo: SexoModel[]=[];
 
   constructor(
+    private authService: AuthService,
     private tramitesService: TramitesService,
     private usuariosTramitesService: UsuariosTramiteService,
     public dataService: DataService,
@@ -42,21 +44,21 @@ export class TramitesAsignadosComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if (globalConstants.isAdministrador) {
-      console.log("administrador ", globalConstants.isAdministrador);
+    if (this.authService.currentUserLogin.rol_id == "administrador") {
+      console.log("administrador ", this.authService.currentUserLogin);
       this.tituloPagina ="Usuario: Administrador"
       this.listarTramitesUsuario();
     }
 
-    if (globalConstants.ciudadanoLogin) {
-      console.log("ciudadano", globalConstants.ciudadanoLogin);
-      this.tituloPagina ="Ciudadano: " + globalConstants.ciudadanoLogin.apellido + " " + globalConstants.ciudadanoLogin.nombre
+    if (this.authService.currentCiudadanoLogin) {
+      console.log("ciudadano", this.authService.currentCiudadanoLogin);
+      this.tituloPagina ="Ciudadano: " + this.authService.currentCiudadanoLogin.apellido + " " + this.authService.currentCiudadanoLogin.nombre
       this.listarTramitesCiudadano();
     }
     
-    if (globalConstants.usuarioLogin && !globalConstants.isAdministrador) {
-      console.log("usuario", globalConstants.usuarioLogin);
-      this.tituloPagina ="Usuario: " + globalConstants.usuarioLogin.apellido + " " + globalConstants.usuarioLogin.nombre
+    if (this.authService.currentUserLogin && this.authService.currentUserLogin.rol_id != "administrador") {
+      console.log("usuario", this.authService.currentUserLogin);
+      this.tituloPagina ="Usuario: " + this.authService.currentUserLogin.apellido + " " + this.authService.currentUserLogin.nombre
       this.listTramites = [];
       this.listarTramitesUsuario();
     }
@@ -82,7 +84,7 @@ export class TramitesAsignadosComponent implements OnInit {
   //LISTADO DE TRAMITES CIUDADANOS ASIGNADOS
   listarTramitesCiudadano(){   
 
-    let id_ciudadano: number = globalConstants.ciudadanoLogin.id_ciudadano; 
+    let id_ciudadano: number = this.authService.currentCiudadanoLogin.id_ciudadano; 
     this.usuariosTramitesService.listarTramitesAsignadosXCiudadano(id_ciudadano)
       .subscribe ({
         next: (respuesta) => {
@@ -96,7 +98,7 @@ export class TramitesAsignadosComponent implements OnInit {
 
   //LISTADO DE TRAMITES USUARIO
   listarTramitesUsuario(){
-    let id_usuario: number = globalConstants.usuarioLogin.id_usuario;
+    let id_usuario: number = this.authService.currentUserLogin.id_usuario;
 
     this.usuariosTramitesService.listarTramitesAsignadosXUsuario(id_usuario)
       .subscribe({
@@ -112,7 +114,7 @@ export class TramitesAsignadosComponent implements OnInit {
   //ACCEDER A DATA SERVICE
   administrarTramite(data: UsuarioTramiteModel){
     this.dataService.tramiteData = data.tramite;
-    if( globalConstants.isAdministrador ){
+    if( this.authService.currentUserLogin.rol_id == "administrador" ){
       this.router.navigateByUrl("admin/tramites/administrar");
     }
     else{

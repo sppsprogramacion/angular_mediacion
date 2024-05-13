@@ -3,6 +3,7 @@ import { AppMainComponent } from './app.main.component';
 import { globalConstants } from './common/global-constants';
 import { CiudadanoModel } from './models/ciudadano.model';
 import { DataService } from './service/data.service';
+import { AuthService } from './service/auth.service';
 
 @Component({
     selector: 'app-menu',
@@ -34,12 +35,16 @@ export class AppMenuComponent implements OnInit {
     nombre_completo: string;
     ciudadano: CiudadanoModel;
 
-    constructor(public appMain: AppMainComponent, readonly  dataService: DataService) { }
+    constructor(
+        public appMain: AppMainComponent, 
+        readonly  dataService: DataService,
+        readonly authService: AuthService
+        ) { }
 
-    ngOnInit() {
-        console.log("Ciudadano logueado", globalConstants.ciudadanoLogin);
-        if(globalConstants.ciudadanoLogin){
-            this.nombre_completo = this.dataService.ciudadanoData.apellido + " " + this.dataService.ciudadanoData.nombre;
+    ngOnInit() {        
+
+        if(this.authService.currentCiudadanoLogin){
+            this.nombre_completo = this.authService.currentCiudadanoLogin.apellido + " " + this.authService.currentCiudadanoLogin.nombre;
             this.model = [                
                 {
                     label: 'Tramites',
@@ -59,14 +64,15 @@ export class AppMenuComponent implements OnInit {
                 {
                     label: 'Salir',
                     items: [
-                        {label: 'Cerrar sesión', icon: 'pi pi-sign-out', routerLink: ['/ciudadano/datospersonales']},
+                        {label: 'Cerrar sesión', icon: 'pi pi-sign-out', routerLink: ['/login'] },
                         
                     ]
                 },
             ]
         }
-        if(globalConstants.usuarioLogin && !globalConstants.isAdministrador){
-            this.nombre_completo = this.dataService.usuarioData.apellido + " " + this.dataService.usuarioData.nombre;
+        if(this.authService.currentUserLogin && this.authService.currentUserLogin.rol_id != "admnistrador"){
+            
+            this.nombre_completo = this.authService.currentUserLogin.apellido + " " + this.authService.currentUserLogin.nombre;
             this.model = [                
                 {
                     label: 'Tramites',
@@ -93,15 +99,15 @@ export class AppMenuComponent implements OnInit {
                 {
                     label: 'Salir',
                     items: [
-                        {label: 'Cerrar sesión', icon: 'pi pi-sign-out', routerLink: ['/ciudadano/datospersonales']},
+                        {label: 'Cerrar sesión', icon: 'pi pi-sign-out', routerLink: ['/login-admin-mediacion']},
                             
                     ]
                 },
             ]
         }
 
-        if(globalConstants.usuarioLogin && globalConstants.isAdministrador) {
-            this.nombre_completo = this.dataService.usuarioData.apellido + " " + this.dataService.usuarioData.nombre;
+        if(this.authService.currentUserLogin && this.authService.currentUserLogin.rol_id == "administrador") {
+            this.nombre_completo = this.authService.currentUserLogin.apellido + " " + this.authService.currentUserLogin.nombre;
             this.model = [
                 {
                     label: 'Home',
@@ -165,7 +171,7 @@ export class AppMenuComponent implements OnInit {
                 {
                     label: 'Salir',
                     items: [
-                        {label: 'Cerrar sesión', icon: 'pi pi-sign-out', routerLink: ['/ciudadano/datospersonales']},
+                        {label: 'Cerrar sesión', icon: 'pi pi-sign-out', routerLink: ['/login-admin-mediacion']},
                     ]
                 },
                 

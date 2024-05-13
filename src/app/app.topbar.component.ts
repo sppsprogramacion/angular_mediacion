@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { MenuItem } from 'primeng/api';
 import { Router } from '@angular/router';
 import { globalConstants } from './common/global-constants';
+import { AuthService } from './service/auth.service';
 
 @Component({
     selector: 'app-topbar',
@@ -15,20 +16,22 @@ export class AppTopBarComponent {
 
     constructor(
         public appMain: AppMainComponent,
-        private router: Router
+        private router: Router,
+
+        private authService: AuthService
     ) { }
 
     //IR A REGISTRARME
   irAPrincipal(){
-    if(globalConstants.ciudadanoLogin){
+    if(this.authService.currentCiudadanoLogin){
         this.router.navigateByUrl("ciudadano/tramites/nuevos");
     }
 
-    if(globalConstants.usuarioLogin && globalConstants.isAdministrador){
+    if(this.authService.currentUserLogin && this.authService.currentUserLogin.rol_id == "administrador"){
         this.router.navigateByUrl("admin/principal");
     }
 
-    if(globalConstants.usuarioLogin && !globalConstants.isAdministrador){
+    if(this.authService.currentUserLogin && this.authService.currentUserLogin.rol_id != "administrador"){
         this.router.navigateByUrl("admin/tramites/nuevoslis")
     }
     

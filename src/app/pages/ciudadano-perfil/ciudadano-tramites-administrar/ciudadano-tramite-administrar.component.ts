@@ -23,7 +23,9 @@ import { AudienciaModel } from 'src/app/models/audiencia.model';
 export class CiudadanoTramitesAdministrarComponent implements OnInit {
 
   msgs: Message[] = []; 
-
+  msgsEstadoTramite: Message[] = []; 
+  msgsAudienciasTramite: Message[] = []; 
+  
   //MODELOS
   dataAudiencia: AudienciaModel = {};
   dataConvocado: ConvocadoModel = {};
@@ -71,37 +73,14 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
     this.dataTramiteAux= this.dataService.tramiteData;
 
     if(this.dataTramiteAux){
-      this.msgs = []; 
-      if (this.dataTramite.es_expediente){
-        this.msgs.push({ severity: 'success', summary: 'Expediente', detail: 'Se generó el número de expediente para su tramite' });
-      }
 
       this.buscarTramite();
-      this.buscarAudienciasByNumTramiteActivo();
+      //this.buscarAudienciasByNumTramiteActivo();
       
     }
     //fin obtener tramite
   }
   //FIN ONINIT......................................................................................
-
-
-  //BUSCAR AUDIENCIA POR NUMERO DE TRAMITE
-  buscarAudienciasByNumTramiteActivo(){
-    this.audienciaService.listarAudienciasByTramite(this.dataTramiteAux.numero_tramite)
-      .subscribe({
-        next: (resultado) => {
-          this.listAudiencias = resultado[0]; 
-          this.loadingAudiencia = false;     
-        },
-        error: (err) => {
-          this.listAudiencias = [];
-          this.loadingAudiencia = false;  
-          //Swal.fire('Error',`Error al buscar tramite asignado: ${err.error.message}`,"error") 
-        }
-      });       
-  }
-  //FIN BUSCAR AUDIENCIA POR NUMERO DE TRAMITE...................................
-  
 
 
   //BUSCAR MEDIADOR DEL TRAMITE X NUMERO TRAMITE ACTIVO
@@ -130,24 +109,67 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
         next: (resultado) => {          
           this.dataTramite = {};
           this.dataTramite = resultado;  
+
+          this.msgsEstadoTramite = [];           
           
-          if(this.dataTramite.estado_tramite_id === 2 || this.dataTramite.estado_tramite_id === 3) {
+          if(this.dataTramite.estado_tramite_id === 2 ) {            
             
+            this.msgsEstadoTramite.push({ severity: 'success', summary: 'Mediador', detail: 'El tramite tiene mediador asignado.' });
+            
+            if (this.dataTramite.es_expediente){
+              this.msgsEstadoTramite.push({ severity: 'success', summary: 'Expediente', detail: 'Se generó el número de expediente para su tramite.' });
+            }
             this.buscarMediadorByNumTramiteActivo();
           }
 
           if(this.dataTramite.estado_tramite_id === 3) {
-            
+            this.msgsEstadoTramite.push({ severity: 'warn', summary: 'Finalizado', detail: 'El tramite está finalizado.' });
             this.buscarMediadorByNumTramiteActivo();
             this.isTramiteFinalizado = true;
           }
+
+          this.buscarAudienciasByNumTramiteActivo();
         }
       });    
   }
   //FIN BUSCAR TRAMITE................................................................... 
 
+  //BUSCAR AUDIENCIA POR NUMERO DE TRAMITE
+  buscarAudienciasByNumTramiteActivo(){
+    this.audienciaService.listarAudienciasByTramite(this.dataTramiteAux.numero_tramite)
+      .subscribe({
+        next: (resultado) => {
+          this.listAudiencias = resultado[0]; 
+
+          this.msgsAudienciasTramite=[];
+          if(this.listAudiencias.length > 0){
+            let listAudienciasActivas: AudienciaModel[] = this.listAudiencias.filter(audiencia => audiencia.esta_cerrada === false);
+            if(listAudienciasActivas.length > 0 ){
+              this.msgsAudienciasTramite.push({ severity: 'success', summary: 'Audiencia', detail: 'Tiene una audiencia programada pendiente.' });
+
+            }
+          }
+          else{
+            console.log("audiencia numero", this.listAudiencias.length);
+            this.msgsAudienciasTramite.push({ severity: 'warn', summary: 'Audiencia', detail: 'No tiene una audiencia programada' });
+          
+          }
+  
+          this.loadingAudiencia = false;     
+        },
+        error: (err) => {
+          this.listAudiencias = [];
+          this.loadingAudiencia = false;  
+          //Swal.fire('Error',`Error al buscar tramite asignado: ${err.error.message}`,"error") 
+        }
+      });       
+  }
+  //FIN BUSCAR AUDIENCIA POR NUMERO DE TRAMITE...................................
+  
+
   //MANEJO FORMULARIO DIALOG VER AUDIENCIA FINALIZADA
   openDialogAudienciaFinalizada(audiencia: AudienciaModel) {
+
     this.dataAudiencia = audiencia;
     this.audienciaFinalizadaDialog = true;
     // this.formaAudiencia.reset();    
@@ -158,8 +180,7 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
   hideDialogAudienciaFinalizada() {
     
     this.msgs = [];
-    this.audienciaFinalizadaDialog = false;
-    
+    this.audienciaFinalizadaDialog = false;    
   }
   //FIN MANEJO FORMULARIO DIALOG VER AUDIENCIA FINALIZADA................................................
 
@@ -168,8 +189,7 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
   //MANEJO DE FORMULARIO DIALOG VINCULADO
   openDialogConvocado(convocado: ConvocadoModel) {
     this.dataConvocado = convocado;
-    this.convocadoDialog = true; 
-    
+    this.convocadoDialog = true;     
   }
   
   hideDialogConvocado() {    

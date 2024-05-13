@@ -8,7 +8,7 @@ export class globalConstants {
     public static validado: boolean = false;
     public static usuario: UsuarioModel;
     public static ciudadano: CiudadanoModel;
-    public static isAdministrador: boolean = true;
-    public static ciudadanoLogin: CiudadanoModel;
-    public static usuarioLogin: UsuarioModel;
+    // public static isAdministrador: boolean = true;
+    // public static ciudadanoLogin: CiudadanoModel;
+    // public static usuarioLogin: UsuarioModel;
 }

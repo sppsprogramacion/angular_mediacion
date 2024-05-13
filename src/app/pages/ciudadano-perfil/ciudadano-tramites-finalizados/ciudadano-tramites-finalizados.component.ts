@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { globalConstants } from 'src/app/common/global-constants';
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { TramiteModel } from 'src/app/models/tramite.model';
+import { AuthService } from 'src/app/service/auth.service';
 import { DataService } from 'src/app/service/data.service';
 import { TramitesService } from 'src/app/service/tramites.service';
 import { UsuariosTramiteService } from 'src/app/service/usuarios-tramite.service';
@@ -24,13 +25,14 @@ export class CiudadanoTramitesFinalizadosComponent implements OnInit {
   listTramitesFinalizados: TramiteModel[]=[];
 
   constructor(
+    private authService: AuthService,
     public dataService: DataService,
     private usuarioTramiteService: UsuariosTramiteService,
     private tramiteService: TramitesService,
     private router: Router
   ) { 
     //recuperar ciudadano seleccioando
-    this.dataCiudadano = dataService.ciudadanoData;
+    this.dataCiudadano = authService.currentCiudadanoLogin;
   }
 
   ngOnInit(): void {
@@ -65,7 +67,7 @@ export class CiudadanoTramitesFinalizadosComponent implements OnInit {
   //ACCEDER A DATA SERVICE
   administrarTramite(data: TramiteModel){
     this.dataService.tramiteData = data;
-    if (globalConstants.ciudadanoLogin) {
+    if (this.authService.currentCiudadanoLogin) {
       this.router.navigateByUrl("ciudadano/tramites/administrar");
     }
     else{

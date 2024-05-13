@@ -9,6 +9,7 @@ import { UsuarioTramiteModel } from 'src/app/models/usuario_tramite.model';
 import { DataService } from 'src/app/service/data.service';
 import { TramitesService } from 'src/app/service/tramites.service';
 import { UsuariosTramiteService } from 'src/app/service/usuarios-tramite.service';
+import { AuthService } from '../../../service/auth.service';
 
 @Component({
   selector: 'app-tramites-finalizados',
@@ -33,6 +34,7 @@ export class TramitesFinalizadosComponent implements OnInit {
   listUsuariosTramites: UsuarioTramiteModel[]=[];
 
   constructor(
+    private authService: AuthService,
     private tramitesService: TramitesService,
     private usuariosTramitesService: UsuariosTramiteService,
     public dataService: DataService,
@@ -58,7 +60,7 @@ export class TramitesFinalizadosComponent implements OnInit {
 
   //LISTADO DE TRANITES USUARIO
   listarTramitesUsuarioFinalizados(){
-    let id_usuario: number = globalConstants.usuarioLogin.id_usuario;
+    let id_usuario: number = this.authService.currentUserLogin.id_usuario;
 
     //REVISAR PARA LISTAR TRAMITES FINALIZADOS
     this.usuariosTramitesService.listarTramitesFinalizadosXUsuario(id_usuario).

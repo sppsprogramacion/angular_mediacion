@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { CategoriasService } from './service/categorias.service';
 import { CategoriaModel } from './models/categoria.model';
 import { DataMokeada } from './common/data-mokeada';
+import { AuthService } from './service/auth.service';
 
 @Component({
     selector: 'app-root',
@@ -20,6 +21,8 @@ export class AppComponent {
         private primengConfig: PrimeNGConfig,
         //traslate lenguaje
         private config: PrimeNGConfig, private translateService: TranslateService,
+        //personales
+        private authService: AuthService,
         private categoriasService: CategoriasService,
         
         ) { }
@@ -30,8 +33,14 @@ export class AppComponent {
         
         //traslate lenguaje
         this.translateService.setDefaultLang('es');    
-        this.translate('es');  
+        this.translate('es');          
         
+        //AUTENTICAR USUARIO
+        // this.authService.checkAutenticationUsuario()
+        //     .subscribe( () => {
+        //         console.log("Autenticado");
+        //     })
+
         //INICIALIZACION DE DATA-MOKEADA
         this.listarCategorias();
     }

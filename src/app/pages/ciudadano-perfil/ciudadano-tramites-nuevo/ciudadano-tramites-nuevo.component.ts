@@ -22,6 +22,7 @@ import { TramitesService } from 'src/app/service/tramites.service';
 import { ElementoModel } from 'src/app/models/elemento.model';
 import { Router } from '@angular/router';
 import { CategoriaModel } from 'src/app/models/categoria.model';
+import { AuthService } from '../../../service/auth.service';
 
 @Component({
   selector: 'app-ciudadano-tramites-nuevo',
@@ -88,13 +89,15 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   posicion: string = "top";
 
   constructor(
-    private fb: FormBuilder,
+    private authService: AuthService,
     private readonly datePipe: DatePipe,
+    private fb: FormBuilder,
+    private router: Router,
     private serviceMensajes: MessageService,
+
     private centroMediacionService: CentrosMediacionService,
     private tramiteService: TramitesService,
     public dataService: DataService,
-    private router: Router,
   ) {
     //FORMULARIOS
     this.formaTramite = this.fb.group({
@@ -310,7 +313,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   //...........................................................................................................
 
   ngOnInit(): void {    
-    this.ciudadanoData = this.dataService.ciudadanoData
+    //OBTENER CIUDADANO LOGUEADO
+    this.ciudadanoData = this.authService.currentCiudadanoLogin;
 
     this.msgsDatosPersonales = []; 
     this.msgsDatosPersonales.push({ severity: 'warning', detail: 'Debe estar asesordo/a por un abogado antes de iniciar un tramite de mediación.'});

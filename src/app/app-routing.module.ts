@@ -58,13 +58,15 @@ import { CiudadanoTramitesFinalizadosComponent } from './pages/ciudadano-perfil/
 import { CiudadanoDatospersonalesComponent } from './pages/ciudadano-perfil/ciudadano-datospersonales/ciudadano-datospersonales.component';
 import { CiudadanosBuscarComponent } from './pages/ciudadanos/ciudadanos-buscar/ciudadanos-buscar.component';
 import { TramitesAdministrarFinalizadoComponent } from './pages/tramites-administrador/tramites-administrar-finalizado/tramites-administrar-finalizado.component';
+import { AuthCiudadanoGuard } from './auth/guards/auth-ciudadano.guard';
+import { AuthUsuarioGuard } from './auth/guards/auth-usuario.guard';
 
 @NgModule({
     imports: [
         RouterModule.forRoot([
             {path: '', redirectTo: 'login', pathMatch: 'full'},
             {
-                path: 'admin', component: AppMainComponent,
+                path: 'admin', component: AppMainComponent, canActivate: [AuthUsuarioGuard],
                 children: [
                     {path: '', component: TramitesPrincipalComponent},
                     {path: 'principal', component: TramitesPrincipalComponent},
@@ -95,7 +97,7 @@ import { TramitesAdministrarFinalizadoComponent } from './pages/tramites-adminis
                 ],                
             },
             {
-                path: 'ciudadano', component: AppMainComponent,
+                path: 'ciudadano', component: AppMainComponent, canActivate: [AuthCiudadanoGuard],
                 children: [
                     {path: '', component: CiudadanoPrincipalComponent},
                     {path: 'principal', component: CiudadanoPrincipalComponent},

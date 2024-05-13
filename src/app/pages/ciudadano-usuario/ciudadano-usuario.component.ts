@@ -107,9 +107,9 @@ export class CiudadanoUsuarioComponent implements OnInit {
           this.dataUsuario = {};       
           this.dataAdministrador = "";
           this.dataService.ciudadanoData = this.dataCiudadano;
-          globalConstants.ciudadanoLogin = this.dataCiudadano;          
-          globalConstants.usuarioLogin = null;
-          globalConstants.isAdministrador = false;
+          // globalConstants.ciudadanoLogin = this.dataCiudadano;          
+          // globalConstants.usuarioLogin = null;
+          // globalConstants.isAdministrador = false;
           Swal.fire('Exito',`Ciudadano seleccionado`,"success");
         }
       });    
@@ -123,9 +123,9 @@ export class CiudadanoUsuarioComponent implements OnInit {
           this.dataCiudadano = {};
           this.dataUsuario = resultado;
           this.dataAdministrador = "";
-          globalConstants.ciudadanoLogin = null;
-          globalConstants.usuarioLogin = this.dataUsuario;
-          globalConstants.isAdministrador = false;
+          // globalConstants.ciudadanoLogin = null;
+          // globalConstants.usuarioLogin = this.dataUsuario;
+          // globalConstants.isAdministrador = false;
           Swal.fire('Exito',`Usuario seleccionado`,"success");
         }
       });    
@@ -135,9 +135,9 @@ export class CiudadanoUsuarioComponent implements OnInit {
     this.dataCiudadano = {};
     this.dataUsuario = {};
     this.dataAdministrador = "Administrador";
-    globalConstants.ciudadanoLogin = null;
-    globalConstants.usuarioLogin = null;
-    globalConstants.isAdministrador = true;
+    // globalConstants.ciudadanoLogin = null;
+    // globalConstants.usuarioLogin = null;
+    // globalConstants.isAdministrador = true;
     Swal.fire('Exito',`Administrador seleccionado`,"success");
   }
   //FIN ACCEDER A GLOBAL CONSTANTS

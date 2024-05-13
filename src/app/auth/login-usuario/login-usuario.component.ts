@@ -67,20 +67,12 @@ export class LoginUsuarioComponent implements OnInit {
     this.authService.loginUsuario(dataLogin)
       .subscribe({
         next: (resultado) => {
-          let loginRes: UsuarioModel = resultado;
           
-          this.dataUsuario = resultado;  
-          
-          localStorage.setItem('token', this.dataUsuario.id_usuario.toString())
-          this.dataService.usuarioData = this.dataUsuario;
-          globalConstants.usuarioLogin = this.dataUsuario;          
-          globalConstants.ciudadanoLogin = null;
+          this.dataUsuario = resultado;            
           if(this.dataUsuario.rol_id == "administrador"){
-            globalConstants.isAdministrador = true;
             this.router.navigateByUrl("admin/principal");
           }
           if(this.dataUsuario.rol_id == "mediador"){
-            globalConstants.isAdministrador = false;
             this.router.navigateByUrl("admin/tramites/nuevoslis");
           }
           

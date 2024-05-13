@@ -80,14 +80,8 @@ export class LoginComponent implements OnInit {
     this.authService.loginCiudadano(dataLogin)
       .subscribe({
         next: (resultado) => {
-          let loginRes: UsuarioModel = resultado;
           this.dataCiudadano = resultado;  
           
-          this.dataService.ciudadanoData = this.dataCiudadano;
-          globalConstants.ciudadanoLogin = this.dataCiudadano;          
-          globalConstants.usuarioLogin = null;
-          globalConstants.isAdministrador = false;
-          Swal.fire('Exito',`El login se realizo con exito`,"success");
           this.router.navigateByUrl("ciudadano/tramites/nuevos");
         }, 
         error: (err) => {

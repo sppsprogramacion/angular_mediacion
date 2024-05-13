@@ -10,10 +10,14 @@ import { CiudadanoModel } from '../models/ciudadano.model';
   providedIn: 'root'
 })
 export class DataService {
+  
   ciudadanoData: CiudadanoModel = {};
-  tramiteData: TramiteModel = {};
-  usuarioData: UsuarioModel ={};
+  
   centroMediacionData: CentroMediacionModel= {};
+  
+  tramiteData: TramiteModel = {};
+  
+  usuarioData: UsuarioModel ={};
 
   constructor(private readonly datePipe: DatePipe,) { }
 
