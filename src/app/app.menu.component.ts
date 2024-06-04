@@ -162,12 +162,12 @@ export class AppMenuComponent implements OnInit {
                 //         {label: 'Tramites finalizados', icon: 'pi pi-fw pi-check-square', routerLink: ['/usuario/tramites/finalizados']}
                 //     ]
                 // },
-                {
-                    label: 'Seleccionar usuario/ciudadano',
-                    items: [
-                        {label: 'Seleccionar', icon: 'pi pi-fw pi-users', routerLink: ['/admin/ciudadanos-usuarios/administrar']},
-                    ]
-                },
+                // {
+                //     label: 'Seleccionar usuario/ciudadano',
+                //     items: [
+                //         {label: 'Seleccionar', icon: 'pi pi-fw pi-users', routerLink: ['/admin/ciudadanos-usuarios/administrar']},
+                //     ]
+                // },
                 {
                     label: 'Salir',
                     items: [

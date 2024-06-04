@@ -6,14 +6,18 @@ import { UsuarioModel } from '../models/usuario.model';
 import { DataService } from './data.service';
 import { CiudadanoModel } from '../models/ciudadano.model';
 import { Observable, catchError, map, of, tap } from 'rxjs';
+import { LoginResponseUsuarioModel } from '../models/login_response_usuario.model';
+import { LoginResponseCiudadanoModel } from '../models/login_response_ciudadano.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   //MODELOS
-  private ciudadanoLogin: CiudadanoModel;
-  private usuarioLogin: UsuarioModel;
+  private ciudadanoLoggedIn: CiudadanoModel;
+  private ciudadanoLoginResponse: LoginResponseCiudadanoModel;
+  private usuarioLoggedIn: UsuarioModel;
+  private usuarioLoginResponse: LoginResponseUsuarioModel;
 
   private base_url: string = environment.URL_BASE;
 
@@ -31,10 +35,15 @@ export class AuthService {
       .pipe(
         tap(
           ciudadano =>{
-            this.ciudadanoLogin = ciudadano;
+            this.ciudadanoLoggedIn = ciudadano;
           }),
-        tap(ciudadano => localStorage.setItem('token_ciudadano', this.ciudadanoLogin.id_ciudadano.toString())),
-        tap(ciudadano => this.usuarioLogin = null)
+        tap(
+          ciudadano =>{
+            this.ciudadanoLoginResponse = ciudadano;
+          }),
+        tap(ciudadano => localStorage.setItem('token_ciudadano', this.ciudadanoLoggedIn.id_ciudadano.toString())),
+        tap(ciudadano => localStorage.setItem('token-ciudadano', this.ciudadanoLoginResponse.token)),
+        tap(ciudadano => this.usuarioLoggedIn = null)
       );    
   }
   //FIN LOSGUEO DE CIUDADANO...........................................
@@ -44,13 +53,18 @@ export class AuthService {
     const url= `${this.base_url}/auth/login-usuario`;
 
     return this.http.post(url, dataLogin)
-      .pipe(
+      .pipe(        
         tap(
           usuario =>{
-            this.usuarioLogin = usuario;
+            this.usuarioLoggedIn = usuario;
           }),
-        tap(usuario => localStorage.setItem('token_usuario', this.usuarioLogin.id_usuario.toString())),
-        tap(usuario => this.ciudadanoLogin = null)
+        tap(
+          usuario =>{
+            this.usuarioLoginResponse = usuario;
+          }),
+        tap(usuario => localStorage.setItem('token_usuario', this.usuarioLoggedIn.id_usuario.toString())),
+        tap(usuario => localStorage.setItem('token-usuario', this.usuarioLoginResponse.token)),
+        tap(usuario => this.ciudadanoLoggedIn = null)
       ); 
   }
   //FIN LOGUEO DE USUARIO................................
@@ -58,18 +72,18 @@ export class AuthService {
   //OBTENER USUARIO LOGUEADO
   get currentUserLogin(): UsuarioModel | undefined{
 
-    if(!this.usuarioLogin) return undefined;
+    if(!this.usuarioLoggedIn) return undefined;
 
-    return this.usuarioLogin
+    return this.usuarioLoggedIn
   }
   //FIN OBTENER USUARIO LOGUEADO.........................
 
   //OBTENER CIUDADANO LOGUEADO
   get currentCiudadanoLogin(): CiudadanoModel | undefined{
 
-    if(!this.ciudadanoLogin) return undefined;
+    if(!this.ciudadanoLoggedIn) return undefined;
 
-    return this.ciudadanoLogin;
+    return this.ciudadanoLoggedIn;
   }
   //FIN OBTENER CIUDADANO LOGUEADO..........................
 
@@ -82,8 +96,8 @@ export class AuthService {
 
     return this.http.get<UsuarioModel>(`${this.base_url}/usuarios/${token}`)
       .pipe(
-        tap( usuario => this.usuarioLogin = usuario),
-        tap( usuario => this.ciudadanoLogin = null),
+        tap( usuario => this.usuarioLoggedIn = usuario),
+        tap( usuario => this.ciudadanoLoggedIn = null),
         map( usuario => !!usuario),
         catchError( err => of(false) )
       )
@@ -99,8 +113,8 @@ export class AuthService {
 
     return this.http.get<UsuarioModel>(`${this.base_url}/ciudadanos/${token}`)
       .pipe(
-        tap( ciudadano => this.ciudadanoLogin = ciudadano),
-        tap( ciudadano => this.usuarioLogin = null),
+        tap( ciudadano => this.ciudadanoLoggedIn = ciudadano),
+        tap( ciudadano => this.usuarioLoggedIn = null),
         map( ciudadano => !!ciudadano),
         catchError( err => of(false) )
       )
@@ -109,14 +123,14 @@ export class AuthService {
 
   //CERRAR SESION CIUDADANO
   logoutCiudadano(){
-    this.ciudadanoLogin = undefined;
+    this.ciudadanoLoggedIn = undefined;
     localStorage.removeItem('token_ciudadano');
   }
   //FIN CERRAR SESION CIUDADANO................................................
 
   //CERRAR SESION CIUDADANO
   logoutUsuario(){
-    this.usuarioLogin = undefined;
+    this.usuarioLoggedIn = undefined;
     localStorage.removeItem('token_usuario');
   }
   //FIN CERRAR SESION CIUDADANO................................................
