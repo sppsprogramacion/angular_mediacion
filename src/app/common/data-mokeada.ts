@@ -1,9 +1,11 @@
 import { CategoriaModel } from "../models/categoria.model";
+import { SexoModel } from "../models/sexo.model";
 import { CategoriasService } from "../service/categorias.service";
 
 export class DataMokeada {
     
     public static categorias: CategoriaModel[]=[];
+    public static sexos: SexoModel[] = [];
 }
 
 // export let categorias = [
@@ -105,20 +107,20 @@ export const objetos = [
     }
 ];
 
-export const sexo = [
-    {
-        "id_sexo": 1,
-        "sexo": "femenino"
-    },
-    {
-        "id_sexo": 2,
-        "sexo": "masculino"
-    },
-    {
-        "id_sexo": 3,
-        "sexo": "no binario"
-    }
-];
+// export const sexo = [
+//     {
+//         "id_sexo": 1,
+//         "sexo": "femenino"
+//     },
+//     {
+//         "id_sexo": 2,
+//         "sexo": "masculino"
+//     },
+//     {
+//         "id_sexo": 3,
+//         "sexo": "no binario"
+//     }
+// ];
 
 export const tiposAudiencia = [
     {

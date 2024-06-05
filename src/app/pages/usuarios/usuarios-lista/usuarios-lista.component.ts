@@ -6,7 +6,7 @@ import { SexoModel } from 'src/app/models/sexo.model';
 import { CiudadanosService } from 'src/app/service/ciudadanos.service';
 import { UsuarioModel } from '../../../models/usuario.model';
 import { UsuariosService } from '../../../service/usuarios.service';
-import { departamentos, municipios, sexo } from '../../../common/data-mokeada';
+import { DataMokeada, departamentos, municipios } from '../../../common/data-mokeada';
 import { FiltroModel } from '../../../models/filtro.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfigService } from 'src/app/service/app.config.service';
@@ -144,14 +144,14 @@ export class UsuariosListaComponent implements OnInit {
 
     //CARGA DE LISTADOS DESDE DATA MOKEADA
     //this.listSexo = sexo;
-    this.filtroSexo = sexo.map(respuesta => {
+    this.filtroSexo = DataMokeada.sexos.map(respuesta => {
       return {
         label: respuesta.sexo.toLowerCase(),
         value: respuesta.sexo,
        }
     });
 
-    this.listSexo= sexo;
+    this.listSexo= DataMokeada.sexos;
     this.listDepartamentos = departamentos;
     //this.cargarMunicipios(1);
     

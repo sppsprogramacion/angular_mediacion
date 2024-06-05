@@ -5,6 +5,8 @@ import { CategoriasService } from './service/categorias.service';
 import { CategoriaModel } from './models/categoria.model';
 import { DataMokeada } from './common/data-mokeada';
 import { AuthService } from './service/auth.service';
+import { SexoService } from './service/sexo.service';
+import { SexoModel } from './models/sexo.model';
 
 @Component({
     selector: 'app-root',
@@ -14,6 +16,7 @@ export class AppComponent {
 
     //LISTAS
     listCatregorias: CategoriaModel[] = [];
+    listSexo: SexoModel[] = [];
     
     menuMode = 'static';
 
@@ -24,6 +27,7 @@ export class AppComponent {
         //personales
         private authService: AuthService,
         private categoriasService: CategoriasService,
+        private sexoService: SexoService
         
         ) { }
 
@@ -43,6 +47,7 @@ export class AppComponent {
 
         //INICIALIZACION DE DATA-MOKEADA
         this.listarCategorias();
+        this.listarSexo();
     }
 
     //CONFIGURACION DE LENGUAJE
@@ -61,6 +66,16 @@ export class AppComponent {
             DataMokeada.categorias = this.listCatregorias;
         });
     }
+    //FIN LISTADO DE CATEGORIAS............................
+
+    //LISTADO DE CATEGORIAS
+    listarSexo(){    
+        this.sexoService.listarSexoTodos().
+            subscribe(respuesta => {
+                this.listSexo= respuesta[0];
+                DataMokeada.sexos = this.listSexo;
+            });
+        }
     //FIN LISTADO DE CATEGORIAS............................
    
 }

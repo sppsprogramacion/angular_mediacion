@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { CiudadanosService } from '../../service/ciudadanos.service';
 import { CiudadanoModel } from '../../models/ciudadano.model';
 import { DepartamentoModel } from '../../models/departamento.model';
-import { departamentos, sexo } from 'src/app/common/data-mokeada';
+import { DataMokeada, departamentos } from 'src/app/common/data-mokeada';
 import { MunicipioModel } from 'src/app/models/municipio.model';
 import { municipios } from '../../common/data-mokeada';
 import { SexoModel } from 'src/app/models/sexo.model';
@@ -147,7 +147,7 @@ export class RegistroComponent implements OnInit {
 
     
     //CARGA DE LISTADOS DESDE DATA MOKEADA
-    this.listaSexo = sexo;
+    this.listaSexo = DataMokeada.sexos;
     this.listaDepartamentos = departamentos;
     this.cargarMunicipios(1);    
     

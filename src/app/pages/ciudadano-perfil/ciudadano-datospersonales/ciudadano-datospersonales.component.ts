@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { sexo } from 'src/app/common/data-mokeada';
+import { DataMokeada } from 'src/app/common/data-mokeada';
 import { globalConstants } from 'src/app/common/global-constants';
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { SexoModel } from 'src/app/models/sexo.model';
@@ -111,7 +111,7 @@ export class CiudadanoDatospersonalesComponent implements OnInit {
     //fin cargar datos del ciudadano en el formulario
 
     //CARGA DE LISTADOS DESDE DATA MOKEADA
-    this.listaSexo = sexo;
+    this.listaSexo = DataMokeada.sexos;
   }
 
 

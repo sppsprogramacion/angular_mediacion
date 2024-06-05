@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, Message, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { AppConfig } from 'src/app/api/appconfig';
-import { departamentos, municipios, objetos, opcionSiNo, sexo } from 'src/app/common/data-mokeada';
+import { DataMokeada, departamentos, municipios, objetos, opcionSiNo } from 'src/app/common/data-mokeada';
 import { CentroMediacionModel } from 'src/app/models/centro_mediacion.model';
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
@@ -157,7 +157,7 @@ export class TramitesNuevoComponent implements OnInit {
 
     //CARGA DE LISTADOS DESDE DATA MOKEADA
     this.listObjetos = objetos;
-    this.listSexo = sexo;
+    this.listSexo = DataMokeada.sexos;
     this.listSiNo = opcionSiNo;
     this.listaDepartamentos = departamentos;
     this.cargarMunicipios(1);

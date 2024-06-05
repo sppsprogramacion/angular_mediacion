@@ -7,7 +7,7 @@ import { AppConfig } from 'src/app/api/appconfig';
 import Swal from 'sweetalert2';
 
 //import { categorias, departamentos, municipios, objetos, opcionSiNo, provincias, sexo } from 'src/app/common/data-mokeada';
-import { DataMokeada, departamentos, municipios, objetos, opcionSiNo, provincias, sexo } from 'src/app/common/data-mokeada';
+import { DataMokeada, departamentos, municipios, objetos, opcionSiNo, provincias } from 'src/app/common/data-mokeada';
 import { CentroMediacionModel } from 'src/app/models/centro_mediacion.model';
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { ProvinciaModel } from '../../../models/provincia.model';
@@ -322,7 +322,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     //CARGA DE LISTADOS DESDE DATA MOKEADA
     this.listaCategorias = DataMokeada.categorias;
     this.listObjetos = objetos;
-    this.listSexo = sexo;
+    this.listSexo = DataMokeada.sexos;
     this.listSiNo = opcionSiNo;
     this.listaProvincias = provincias;
     this.listaDepartamentos = departamentos;
@@ -405,7 +405,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.listVinculados.push(this.vinculado);
 
     //ARMAR ARRAY AUXILIAR
-    let sexoAux = sexo.filter(sexo => sexo.id_sexo == this.vinculado.sexo_id);
+    let sexoAux = DataMokeada.sexos.filter(sexo => sexo.id_sexo == this.vinculado.sexo_id);
     this.vinculadoAux = {
       apellido: this.vinculado.apellido,
       nombre: this.vinculado.nombre,
@@ -483,7 +483,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       this.listConvocados.push(this.convocado);
 
       //ARMAR ARRAY AUXILIAR
-      let sexoAux = sexo.filter(sexo => sexo.id_sexo == this.convocado.sexo_id);
+      let sexoAux = DataMokeada.sexos.filter(sexo => sexo.id_sexo == this.convocado.sexo_id);
       let provinciaAux = provincias.filter(provincia => provincia.id_provincia == 18);
       let departamentoAux = departamentos.filter(departamento => departamento.id_departamento == this.convocado.departamento_id);
       let municipioAux = municipios.filter(municipio => municipio.id_municipio == this.convocado.municipio_id);
@@ -535,7 +535,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   
       this.listConvocadosNoSalta.push(this.convocado);
 
-      let sexoAux = sexo.filter(sexo => sexo.id_sexo == this.convocado.sexo_id);
+      let sexoAux = DataMokeada.sexos.filter(sexo => sexo.id_sexo == this.convocado.sexo_id);
       let provinciaAux = provincias.filter(provincia => provincia.id_provincia == this.convocado.provincia_id);   
       this.convocadoAux = {
         ...this.convocado,
