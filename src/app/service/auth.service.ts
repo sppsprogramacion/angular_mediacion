@@ -107,7 +107,7 @@ export class AuthService {
   //CONTROLAR AUTENTICACION CIUDADANO
   checkAutenticationCiudadano(): Observable<boolean> {
 
-    if( !localStorage.getItem('token_usuario') ) return of(false);
+    if( !localStorage.getItem('token_ciudadano') ) return of(false);
 
     const token = localStorage.getItem('token_ciudadano');
 
