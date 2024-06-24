@@ -46,6 +46,7 @@ import { CiudadanoDatospersonalesComponent } from './ciudadano-perfil/ciudadano-
 import { CiudadanosBuscarComponent } from './ciudadanos/ciudadanos-buscar/ciudadanos-buscar.component';
 import { InputMaskModule } from 'primeng/inputmask';
 import { TramitesAdministrarFinalizadoComponent } from './tramites-administrador/tramites-administrar-finalizado/tramites-administrar-finalizado.component';
+import { CiudadanoCambiarPasswordComponent } from './ciudadano-perfil/ciudadano-cambiar-password/ciudadano-cambiar-password.component';
 
 @NgModule({
   imports: [
@@ -98,7 +99,8 @@ import { TramitesAdministrarFinalizadoComponent } from './tramites-administrador
     CiudadanoTramitesFinalizadosComponent,
     CiudadanoDatospersonalesComponent,
     CiudadanosBuscarComponent,
-    TramitesAdministrarFinalizadoComponent
+    TramitesAdministrarFinalizadoComponent,
+    CiudadanoCambiarPasswordComponent
     
   ],
   

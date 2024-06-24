@@ -60,6 +60,7 @@ import { CiudadanosBuscarComponent } from './pages/ciudadanos/ciudadanos-buscar/
 import { TramitesAdministrarFinalizadoComponent } from './pages/tramites-administrador/tramites-administrar-finalizado/tramites-administrar-finalizado.component';
 import { AuthCiudadanoGuard } from './auth/guards/auth-ciudadano.guard';
 import { AuthUsuarioGuard } from './auth/guards/auth-usuario.guard';
+import { CiudadanoCambiarPasswordComponent } from './pages/ciudadano-perfil/ciudadano-cambiar-password/ciudadano-cambiar-password.component';
 
 @NgModule({
     imports: [
@@ -101,7 +102,7 @@ import { AuthUsuarioGuard } from './auth/guards/auth-usuario.guard';
                 children: [
                     {path: '', component: CiudadanoPrincipalComponent},
                     {path: 'principal', component: CiudadanoPrincipalComponent},
-                    {path: 'cambiarcontrasenia', component: CiudadanoDatospersonalesComponent},
+                    {path: 'cambiarcontrasenia', component: CiudadanoCambiarPasswordComponent},
                     {path: 'datospersonales', component: CiudadanoDatospersonalesComponent},
                     {path: 'tramites/administrar', component: CiudadanoTramitesAdministrarComponent},
                     {path: 'tramites/finalizados', component: CiudadanoTramitesFinalizadosComponent},
