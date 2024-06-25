@@ -4,7 +4,6 @@ import { Message } from 'primeng/api';
 
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { DataService } from 'src/app/service/data.service';
-import { globalConstants } from 'src/app/common/global-constants';
 import { TramiteModel } from 'src/app/models/tramite.model';
 import { TramitesService } from 'src/app/service/tramites.service';
 import { UsuariosTramiteService } from 'src/app/service/usuarios-tramite.service';
@@ -34,7 +33,6 @@ export class CiudadanoTramitesNuevoslistaComponent implements OnInit {
   constructor(
     private authService: AuthService,
     public dataService: DataService,
-    private usuarioTramiteService: UsuariosTramiteService,
     private tramiteService: TramitesService,
     private router: Router
   ) { 
@@ -58,7 +56,6 @@ export class CiudadanoTramitesNuevoslistaComponent implements OnInit {
                 this.listTramites.push(tramite);
               }
             })
-            console.log("tramites", this.listTramites);
             this.loading = false;  
           }
     });
@@ -71,7 +68,6 @@ export class CiudadanoTramitesNuevoslistaComponent implements OnInit {
         .subscribe({
           next: (respuesta) => {
             this.listTramitesNuevos= respuesta[0];
-            console.log("tramites nuevos", this.listTramitesNuevos);
             this.loading = false;  
           }
     });

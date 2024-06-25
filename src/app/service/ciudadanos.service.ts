@@ -24,6 +24,11 @@ export class CiudadanosService {
     return this.http.patch(`${base_url}/ciudadanos/${id}`, this.ciudadano);
   }
 
+  guardarCambiarContrasenia(id: number, data: any){    
+    
+    return this.http.patch(`${base_url}/ciudadanos/cambiar-password/${id}`, data);
+  }
+
   listarCiudadanosTodos(){
     return this.http.get<[ciudadano:CiudadanoModel[], total: number]>(`${base_url}/ciudadanos`)
   }

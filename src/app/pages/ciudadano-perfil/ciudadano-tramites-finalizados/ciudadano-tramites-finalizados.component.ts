@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { globalConstants } from 'src/app/common/global-constants';
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { TramiteModel } from 'src/app/models/tramite.model';
 import { AuthService } from 'src/app/service/auth.service';
 import { DataService } from 'src/app/service/data.service';
 import { TramitesService } from 'src/app/service/tramites.service';
-import { UsuariosTramiteService } from 'src/app/service/usuarios-tramite.service';
 
 @Component({
   selector: 'app-ciudadano-tramites-finalizados',
@@ -27,7 +25,6 @@ export class CiudadanoTramitesFinalizadosComponent implements OnInit {
   constructor(
     private authService: AuthService,
     public dataService: DataService,
-    private usuarioTramiteService: UsuariosTramiteService,
     private tramiteService: TramitesService,
     private router: Router
   ) { 
@@ -51,7 +48,6 @@ export class CiudadanoTramitesFinalizadosComponent implements OnInit {
                 this.listTramites.push(tramite);
               }
             })
-            console.log("tramites", this.listTramites);
             this.loading = false;  
           }
     });

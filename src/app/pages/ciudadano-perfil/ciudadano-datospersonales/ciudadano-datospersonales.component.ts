@@ -183,10 +183,10 @@ export class CiudadanoDatospersonalesComponent implements OnInit {
   }
   //FIN BUSCAR CIUDADANO
 
-  //IR A REGISTRARME
+  //IR A PRINCIPAL
   irAPrincipal(){
     this.router.navigateByUrl("ciudadano/tramites/nuevos");
   }
-  //FIN IR A REGISTRARME
+  //FIN IR A PRINCIPAL
 
 }
