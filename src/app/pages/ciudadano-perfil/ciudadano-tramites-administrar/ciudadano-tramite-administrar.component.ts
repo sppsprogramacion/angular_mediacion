@@ -14,6 +14,8 @@ import { Message, MessageService } from 'primeng/api';
 import { TramitesService } from 'src/app/service/tramites.service';
 import { AudienciasService } from 'src/app/service/audiencias.service';
 import { AudienciaModel } from 'src/app/models/audiencia.model';
+import { Img, PdfMakeWrapper, Txt } from 'pdfmake-wrapper';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-ciudadano-tramite-administrar',
   templateUrl: './ciudadano-tramite-administrar.component.html',
@@ -53,6 +55,7 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
 
   constructor(
     private readonly datePipe: DatePipe,
+    private router: Router,
     public dataService: DataService,
     private audienciaService: AudienciasService,
     private centroMediacionService: CentrosMediacionService,
@@ -64,19 +67,23 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
     
   ) {     
     
+    
   }
   //FIN CONSTRUCTOR................................................................................
 
   ngOnInit(): void {
 
+    
     //obtener tramite
     this.dataTramiteAux= this.dataService.tramiteData;
 
-    if(this.dataTramiteAux){
-
+    if(this.dataTramiteAux.numero_tramite){
       this.buscarTramite();
       //this.buscarAudienciasByNumTramiteActivo();
       
+    }
+    else{
+      this.irAPrincipal();
     }
     //fin obtener tramite
   }
@@ -213,5 +220,43 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
     this.vinculadoDialog = false;    
   }    
   //FIN MANEJO FORMULARIO DIALOG VINCULADO....................................
+
+  //CREAR PDF DEL TRAMITE
+  async generarPdfTramite() {
+    const pdf = new PdfMakeWrapper();
+    
+    //agrega imagen
+    pdf.add( await new Img('../../../assets/imagenes/general/logo-gobierno-salta.png').fit([120,120]).alignment('left').build());
+    pdf.add(
+      new Txt('Fecha: Salta 25/06/2024').fontSize(11).alignment('right').end      
+    );
+    pdf.add(' ');
+    pdf.add(
+      new Txt('Datos del tramite').bold().fontSize(12).alignment('center').end
+    );
+    pdf.add(' ');
+    //agrega imagen
+    //pdf.add( await new Img(this.imagenUrl).fit([100,100]).alignment('center').build());
+
+
+    pdf.add(' ');
+
+
+    pdf.add(
+      new Txt('Nombre: '+this.dataTramite.ciudadano.apellido).fontSize(11).end
+     
+    );  
+     
+    pdf.create().open();
+                             
+  }
+
+  //FIN CREAR PDF DEL TRAMITE
+
+  //IR A RPINCIPAL
+  irAPrincipal(){
+    this.router.navigateByUrl("ciudadano/tramites/nuevos");
+  }
+  //FIN IR A PRINCIPAL
 
 }

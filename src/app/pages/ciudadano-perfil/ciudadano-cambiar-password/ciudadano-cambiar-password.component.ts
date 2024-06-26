@@ -115,9 +115,9 @@ export class CiudadanoCambiarPasswordComponent implements OnInit {
   }    
   //FIN GUARDAR CIUDADANO............................................................
 
-  //IR A REGISTRARME
+  //IR A RPINCIPAL
   irAPrincipal(){
     this.router.navigateByUrl("ciudadano/tramites/nuevos");
   }
-  //FIN IR A REGISTRARME
+  //FIN IR A PRINCIPAL
 }

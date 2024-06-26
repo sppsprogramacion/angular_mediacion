@@ -48,6 +48,17 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { TramitesAdministrarFinalizadoComponent } from './tramites-administrador/tramites-administrar-finalizado/tramites-administrar-finalizado.component';
 import { CiudadanoCambiarPasswordComponent } from './ciudadano-perfil/ciudadano-cambiar-password/ciudadano-cambiar-password.component';
 
+
+// Import pdfmake-wrapper and the fonts to use
+import { PdfMakeWrapper } from 'pdfmake-wrapper';
+import * as pdfFonts from "pdfmake/build/vfs_fonts"; // fonts provided for pdfmake
+
+// If any issue using previous fonts import. you can try this:
+// import pdfFonts from "pdfmake/build/vfs_fonts";
+
+// registrar las fuentes
+PdfMakeWrapper.setFonts(pdfFonts);
+
 @NgModule({
   imports: [
     CalendarModule,
