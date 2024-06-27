@@ -30,12 +30,33 @@ export class LoginUsuarioComponent implements OnInit {
 
   ) { 
     this.formaLogin = this.fb.group({
-      dni: ['',[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.minLength(5)]],
-      password: ['',[Validators.required,  Validators.minLength(8),Validators.maxLength(16),Validators.pattern(/[^$%&|<>=# ]$/)]],
+      dni: ['',[Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      password: ['',[Validators.required]],
           
     });
   }
   //FIN CONSTRUCTOR...................
+
+  //MENSAJES DE VALIDACIONES
+  user_validation_messages = {
+    //datos tramite
+    'dni': [
+      { type: 'required', message: 'El dni es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
+    ],
+    'password': [
+      { type: 'required', message: 'La contraseña es requerida' },
+     
+    ],
+  }
+  //MENSAJES DE VALIDACIONES
+
+  //VALIDACIONES DE FORMULARIO
+  isValid(campo: string): boolean{     
+    
+    return this.formaLogin.get(campo)?.invalid && this.formaLogin.get(campo)?.touched;      
+  }
+  //FIN VALIDACIONES DE FORMULARIO......................................................
 
   ngOnInit(): void {
     
@@ -46,10 +67,6 @@ export class LoginUsuarioComponent implements OnInit {
   submitFormLogin(){
     
     if(this.formaLogin.invalid){                        
-        // this.msgs = [];
-        // this.msgs.push({ severity: 'warn', summary: 'Errores en formulario', detail: 'Cargue correctamente los datos' });
-        // this.serviceMensajes.add({key: 'tst', severity: 'warn', summary: 'Errores en formulario', detail: 'Cargue correctamente los dato'});
-        Swal.fire('Formulario con errores',`Complete correctamente todos los campos del formulario`,"warning");
         
         console.log("errores formulario");
         return Object.values(this.formaLogin.controls).forEach(control => control.markAsTouched());

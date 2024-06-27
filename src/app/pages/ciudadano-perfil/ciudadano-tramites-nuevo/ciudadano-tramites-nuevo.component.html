@@ -270,7 +270,7 @@
                                     <ng-template pTemplate="body" let-convocado>
                                         <tr>
                                             <td>
-                                                <p-button icon="pi pi-search-plus" styleClass="p-button-rounded mb-1" (click)="openDialogVerConvocado(convocado)"></p-button>
+                                                <p-button icon="pi pi-search-plus" styleClass="p-button-rounded  mr-2 mb-1" (click)="openDialogVerConvocado(convocado)"></p-button>
                                                 <!-- <button pButton pRipple type="button" icon="pi pi-folder-open text-purple-100" class="p-button-secondary p-button-rounded bg-purple-500 mr-1 mb-1" (click)="quitarConvocado(convocado)"></button>     -->
                                             </td>
                                             <td style="min-width: 12rem;">
@@ -715,7 +715,7 @@
                                 <p-table #dt1 [value]="listVinculadosAux" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
                                     <ng-template pTemplate="header">
                                         <tr>
-                                            <th style="width: 5rem"></th>
+                                            <th style="width: 3rem"></th>
                                             <th>
                                                 <div class="flex justify-content-between align-items-left">
                                                     Apellido y nombre
@@ -732,18 +732,13 @@
                                                     Sexo
                                                 </div>
                                             </th>
-                                            <th>
-                                                <div class="flex justify-content-between align-items-center">
-                                                    Provincia
-                                                </div>
-                                            </th>
+                                            
                                         </tr>
                                     </ng-template>
                                     <ng-template pTemplate="body" let-vinculado>
                                         <tr>
                                             <td>
-                                                <!-- <button *ngIf="tramite.estado_tramite_id==1" pButton pRipple type="button" icon="pi pi-folder-open text-purple-100" class="p-button-secondary p-button-rounded bg-purple-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
-                                                <button *ngIf="tramite.estado_tramite_id==2" pButton pRipple type="button" icon="pi pi-folder-open text-orange-100" class="p-button-secondary p-button-rounded bg-orange-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button> -->
+                                                <p-button icon="pi pi-times" styleClass="p-button-rounded p-button-danger mb-1" (click)="quitarVinculado(vinculado)"></p-button>
                                             </td>
                                             <td style="min-width: 25rem;">
                                                 {{vinculado.apellido}} {{vinculado.nombre}}
@@ -754,9 +749,7 @@
                                             <td style="min-width: 10rem;">
                                                 {{vinculado.sexo}}
                                             </td>
-                                            <td style="min-width: 15rem;">
-                                                <!-- {{vinculado.provincia}} -->
-                                            </td>
+                                            
                                         </tr>
                                     </ng-template>
 

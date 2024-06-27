@@ -138,8 +138,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       calle_direccion: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],        
       numero_dom: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       punto_referencia: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],       
-      telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
-      email: ['',[Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
+      telefono: [,[Validators.minLength(1), Validators.maxLength(100)]],
+      email: ['',[Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
     });
 
     this.formaDomicilioNoSalta = this.fb.group({     
@@ -792,6 +792,16 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.convocadoAux = {};
     this.convocadoSaltaDialog = false;
     this.convocadoNoSaltaDialog = false;
+  }
+  //FIN QUITAR CONVOCADO
+
+  //QUITAR CONVOCADO
+  quitarVinculado(vinculadoQuitar: any){
+
+    this.listVinculados = this.listVinculados.filter(vinculado => vinculado.dni !== vinculadoQuitar.dni)
+      
+    this.listVinculadosAux = this.listVinculadosAux.filter(vinculado => vinculado !== vinculadoQuitar)
+    
   }
   //FIN QUITAR CONVOCADO
 
