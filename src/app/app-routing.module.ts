@@ -61,6 +61,8 @@ import { TramitesAdministrarFinalizadoComponent } from './pages/tramites-adminis
 import { AuthCiudadanoGuard } from './auth/guards/auth-ciudadano.guard';
 import { AuthUsuarioGuard } from './auth/guards/auth-usuario.guard';
 import { CiudadanoCambiarPasswordComponent } from './pages/ciudadano-perfil/ciudadano-cambiar-password/ciudadano-cambiar-password.component';
+import { UsuarioDatosPersonalesComponent } from './pages/usuario-perfil/usuario-datos-personales/usuario-datos-personales.component';
+import { UsuarioCambiarContraseniaComponent } from './pages/usuario-perfil/usuario-cambiar-contrasenia/usuario-cambiar-contrasenia.component';
 
 @NgModule({
     imports: [
@@ -84,6 +86,9 @@ import { CiudadanoCambiarPasswordComponent } from './pages/ciudadano-perfil/ciud
                     {path: 'centro-mediacion/lista', component: CentrosMediacionListaComponent},
                     {path: 'centro-mediacion/administrar', component: CentroAdministrarComponent},
                     
+                    {path: 'miperfil/datospersonales', component: UsuarioDatosPersonalesComponent},
+                    {path: 'miperfil/cambiarcontrasenia', component: UsuarioCambiarContraseniaComponent},
+
                     {path: 'usuarios/administrar', component: UsuariosAdministrarComponent},
                     {path: 'usuarios/lista', component: UsuariosListaComponent},
                     

@@ -1,0 +1,63 @@
+<div class="grid justify-content-center">
+    <div class="col-12">
+        <div class="card p-fluid">
+            <p-toolbar styleClass="mb-3 bg-cyan-500">
+                <h5 class="block text-white  font-bold font-medium mb-1">Datos personales</h5>
+            </p-toolbar>
+            <div class="bg-cyan-600">
+
+            </div>
+
+            <div class="p-formgrid grid">                
+                <!-- FORMULARIO CIUDADANO -->
+                <div class="col-12">  
+                    <form [formGroup]="formaContrasenia">
+                        <!-- CARD DATOS PERSONALES-->
+                        <div class="card p-fluid">
+                            <p-toolbar styleClass="mb-3 bg-orange-500">
+                                <h5 class="block text-white  font-bold font-medium mb-1">Cambiar contraseña</h5>
+                            </p-toolbar>
+                            <div class="bg-cyan-600"></div>
+
+                            <div class="formgrid grid">
+                                <div class="field col-12 md:col-6 lg:col-6">
+                                    <label for="clave1">Contraseña nueva</label>
+                                    <p-password id="clave1" formControlName="clave1" [feedback]="false" [toggleMask]="true" [inputStyle]="{'width':'100%'}" styleClass="w-full p-input-icon-right"></p-password>
+                                    <small *ngIf="isValid('clave1')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.clave1" >
+                                            <div  *ngIf="formaContrasenia.get('clave1')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
+                                </div>
+                                <div class="field col-12 md:col-6 lg:col-6">
+                                    <label for="clave2">confirmar contraseña</label>
+                                    <p-password formControlName="clave2" [feedback]="false" [toggleMask]="true" [inputStyle]="{'width':'100%'}" styleClass="w-full p-input-icon-right"></p-password>
+                                    <small *ngIf="isValid('clave2')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.clave2" >
+                                            <div  *ngIf="formaContrasenia.get('clave2')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
+                                    <small *ngIf="!validacionClaves" class="p-error">Las contraseñas no coinciden.</small>
+                                </div>    
+                            </div>   
+                        </div>
+                        <!-- FIN CARD DATOS PERSONALES -->
+                        
+                    </form>
+                </div>
+                <!--  FIN FORMULARIO CIUDADANO -->
+                <div  class="col-12 grid justify-content-center">
+                    <button pButton pRipple type="button" label="Guardar" class="p-button-success" style="width: 47%;" (click)="submitFormUsuario()" ></button>
+                    <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger ml-2" style="width: 47%;" (click)="irAPrincipal()"></button>
+                    
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

@@ -51,7 +51,9 @@ import { CiudadanoCambiarPasswordComponent } from './ciudadano-perfil/ciudadano-
 
 // Import pdfmake-wrapper and the fonts to use
 import { PdfMakeWrapper } from 'pdfmake-wrapper';
-import * as pdfFonts from "pdfmake/build/vfs_fonts"; // fonts provided for pdfmake
+import * as pdfFonts from "pdfmake/build/vfs_fonts";
+import { UsuarioCambiarContraseniaComponent } from './usuario-perfil/usuario-cambiar-contrasenia/usuario-cambiar-contrasenia.component';
+import { UsuarioDatosPersonalesComponent } from './usuario-perfil/usuario-datos-personales/usuario-datos-personales.component'; // fonts provided for pdfmake
 
 // If any issue using previous fonts import. you can try this:
 // import pdfFonts from "pdfmake/build/vfs_fonts";
@@ -111,7 +113,9 @@ PdfMakeWrapper.setFonts(pdfFonts);
     CiudadanoDatospersonalesComponent,
     CiudadanosBuscarComponent,
     TramitesAdministrarFinalizadoComponent,
-    CiudadanoCambiarPasswordComponent
+    CiudadanoCambiarPasswordComponent,    
+    UsuarioCambiarContraseniaComponent,
+    UsuarioDatosPersonalesComponent
     
   ],
   
