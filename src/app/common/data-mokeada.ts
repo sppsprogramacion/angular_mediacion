@@ -45,6 +45,17 @@ export const opcionSiNo = [
     },
 ];
 
+export const tiposBusquedaCiudadano = [
+    {
+        "id_tipo_busqueda_ciudadano": "dni",
+        "tipo_busqueda_ciudadano": "Buscar por DNI"
+    },
+    {
+        "id_tipo_busqueda_ciudadano": "nombre",
+        "tipo_busqueda_ciudadano": "Buscar por apellido"
+    },
+];
+
 export const modalidad = [
     {
         "id_modalidad": 2,

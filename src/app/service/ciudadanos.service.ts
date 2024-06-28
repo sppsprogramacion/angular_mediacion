@@ -33,6 +33,10 @@ export class CiudadanosService {
     return this.http.get<[ciudadano:CiudadanoModel[], total: number]>(`${base_url}/ciudadanos`)
   }
 
+  listarCiudadanosXDni(dni:number){
+    return this.http.get<[ciudadano:CiudadanoModel[], total: number]>(`${base_url}/ciudadanos/buscarlista-xdni?dni=${dni}`)
+  }
+
   buscarXDni(dni: number){
     return this.http.get<CiudadanoModel>(`${base_url}/ciudadanos/buscar-xdni?dni=${dni}`)
   }

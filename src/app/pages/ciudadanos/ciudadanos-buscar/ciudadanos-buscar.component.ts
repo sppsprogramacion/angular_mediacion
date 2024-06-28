@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DataMokeada, tiposBusquedaCiudadano } from 'src/app/common/data-mokeada';
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
 import { MunicipioModel } from 'src/app/models/municipio.model';
@@ -22,9 +23,6 @@ export class CiudadanosBuscarComponent implements OnInit {
   //MODELOS
   ciudadanoData: CiudadanoModel = {};
 
-  //listas
-  listaSexo: SexoModel[] = [];
-
   //iidiomas
   //es: any = {};
 
@@ -42,6 +40,7 @@ export class CiudadanosBuscarComponent implements OnInit {
   listDepartamentos: DepartamentoModel[]=[];
   listMunicipios: MunicipioModel[]= [];
   listSexo: SexoModel[]=[];
+  listTiposBusqueda: any[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -54,9 +53,8 @@ export class CiudadanosBuscarComponent implements OnInit {
 
   ) { 
     this.formaBuscar = this.fb.group({
-
+      tipo_busqueda_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       buscar: ['',[Validators.required]],
-      tipo_busqueda: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
 
     });
   }
@@ -65,37 +63,13 @@ export class CiudadanosBuscarComponent implements OnInit {
   //MENSAJES DE VALIDACIONES
   user_validation_messages = {
     //datos tramite
-    'dni': [
-      { type: 'required', message: 'El dni es requerido' },
+    'tipo_busqueda_id': [
+      { type: 'required', message: 'El tipo de busqueda es requerido' },
       { type: 'pattern', message: 'Solo se pueden ingresar números.' },
-      { type: 'minlength', message: 'El número ingresado debe tener mas de 5 digitos.' }
     ],
-    'apellido': [
-      { type: 'required', message: 'El apellido es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
-      { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
-      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
-    ],
-    'nombre': [
+    'buscar': [
       { type: 'required', message: 'El nombre es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
-      { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
-      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
     ],
-    'sexo_id': [
-      { type: 'required', message: 'El sexo es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
-    ],
-    'telefono': [
-      { type: 'required', message: 'El télefono es requerido.' },
-        { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
-        { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
-    ],
-    'email': [
-      { type: 'required', message: 'El e-mail es requerido' },
-      { type: 'pattern', message: 'El formato del e-mail no es correcto.' }
-    ],
-    
   }
   //FIN MENSAJES DE VALIDACIONES...............................................................
 
@@ -107,6 +81,8 @@ export class CiudadanosBuscarComponent implements OnInit {
 
   ngOnInit(): void {
     this.listarCiudadanos();
+
+    this.listTiposBusqueda = tiposBusquedaCiudadano;
     
   }
 
@@ -116,7 +92,7 @@ export class CiudadanosBuscarComponent implements OnInit {
 
   //LISTADO DE CIUDADANOS
   listarCiudadanos(){    
-    this.ciudadanosService.listarCiudadanosTodos().
+    this.ciudadanosService.listarCiudadanosXDni(parseInt(this.formaBuscar.get('buscar')?.value)).
         subscribe(respuesta => {
         this.listCiudadanos= respuesta[0];
         console.log("ciudadanos", this.listCiudadanos);
