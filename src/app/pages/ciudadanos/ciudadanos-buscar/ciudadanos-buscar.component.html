@@ -17,7 +17,7 @@
                             <div class="formgrid grid">
                                 <div class="field col-12 md:col-6 lg:col-6">
                                     <label for="tipo_busqueda_id">Tipo busqueda</label>
-                                    <p-dropdown id="tipo_busqueda_id" [options]="listTiposBusqueda" optionLabel="tipo_busqueda_ciudadano" optionValue="id_tipo_busqueda_ciudadano" formControlName="tipo_busqueda" placeholder="Seleccionar...">
+                                    <p-dropdown id="tipo_busqueda_id" [options]="listTiposBusqueda" optionLabel="tipo_busqueda_ciudadano" optionValue="id_tipo_busqueda_ciudadano" formControlName="tipo_busqueda_id" placeholder="Seleccionar...">
                                     </p-dropdown>
                                 </div>
 
@@ -37,7 +37,7 @@
 
                             <!-- boton buscar -->
                             <div  class="col-12 grid justify-content-between">
-                                <button pButton pRipple type="button" label="Buscar" class="p-button-primary" style="width: 47%;" (click)="listarCiudadanos()" ></button>
+                                <button pButton pRipple type="button" label="Buscar" class="p-button-primary" style="width: 47%;" (click)="buscarCiudadanos()" ></button>
                                 
                             </div>
                         </div>

@@ -37,6 +37,10 @@ export class CiudadanosService {
     return this.http.get<[ciudadano:CiudadanoModel[], total: number]>(`${base_url}/ciudadanos/buscarlista-xdni?dni=${dni}`)
   }
 
+  listarCiudadanosXApellido(apellido:string){
+    return this.http.get<[ciudadano:CiudadanoModel[], total: number]>(`${base_url}/ciudadanos/buscarlista-xapellido?dni=${apellido}`)
+  }
+
   buscarXDni(dni: number){
     return this.http.get<CiudadanoModel>(`${base_url}/ciudadanos/buscar-xdni?dni=${dni}`)
   }

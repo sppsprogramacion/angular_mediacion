@@ -80,7 +80,7 @@ export class CiudadanosBuscarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.listarCiudadanos();
+    //this.listarCiudadanos();
 
     this.listTiposBusqueda = tiposBusquedaCiudadano;
     
@@ -90,17 +90,27 @@ export class CiudadanosBuscarComponent implements OnInit {
   buscarCiudadanos(){}
 
 
-  //LISTADO DE CIUDADANOS
-  listarCiudadanos(){    
+  //LISTADO DE CIUDADANOS DNI
+  listarCiudadanosDni(){    
     this.ciudadanosService.listarCiudadanosXDni(parseInt(this.formaBuscar.get('buscar')?.value)).
         subscribe(respuesta => {
-        this.listCiudadanos= respuesta[0];
-        console.log("ciudadanos", this.listCiudadanos);
-        this.loading = false;  
-    
-    });
+          this.listCiudadanos= respuesta[0];
+          this.loading = false;  
+      
+      });
   }
-  //FIN LISTADO DE CIUDADANOS....................................................... 
+  //FIN LISTADO DE CIUDADANOS DNI...................................................... 
+
+  //LISTADO DE CIUDADANOS APELLIDO
+  listarCiudadanosApellido(){    
+    this.ciudadanosService.listarCiudadanosXApellido(this.formaBuscar.get('buscar')?.value).
+        subscribe(respuesta => {
+          this.listCiudadanos= respuesta[0];
+          this.loading = false;  
+      
+      });
+  }
+  //FIN LISTADO DE CIUDADANOS APELLIDO...................................................... 
 
   //ACCEDER A ADMINSTRAR USUARIO
   administrarCiudadano(data: CiudadanoModel){
