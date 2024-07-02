@@ -38,7 +38,7 @@ export class CiudadanosService {
   }
 
   listarCiudadanosXApellido(apellido:string){
-    return this.http.get<[ciudadano:CiudadanoModel[], total: number]>(`${base_url}/ciudadanos/buscarlista-xapellido?dni=${apellido}`)
+    return this.http.get<[ciudadano:CiudadanoModel[], total: number]>(`${base_url}/ciudadanos/buscarlista-xapellido?apellido=${apellido}`)
   }
 
   buscarXDni(dni: number){

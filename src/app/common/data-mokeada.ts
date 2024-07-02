@@ -51,7 +51,7 @@ export const tiposBusquedaCiudadano = [
         "tipo_busqueda_ciudadano": "Buscar por DNI"
     },
     {
-        "id_tipo_busqueda_ciudadano": "nombre",
+        "id_tipo_busqueda_ciudadano": "apellido",
         "tipo_busqueda_ciudadano": "Buscar por apellido"
     },
 ];

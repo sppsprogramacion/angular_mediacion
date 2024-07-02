@@ -10,6 +10,7 @@ import { ConfigService } from 'src/app/service/app.config.service';
 import { AuthService } from 'src/app/service/auth.service';
 import { CiudadanosService } from 'src/app/service/ciudadanos.service';
 import { DataService } from 'src/app/service/data.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ciudadanos-buscar',
@@ -18,7 +19,7 @@ import { DataService } from 'src/app/service/data.service';
 })
 export class CiudadanosBuscarComponent implements OnInit {
 
-  loading:boolean = true;
+  
 
   //MODELOS
   ciudadanoData: CiudadanoModel = {};
@@ -34,6 +35,7 @@ export class CiudadanosBuscarComponent implements OnInit {
   ciudadanoDialog: boolean;
   nuevoCiudadano: boolean;
   submitted: boolean;
+  loading:boolean = true;
 
   //LISTAS    
   listCiudadanos: CiudadanoModel[]=[];
@@ -53,7 +55,7 @@ export class CiudadanosBuscarComponent implements OnInit {
 
   ) { 
     this.formaBuscar = this.fb.group({
-      tipo_busqueda_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      id_tipo_busqueda: [,[Validators.required]],
       buscar: ['',[Validators.required]],
 
     });
@@ -63,12 +65,11 @@ export class CiudadanosBuscarComponent implements OnInit {
   //MENSAJES DE VALIDACIONES
   user_validation_messages = {
     //datos tramite
-    'tipo_busqueda_id': [
+    'id_tipo_busqueda': [
       { type: 'required', message: 'El tipo de busqueda es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números.' },
     ],
     'buscar': [
-      { type: 'required', message: 'El nombre es requerido' },
+      { type: 'required', message: 'El dato a buscar es requerido ' },
     ],
   }
   //FIN MENSAJES DE VALIDACIONES...............................................................
@@ -80,14 +81,42 @@ export class CiudadanosBuscarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.listarCiudadanos();
 
+    this.loading = false;
     this.listTiposBusqueda = tiposBusquedaCiudadano;
     
   }
 
   //BUSCAR CIUDADANOS
-  buscarCiudadanos(){}
+  buscarCiudadanos(){
+    this.loading = true;
+
+    if(this.formaBuscar.invalid){    
+
+      this.loading = false;
+      //Swal.fire('Formulario con errores',`Complete correctamente todos los campos del formulario`,"warning");
+      return Object.values(this.formaBuscar.controls).forEach(control => control.markAsTouched());
+    }
+
+    if(this.formaBuscar.get('id_tipo_busqueda')?.value === "dni"){
+
+      const dato = this.formaBuscar.get('buscar')?.value;
+      if(Number.isInteger(Number(dato))){
+
+        this.listarCiudadanosDni();
+      }
+      else{
+        this.loading = false;
+        Swal.fire('Formulario con errores',`El DNI debe ser un número`,"warning");
+      }
+    }
+
+    if(this.formaBuscar.get('id_tipo_busqueda')?.value === "apellido"){
+      this.listarCiudadanosApellido();
+    }
+
+    
+  }
 
 
   //LISTADO DE CIUDADANOS DNI

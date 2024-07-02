@@ -80,6 +80,16 @@ export class CiudadanosAdministrarComponent implements OnInit {
   }
   //FIN LISTADO DE TRAMITES ASIGNADOS.......................................................
 
+  //VERIFICAR ADMINISTRADOR
+  isAdmin(): boolean{
+    if(this.authService.currentUserLogin.rol_id === "administrador"){
+      return true;
+    }
+
+    return false;
+  }
+  //FIN VERIFICAR ADMINISTRADOR
+
   //ABRIR NUEVO TRAMITE
   abrirNuevoTramite(){
     this.router.navigateByUrl("admin/ciudadanos/tramites/nuevo");
@@ -89,14 +99,20 @@ export class CiudadanosAdministrarComponent implements OnInit {
   //ACCEDER A DATA SERVICE
   administrarTramite(data: TramiteModel){
     this.dataService.tramiteData = data;
+
     if (this.authService.currentCiudadanoLogin) {
       this.router.navigateByUrl("ciudadano/tramites/administrar");
     }
-    else{
-      this.router.navigateByUrl("admin/tramites/administrar");
+    if(this.authService.currentUserLogin){
+      if(this.authService.currentUserLogin.rol_id === "administrador"){
+        this.router.navigateByUrl("admin/tramites/administrar");
+      }
+      
     }
     
   }
   //FIN ACCEDER A DATA SERVICE
+
+
 
 }
