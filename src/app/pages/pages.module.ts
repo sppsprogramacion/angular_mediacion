@@ -47,7 +47,7 @@ import { CiudadanosBuscarComponent } from './ciudadanos/ciudadanos-buscar/ciudad
 import { InputMaskModule } from 'primeng/inputmask';
 import { TramitesAdministrarFinalizadoComponent } from './tramites-administrador/tramites-administrar-finalizado/tramites-administrar-finalizado.component';
 import { CiudadanoCambiarPasswordComponent } from './ciudadano-perfil/ciudadano-cambiar-password/ciudadano-cambiar-password.component';
-
+import { TagModule } from 'primeng/tag';
 
 // Import pdfmake-wrapper and the fonts to use
 import { PdfMakeWrapper } from 'pdfmake-wrapper';
@@ -80,6 +80,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
     PasswordModule,
     TableModule,
     TabViewModule,//funciona ng-template    
+    TagModule,
     ToolbarModule,
     
     FormsModule,
