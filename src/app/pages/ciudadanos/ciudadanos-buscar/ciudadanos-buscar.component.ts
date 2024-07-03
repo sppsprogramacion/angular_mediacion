@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Table } from 'primeng/table';
 import { DataMokeada, tiposBusquedaCiudadano } from 'src/app/common/data-mokeada';
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
@@ -19,7 +20,9 @@ import Swal from 'sweetalert2';
 })
 export class CiudadanosBuscarComponent implements OnInit {
 
-  
+  //PARA FILTRAR EN TABLA
+  @ViewChild('dt') table: Table;
+  @ViewChild('filter') filter: ElementRef;
 
   //MODELOS
   ciudadanoData: CiudadanoModel = {};
@@ -140,6 +143,13 @@ export class CiudadanosBuscarComponent implements OnInit {
       });
   }
   //FIN LISTADO DE CIUDADANOS APELLIDO...................................................... 
+
+  //LIMPIAR FILTROS
+  clear(table: Table) {
+    table.clear();
+    this.filter.nativeElement.value = '';
+  } 
+  //FIN LIMPIAR FILTROS....................................................................................  
 
   //ACCEDER A ADMINSTRAR USUARIO
   administrarCiudadano(data: CiudadanoModel){

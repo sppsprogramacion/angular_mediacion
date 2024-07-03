@@ -8,6 +8,8 @@ import { TramiteModel } from '../../../models/tramite.model';
 import { UsuarioTramiteModel } from '../../../models/usuario_tramite.model';
 import { TramitesService } from '../../../service/tramites.service';
 import { AuthService } from 'src/app/service/auth.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-ciudadanos-administrar',
@@ -20,6 +22,9 @@ export class CiudadanosAdministrarComponent implements OnInit {
   //MODELOS
   dataCiudadano: CiudadanoModel = new CiudadanoModel;
 
+  //FORMULARIOS
+  formaCiudadano: FormGroup;  
+
   //LISTAS    
   listTramites: TramiteModel[]=[];
   listTramitesNuevos: TramiteModel[]=[];
@@ -27,19 +32,34 @@ export class CiudadanosAdministrarComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private readonly datePipe: DatePipe,
+    private fb: FormBuilder,
+    private router: Router,
+
     public dataService: DataService,
     private usuarioTramiteService: UsuariosTramiteService,
     private tramiteService: TramitesService,
-    private router: Router
   ) { 
     //recuperar ciudadano seleccioando
     this.dataCiudadano = dataService.ciudadanoData;
+
+    this.formaCiudadano = this.fb.group({
+      dni: ['',],
+      apellido: ['',],
+      nombre:   ['',],
+      sexo: ['',],
+      telefono: [,],
+      fecha_nac: [,],  
+      email: ['',],    
+      
+    });
   }
 
   ngOnInit(): void {
+
+    this.cargarFormularioCiudadano();
+    
     this.listarTramites();
-    this.listarTramitesAsignados();
-    this.listarTramitesNuevos();
   }
 
   //LISTADO DE TRAMITES ASIGNADOS
@@ -55,31 +75,6 @@ export class CiudadanosAdministrarComponent implements OnInit {
   }
   //FIN LISTADO DE TRAMITES ASIGNADOS.......................................................
 
-  //LISTADO DE TRAMITES ASIGNADOS
-  listarTramitesNuevos(){    
-    this.tramiteService.listarTramitesNuevos(this.dataCiudadano.id_ciudadano)
-        .subscribe({
-          next: (respuesta) => {
-            this.listTramitesNuevos= respuesta[0];
-            console.log("tramites nuevos", this.listTramitesNuevos);
-            this.loading = false;  
-          }
-    });
-  }
-  //FIN LISTADO DE TRAMITES ASIGNADOS.......................................................
-
-  //LISTADO DE TRAMITES ASIGNADOS
-  listarTramitesAsignados(){    
-    this.usuarioTramiteService.listarTramitesAsignadosXCiudadano(this.dataCiudadano.id_ciudadano)
-        .subscribe({
-          next: (respuesta) => {
-            this.listTramitesAsignados= respuesta[0];
-            this.loading = false;  
-          }
-    });
-  }
-  //FIN LISTADO DE TRAMITES ASIGNADOS.......................................................
-
   //VERIFICAR ADMINISTRADOR
   isAdmin(): boolean{
     if(this.authService.currentUserLogin.rol_id === "administrador"){
@@ -89,6 +84,18 @@ export class CiudadanosAdministrarComponent implements OnInit {
     return false;
   }
   //FIN VERIFICAR ADMINISTRADOR
+
+  //CARGAR FORMULARIO CIUDADANO
+  cargarFormularioCiudadano(){
+    this.formaCiudadano.get('dni')?.setValue(this.dataCiudadano.dni);
+    this.formaCiudadano.get('apellido')?.setValue(this.dataCiudadano.apellido);
+    this.formaCiudadano.get('nombre')?.setValue(this.dataCiudadano.nombre);
+    this.formaCiudadano.get('sexo')?.setValue(this.dataCiudadano.sexo.sexo);
+    this.formaCiudadano.get('fecha_nac')?.setValue(this.datePipe.transform(this.dataCiudadano.fecha_nac, 'dd/MM/yyyy'));
+    this.formaCiudadano.get('telefono')?.setValue(this.dataCiudadano.telefono);
+    this.formaCiudadano.get('email')?.setValue(this.dataCiudadano.email);
+  }
+  //FIN CARGAR FORMULARIO CIUDADANO......................
 
   //ABRIR NUEVO TRAMITE
   abrirNuevoTramite(){
