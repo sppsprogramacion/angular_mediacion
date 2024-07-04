@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AudienciaModel } from 'src/app/models/audiencia.model';
 import { ConvocadoModel } from 'src/app/models/convocado.model';
 import { ResultadoAudienciaModel } from 'src/app/models/resultadoAudiencia.model';
@@ -18,6 +19,7 @@ import { TramitesService } from 'src/app/service/tramites.service';
 import { UsuariosCentroService } from 'src/app/service/usuarios-centro.service';
 import { UsuariosTramiteService } from 'src/app/service/usuarios-tramite.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
+import { AuthService } from '../../../service/auth.service';
 
 @Component({
   selector: 'app-tramites-administrar-finalizado',
@@ -54,16 +56,13 @@ export class TramitesAdministrarFinalizadoComponent implements OnInit {
 
 
   constructor(
+    private router: Router,
+    
     public dataService: DataService,
-    private audienciaService: AudienciasService,
-    private centroMediacionService: CentrosMediacionService,
-    private funcionTramiteService: FuncionTramiteService,
-    private modalidadService: ModalidadService,
-    private resultadosAudienciaService: ResultadosAudienciaService,
-    private tiposAudienciaService: TiposAudienciaService,
-    private tramiteService: TramitesService,   
-    private usuariosCentroService: UsuariosCentroService,
-    private usuarioService: UsuariosService,
+
+    private audienciaService: AudienciasService,    
+    private authService: AuthService,
+    private tramiteService: TramitesService,  
     private usuarioTramiteService: UsuariosTramiteService,
   ) { }
 
@@ -71,13 +70,16 @@ export class TramitesAdministrarFinalizadoComponent implements OnInit {
 
     //obtener tramite    
     this.dataTramiteAux= this.dataService.tramiteData;
-    this.buscarTramite();
-
-    if(this.dataTramiteAux){      
-      this.buscarAsignacionByNumTramiteActivo();
-      this.buscarAudienciasByNumTramiteActivo(); 
+    if(this.dataTramiteAux.numero_tramite){  
       
-    }   
+      this.buscarTramite();
+      this.buscarAsignacionByNumTramiteActivo();
+      this.buscarAudienciasByNumTramiteActivo();       
+    }  
+    else{
+
+      this.router.navigateByUrl("admin/tramites/nuevoslis");
+    }  
     //fin obtener tramite
 
   }

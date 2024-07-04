@@ -14,13 +14,10 @@ import { FuncionTramiteService } from '../../../service/funcion-tramite.service'
 import { FuncionTtramiteModel } from 'src/app/models/funcion_tramite.model';
 import { ElementoModel } from '../../../models/elemento.model';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
-import { departamentos } from 'src/app/common/data-mokeada';
-import { CentroMediacionModel } from 'src/app/models/centro_mediacion.model';
 import { CentrosMediacionService } from '../../../service/centros-mediacion.service';
 import { UsuariosCentroService } from '../../../service/usuarios-centro.service';
 import { UsuarioCentroModel } from '../../../models/usuario_centro.model ';
 import { TramitesService } from 'src/app/service/tramites.service';
-import { globalConstants } from '../../../common/global-constants';
 import { ConvocadoModel } from 'src/app/models/convocado.model';
 import { VinculadoModel } from 'src/app/models/vinculado.model';
 import { AudienciasService } from 'src/app/service/audiencias.service';
@@ -160,19 +157,20 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   //FIN CONSTRUCTOR................................................................................
   
   ngOnInit(): void {
-    //obtener tramite
+    
+    //obtener tramite    
     this.dataTramiteAux= this.dataService.tramiteData;
-    this.buscarTramite();
-
-    if(this.dataTramiteAux){
-      this.buscarAsignacionByNumTramiteActivo();
-      this.buscarAudienciasByNumTramiteActivo(); 
+    if(this.dataTramiteAux.numero_tramite){  
       
-    }   
-    //fin obtener tramite
+      this.buscarTramite();
+      this.buscarAsignacionByNumTramiteActivo();
+      this.buscarAudienciasByNumTramiteActivo();       
+    }  
+    else{
 
-    // this.listarTiposAudiencia();
-    // this.listarModalidad();  
+      this.router.navigateByUrl("admin/tramites/nuevoslis");
+    }  
+    //fin obtener tramite
       
     
   }

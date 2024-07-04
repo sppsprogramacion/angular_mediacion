@@ -610,8 +610,6 @@ export class TramitesAdministrarComponent implements OnInit {
       return
     }
 
-    console.log("usuariotramite", this.dataUsuarioTramite);
-
     this.cargarCentrosMediacionXUsuario(this.dataUsuarioTramite.usuario_id);
     //this.listarTiposAudiencia()
     this.audienciaDialog = true;

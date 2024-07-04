@@ -158,6 +158,9 @@ export class CiudadanoDatospersonalesComponent implements OnInit {
 
   //CARGAR FORMULARIO CIUDADANO
   cargarFormularioCiudadano(){
+    console.log("fecha nacimiento", this.dataService.getchangeFormatoFechaRetornar(this.ciudadanoData.fecha_nac));
+    console.log("fecha nacimiento", this.ciudadanoData.fecha_nac);
+    
     this.formaCiudadano.get('dni')?.setValue(this.ciudadanoData.dni);
     this.formaCiudadano.get('apellido')?.setValue(this.ciudadanoData.apellido);
     this.formaCiudadano.get('nombre')?.setValue(this.ciudadanoData.nombre);
