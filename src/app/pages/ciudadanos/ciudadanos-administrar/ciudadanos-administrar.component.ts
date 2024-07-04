@@ -40,8 +40,7 @@ export class CiudadanosAdministrarComponent implements OnInit {
     private usuarioTramiteService: UsuariosTramiteService,
     private tramiteService: TramitesService,
   ) { 
-    //recuperar ciudadano seleccioando
-    this.dataCiudadano = dataService.ciudadanoData;
+    
 
     this.formaCiudadano = this.fb.group({
       dni: ['',],
@@ -56,10 +55,17 @@ export class CiudadanosAdministrarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.cargarFormularioCiudadano();
+    //recuperar ciudadano seleccioando
+    this.dataCiudadano = this.dataService.ciudadanoData;
     
-    this.listarTramites();
+    if(this.dataCiudadano.dni){
+
+      this.cargarFormularioCiudadano();      
+      this.listarTramites();
+    }
+    else{
+      this.router.navigateByUrl("admin/ciudadanos/buscar");
+    }
   }
 
   //LISTADO DE TRAMITES ASIGNADOS

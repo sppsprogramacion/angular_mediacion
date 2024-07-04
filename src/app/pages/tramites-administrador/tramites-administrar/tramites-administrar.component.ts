@@ -27,6 +27,7 @@ import { AudienciaModel } from 'src/app/models/audiencia.model';
 import { AudienciasService } from '../../../service/audiencias.service';
 import { ConvocadoModel } from 'src/app/models/convocado.model';
 import { VinculadoModel } from 'src/app/models/vinculado.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tramites-administrar',
@@ -84,6 +85,8 @@ export class TramitesAdministrarComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private readonly datePipe: DatePipe,
+    private router: Router,
+
     public dataService: DataService,
     private audienciaService: AudienciasService,
     private centroMediacionService: CentrosMediacionService,
@@ -184,13 +187,17 @@ export class TramitesAdministrarComponent implements OnInit {
   ngOnInit(): void {
     //obtener tramite
     this.dataTramiteAux= this.dataService.tramiteData;
-    this.buscarTramite();
     
-
-    if(this.dataTramiteAux){
+    if(this.dataTramiteAux.numero_tramite){
+      
+      this.buscarTramite();    
       this.buscarAsignacionByNumTramiteActivo(); 
       this.buscarAudienciasByNumTramiteActivo();     
-    }    
+    } 
+    else{
+      this.router.navigateByUrl("admin/tramites/nuevoslis");
+    }   
+
     this.listDepartamentos = departamentos;
     this.listTipoAudiencia = tiposAudiencia;
     this.listModalidad = modalidad;
