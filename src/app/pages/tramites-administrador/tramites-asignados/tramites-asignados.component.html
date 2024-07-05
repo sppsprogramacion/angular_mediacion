@@ -6,7 +6,7 @@
             <h5>Tramites asignados</h5>
 
             <!-- TABLA DE TRAMITES -->
-            <p-table #dt1 [value]="listUsuariosTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['tramite.numero_tramite','tramite.ciudadano.apellido','tramite.ciudadano.nombre','tramite.ciudadano.dni']" responsiveLayout="scroll">
+            <p-table #dt1 [value]="listUsuariosTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['tramite.numero_tramite', 'tramite.expediente' ,'tramite.ciudadano.apellido','tramite.ciudadano.nombre','tramite.ciudadano.dni']" responsiveLayout="scroll">
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-between flex-column sm:flex-row">                        
                         <div>
