@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
 import { MunicipioModel } from 'src/app/models/municipio.model';
@@ -10,6 +10,7 @@ import { TramitesService } from 'src/app/service/tramites.service';
 import { globalConstants } from '../../../common/global-constants';
 import { UsuariosTramiteService } from '../../../service/usuarios-tramite.service';
 import { AuthService } from 'src/app/service/auth.service';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-tramites-nuevoslis',
@@ -17,6 +18,10 @@ import { AuthService } from 'src/app/service/auth.service';
   styleUrls: ['./tramites-nuevoslis.component.scss']
 })
 export class TramitesNuevoslisComponent implements OnInit {
+
+  //PARA FILTRAR EN TABLA
+  @ViewChild('dt') table: Table;
+  @ViewChild('filter') filter: ElementRef;
 
   loading:boolean = true;
 
@@ -103,6 +108,14 @@ export class TramitesNuevoslisComponent implements OnInit {
     this.router.navigateByUrl("admin/tramites/nuevo");
   }
   //FIN ABRIR NUEVO TRAMITE
+
+  //LIMPIAR FILTROS
+  clear(table: Table) {
+    table.clear();
+    this.filter.nativeElement.value = '';
+  } 
+  //FIN LIMPIAR FILTROS....................................................................................  
+
 
   //ACCEDER A DATA SERVICE
   administrarTramite(data: TramiteModel){

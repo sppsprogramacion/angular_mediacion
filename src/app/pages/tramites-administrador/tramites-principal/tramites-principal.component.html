@@ -63,7 +63,7 @@
     <div class="col-12">
         <div class="card">
 
-            <h5>Tramites<span class="text-cyan-500"> -> {{tituloPagina}}</span></h5>
+            <h5>Tramites</h5>
 
             <!-- TABLA DE TRAMITES -->
             <p-table #dt1 [value]="listTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['numero_tramite','ciudadano.apellido','ciudadano.nombre','dni_ciudadano','objeto.objeto','expediente']"
@@ -153,25 +153,22 @@
                         <td style="min-width: 15rem;">
                             {{tramite.ciudadano.apellido}}
                         </td>
-                        <td style="min-width: 2rem;">
+                        <td style="min-width: 15rem;">
                             {{tramite.ciudadano.nombre}}
                         </td>
                         <td style="min-width: 10rem;">
-                            {{tramite.ciudadano.dni}}
+                            {{tramite.dni_ciudadano}}
                         </td>
-                        <td style="min-width: 10rem;">
+                        <td style="min-width: 15rem;">
                             {{tramite.objeto.objeto}}
                         </td>
-                        <td style="min-width: 5rem;">
+                        <td style="min-width: 8rem;">
                             {{tramite.fecha_tramite| date: 'dd/MM/yyyy'}}
                         </td>
                         <td style="min-width: 15rem;">
                             {{tramite.expediente}}
-
-
-
                         </td>
-                        <td style="min-width: 5rem;">
+                        <td style="min-width: 8rem;">
                             {{tramite.fecha_expediente| date: 'dd/MM/yyyy'}}
                         </td>
                     </tr>

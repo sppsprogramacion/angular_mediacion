@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
 import { MunicipioModel } from 'src/app/models/municipio.model';
@@ -11,6 +11,7 @@ import { globalConstants } from '../../../common/global-constants';
 import { UsuariosTramiteService } from '../../../service/usuarios-tramite.service';
 import { UsuarioTramiteModel } from '../../../models/usuario_tramite.model';
 import { AuthService } from '../../../service/auth.service';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-tramites-principal',
@@ -18,6 +19,10 @@ import { AuthService } from '../../../service/auth.service';
   styleUrls: ['./tramites-principal.component.scss']
 })
 export class TramitesPrincipalComponent implements OnInit {
+
+  //PARA FILTRAR EN TABLA
+  @ViewChild('dt') table: Table;
+  @ViewChild('filter') filter: ElementRef;
 
   loading:boolean = true;
 
@@ -115,6 +120,14 @@ export class TramitesPrincipalComponent implements OnInit {
     });
   }
   //FIN CONTAR TRAMITES............................
+
+  //LIMPIAR FILTROS
+  clear(table: Table) {
+    table.clear();
+    this.filter.nativeElement.value = '';
+  } 
+  //FIN LIMPIAR FILTROS....................................................................................  
+
 
   //ACCEDER A DATA SERVICE
   administrarTramite(data: TramiteModel){
