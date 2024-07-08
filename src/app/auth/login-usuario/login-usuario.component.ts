@@ -97,6 +97,7 @@ export class LoginUsuarioComponent implements OnInit {
           
         }, 
         error: (err) => {
+          console.log("error", err);
           Swal.fire('Error',`Error al realizar el login: ${err.error.message}`,"error") ;
         }           
       
