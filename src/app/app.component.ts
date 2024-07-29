@@ -47,7 +47,7 @@ export class AppComponent {
 
         //INICIALIZACION DE DATA-MOKEADA
         this.listarCategorias();
-        this.listarSexo();
+        //this.listarSexo();
     }
 
     //CONFIGURACION DE LENGUAJE

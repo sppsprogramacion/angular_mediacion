@@ -15,6 +15,7 @@ import { DataMokeada, departamentos } from 'src/app/common/data-mokeada';
 import { MunicipioModel } from 'src/app/models/municipio.model';
 import { municipios } from '../../common/data-mokeada';
 import { SexoModel } from 'src/app/models/sexo.model';
+import { DataMokeadaService } from '../../service/data-mokeada.service';
 
 @Component({
   selector: 'app-registro',
@@ -55,8 +56,8 @@ export class RegistroComponent implements OnInit {
     public configService: ConfigService,
     private readonly datePipe: DatePipe,
     private router: Router,
-    private serviceMensajes: MessageService,
     private ciudadanoService: CiudadanosService,
+    private dataMokeadaService: DataMokeadaService
     
   ){ 
     this.formaRegistro = this.fb.group({
@@ -147,7 +148,9 @@ export class RegistroComponent implements OnInit {
 
     
     //CARGA DE LISTADOS DESDE DATA MOKEADA
-    this.listaSexo = DataMokeada.sexos;
+    //this.listaSexo = DataMokeada.sexos;
+    console.log("hola",this.dataMokeadaService.listarSexo())
+    this.listaSexo = this.dataMokeadaService.listarSexo();
     this.listaDepartamentos = departamentos;
     this.cargarMunicipios(1);    
     
