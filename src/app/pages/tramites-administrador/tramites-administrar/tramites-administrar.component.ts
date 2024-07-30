@@ -73,7 +73,8 @@ export class TramitesAdministrarComponent implements OnInit {
   loadingMediadores: boolean = true;
   loadingFuncionTramite: boolean = true;
   audienciaDialog: boolean = false;
-  audienciaUsuarioDialog: boolean = false;  
+  audienciaUsuarioDialog: boolean = false;
+  audienciaVerDialog: Boolean = false;  
   convocadoDialog: boolean = false;  
   usuarioTramiteDialog: boolean = false;
   vinculadoDialog: boolean = false;
@@ -628,17 +629,23 @@ export class TramitesAdministrarComponent implements OnInit {
 
   openDialogAudienciaUsuario() {
     this.buscarAudienciasByUsuario();
-    this.audienciaUsuarioDialog = true;
-    // this.formaAudiencia.reset();    
-
-    // return Object.values(this.formaAudiencia.controls).forEach(control => control.markAsUntouched());    
+    this.audienciaUsuarioDialog = true;   
   }
   
   hideDialogAudienciaUsuario() {
     
     this.msgs = [];
-    this.audienciaUsuarioDialog = false;
+    this.audienciaUsuarioDialog = false;    
+  }
+
+  openDialogAudienciaVer(audiencia: AudienciaModel) {
+    this.dataAudiencia = audiencia;
+    this.audienciaVerDialog = true;
+  }
+  
+  hideDialogAudienciaVer() {
     
+    this.audienciaVerDialog = false;    
   }
   //FIN MANEJO FORMULARIO DIALOG AUDIENCIAS....................................
 
