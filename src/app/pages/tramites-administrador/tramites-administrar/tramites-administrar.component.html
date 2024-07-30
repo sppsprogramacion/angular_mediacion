@@ -665,7 +665,7 @@
                     <button pButton pRipple label="Generar Audiencia" icon="pi pi-plus" class="p-button-info mr-2" (click)="openDialogAudiencia()"></button>
                 </div>
                 <div class="my-2">
-                    <button pButton pRipple label="Agenda usuario" icon="pi pi-calendar" class="p-button mr-2" (click)="openDialogAudienciaUsuario()"></button>
+                    <button pButton pRipple label="Agenda usuario" icon="pi pi-calendar" class="p-button ml-2" (click)="openDialogAudienciaUsuario()"></button>
                 </div>
             </ng-template>
         </p-toolbar>
@@ -725,20 +725,20 @@
                     <td style="min-width: 10rem;">
                         {{audiencia.fecha_inicio | date: 'dd/MM/yyyy'}}
                     </td>
-                    <td style="min-width: 10rem;">
+                    <td style="min-width: 8rem;">
                         {{audiencia.hora_inicio}}
                     </td>
-                    <td style="min-width: 10rem;">
+                    <td style="min-width: 8rem;">
                         {{audiencia.hora_fin}}
                     </td>
 
-                    <td style="min-width: 7rem;">
+                    <td style="min-width: 15rem;">
                         {{audiencia.centro_mediacion.centro_mediacion}}
                     </td>
-                    <td style="min-width: 15rem;">
+                    <td style="min-width: 8rem;">
                         {{audiencia.tipo_audiencia.tipo_audiencia}}
                     </td>
-                    <td style="min-width: 5rem;">
+                    <td style="min-width: 8rem;">
                         {{audiencia.modalidad.modalidad}}
                     </td>
                 </tr>
@@ -760,7 +760,8 @@
 
     <!-- DIALOG FORMULARIO AUDIENCIAS -->
     <!-- <p-dialog id="usuarioTramiteDialog" [(visible)]="usuarioTramiteDialog" [style]="{width: '500px'}" header="Asignar Usuario" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}"></p-dialog> -->
-    <p-dialog id="audienciaDialog" [(visible)]="audienciaDialog" [style]="{width: '500px'}" header="Generar audiencia" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}">
+    <!-- <p-dialog id="audienciaDialog" [(visible)]="audienciaDialog" [style]="{width: '500px','min-height':'400px'}" header="Generar audiencia" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}"> -->
+    <p-dialog id="audienciaDialog" [(visible)]="audienciaDialog" [style]="{width: '500px','min-height':'400px'}" header="Generar audiencia" [closable]="false" [modal]="true" >
         <!-- MENSAJE DE ERROR -->
         <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
         <ng-template pTemplate="content">
@@ -852,7 +853,7 @@
                         <div class="formgrid grid">
                             <div class="field col-12">
                                 <label for="detalles" class="text font-medium">Detalles</label>
-                                <input type="text" pInputText id="detalles" formControlName="detalles" />
+                                <textarea pInputTextarea id="detalles" [autoResize]="false" rows="5" cols="30" formControlName="detalles"></textarea>
                                 <small *ngIf="isValidAudiencia('detalles')" class="p-error">
                                         <div *ngFor="let validation of user_validation_messages.detalles" >
                                             <div  *ngIf="formaAudiencia.get('detalles')?.hasError(validation.type)">
@@ -875,7 +876,7 @@
     </p-dialog>
     <!-- FIN DIALOG FORMULARIO  AUDIENCIAS -->
 
-    <!-- DIALOG TABLA AUDIENCIAS -->
+    <!-- DIALOG TABLA AUDIENCIAS DEL USUARIO-->
     <p-dialog id="audienciaUsuarioDialog" [(visible)]="audienciaUsuarioDialog" [style]="{width: '600px'}" header="Audiencias del usuario" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}">
 
         <ng-template pTemplate="content">
@@ -962,7 +963,7 @@
                         <td style="min-width: 10rem;">
                             {{audiencia.modalidad.modalidad}}
                         </td>
-                        <td style="min-width: 12rem;">
+                        <td style="min-width: 15rem;">
                             {{audiencia.centro_mediacion.centro_mediacion}}
                         </td>
                         <td style="min-width: 12rem;">
