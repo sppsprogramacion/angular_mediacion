@@ -149,8 +149,10 @@ export class RegistroComponent implements OnInit {
     
     //CARGA DE LISTADOS DESDE DATA MOKEADA
     //this.listaSexo = DataMokeada.sexos;
+    this.dataMokeadaService.listarSexo()
+
     console.log("hola",this.dataMokeadaService.listarSexo())
-    this.listaSexo = this.dataMokeadaService.listarSexo();
+    this.listaSexo = DataMokeada.sexos;
     this.listaDepartamentos = departamentos;
     this.cargarMunicipios(1);    
     
