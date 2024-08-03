@@ -27,7 +27,7 @@ export class DataMokeadaService {
           subscribe(respuesta => {
               this.listSexo= respuesta[0];
               DataMokeada.sexos = this.listSexo;
-              return DataMokeada.sexos;
+              return this.listSexo;
           });
     }
     return DataMokeada.sexos;
