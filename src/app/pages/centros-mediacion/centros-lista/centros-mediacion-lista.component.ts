@@ -3,7 +3,6 @@ import { CentrosMediacionService } from '../../../service/centros-mediacion.serv
 import { CentroMediacionModel } from '../../../models/centro_mediacion.model';
 import { FiltroModel } from '../../../models/filtro.model';
 import { municipios } from 'src/app/common/data-mokeada';
-import { departamentos } from '../../../common/data-mokeada';
 import { Table } from 'primeng/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
@@ -13,6 +12,7 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Message, MessageService } from 'primeng/api';
+import { DataMokeadaService } from '../../../service/data-mokeada.service';
 
 @Component({
   selector: 'app-centros-lista',
@@ -56,6 +56,7 @@ export class CentrosMediacionListaComponent implements OnInit {
     private router: Router,
     private serviceMensajes: MessageService,
     private readonly dataService: DataService,
+    private dataMokeadaService: DataMokeadaService,
     private centrosMediacionService: CentrosMediacionService,
   ) {
     this.formaCentroMediacion = this.fb.group({
@@ -126,6 +127,11 @@ export class CentrosMediacionListaComponent implements OnInit {
   ngOnInit(): void {
     //CARGAR cENTROS DE MEDIACION
     this.listarCentrosMediacion();
+
+    //CARGA DE LISTAS
+    this.dataMokeadaService.listarDepartamentos().subscribe(departamentos => {
+      this.listDepartamentos = departamentos;
+    });
     
     //LISTAS PARA FILTROS
     this.filtroMunicipios = municipios.map(respuesta => {
@@ -135,7 +141,7 @@ export class CentrosMediacionListaComponent implements OnInit {
        }
     });
 
-    this.filtroDepartamentos = departamentos.map(respuesta => {
+    this.filtroDepartamentos = this.listDepartamentos.map(respuesta => {
       return {
         label: respuesta.departamento,
         value: respuesta.departamento,
@@ -143,8 +149,7 @@ export class CentrosMediacionListaComponent implements OnInit {
     });
     //FIN LISTAS PARA FILTROS.......................
 
-    //CARGA DE LISTAS
-    this.listDepartamentos = departamentos;
+    
 
     //FIN LISTAS.....................................
   }

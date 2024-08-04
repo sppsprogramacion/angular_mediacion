@@ -14,7 +14,6 @@ import { FuncionTramiteService } from '../../../service/funcion-tramite.service'
 import { FuncionTtramiteModel } from 'src/app/models/funcion_tramite.model';
 import { ElementoModel } from '../../../models/elemento.model';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
-import { departamentos, modalidad, tiposAudiencia } from 'src/app/common/data-mokeada';
 import { CentroMediacionModel } from 'src/app/models/centro_mediacion.model';
 import { CentrosMediacionService } from '../../../service/centros-mediacion.service';
 import { UsuariosCentroService } from '../../../service/usuarios-centro.service';
@@ -28,6 +27,7 @@ import { AudienciasService } from '../../../service/audiencias.service';
 import { ConvocadoModel } from 'src/app/models/convocado.model';
 import { VinculadoModel } from 'src/app/models/vinculado.model';
 import { Router } from '@angular/router';
+import { DataMokeadaService } from 'src/app/service/data-mokeada.service';
 
 @Component({
   selector: 'app-tramites-administrar',
@@ -91,6 +91,7 @@ export class TramitesAdministrarComponent implements OnInit {
     public dataService: DataService,
     private audienciaService: AudienciasService,
     private centroMediacionService: CentrosMediacionService,
+    private dataMokeadaService: DataMokeadaService,
     private funcionTramiteService: FuncionTramiteService,
     private tiposAudienciaService: TiposAudienciaService,
     private tramiteService: TramitesService,
@@ -199,9 +200,15 @@ export class TramitesAdministrarComponent implements OnInit {
       this.router.navigateByUrl("admin/tramites/nuevoslis");
     }   
 
-    this.listDepartamentos = departamentos;
-    this.listTipoAudiencia = tiposAudiencia;
-    this.listModalidad = modalidad;
+    this.dataMokeadaService.listarDepartamentos().subscribe(departamentos => {
+      this.listDepartamentos = departamentos;
+    });
+
+    this.dataMokeadaService.listarModalidad().subscribe(modalidad => {
+      this.listModalidad = modalidad;
+    });
+    //this.listModalidad = modalidad;
+
     this.listarMediadores();
     
   }
@@ -333,7 +340,6 @@ export class TramitesAdministrarComponent implements OnInit {
           if(this.dataTramite.estado_tramite_id === 2) {
             this.buscarMediadorByNumTramiteActivo();
           }
-          console.log("tramite recibido", this.dataTramite);    
         }
       });    
   }

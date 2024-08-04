@@ -2,17 +2,15 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DataMokeada } from 'src/app/common/data-mokeada';
-import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { SexoModel } from 'src/app/models/sexo.model';
 import { ConfigService } from 'src/app/service/app.config.service';
-import { CiudadanosService } from 'src/app/service/ciudadanos.service';
 import Swal from 'sweetalert2';
 import { DataService } from '../../../service/data.service';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/service/auth.service';
 import { UsuarioModel } from 'src/app/models/usuario.model';
 import { UsuariosService } from 'src/app/service/usuarios.service';
+import { DataMokeadaService } from '../../../service/data-mokeada.service';
 
 @Component({
   selector: 'app-usuario-datos-personales',
@@ -41,6 +39,7 @@ export class UsuarioDatosPersonalesComponent implements OnInit {
 
     private authService: AuthService,
     private dataService: DataService,    
+    private dataMokeadaService: DataMokeadaService,
     private usuarioService: UsuariosService,
   ) {
 
@@ -109,7 +108,10 @@ export class UsuarioDatosPersonalesComponent implements OnInit {
     //fin cargar datos del ciudadano en el formulario
 
     //CARGA DE LISTADOS DESDE DATA MOKEADA
-    this.listaSexo = DataMokeada.sexos;
+    this.dataMokeadaService.listarSexo().subscribe(sexos => {
+      this.listaSexo = sexos;
+    });
+
   }
 
 
@@ -132,8 +134,7 @@ export class UsuarioDatosPersonalesComponent implements OnInit {
       nombre: this.formaUsuario.get('nombre')?.value,
       sexo_id: parseInt(this.formaUsuario.get('sexo_id')?.value),
       telefono: this.formaUsuario.get('telefono')?.value,
-      email: this.formaUsuario.get('email')?.value,    
-       
+      email: this.formaUsuario.get('email')?.value,           
     };
     
     //GUARDAR EDICION CIUDADANO

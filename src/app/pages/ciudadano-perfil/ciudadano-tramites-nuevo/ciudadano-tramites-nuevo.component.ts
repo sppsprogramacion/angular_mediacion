@@ -7,7 +7,7 @@ import { AppConfig } from 'src/app/api/appconfig';
 import Swal from 'sweetalert2';
 
 //import { categorias, departamentos, municipios, objetos, opcionSiNo, provincias, sexo } from 'src/app/common/data-mokeada';
-import { DataMokeada, departamentos, municipios, objetos, opcionSiNo, provincias } from 'src/app/common/data-mokeada';
+import { municipios, opcionSiNo } from 'src/app/common/data-mokeada';
 import { CentroMediacionModel } from 'src/app/models/centro_mediacion.model';
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { ProvinciaModel } from '../../../models/provincia.model';
@@ -23,6 +23,7 @@ import { ElementoModel } from 'src/app/models/elemento.model';
 import { Router } from '@angular/router';
 import { CategoriaModel } from 'src/app/models/categoria.model';
 import { AuthService } from '../../../service/auth.service';
+import { DataMokeadaService } from '../../../service/data-mokeada.service';
 
 @Component({
   selector: 'app-ciudadano-tramites-nuevo',
@@ -96,6 +97,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     private serviceMensajes: MessageService,
 
     private centroMediacionService: CentrosMediacionService,
+    private dataMokeadaService: DataMokeadaService,
     private tramiteService: TramitesService,
     public dataService: DataService,
   ) {
@@ -320,12 +322,28 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.msgsDatosPersonales.push({ severity: 'warning', detail: 'Debe estar asesordo/a por un abogado antes de iniciar un tramite de mediación.'});
 
     //CARGA DE LISTADOS DESDE DATA MOKEADA
-    this.listaCategorias = DataMokeada.categorias;
-    this.listObjetos = objetos;
-    this.listSexo = DataMokeada.sexos;
+    this.dataMokeadaService.listarCategorias().subscribe(categorias => {
+      this.listaCategorias = categorias;
+    });
+
+    this.dataMokeadaService.listarObjetos().subscribe(objetos => {
+      this.listObjetos = objetos;
+    });
+
+    this.dataMokeadaService.listarProvincias().subscribe(provincias => {
+      this.listaProvincias = provincias;
+    });
+
+    this.dataMokeadaService.listarSexo().subscribe(sexos => {
+      this.listSexo = sexos;
+    });
+
     this.listSiNo = opcionSiNo;
-    this.listaProvincias = provincias;
-    this.listaDepartamentos = departamentos;
+
+    this.dataMokeadaService.listarDepartamentos().subscribe(departamentos => {
+      this.listaDepartamentos = departamentos;
+    });
+
     this.cargarDepartamentosconCentroMediacion();
     this.cargarMunicipios(1);        
   }
@@ -405,7 +423,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.listVinculados.push(this.vinculado);
 
     //ARMAR ARRAY AUXILIAR
-    let sexoAux = DataMokeada.sexos.filter(sexo => sexo.id_sexo == this.vinculado.sexo_id);
+    let sexoAux = this.listSexo.filter(sexo => sexo.id_sexo == this.vinculado.sexo_id);
     this.vinculadoAux = {
       apellido: this.vinculado.apellido,
       nombre: this.vinculado.nombre,
@@ -483,9 +501,9 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       this.listConvocados.push(this.convocado);
 
       //ARMAR ARRAY AUXILIAR
-      let sexoAux = DataMokeada.sexos.filter(sexo => sexo.id_sexo == this.convocado.sexo_id);
-      let provinciaAux = provincias.filter(provincia => provincia.id_provincia == 18);
-      let departamentoAux = departamentos.filter(departamento => departamento.id_departamento == this.convocado.departamento_id);
+      let sexoAux = this.listSexo.filter(sexo => sexo.id_sexo == this.convocado.sexo_id);
+      let provinciaAux = this.listaProvincias.filter(provincia => provincia.id_provincia == 18);
+      let departamentoAux = this.listaDepartamentos.filter(departamento => departamento.id_departamento == this.convocado.departamento_id);
       let municipioAux = municipios.filter(municipio => municipio.id_municipio == this.convocado.municipio_id);
       
       this.convocadoAux = {
@@ -535,8 +553,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   
       this.listConvocadosNoSalta.push(this.convocado);
 
-      let sexoAux = DataMokeada.sexos.filter(sexo => sexo.id_sexo == this.convocado.sexo_id);
-      let provinciaAux = provincias.filter(provincia => provincia.id_provincia == this.convocado.provincia_id);   
+      let sexoAux = this.listSexo.filter(sexo => sexo.id_sexo == this.convocado.sexo_id);
+      let provinciaAux = this.listaProvincias.filter(provincia => provincia.id_provincia == this.convocado.provincia_id);   
       this.convocadoAux = {
         ...this.convocado,
         sexo: sexoAux[0].sexo,
@@ -612,7 +630,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
 
   //CARGA DEPARTAMENTOS CON CENTRO DE EMDIACION
   cargarDepartamentosconCentroMediacion(){
-    this.listaDepartamentosConCentros=departamentos.filter(departamento => {      
+    this.listaDepartamentosConCentros= this.listaDepartamentos.filter(departamento => {      
       return departamento.tiene_centro_mediacion == true;
     });    
   }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, Message, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { AppConfig } from 'src/app/api/appconfig';
 import Swal from 'sweetalert2';
 import { ConfigService } from 'src/app/service/app.config.service';
 import { DatePipe } from '@angular/common';
@@ -11,7 +10,6 @@ import { Router } from '@angular/router';
 import { CiudadanosService } from '../../service/ciudadanos.service';
 import { CiudadanoModel } from '../../models/ciudadano.model';
 import { DepartamentoModel } from '../../models/departamento.model';
-import { DataMokeada, departamentos } from 'src/app/common/data-mokeada';
 import { MunicipioModel } from 'src/app/models/municipio.model';
 import { municipios } from '../../common/data-mokeada';
 import { SexoModel } from 'src/app/models/sexo.model';
@@ -149,11 +147,16 @@ export class RegistroComponent implements OnInit {
     
     //CARGA DE LISTADOS DESDE DATA MOKEADA
     //this.listaSexo = DataMokeada.sexos;
-    this.dataMokeadaService.listarSexo()
+    
 
-    console.log("hola",this.dataMokeadaService.listarSexo())
-    this.listaSexo = DataMokeada.sexos;
-    this.listaDepartamentos = departamentos;
+    this.dataMokeadaService.listarSexo().subscribe(sexos => {
+      this.listaSexo = sexos;
+    });
+
+    this.dataMokeadaService.listarDepartamentos().subscribe(departamentos => {
+      this.listaDepartamentos = departamentos;
+    });
+
     this.cargarMunicipios(1);    
     
   }

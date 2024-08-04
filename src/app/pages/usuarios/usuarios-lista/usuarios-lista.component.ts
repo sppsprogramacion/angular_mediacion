@@ -1,12 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
 import { MunicipioModel } from 'src/app/models/municipio.model';
 import { SexoModel } from 'src/app/models/sexo.model';
-import { CiudadanosService } from 'src/app/service/ciudadanos.service';
 import { UsuarioModel } from '../../../models/usuario.model';
 import { UsuariosService } from '../../../service/usuarios.service';
-import { DataMokeada, departamentos, municipios } from '../../../common/data-mokeada';
+import { municipios } from '../../../common/data-mokeada';
 import { FiltroModel } from '../../../models/filtro.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfigService } from 'src/app/service/app.config.service';
@@ -16,6 +14,7 @@ import Swal from 'sweetalert2';
 import { DataService } from '../../../service/data.service';
 import { Table } from 'primeng/table';
 import { Router } from '@angular/router';
+import { DataMokeadaService } from '../../../service/data-mokeada.service';
 
 @Component({
   selector: 'app-usuarios-lista',
@@ -57,7 +56,7 @@ export class UsuariosListaComponent implements OnInit {
     public configService: ConfigService,
     private readonly datePipe: DatePipe,
     private readonly dataService: DataService,
-    private serviceMensajes: MessageService,
+    private dataMokeadaService: DataMokeadaService,
     private usuariosService: UsuariosService,
     private router: Router
 
@@ -143,17 +142,21 @@ export class UsuariosListaComponent implements OnInit {
     this.listarUsuarios();
 
     //CARGA DE LISTADOS DESDE DATA MOKEADA
-    //this.listSexo = sexo;
-    this.filtroSexo = DataMokeada.sexos.map(respuesta => {
+    this.dataMokeadaService.listarDepartamentos().subscribe(departamentos => {
+      this.listDepartamentos = departamentos;
+    });
+
+    this.dataMokeadaService.listarSexo().subscribe(sexos => {
+      this.listSexo = sexos;
+    });
+
+    this.filtroSexo = this.listSexo.map(respuesta => {
       return {
         label: respuesta.sexo.toLowerCase(),
         value: respuesta.sexo,
        }
     });
-
-    this.listSexo= DataMokeada.sexos;
-    this.listDepartamentos = departamentos;
-    //this.cargarMunicipios(1);
+   
     
   }
   //FIN ONINIT...................................................

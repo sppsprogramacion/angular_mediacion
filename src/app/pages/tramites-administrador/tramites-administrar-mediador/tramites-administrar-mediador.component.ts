@@ -6,7 +6,6 @@ import Swal from 'sweetalert2';
 
 import { DataService } from 'src/app/service/data.service';
 import { TramiteModel } from '../../../models/tramite.model';
-import { UsuariosService } from '../../../service/usuarios.service';
 import { UsuarioModel } from '../../../models/usuario.model';
 import { UsuarioTramiteModel } from '../../../models/usuario_tramite.model';
 import { UsuariosTramiteService } from '../../../service/usuarios-tramite.service';
@@ -26,11 +25,11 @@ import { TiposAudienciaService } from 'src/app/service/tipos-audiencia.service';
 import { TipoAudienciaModel } from 'src/app/models/tipo_audiencia.model';
 import { ModalidadModel } from '../../../models/modalidad.model';
 import { ModalidadService } from 'src/app/service/modalidad.service';
-import { modalidad } from '../../../common/data-mokeada';
 import { ResultadoAudienciaModel } from '../../../models/resultadoAudiencia.model';
 import { ResultadosAudienciaService } from '../../../service/resultados-audiencia.service';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/service/auth.service';
+import { DataMokeadaService } from '../../../service/data-mokeada.service';
 
 @Component({
   selector: 'app-tramites-administrar-mediador',
@@ -105,14 +104,13 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     private router: Router,
     public dataService: DataService,
     private audienciaService: AudienciasService,
-    private centroMediacionService: CentrosMediacionService,
+    private dataMokeadaService: DataMokeadaService,
     private funcionTramiteService: FuncionTramiteService,
     private modalidadService: ModalidadService,
     private resultadosAudienciaService: ResultadosAudienciaService,
     private tiposAudienciaService: TiposAudienciaService,
     private tramiteService: TramitesService,   
     private usuariosCentroService: UsuariosCentroService,
-    private usuarioService: UsuariosService,
     private usuarioTramiteService: UsuariosTramiteService,
     
   ) { 
@@ -126,7 +124,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
       fecha_inicio: [,[Validators.required]],   
       hora_inicio: [,[Validators.required, Validators.pattern(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/)]],     
       hora_fin: [,[Validators.required]],          
-      modalidad_id: [1,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(2)]],     
+      modalidad_id: [1,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]],     
       tipo_audiencia_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(1)]]
     });
     
@@ -171,6 +169,14 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
       this.router.navigateByUrl("admin/tramites/nuevoslis");
     }  
     //fin obtener tramite
+
+    this.dataMokeadaService.listarModalidad().subscribe(modalidad => {
+      this.listModalidad = modalidad;
+    });
+
+    this.dataMokeadaService.listarTipoAudiaencia().subscribe(tipoAudiencia => {
+      this.listTipoAudiencia = tipoAudiencia;
+    });
       
     
   }
@@ -549,16 +555,6 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   //FIN LISTADO DE FUNCIONES TRAMITES............................
 
   //LISTADO DE TIPO AUDIENCIAS
-  listarModalidad(){    
-    this.modalidadService.listarModalidadTodos().
-        subscribe(respuesta => {
-        this.listModalidad= respuesta[0];
-    
-    });
-  }
-  //FIN LISTADO DE TIPO AUDIENCIAS............................
-
-  //LISTADO DE TIPO AUDIENCIAS
   listarResultadosAudiencia(){    
     this.resultadosAudienciaService.listarResultadoAudienciaTodos().
         subscribe(respuesta => {
@@ -567,17 +563,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     });
   }
   //FIN LISTADO DE TIPO AUDIENCIAS............................
-
-  //LISTADO DE TIPO AUDIENCIAS
-  listarTiposAudiencia(){    
-    
-    this.tiposAudienciaService.listarTodos().
-        subscribe(respuesta => {
-        this.listTipoAudiencia= respuesta[0];
-    
-    });
-  }
-  //FIN LISTADO DE TIPO AUDIENCIAS............................
+  
 
   cargarCentrosMediacion(id_usuario: number){
     this.usuariosCentroService.listarCentrosActivosXUsuario(id_usuario).
@@ -681,12 +667,8 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
       return
     }
 
-    console.log("usuariotramite", this.dataUsuarioTramite);
-
     this.cargarCentrosMediacionXUsuario(this.dataUsuarioTramite.usuario_id);
-    this.listarTiposAudiencia();
-    this.listarModalidad(); 
-    //this.listarTiposAudiencia()
+
     this.audienciaDialog = true;
     this.formaAudiencia.reset();    
 

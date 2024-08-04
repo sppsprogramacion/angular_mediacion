@@ -39,15 +39,8 @@ export class AppComponent {
         this.translateService.setDefaultLang('es');    
         this.translate('es');          
         
-        //AUTENTICAR USUARIO
-        // this.authService.checkAutenticationUsuario()
-        //     .subscribe( () => {
-        //         console.log("Autenticado");
-        //     })
-
-        //INICIALIZACION DE DATA-MOKEADA
-        this.listarCategorias();
-        //this.listarSexo();
+        
+        
     }
 
     //CONFIGURACION DE LENGUAJE
@@ -58,24 +51,8 @@ export class AppComponent {
     }
 
     //
-    //LISTADO DE CATEGORIAS
-    listarCategorias(){    
-    this.categoriasService.listarCategoriasTodos().
-        subscribe(respuesta => {
-            this.listCatregorias= respuesta[0];
-            DataMokeada.categorias = this.listCatregorias;
-        });
-    }
-    //FIN LISTADO DE CATEGORIAS............................
+    
 
-    //LISTADO DE CATEGORIAS
-    listarSexo(){    
-        this.sexoService.listarSexoTodos().
-            subscribe(respuesta => {
-                this.listSexo= respuesta[0];
-                DataMokeada.sexos = this.listSexo;
-            });
-        }
-    //FIN LISTADO DE CATEGORIAS............................
+    
    
 }

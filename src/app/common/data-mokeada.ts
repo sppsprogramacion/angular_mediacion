@@ -2,37 +2,10 @@ import { CategoriaModel } from "../models/categoria.model";
 import { SexoModel } from "../models/sexo.model";
 import { CategoriasService } from "../service/categorias.service";
 
-export class DataMokeada {
+export class DataMokeada {    
     
-    public static categorias: CategoriaModel[]=[];
-    public static sexos: SexoModel[] = [];
 }
 
-// export let categorias = [
-//     // {
-//     //     "id_categoria": 3,
-//     //     "categoria": "abogado"
-//     // },
-//     // {
-//     //     "id_categoria": 4,
-//     //     "categoria": "acompañante"
-//     // },
-//     // {
-//     //     "id_categoria": 2,
-//     //     "categoria": "convocado"
-//     // },
-//     // {
-//     //     "id_categoria": 5,
-//     //     "categoria": "otro"
-//     // },
-//     // {
-//     //     "id_categoria": 1,
-//     //     "categoria": "solicitante adicional"
-//     // }
-
-    
-
-// ];
 
 export const opcionSiNo = [
     {
@@ -56,442 +29,250 @@ export const tiposBusquedaCiudadano = [
     },
 ];
 
-export const modalidad = [
-    {
-        "id_modalidad": 2,
-        "modalidad": "conjunta"
-    },
-    {
-        "id_modalidad": 3,
-        "modalidad": "separado"
-    },
-    {
-        "id_modalidad": 1,
-        "modalidad": "sin especificar"
-    }
-];
 
-export const objetos = [
-    {
-        "id_objeto": 1,
-        "objeto": "alimentos"
-    },
-    {
-        "id_objeto": 9,
-        "objeto": "Canon locativo"
-    },
-    {
-        "id_objeto": 4,
-        "objeto": "Cobro de pesos"
-    },
-    {
-        "id_objeto": 6,
-        "objeto": "Compensacion economica"
-    },
-    {
-        "id_objeto": 5,
-        "objeto": "Comprobante de Reconocimiento"
-    },
-    {
-        "id_objeto": 2,
-        "objeto": "Cuidado personal"
-    },
-    {
-        "id_objeto": 10,
-        "objeto": "Daños y perjuicios en general"
-    },
-    {
-        "id_objeto": 11,
-        "objeto": "Derecho de comunnicación"
-    },
-    {
-        "id_objeto": 3,
-        "objeto": "División de bienes"
-    },
-    {
-        "id_objeto": 8,
-        "objeto": "División de condominio"
-    },
-    {
-        "id_objeto": 7,
-        "objeto": "Organización de convivencia"
-    }
-];
-
-// export const sexo = [
+// export const departamentos = [
 //     {
-//         "id_sexo": 1,
-//         "sexo": "femenino"
+//         "id_departamento": 2,
+//         "departamento": "Anta",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": false,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
 //     },
 //     {
-//         "id_sexo": 2,
-//         "sexo": "masculino"
+//         "id_departamento": 3,
+//         "departamento": "Cachi",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": false,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
 //     },
 //     {
-//         "id_sexo": 3,
-//         "sexo": "no binario"
+//         "id_departamento": 4,
+//         "departamento": "Cafayate",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": false,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
+//     },
+//     {
+//         "id_departamento": 5,
+//         "departamento": "Capital",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": true,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
+//     },
+//     {
+//         "id_departamento": 6,
+//         "departamento": "Cerrillos",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": false,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
+//     },
+//     {
+//         "id_departamento": 7,
+//         "departamento": "Chicoana",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": false,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
+//     },
+//     {
+//         "id_departamento": 8,
+//         "departamento": "General Gûemes",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": false,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
+//     },
+//     {
+//         "id_departamento": 9,
+//         "departamento": "General José de San Martín",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": false,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
+//     },
+//     {
+//         "id_departamento": 10,
+//         "departamento": "Guachipas",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": false,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
+//     },
+//     {
+//         "id_departamento": 11,
+//         "departamento": "Iruya",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": false,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
+//     },
+//     {
+//         "id_departamento": 12,
+//         "departamento": "La Caldera",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": false,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
+//     },
+//     {
+//         "id_departamento": 13,
+//         "departamento": "La Candelaria",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": false,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
+//     },
+//     {
+//         "id_departamento": 14,
+//         "departamento": "La Poma",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": false,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
+//     },
+//     {
+//         "id_departamento": 15,
+//         "departamento": "La Viña",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": false,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
+//     },
+//     {
+//         "id_departamento": 16,
+//         "departamento": "Los Andes",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": false,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
+//     },
+//     {
+//         "id_departamento": 17,
+//         "departamento": "Metán",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": false,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
+//     },
+//     {
+//         "id_departamento": 18,
+//         "departamento": "Molinos",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": true,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
+//     },
+//     {
+//         "id_departamento": 19,
+//         "departamento": "Orán",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": false,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
+//     },
+//     {
+//         "id_departamento": 20,
+//         "departamento": "Rivadavia",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": false,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
+//     },
+//     {
+//         "id_departamento": 21,
+//         "departamento": "Rosario de la Frontera",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": false,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
+//     },
+//     {
+//         "id_departamento": 22,
+//         "departamento": "Rosario de Lerma",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": true,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
+//     },
+//     {
+//         "id_departamento": 23,
+//         "departamento": "San Carlos",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": false,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
+//     },
+//     {
+//         "id_departamento": 24,
+//         "departamento": "Santa Victoria",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": true,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
+//     },
+//     {
+//         "id_departamento": 1,
+//         "departamento": "sin departamento",
+//         "provincia_id": 18,
+//         "tiene_centro_mediacion": false,
+//         "provincia": {
+//             "id_provincia": 18,
+//             "provincia": "Salta"
+//         }
 //     }
+
 // ];
-
-export const tiposAudiencia = [
-    {
-        "id_tipo_audiencia": 1,
-        "tipo_audiencia": "presencial"
-    },
-    {
-        "id_tipo_audiencia": 2,
-        "tipo_audiencia": "virtual"
-    }
-];
-
-
-export const provincias = [
-    {
-        "id_provincia": 2,
-        "provincia": "Buenos Aires"
-    },
-    {
-        "id_provincia": 3,
-        "provincia": "Catamarca"
-    },
-    {
-        "id_provincia": 4,
-        "provincia": "Chaco"
-    },
-    {
-        "id_provincia": 5,
-        "provincia": "Chubut"
-    },
-    {
-        "id_provincia": 6,
-        "provincia": "Ciudad Autónoma de Buenos Aires"
-    },
-    {
-        "id_provincia": 7,
-        "provincia": "Córdoba"
-    },
-    {
-        "id_provincia": 8,
-        "provincia": "Corrientes"
-    },
-    {
-        "id_provincia": 9,
-        "provincia": "Entre Ríos"
-    },
-    {
-        "id_provincia": 10,
-        "provincia": "Formosa"
-    },
-    {
-        "id_provincia": 11,
-        "provincia": "Jujuy"
-    },
-    {
-        "id_provincia": 12,
-        "provincia": "La Pampa"
-    },
-    {
-        "id_provincia": 13,
-        "provincia": "La Rioja"
-    },
-    {
-        "id_provincia": 14,
-        "provincia": "Mendoza"
-    },
-    {
-        "id_provincia": 15,
-        "provincia": "Misiones"
-    },
-    {
-        "id_provincia": 16,
-        "provincia": "Neuquén"
-    },
-    {
-        "id_provincia": 17,
-        "provincia": "Río Negro"
-    },
-    {
-        "id_provincia": 18,
-        "provincia": "Salta"
-    },
-    {
-        "id_provincia": 19,
-        "provincia": "San Juan"
-    },
-    {
-        "id_provincia": 20,
-        "provincia": "San Luis"
-    },
-    {
-        "id_provincia": 21,
-        "provincia": "Santa Cruz"
-    },
-    {
-        "id_provincia": 22,
-        "provincia": "Santa Fé"
-    },
-    {
-        "id_provincia": 23,
-        "provincia": "Santiago del Estero"
-    },
-    {
-        "id_provincia": 1,
-        "provincia": "sin provincia"
-    },
-    {
-        "id_provincia": 24,
-        "provincia": "Tierra del Fuego"
-    },
-    {
-        "id_provincia": 25,
-        "provincia": "Tucumán"
-    }
-
-];
-
-export const departamentos = [
-    {
-        "id_departamento": 2,
-        "departamento": "Anta",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": false,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 3,
-        "departamento": "Cachi",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": false,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 4,
-        "departamento": "Cafayate",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": false,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 5,
-        "departamento": "Capital",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": true,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 6,
-        "departamento": "Cerrillos",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": false,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 7,
-        "departamento": "Chicoana",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": false,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 8,
-        "departamento": "General Gûemes",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": false,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 9,
-        "departamento": "General José de San Martín",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": false,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 10,
-        "departamento": "Guachipas",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": false,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 11,
-        "departamento": "Iruya",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": false,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 12,
-        "departamento": "La Caldera",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": false,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 13,
-        "departamento": "La Candelaria",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": false,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 14,
-        "departamento": "La Poma",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": false,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 15,
-        "departamento": "La Viña",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": false,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 16,
-        "departamento": "Los Andes",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": false,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 17,
-        "departamento": "Metán",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": false,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 18,
-        "departamento": "Molinos",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": true,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 19,
-        "departamento": "Orán",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": false,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 20,
-        "departamento": "Rivadavia",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": false,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 21,
-        "departamento": "Rosario de la Frontera",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": false,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 22,
-        "departamento": "Rosario de Lerma",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": true,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 23,
-        "departamento": "San Carlos",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": false,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 24,
-        "departamento": "Santa Victoria",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": true,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    },
-    {
-        "id_departamento": 1,
-        "departamento": "sin departamento",
-        "provincia_id": 18,
-        "tiene_centro_mediacion": false,
-        "provincia": {
-            "id_provincia": 18,
-            "provincia": "Salta"
-        }
-    }
-
-];
 
 export const municipios = [
     {
