@@ -4,7 +4,6 @@ import { MunicipioModel } from 'src/app/models/municipio.model';
 import { SexoModel } from 'src/app/models/sexo.model';
 import { UsuarioModel } from '../../../models/usuario.model';
 import { UsuariosService } from '../../../service/usuarios.service';
-import { municipios } from '../../../common/data-mokeada';
 import { FiltroModel } from '../../../models/filtro.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfigService } from 'src/app/service/app.config.service';
@@ -44,7 +43,8 @@ export class UsuariosListaComponent implements OnInit {
   //LISTAS    
   listUsuarios: UsuarioModel[]=[];
   listDepartamentos: DepartamentoModel[]=[];
-  listMunicipios: MunicipioModel[]= [];
+  listMunicipios: MunicipioModel[]= [];  
+  listMunicipiosCompleto: MunicipioModel[]=[];
   listSexo: SexoModel[]=[];
   filtroSexo: FiltroModel[]=[];
 
@@ -146,6 +146,10 @@ export class UsuariosListaComponent implements OnInit {
       this.listDepartamentos = departamentos;
     });
 
+    this.dataMokeadaService.listarMunicipios().subscribe(municipios => {
+      this.listMunicipiosCompleto= municipios;
+    });
+
     this.dataMokeadaService.listarSexo().subscribe(sexos => {
       this.listSexo = sexos;
     });
@@ -240,7 +244,7 @@ export class UsuariosListaComponent implements OnInit {
 
   //CARGAR MUNICIPOS
   cargarMunicipios(id_departamento: number){
-    this.listMunicipios=municipios.filter(municipio => {      
+    this.listMunicipios=this.listMunicipiosCompleto.filter(municipio => {      
       return municipio.id_municipio == 1 || municipio.departamento_id == id_departamento;
     });    
   }

@@ -2,7 +2,6 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CentrosMediacionService } from '../../../service/centros-mediacion.service';
 import { CentroMediacionModel } from '../../../models/centro_mediacion.model';
 import { FiltroModel } from '../../../models/filtro.model';
-import { municipios } from 'src/app/common/data-mokeada';
 import { Table } from 'primeng/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
@@ -45,6 +44,7 @@ export class CentrosMediacionListaComponent implements OnInit {
   listCentrosMediacion: CentroMediacionModel[]=[];
   listDepartamentos: DepartamentoModel[]=[];
   listMunicipios: MunicipioModel[]=[];
+  listMunicipiosCompleto: MunicipioModel[]=[];
   filtroDepartamentos: FiltroModel[]=[];
   filtroMunicipios: FiltroModel[]=[];
 
@@ -54,7 +54,6 @@ export class CentrosMediacionListaComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private serviceMensajes: MessageService,
     private readonly dataService: DataService,
     private dataMokeadaService: DataMokeadaService,
     private centrosMediacionService: CentrosMediacionService,
@@ -132,9 +131,13 @@ export class CentrosMediacionListaComponent implements OnInit {
     this.dataMokeadaService.listarDepartamentos().subscribe(departamentos => {
       this.listDepartamentos = departamentos;
     });
+
+    this.dataMokeadaService.listarMunicipios().subscribe(municipios => {
+      this.listMunicipiosCompleto= municipios;
+    });
     
     //LISTAS PARA FILTROS
-    this.filtroMunicipios = municipios.map(respuesta => {
+    this.filtroMunicipios = this.listMunicipiosCompleto.map(respuesta => {
       return {
         label: respuesta.municipio,
         value: respuesta.municipio,
@@ -276,7 +279,7 @@ export class CentrosMediacionListaComponent implements OnInit {
 
   //CARGAR MUNICIPOS
   cargarMunicipios(id_departamento: number){
-    this.listMunicipios=municipios.filter(municipio => {      
+    this.listMunicipios=this.listMunicipiosCompleto.filter(municipio => {      
       return municipio.id_municipio == 1 || municipio.departamento_id == id_departamento;
     });    
   }

@@ -14,6 +14,8 @@ import { ObjetoModel } from '../models/objeto.model';
 import { ObjetosService } from './objetos.service';
 import { DepartamentosService } from './departamentos.service';
 import { DepartamentoModel } from '../models/departamento.model';
+import { MunicipioModel } from '../models/municipio.model';
+import { MunicipiosService } from './municipios.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +29,8 @@ export class DataMokeadaService {
   private listDepartamentosSubject: BehaviorSubject<DepartamentoModel[]> = new BehaviorSubject<DepartamentoModel[]>([]);
   private listModalidad: ModalidadModel[] = [];
   private listModalidadSubject: BehaviorSubject<ModalidadModel[]> = new BehaviorSubject<ModalidadModel[]>([]);  
+  private listMunicipios: MunicipioModel[] = [];
+  private listMunicipiosSubject: BehaviorSubject<MunicipioModel[]> = new BehaviorSubject<MunicipioModel[]>([]); 
   private listObjetos: ObjetoModel[] = [];
   private listObjetosSubject: BehaviorSubject<ObjetoModel[]> = new BehaviorSubject<ObjetoModel[]>([]);
   private listProvincias: ProvinciaModel[] = [];
@@ -41,6 +45,7 @@ export class DataMokeadaService {
     private categoriasService: CategoriasService,
     private departamentosService: DepartamentosService,
     private modalidadService: ModalidadService,
+    private municipiosService: MunicipiosService,
     private objetosService: ObjetosService,
     private provinciasService: ProvinciasService,
     private sexoService: SexoService,
@@ -88,6 +93,19 @@ export class DataMokeadaService {
     return this.listModalidadSubject.asObservable();
   } 
   //FIN LISTADO DE MODALIDAD............................
+
+  //LISTADO DE MUNICIPIOS
+  listarMunicipios(): Observable<MunicipioModel[]> { 
+    if(this.listMunicipios.length == 0) {      
+      this.municipiosService.listarMuicipioTodos().
+        subscribe(respuesta => {
+            this.listMunicipios= respuesta[0];
+            this.listMunicipiosSubject.next(this.listMunicipios);
+        });
+    }
+    return this.listMunicipiosSubject.asObservable();
+  } 
+  //FIN LISTADO DE MUNICIPIOS............................
 
   //LISTADO DE OBJETOS
   listarObjetos(): Observable<ObjetoModel[]> { 

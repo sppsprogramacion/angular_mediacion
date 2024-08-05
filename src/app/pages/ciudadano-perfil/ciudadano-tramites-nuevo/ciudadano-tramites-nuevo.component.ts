@@ -7,7 +7,7 @@ import { AppConfig } from 'src/app/api/appconfig';
 import Swal from 'sweetalert2';
 
 //import { categorias, departamentos, municipios, objetos, opcionSiNo, provincias, sexo } from 'src/app/common/data-mokeada';
-import { municipios, opcionSiNo } from 'src/app/common/data-mokeada';
+import { opcionSiNo } from 'src/app/common/data-mokeada';
 import { CentroMediacionModel } from 'src/app/models/centro_mediacion.model';
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { ProvinciaModel } from '../../../models/provincia.model';
@@ -48,6 +48,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   listaDepartamentosConCentros: DepartamentoModel[] = [];
   listaMunicipios: MunicipioModel[] = [];
   listaMunicipiosConvocado: MunicipioModel[] = [];
+  listMunicipiosCompleto: MunicipioModel[]=[];
   listaProvincias: ProvinciaModel[] = []
   listCiudadano: CiudadanoModel[]=[]; 
   listConvocados: any[]=[]; 
@@ -321,31 +322,33 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.msgsDatosPersonales = []; 
     this.msgsDatosPersonales.push({ severity: 'warning', detail: 'Debe estar asesordo/a por un abogado antes de iniciar un tramite de mediación.'});
 
-    //CARGA DE LISTADOS DESDE DATA MOKEADA
-    this.dataMokeadaService.listarCategorias().subscribe(categorias => {
-      this.listaCategorias = categorias;
-    });
-
+    //CARGA DE LISTADOS DESDE DATA MOKEADA    
+    
     this.dataMokeadaService.listarObjetos().subscribe(objetos => {
       this.listObjetos = objetos;
-    });
 
-    this.dataMokeadaService.listarProvincias().subscribe(provincias => {
-      this.listaProvincias = provincias;
+    });    
+    
+    
+    this.dataMokeadaService.listarDepartamentos().subscribe(departamentos => {
+      this.listaDepartamentos = departamentos;
+      
+      this.dataMokeadaService.listarMunicipios().subscribe(municipios => {
+        this.listMunicipiosCompleto= municipios;
+      });
+
+      this.cargarDepartamentosconCentroMediacion();
+
     });
+    
+    this.listSiNo = opcionSiNo;
 
     this.dataMokeadaService.listarSexo().subscribe(sexos => {
       this.listSexo = sexos;
     });
 
-    this.listSiNo = opcionSiNo;
-
-    this.dataMokeadaService.listarDepartamentos().subscribe(departamentos => {
-      this.listaDepartamentos = departamentos;
-    });
-
-    this.cargarDepartamentosconCentroMediacion();
-    this.cargarMunicipios(1);        
+    
+    // this.cargarMunicipios(1);        
   }
   //FIN ONINIT................................................................
   //..........................................................................
@@ -445,6 +448,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   agregarConvocado(){
     let id_provincia: number = parseInt(this.formaProvincia.get('provincia_id')?.value);
     
+    
     //SIN SELECCIONAR PROVINCIA
     if(id_provincia == 1){
       //VAIDACIONES DE FORMULARIOS
@@ -504,7 +508,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       let sexoAux = this.listSexo.filter(sexo => sexo.id_sexo == this.convocado.sexo_id);
       let provinciaAux = this.listaProvincias.filter(provincia => provincia.id_provincia == 18);
       let departamentoAux = this.listaDepartamentos.filter(departamento => departamento.id_departamento == this.convocado.departamento_id);
-      let municipioAux = municipios.filter(municipio => municipio.id_municipio == this.convocado.municipio_id);
+      let municipioAux = this.listMunicipiosCompleto.filter(municipio => municipio.id_municipio == this.convocado.municipio_id);
       
       this.convocadoAux = {
         ...this.convocado,
@@ -597,6 +601,12 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
 
   openDialogConvocado() {
     this.convocadoTramiteDialog = true; 
+
+    this.dataMokeadaService.listarProvincias().subscribe(provincias => {
+      this.listaProvincias = provincias;      
+      
+    });
+
     Object.values(this.formaProvincia.controls).forEach(control => control.markAsUntouched()); 
     
   }
@@ -618,6 +628,12 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
 
   openDialogVinculado() {
     this.vinculadoTramiteDialog = true; 
+
+    //CARGAR CATEGORIAS
+    this.dataMokeadaService.listarCategorias().subscribe(categorias => {
+      this.listaCategorias = categorias;      
+    });
+
     Object.values(this.formaVinculado.controls).forEach(control => control.markAsUntouched()); 
   }
   
@@ -638,7 +654,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
 
   //CARGA DE DROPDOWN TRAMITES
   cargarMunicipios(id_departamento: number){
-    this.listaMunicipios=municipios.filter(municipio => {      
+    this.listaMunicipios=this.listMunicipiosCompleto.filter(municipio => {      
       return municipio.id_municipio == 1 || municipio.departamento_id == id_departamento;
     });    
   }
@@ -677,7 +693,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
 
   //CARGA DEPARTAMENTOS Y MUNICIPIOS CONVOCADOS
   cargarMunicipiosConvocado(id_departamento: number){
-    this.listaMunicipiosConvocado=municipios.filter(municipio => {      
+    this.listaMunicipiosConvocado=this.listMunicipiosCompleto.filter(municipio => {      
       return municipio.id_municipio == 1 || municipio.departamento_id == id_departamento;
     });    
   }

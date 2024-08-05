@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, Message, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { AppConfig } from 'src/app/api/appconfig';
-import { municipios, opcionSiNo } from 'src/app/common/data-mokeada';
+import { opcionSiNo } from 'src/app/common/data-mokeada';
 import { CentroMediacionModel } from 'src/app/models/centro_mediacion.model';
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
@@ -36,7 +36,8 @@ export class TramitesNuevoComponent implements OnInit {
 
   //listas  
   listaCentrosMediacion: CentroMediacionModel[]=[];
-  listaMunicipios: MunicipioModel[] = [];
+  listaMunicipios: MunicipioModel[] = [];  
+  listMunicipiosCompleto: MunicipioModel[]=[];
   listaDepartamentos: DepartamentoModel[] = [];
   listObjetos: ObjetoModel[] = [];
   listSexo: SexoModel[] = [];
@@ -161,6 +162,10 @@ export class TramitesNuevoComponent implements OnInit {
       this.listaDepartamentos = departamentos;
     });
 
+    this.dataMokeadaService.listarMunicipios().subscribe(municipios => {
+      this.listMunicipiosCompleto= municipios;
+    });
+
     this.dataMokeadaService.listarObjetos().subscribe(objetos => {
       this.listObjetos = objetos;
     });
@@ -257,7 +262,7 @@ export class TramitesNuevoComponent implements OnInit {
   }
 
   cargarMunicipios(id_departamento: number){
-    this.listaMunicipios=municipios.filter(municipio => {      
+    this.listaMunicipios=this.listMunicipiosCompleto.filter(municipio => {      
       return municipio.id_municipio == 1 || municipio.departamento_id == id_departamento;
     });    
   }

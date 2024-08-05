@@ -11,7 +11,6 @@ import { CiudadanosService } from '../../service/ciudadanos.service';
 import { CiudadanoModel } from '../../models/ciudadano.model';
 import { DepartamentoModel } from '../../models/departamento.model';
 import { MunicipioModel } from 'src/app/models/municipio.model';
-import { municipios } from '../../common/data-mokeada';
 import { SexoModel } from 'src/app/models/sexo.model';
 import { DataMokeadaService } from '../../service/data-mokeada.service';
 
@@ -145,20 +144,11 @@ export class RegistroComponent implements OnInit {
     // });
 
     
-    //CARGA DE LISTADOS DESDE DATA MOKEADA
-    //this.listaSexo = DataMokeada.sexos;
-    
-
+    //CARGA DE LISTADOS DESDE DATA MOKEADA 
     this.dataMokeadaService.listarSexo().subscribe(sexos => {
       this.listaSexo = sexos;
     });
-
-    this.dataMokeadaService.listarDepartamentos().subscribe(departamentos => {
-      this.listaDepartamentos = departamentos;
-    });
-
-    this.cargarMunicipios(1);    
-    
+        
   }
   //FIN ONINIT...................................................
 
@@ -219,21 +209,6 @@ export class RegistroComponent implements OnInit {
     this.formRegistroDialog= false;
   }
 
-  cargarMunicipios(id_departamento: number){
-    this.listaMunicipios=municipios.filter(municipio => {      
-      return municipio.id_municipio == 1 || municipio.departamento_id == id_departamento;
-    });    
-  }
-
-  onChangeDepartamento(){
-    const id = this.formaRegistro.get('departamento_id')?.value;
-    if(id != null){               
-        this.cargarMunicipios(parseInt(id.toString()));
-        this.formaRegistro.get('municipio_id')?.setValue(1);               
-        this.formaRegistro.get('municipio_id')?.markAsUntouched();
-        
-    }
-  }
 
   changeFormatoFechaGuardar(nuevaFecha: Date){
     let fechaAuxiliar:any = null;
