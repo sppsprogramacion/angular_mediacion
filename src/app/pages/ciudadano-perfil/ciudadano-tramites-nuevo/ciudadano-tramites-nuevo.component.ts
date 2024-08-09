@@ -40,6 +40,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   msgsAsesorado: Message[] = []; 
   msgsDatosPersonales: Message[] = []; 
   msgsVinculado: Message[] = [];
+  msgsViolencia: Message[] = []; 
 
   //listas  
   listaCategorias: CategoriaModel[] = [];
@@ -116,13 +117,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       violencia_genero: [false,[Validators.required]],
       violencia_partes: [false,[Validators.required]],
       existe_denuncia: [false,[Validators.required]],
-      medida_cautelar: [false,[Validators.required]],
-      pdf_denuncia: [false,[Validators.required]],
-      pdf_cautelar: [false,[Validators.required]],
-      pdf_ingresos: [false,[Validators.required]],
-      pdf_negativa: [false,[Validators.required]],
-      // modalidad_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-      // variante_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/)]],     
+      medida_cautelar: [false,[Validators.required]],      
     
     });
 
@@ -322,6 +317,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.msgsDatosPersonales = []; 
     this.msgsDatosPersonales.push({ severity: 'warning', detail: 'Debe estar asesordo/a por un abogado antes de iniciar un tramite de mediación.'});
 
+    
     //CARGA DE LISTADOS DESDE DATA MOKEADA    
     
     this.dataMokeadaService.listarObjetos().subscribe(objetos => {
@@ -378,10 +374,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
         violencia_partes: this.formaTramite.get('violencia_genero')?.value,
         existe_denuncia: this.formaTramite.get('existe_denuncia')?.value,
         medida_cautelar: this.formaTramite.get('medida_cautelar')?.value,
-        pdf_denuncia: this.formaTramite.get('pdf_denuncia')?.value,
-        pdf_cautelar: this.formaTramite.get('pdf_cautelar')?.value,
-        pdf_ingresos: this.formaTramite.get('pdf_ingresos')?.value,
-        pdf_negativa: this.formaTramite.get('pdf_negativa')?.value,
+        
         // modalidad_id: parseInt(this.formaTramite.get('modalidad_id')?.value),
         // variante_id: parseInt(this.formaTramite.get('variante_id')?.value),
       },

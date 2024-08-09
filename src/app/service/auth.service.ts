@@ -41,6 +41,7 @@ export class AuthService {
           ciudadano =>{
             this.ciudadanoLoginResponse = ciudadano;
           }),
+        //tap(ciudadano => localStorage.setItem('token_ciudadano', this.ciudadanoLoggedIn.id_ciudadano.toString())),
         tap(ciudadano => localStorage.setItem('token_ciudadano', this.ciudadanoLoggedIn.id_ciudadano.toString())),
         tap(ciudadano => localStorage.setItem('token-ciudadano', this.ciudadanoLoginResponse.token)),
         tap(ciudadano => this.usuarioLoggedIn = null)

@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="card p-fluid">
             <p-toolbar styleClass="mb-3 bg-cyan-500">
-                <h5 class="block text-white  font-bold font-medium mb-1">Nueva solicitud de tramite</h5>
+                <h5 class="block text-white  font-bold font-medium mb-1">Nueva solicitud de trámite</h5>
             </p-toolbar>
             <p-messages [(value)]="msgsAsesorado" [enableService]="false"></p-messages>
 
@@ -38,14 +38,25 @@
                         </div>
                         <!-- FIN CARD ASESORADO-->
 
+                        <!-- CARD MENSAJE -->
+                        <div *ngIf="estaAsesorado" class="card p-fluid">  
+                            <p-messages severity="warn">
+                                <ng-template pTemplate>                                    
+                                    <div class="ml-1">
+                                        En el día asignado de la mediación deberá traer DNI y RECIBO DE SUELDO.
+                                    </div>
+                                </ng-template>
+                            </p-messages>
+                            
+                        </div>
+                        <!-- FIN CARD MENSAJE -->
+
                         <!-- CARD MI DOMICILIO -->
                         <div *ngIf="estaAsesorado" class="card p-fluid">
                             <p-toolbar styleClass="mb-3 bg-orange-500">
                                 <h5 class="block text-white  font-bold font-medium mb-1">Mi domicilio</h5>
-                            </p-toolbar>
-                            <div class="bg-cyan-600">
+                            </p-toolbar>       
 
-                            </div>
                             <div class="formgrid grid">
                                 <div class="field col-12 md:col-6">
                                     <label for="departamento_id">Departamento</label>
@@ -111,6 +122,7 @@
                                 </div>
 
                             </div>
+                            
                         </div>
                         <!-- FIN CARD MI DOMICIO -->
 
@@ -192,7 +204,7 @@
 
                             <div *ngIf="existe_violencia_genero" class="formgrid grid">
                                 <div class="col-12 mb-1">
-                                    <label for="id_opcion_sino">En caso de violencia de egenero</label><br>
+                                    <label for="id_opcion_sino">En caso de violencia de género</label><br>
                                 </div>
                                 <div class="field col-6">
                                     <label for="id_opcion_sino">¿Existe denuncia?</label>
@@ -206,24 +218,13 @@
                                 </div>
                             </div>
 
-                            <div class="formgrid grid">
-                                <div class="field col-12 sm:col-6 md:col-4">
-                                    <label for="id_opcion_sino">pdf denuncia</label>
-                                    <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="pdf_denuncia">
-                                    </p-dropdown>
-                                </div>
-                                <div class="field col-12 sm:col-6 md:col-4">
-                                    <label for="id_opcion_sino">pdf cautelar</label>
-                                    <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="pdf_cautelar">
-                                    </p-dropdown>
-                                </div>
-                                <div class="field col-12 sm:col-6 md:col-4">
-                                    <label for="id_opcion_sino">pdf ingresos</label>
-                                    <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="pdf_ingresos">
-                                    </p-dropdown>
-                                </div>
-
-                            </div>
+                            <p-messages severity="warn">
+                                <ng-template pTemplate>                                    
+                                    <div class="ml-1">
+                                        En caso de tener RESTRICCION CON EL CONVOCADO, el día asignado de la mediación deberá traer la documentación que lo acredita (DENUNCIA – CAUTELAR).
+                                    </div>
+                                </ng-template>
+                            </p-messages>
                         </div>
                         <!-- FIN CARD MOTIVOS -->
 
