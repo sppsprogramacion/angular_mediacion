@@ -104,7 +104,7 @@ export class TramitesAdministrarComponent implements OnInit {
     
     //FORMULARIO 
     this.formaMediadorAsignado = this.fb.group({
-      detalles: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(200)]],     
+      detalles: ['',[Validators.maxLength(200)]],     
       centro_mediacion_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]],         
       departamento_id_centro: [1,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(2)]],     
       funcion_tramite_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
@@ -113,7 +113,7 @@ export class TramitesAdministrarComponent implements OnInit {
 
     this.formaAudiencia = this.fb.group({
       centro_mediacion_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
-      detalles: ['',[Validators.required, Validators.minLength(5), Validators.maxLength(200)]], 
+      detalles: ['',[Validators.maxLength(200)]], 
       fecha_inicio: [,[Validators.required]],   
       hora_inicio: [,[Validators.required, Validators.pattern(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/)]],     
       hora_fin: [,[Validators.required]],          

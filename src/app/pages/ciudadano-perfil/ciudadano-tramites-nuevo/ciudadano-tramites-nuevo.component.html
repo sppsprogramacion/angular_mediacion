@@ -40,7 +40,7 @@
 
                         <!-- CARD MENSAJE -->
                         <div *ngIf="estaAsesorado" class="card p-fluid">  
-                            <p-messages severity="warn">
+                            <p-messages severity="info">
                                 <ng-template pTemplate>                                    
                                     <div class="ml-1">
                                         En el día asignado de la mediación deberá traer DNI y RECIBO DE SUELDO.
@@ -218,13 +218,15 @@
                                 </div>
                             </div>
 
-                            <p-messages severity="warn">
+                            <!-- MENSAJE-->
+                            <p-messages severity="info">
                                 <ng-template pTemplate>                                    
                                     <div class="ml-1">
                                         En caso de tener RESTRICCION CON EL CONVOCADO, el día asignado de la mediación deberá traer la documentación que lo acredita (DENUNCIA – CAUTELAR).
                                     </div>
                                 </ng-template>
                             </p-messages>
+                            <!-- MENSAJE-->
                         </div>
                         <!-- FIN CARD MOTIVOS -->
 
