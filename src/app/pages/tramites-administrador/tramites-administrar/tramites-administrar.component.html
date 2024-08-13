@@ -829,7 +829,7 @@
                                 <p-dropdown id="modalidad_id" [options]="listModalidad" optionLabel="modalidad" optionValue="id_modalidad" formControlName="modalidad_id" placeholder="Seleccionar...">
                                 </p-dropdown>
                                 <small *ngIf="isValidAudiencia('modalidad_id')" class="p-error">
-                                    <div *ngFor="let validation of user_validation_messages.usuario_id" >
+                                    <div *ngFor="let validation of user_validation_messages.modalidad_id" >
                                         <div  *ngIf="formaAudiencia.get('modalidad_id')?.hasError(validation.type)">
                                             {{validation.message}}
                                         </div>

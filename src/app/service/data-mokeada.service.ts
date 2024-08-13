@@ -16,6 +16,8 @@ import { DepartamentosService } from './departamentos.service';
 import { DepartamentoModel } from '../models/departamento.model';
 import { MunicipioModel } from '../models/municipio.model';
 import { MunicipiosService } from './municipios.service';
+import { FuncionTtramiteModel } from '../models/funcion_tramite.model';
+import { FuncionTramiteService } from './funcion-tramite.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +29,8 @@ export class DataMokeadaService {
   private listCategoriasSubject: BehaviorSubject<CategoriaModel[]> = new BehaviorSubject<CategoriaModel[]>([]);
   private listDepartamentos: DepartamentoModel[] = [];
   private listDepartamentosSubject: BehaviorSubject<DepartamentoModel[]> = new BehaviorSubject<DepartamentoModel[]>([]);
+  private listFuncionTramite: FuncionTtramiteModel[] = [];
+  private listFuncionTramiteSubject: BehaviorSubject<FuncionTtramiteModel[]> = new BehaviorSubject<FuncionTtramiteModel[]>([]);
   private listModalidad: ModalidadModel[] = [];
   private listModalidadSubject: BehaviorSubject<ModalidadModel[]> = new BehaviorSubject<ModalidadModel[]>([]);  
   private listMunicipios: MunicipioModel[] = [];
@@ -44,6 +48,7 @@ export class DataMokeadaService {
   constructor(
     private categoriasService: CategoriasService,
     private departamentosService: DepartamentosService,
+    private funcionTramiteService: FuncionTramiteService,
     private modalidadService: ModalidadService,
     private municipiosService: MunicipiosService,
     private objetosService: ObjetosService,
@@ -59,7 +64,6 @@ export class DataMokeadaService {
         subscribe(respuesta => {
             this.listCatregorias= respuesta[0];
             this.listCategoriasSubject.next(this.listCatregorias);
-            console.log("categorias dentro del metodo");
         });
     }
     return this.listCategoriasSubject.asObservable();
@@ -73,12 +77,24 @@ export class DataMokeadaService {
         subscribe(respuesta => {
             this.listDepartamentos= respuesta[0];
             this.listDepartamentosSubject.next(this.listDepartamentos);
-            console.log("departamentos dentro del metodo");
         });
     }
     return this.listDepartamentosSubject.asObservable();
   } 
   //FIN LISTADO DE DEPARTAMENTOS............................
+
+  //LISTADO DE FUNCION EN TRAMITE
+  listarFuncionTramite(): Observable<FuncionTtramiteModel[]> { 
+    if(this.listFuncionTramite.length == 0) {      
+      this.funcionTramiteService.listarFuncionTramitesTodos().
+        subscribe(respuesta => {
+            this.listFuncionTramite= respuesta[0];
+            this.listFuncionTramiteSubject.next(this.listFuncionTramite);
+        });
+    }
+    return this.listFuncionTramiteSubject.asObservable();
+  } 
+  //FIN LISTADO DE FUNCION EN TRAMITE............................
 
   //LISTADO DE MODALIDAD
   listarModalidad(): Observable<ModalidadModel[]> { 
@@ -87,7 +103,6 @@ export class DataMokeadaService {
         subscribe(respuesta => {
             this.listModalidad= respuesta[0];
             this.listModalidadSubject.next(this.listModalidad);
-            console.log("modalidad dentro del metodo");
         });
     }
     return this.listModalidadSubject.asObservable();
@@ -114,7 +129,6 @@ export class DataMokeadaService {
         subscribe(respuesta => {
             this.listObjetos= respuesta[0];
             this.listObjetosSubject.next(this.listObjetos);
-            console.log("objetos dentro del metodo");
         });
     }
     return this.listObjetosSubject.asObservable();
@@ -149,18 +163,17 @@ export class DataMokeadaService {
   } 
   //FIN LISTADO DE SEXOS............................
 
-  //LISTADO DE MODALIDAD
+  //LISTADO DE TIPOS AUDIENCIA
   listarTipoAudiaencia(): Observable<TipoAudienciaModel[]> { 
     if(this.listTiposAudiencia.length == 0) {      
       this.tiposAudienciaService.listarTodos().
         subscribe(respuesta => {
             this.listTiposAudiencia= respuesta[0];
             this.listTiposAudienciaSubject.next(this.listTiposAudiencia);
-            console.log("tipoAudiencia dentro del metodo");
         });
     }
     return this.listTiposAudienciaSubject.asObservable();
   } 
-  //FIN LISTADO DE MODALIDAD............................
+  //FIN LISTADO DE TIPOS DE AUDIENCIA............................
 
 }

@@ -104,7 +104,7 @@ export class TramitesAdministrarComponent implements OnInit {
     
     //FORMULARIO 
     this.formaMediadorAsignado = this.fb.group({
-      detalles: ['',[Validators.maxLength(200)]],     
+      detalles: ['',[Validators.maxLength(300)]],     
       centro_mediacion_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]],         
       departamento_id_centro: [1,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(2)]],     
       funcion_tramite_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
@@ -113,11 +113,11 @@ export class TramitesAdministrarComponent implements OnInit {
 
     this.formaAudiencia = this.fb.group({
       centro_mediacion_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
-      detalles: ['',[Validators.maxLength(200)]], 
+      detalles: ['',[Validators.maxLength(300)]], 
       fecha_inicio: [,[Validators.required]],   
       hora_inicio: [,[Validators.required, Validators.pattern(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/)]],     
       hora_fin: [,[Validators.required]],          
-      modalidad_id: [1,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(2)]],     
+      modalidad_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(2)]],     
       tipo_audiencia_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(1)]]
     });
   }
@@ -133,8 +133,7 @@ export class TramitesAdministrarComponent implements OnInit {
     ],    
     'detalles': [
       { type: 'required', message: 'El detalle es requerido.' },
-      { type: 'minlength', message: 'La cantidad mínima de caracteres es 5.' },
-      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 200.' }
+      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 300.' }
     ],  
     'departamento_id_centro': [
       { type: 'required', message: 'El departamento es requerido.' },
@@ -200,16 +199,13 @@ export class TramitesAdministrarComponent implements OnInit {
       this.router.navigateByUrl("admin/tramites/nuevoslis");
     }   
 
+    //CARGA DESDE DATA MOKEADA
     this.dataMokeadaService.listarDepartamentos().subscribe(departamentos => {
       this.listDepartamentos = departamentos;
-    });
+    });   
+    //FIN CARGA DESDE DATA MOKEADA
 
-    this.dataMokeadaService.listarModalidad().subscribe(modalidad => {
-      this.listModalidad = modalidad;
-    });
-    //this.listModalidad = modalidad;
-
-    this.listarMediadores();
+    //this.listarMediadores();
     
   }
   //FIN ONINIT......................................................................................
@@ -414,58 +410,11 @@ export class TramitesAdministrarComponent implements OnInit {
   }
   //FIN DESHABILITAR USUARIO-CENTRO.................................................
 
-  //LISTADO DE MEDIADORES
-  listarMediadores(){    
-    this.usuarioService.listarUsuariosTodos()
-      .subscribe(respuesta => {
-        this.listUsuarios= respuesta[0];
-        this.loadingMediadores = false;  
-        this.elementosUsuarios = this.listUsuarios.map(usuario => {
-          return {
-            clave: usuario.id_usuario,
-            value: usuario.apellido + " " + usuario.nombre + " (" + usuario.dni + ")"
-            }
-        });
 
-        //BUSCAR FUNCIONES
-        this.funcionTramiteService.listarFuncionTramitesTodos()
-          .subscribe(respuesta => {
-            this.listFuncionTramite= respuesta[0];
-            console.log("funciones", this.listFuncionTramite);
-            this.loadingFuncionTramite = false;  
-          
-          });
-    
-      });
-  }  
-  //FIN LISTADO DE MEDIADORES............................
-
-  //LISTADO DE TRAMITES
-  listarFuncionTramite(){    
-    this.funcionTramiteService.listarFuncionTramitesTodos().
-        subscribe(respuesta => {
-        this.listFuncionTramite= respuesta[0];
-        console.log("funciones", this.listFuncionTramite);
-        this.loadingFuncionTramite = false;  
-    
-    });
-  }
-  //FIN LISTADO DE TRAMITES............................
-
-  //LISTADO DE TIPO AUDIENCIAS
-  listarTiposAudiencia(){    
-    this.tiposAudienciaService.listarTodos().
-        subscribe(respuesta => {
-        this.listTipoAudiencia= respuesta[0];
-    
-    });
-  }
-  //FIN LISTADO DE TIPO AUDIENCIAS............................
-
-  
   onChangeDepartamentoParaCentros(){
     const id = this.formaMediadorAsignado.get('departamento_id_centro')?.value;
-    if(id != null){               
+    if(id != null){  
+        this.elementosUsuariosCentro = [];             
         this.cargarCentrosMediacion(parseInt(id.toString()));        
     }
   }
@@ -491,8 +440,7 @@ export class TramitesAdministrarComponent implements OnInit {
           }
         });   
         if(this.elementosCentroMediacion.length > 0 ){
-          let idCentroAux: number = this.elementosCentroMediacion[0].clave;
-          console.log("value array", idCentroAux);            
+          let idCentroAux: number = this.elementosCentroMediacion[0].clave;          
           this.formaMediadorAsignado.get('centro_mediacion_id')?.setValue(idCentroAux);
           this.cargarUsuarios(idCentroAux)
         }
@@ -544,8 +492,6 @@ export class TramitesAdministrarComponent implements OnInit {
     this.usuariosCentroService.listarUsuariosActivosXCentro(id_centro_mediacion)
     .subscribe({
       next: (resultado) => {
-        console.log("id centro cargar usuario", id_centro_mediacion);
-        console.log("resultado", resultado);
         this.listUsuariosCentro = resultado[0]
         this.elementosUsuariosCentro = [];
         this.elementosUsuariosCentro = this.listUsuariosCentro.map(usuarioCentro => {
@@ -554,8 +500,8 @@ export class TramitesAdministrarComponent implements OnInit {
             value: usuarioCentro.usuario.apellido +  " " + usuarioCentro.usuario.nombre + " (" + usuarioCentro.usuario.dni + ")"
             
           }
-        });
-        console.log("elementos usuqarios", this.listUsuariosCentro);
+        });       
+        
       },
       error: (err) => {
         Swal.fire('Error al listar los usuarios',`${err.error.message}`,"error");
@@ -593,22 +539,29 @@ export class TramitesAdministrarComponent implements OnInit {
   }    
   //FIN MANEJO FORMULARIO DIALOG VINCULADO....................................
 
-  //MANEJO DE FORMULARIO DIALOG
-  openDialogUsuarioTramite() {
-    //this.listarFuncionTramite();
+  //MANEJO DE FORMULARIO DIALOG USUARIO TRAMITE
+  async openDialogUsuarioTramite() {
     this.usuarioTramiteDialog = true;
-    this.formaMediadorAsignado.reset();    
-    return Object.values(this.formaMediadorAsignado.controls).forEach(control => control.markAsUntouched());
     
+    //CARGA DESDE DATA MOKEADA
+    this.dataMokeadaService.listarFuncionTramite().subscribe(funcionTramite => {
+      this.listFuncionTramite = funcionTramite;      
+    });   
+    //FIN CARGA DESDE DATA MOKEADA
+    
+    this.formaMediadorAsignado.reset(); 
+    return Object.values(this.formaMediadorAsignado.controls).forEach(control => control.markAsUntouched());
   }
   
   hideDialogUsuarioTramite() {
     this.elementosUsuarios = [];
+    this.elementosUsuariosCentro = [];
     this.elementosCentroMediacion = [];
     this.msgs = [];
     this.usuarioTramiteDialog = false;
     
-  }    
+  }   
+  //FIN MANEJO DE FORMULARIO DIALOG USUARIO TRAMITE.............................. 
 
   //MANEJO DE FORMULARIO DIALOG AUDIENCIAS
   openDialogAudiencia() {
@@ -618,7 +571,17 @@ export class TramitesAdministrarComponent implements OnInit {
     }
 
     this.cargarCentrosMediacionXUsuario(this.dataUsuarioTramite.usuario_id);
-    //this.listarTiposAudiencia()
+    
+    //CARGA DESDE DATA MOKEADA
+    this.dataMokeadaService.listarTipoAudiaencia().subscribe(tiposAudiencia => {
+      this.listTipoAudiencia = tiposAudiencia;
+    });
+
+    this.dataMokeadaService.listarModalidad().subscribe(modalidad => {
+      this.listModalidad = modalidad;
+    });
+    //FIN CARGA DESDE DATA MOKEADA
+
     this.audienciaDialog = true;
     this.formaAudiencia.reset();    
 
