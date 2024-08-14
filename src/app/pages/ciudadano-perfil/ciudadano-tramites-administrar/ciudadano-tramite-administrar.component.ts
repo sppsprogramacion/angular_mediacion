@@ -223,6 +223,17 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
 
   //CREAR PDF DEL TRAMITE
   async generarPdfTramite() {
+    let meses_texto=["Enero", "Febrero","Marzo","Abril","Mayo","Junio", "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+    
+    //fecha completa
+    let fecha_hoy: Date = new Date();
+    let fecha_completa: string;
+    let fecha: string;
+    let anio:number= fecha_hoy.getFullYear(); 
+    let mes: number= fecha_hoy.getMonth();
+    let dia: number= fecha_hoy.getDate();
+    fecha_completa = "Salta, " + dia + " de " + meses_texto[mes] + " de " +  anio;
+    
     const pdf = new PdfMakeWrapper();
     
     //agrega imagen

@@ -106,9 +106,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     private audienciaService: AudienciasService,
     private dataMokeadaService: DataMokeadaService,
     private funcionTramiteService: FuncionTramiteService,
-    private modalidadService: ModalidadService,
     private resultadosAudienciaService: ResultadosAudienciaService,
-    private tiposAudienciaService: TiposAudienciaService,
     private tramiteService: TramitesService,   
     private usuariosCentroService: UsuariosCentroService,
     private usuarioTramiteService: UsuariosTramiteService,
@@ -120,7 +118,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     
     this.formaAudiencia = this.fb.group({
       centro_mediacion_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
-      detalles: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(300)]], 
+      detalles: ['',[Validators.maxLength(300)]], 
       fecha_inicio: [,[Validators.required]],   
       hora_inicio: [,[Validators.required, Validators.pattern(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/)]],     
       hora_fin: [,[Validators.required]],          
