@@ -168,15 +168,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
 
       this.router.navigateByUrl("admin/tramites/nuevoslis");
     }  
-    //fin obtener tramite
-
-    this.dataMokeadaService.listarModalidad().subscribe(modalidad => {
-      this.listModalidad = modalidad;
-    });
-
-    this.dataMokeadaService.listarTipoAudiaencia().subscribe(tipoAudiencia => {
-      this.listTipoAudiencia = tipoAudiencia;
-    });
+    //fin obtener tramite    
       
     
   }
@@ -668,6 +660,16 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     }
 
     this.cargarCentrosMediacionXUsuario(this.dataUsuarioTramite.usuario_id);
+
+    //CARGAR DESDE DATA-MOKEADA
+    this.dataMokeadaService.listarModalidad().subscribe(modalidad => {
+      this.listModalidad = modalidad;
+    });
+
+    this.dataMokeadaService.listarTipoAudiaencia().subscribe(tipoAudiencia => {
+      this.listTipoAudiencia = tipoAudiencia;
+    });
+    //FIN CARGAR DESDE DATA MOKEADA
 
     this.audienciaDialog = true;
     this.formaAudiencia.reset();    
