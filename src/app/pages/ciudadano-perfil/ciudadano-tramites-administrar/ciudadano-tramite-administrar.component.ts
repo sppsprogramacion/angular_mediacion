@@ -239,7 +239,7 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
     //agrega imagen
     pdf.add( await new Img('../../../assets/imagenes/general/logo-gobierno-salta.png').fit([120,120]).alignment('left').build());
     pdf.add(
-      new Txt('Fecha: Salta 25/06/2024').fontSize(11).alignment('right').end      
+      new Txt(fecha_completa).fontSize(11).alignment('right').end      
     );
     pdf.add(' ');
     pdf.add(
@@ -254,9 +254,14 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
 
 
     pdf.add(
-      new Txt('Nombre: '+this.dataTramite.ciudadano.apellido).fontSize(11).end
+      new Txt('Nombre: '+this.dataTramite.ciudadano.apellido + this.dataTramite.ciudadano.nombre).fontSize(11).end
      
     );  
+
+    pdf.add(
+      new Txt('DNI N°: '+this.dataTramite.ciudadano.dni).fontSize(11).end
+     
+    ); 
      
     pdf.create().open();
                              
