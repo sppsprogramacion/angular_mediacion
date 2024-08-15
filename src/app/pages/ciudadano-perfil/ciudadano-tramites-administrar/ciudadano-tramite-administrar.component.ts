@@ -14,7 +14,7 @@ import { Message, MessageService } from 'primeng/api';
 import { TramitesService } from 'src/app/service/tramites.service';
 import { AudienciasService } from 'src/app/service/audiencias.service';
 import { AudienciaModel } from 'src/app/models/audiencia.model';
-import { Img, PdfMakeWrapper, Txt } from 'pdfmake-wrapper';
+import { Canvas, Img, PdfMakeWrapper, Rect, Txt, Table as TablaPdf, Cell } from 'pdfmake-wrapper';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-ciudadano-tramite-administrar',
@@ -235,6 +235,18 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
     fecha_completa = "Salta, " + dia + " de " + meses_texto[mes] + " de " +  anio;
     
     const pdf = new PdfMakeWrapper();
+
+
+    //Rectangulos
+    pdf.add(
+      new Canvas([
+        // Bottom
+        new Rect([45, 60], [460, 155]).lineColor('#000000').end,
+        new Rect([45, 215], [460, 70]).lineColor('#000000').end,
+        
+      ]).absolutePosition(0, 0).end
+    );
+    
     
     //agrega imagen
     pdf.add( await new Img('../../../assets/imagenes/general/logo-gobierno-salta.png').fit([120,120]).alignment('left').build());
@@ -242,12 +254,29 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
       new Txt(fecha_completa).fontSize(11).alignment('right').end      
     );
     pdf.add(' ');
+
+
+    //Encabezado
+    pdf.add(
+      new TablaPdf([
+        [
+          // new Cell (new Txt(this.movimientoTramite.sector.organismo.organismo.toUpperCase() + " S.P.P.S").bold().fontSize(14).alignment('left').end).end,
+          // new Cell (new Txt(this.datePipe.transform(this.movimientoTramite.fecha_salida, "dd/MM/yyyy")).fontSize(11).alignment("right").end).end
+        ],
+        [
+          // new Cell (new Txt(this.movimientoTramite.sector.sector.toUpperCase() + " S.P.P.S").bold().fontSize(11).alignment('left').end).end,
+          // new Cell (new Txt(" ").bold().fontSize(13).alignment('left').end).end
+        ]        
+
+      ]).widths([365,70]).layout("noBorders").end
+    );
+    
     pdf.add(
       new Txt('Datos del tramite').bold().fontSize(12).alignment('center').end
     );
     pdf.add(' ');
-    //agrega imagen
-    //pdf.add( await new Img(this.imagenUrl).fit([100,100]).alignment('center').build());
+    
+
 
 
     pdf.add(' ');
