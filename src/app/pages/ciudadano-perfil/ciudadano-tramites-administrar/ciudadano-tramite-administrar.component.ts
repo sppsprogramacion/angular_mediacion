@@ -241,8 +241,7 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
     pdf.add(
       new Canvas([
         // Bottom
-        new Rect([45, 60], [460, 155]).lineColor('#000000').end,
-        new Rect([45, 215], [460, 70]).lineColor('#000000').end,
+        new Rect([40, 170], [500, 800]).lineColor('#000000').end,
         
       ]).absolutePosition(0, 0).end
     );
@@ -253,27 +252,65 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
     pdf.add(
       new Txt(fecha_completa).fontSize(11).alignment('right').end      
     );
+
     pdf.add(' ');
 
+    pdf.add(
+      new Txt('Solicitud de mediación').bold().fontSize(14).alignment('center').end
+    );
 
-    //Encabezado
+    pdf.add(' ');
+    
+    pdf.add(
+      new Txt('Datos principales').bold().fontSize(12).alignment('left').margin(4).end
+    );
     pdf.add(
       new TablaPdf([
         [
-          // new Cell (new Txt(this.movimientoTramite.sector.organismo.organismo.toUpperCase() + " S.P.P.S").bold().fontSize(14).alignment('left').end).end,
-          // new Cell (new Txt(this.datePipe.transform(this.movimientoTramite.fecha_salida, "dd/MM/yyyy")).fontSize(11).alignment("right").end).end
-        ],
+          new Cell (new Txt( 'Tramite N°: ').bold().fontSize(11).end).end,
+          new Cell (new Txt( this.dataTramite.numero_tramite.toString() ).fontSize(11).end).end,
+          new Cell (new Txt('Fecha inicia: ').bold().fontSize(11).end).end,
+          new Cell (new Txt( this.datePipe.transform(this.dataTramite.fecha_tramite, "dd/MM/yyyy") ).fontSize(11).end).end,
+          new Cell (new Txt('Expediente: ').bold().fontSize(11).end).end,
+          new Cell (new Txt( this.dataTramite.expediente.toString() ).fontSize(11).end).end,
+          
+        ],      
+
+      ]).widths([60,85,65,75,60,90]).margin(4).end
+    );
+
+    pdf.add(' ');
+
+    //solicitante
+    pdf.add(
+      new Txt('Solicitante').bold().fontSize(12).alignment('left').margin(4).end
+    );
+    pdf.add(
+      new TablaPdf([
         [
-          // new Cell (new Txt(this.movimientoTramite.sector.sector.toUpperCase() + " S.P.P.S").bold().fontSize(11).alignment('left').end).end,
-          // new Cell (new Txt(" ").bold().fontSize(13).alignment('left').end).end
+          new Cell (new Txt('Nombre: ').bold().fontSize(11).end).end,
+          new Cell (new Txt(this.dataTramite.ciudadano.apellido + ' ' + this.dataTramite.ciudadano.nombre).fontSize(11).end).end,
+          new Cell (new Txt('DNI: ').bold().fontSize(11).end).end,
+          new Cell (new Txt( this.dataTramite.ciudadano.dni.toString()).fontSize(11).end).end
+        ],           
+
+      ]).widths([50,290,30,85]).margin(4).end
+    );
+    pdf.add(
+      new TablaPdf([        
+        [
+          new Cell (new Txt('Sexo: ').bold().fontSize(11).end).end,
+          new Cell (new Txt( this.dataTramite.ciudadano.sexo.sexo ).fontSize(11).end).end,
+          new Cell (new Txt('Teléfono: ').bold().fontSize(11).end).end,
+          new Cell (new Txt( this.dataTramite.ciudadano.telefono.toString() ).fontSize(11).end).end,
+          new Cell (new Txt('Email: ').bold().fontSize(11).end).end,
+          new Cell (new Txt( this.dataTramite.ciudadano.email.toString() ).fontSize(11).end).end
         ]        
 
-      ]).widths([365,70]).layout("noBorders").end
+      ]).widths([40,80,50,90,40,135]).layout('noBorders').margin(4).end
     );
     
-    pdf.add(
-      new Txt('Datos del tramite').bold().fontSize(12).alignment('center').end
-    );
+    
     pdf.add(' ');
     
 
