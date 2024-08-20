@@ -241,8 +241,8 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
     pdf.add(
       new Canvas([
         // Bottom
-        new Rect([40, 170], [500, 800]).lineColor('#000000').end,
-        
+        new Rect([40, 170], [500, 600]).lineColor('#000000').end,
+        new Rect([40, 255], [500, 80]).lineColor('#000000').end,
       ]).absolutePosition(0, 0).end
     );
     
@@ -294,7 +294,7 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
           new Cell (new Txt( this.dataTramite.ciudadano.dni.toString()).fontSize(11).end).end
         ],           
 
-      ]).widths([50,290,30,85]).margin(4).end
+      ]).widths([40,310,20,85]).layout('noBorders').margin(4).end
     );
     pdf.add(
       new TablaPdf([        
@@ -307,7 +307,7 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
           new Cell (new Txt( this.dataTramite.ciudadano.email.toString() ).fontSize(11).end).end
         ]        
 
-      ]).widths([40,80,50,90,40,135]).layout('noBorders').margin(4).end
+      ]).widths([30,80,40,90,30,145]).layout('noBorders').margin(4).end
     );
     
     
@@ -320,7 +320,10 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
 
 
     pdf.add(
-      new Txt('Nombre: '+this.dataTramite.ciudadano.apellido + this.dataTramite.ciudadano.nombre).fontSize(11).end
+      [
+        new Txt('Nombre: '+this.dataTramite.ciudadano.apellido + this.dataTramite.ciudadano.nombre).fontSize(11).end,
+        new Txt('DNI N°: '+this.dataTramite.ciudadano.dni).fontSize(11).end
+      ]
      
     );  
 
