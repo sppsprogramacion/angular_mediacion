@@ -38,7 +38,7 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
 
   //listas
   listAudiencias: AudienciaModel[] = [];
-  listAudienciasActivas: AudienciaModel[]
+  listAudienciasActivas: AudienciaModel[] = [];
   listUsuariosTramite: UsuarioTramiteModel[]=[];
 
   //variables booleanas
@@ -277,7 +277,7 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
         new Cell (new Txt('Fecha inicia: ').bold().fontSize(11).end).width(65).end,
         new Cell (new Txt( this.datePipe.transform(this.dataTramite.fecha_tramite, "dd/MM/yyyy") ).fontSize(11).end).width(90).end,
         new Cell (new Txt('Expediente: ').bold().fontSize(11).end).width(60).end,
-        new Cell (new Txt( this.dataTramite.expediente.toString() ).fontSize(11).end).width(150).end
+        new Cell (new Txt( this.dataTramite.expediente ).fontSize(11).end).width(150).end
       ]
     });    
 
@@ -368,15 +368,12 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
     pdf.add(
       new Txt('Convocados').bold().fontSize(12).alignment('left').end
     );
-
-    pdf.add(' ');
       
     pdf.add({
       columns: [
-        new Cell (new Txt('Motivo: ').bold().fontSize(11).end).width(40).end,
-        new Cell (new Txt(this.dataTramite.objeto.objeto ).fontSize(11).end).width(300).end,    
-        new Cell (new Txt('Existe violencia: ').bold().fontSize(11).end).width(85).end,
-        new Cell (new Txt( existe_violencia ).fontSize(11).end).width(30).end    
+        new Cell (new Txt('Apellido y nombre: ').bold().fontSize(11).end).width(100).end,
+        new Cell (new Txt(this.dataTramite.convocados[0].apellido + ' ' + this.dataTramite.convocados[0].nombre ).fontSize(11).end).width(250).end,    
+            
       ]
     });    
 
@@ -390,44 +387,59 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
     );
 
     pdf.add(' ');
+    console.log("audiencia", this.listAudienciasActivas);
+    if(this.listAudienciasActivas.length > 0){
+
+      pdf.add({
+        columns: [
+          new Cell (new Txt( 'N° audiencia: ').bold().fontSize(11).end).width(70).end,
+          new Cell (new Txt( this.listAudienciasActivas[0].num_audiencia.toString() ).fontSize(11).end).width(80).end,
+          new Cell (new Txt( 'Fecha: ').bold().fontSize(11).end).width(35).end,
+          new Cell (new Txt( this.datePipe.transform(this.listAudienciasActivas[0].fecha_inicio, "dd/MM/yyyy") ).fontSize(11).end).width(80).end,
+          new Cell (new Txt( 'Hora: ').bold().fontSize(11).end).width(35).end,
+          new Cell (new Txt( this.listAudienciasActivas[0].hora_inicio.toString() ).fontSize(11).end).width(80).end        
+        ]
+      });    
       
-    pdf.add({
-      columns: [
-        new Cell (new Txt('Centro de mediación: ').bold().fontSize(11).end).width(110).end,
-        new Cell (new Txt( this.listAudienciasActivas[0].centro_mediacion.centro_mediacion ).fontSize(11).end).width(200).end,    
-        
-      ]
-    });    
+      pdf.add({
+        columns: [
+          new Cell (new Txt('Centro de mediación: ').bold().fontSize(11).end).width(110).end,
+          new Cell (new Txt( this.listAudienciasActivas[0].centro_mediacion.centro_mediacion ).fontSize(11).end).width(200).end,    
+          
+        ]
+      });    
+      pdf.add(' ');
+  
+      pdf.add({
+        columns: [
+          new Cell (new Txt('Domicilio: ').bold().fontSize(11).end).width(55).end,
+          new Cell (new Txt( 
+            'Barrio: ' + this.listAudienciasActivas[0].centro_mediacion.localidad_barrio +
+            ' - Calle/Direccion: ' + this.listAudienciasActivas[0].centro_mediacion.calle_direccion +
+            ' - N°: ' + this.listAudienciasActivas[0].centro_mediacion.numero_dom 
+          
+          ).fontSize(11).end).width(400).end    
+        ]
+      });    
+  
+      pdf.add(' ');
+  
+      pdf.add({
+        columns: [
+          new Cell (new Txt('Departamento: ').bold().fontSize(11).end).width(75).end,
+          new Cell (new Txt( this.listAudienciasActivas[0].centro_mediacion.departamento.departamento ).fontSize(11).end).width(170).end,    
+          new Cell (new Txt('Municipio: ').bold().fontSize(11).end).width(55).end,
+          new Cell (new Txt( this.listAudienciasActivas[0].centro_mediacion.municipio.municipio ).fontSize(11).end).width(150).end    
+        ]
+      });  
+    }
+    else{
+      pdf.add(
+        new Txt('No tiene una audiencia programada').fontSize(11).alignment('left').end
+      );
+    }
 
     pdf.add(' ');
-
-    pdf.add({
-      columns: [
-        new Cell (new Txt('Domicilio: ').bold().fontSize(11).end).width(55).end,
-        new Cell (new Txt( 
-          'Barrio: ' + this.listAudienciasActivas[0].centro_mediacion.localidad_barrio +
-          ' - Calle/Direccion: ' + this.listAudienciasActivas[0].centro_mediacion.calle_direccion +
-          ' - N°: ' + this.listAudienciasActivas[0].centro_mediacion.numero_dom 
-        
-        ).fontSize(11).end).width(400).end    
-      ]
-    });    
-
-    pdf.add(' ');
-
-    pdf.add({
-      columns: [
-        new Cell (new Txt('Departamento: ').bold().fontSize(11).end).width(75).end,
-        new Cell (new Txt( this.listAudienciasActivas[0].centro_mediacion.departamento.departamento ).fontSize(11).end).width(170).end,    
-        new Cell (new Txt('Municipio: ').bold().fontSize(11).end).width(55).end,
-        new Cell (new Txt( this.listAudienciasActivas[0].centro_mediacion.municipio.municipio ).fontSize(11).end).width(150).end    
-      ]
-    });   
-
-
-    pdf.add(' ');
-
-
      
     pdf.create().open();
                              
