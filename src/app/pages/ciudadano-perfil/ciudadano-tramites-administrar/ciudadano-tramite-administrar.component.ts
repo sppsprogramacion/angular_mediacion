@@ -14,7 +14,7 @@ import { Message, MessageService } from 'primeng/api';
 import { TramitesService } from 'src/app/service/tramites.service';
 import { AudienciasService } from 'src/app/service/audiencias.service';
 import { AudienciaModel } from 'src/app/models/audiencia.model';
-import { Canvas, Img, PdfMakeWrapper, Rect, Txt, Table as TablaPdf, Cell } from 'pdfmake-wrapper';
+import { Canvas, Img, PdfMakeWrapper, Rect, Txt, Table as TablaPdf, Cell, Ul } from 'pdfmake-wrapper';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-ciudadano-tramite-administrar',
@@ -242,9 +242,10 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
       new Canvas([
         // Bottom
         new Rect([35, 170], [510, 600]).lineColor('#000000').end,
-        new Rect([40, 210], [500, 30]).lineColor('#000000').end,
-        new Rect([40, 280], [500, 60]).lineColor('#000000').end,
-        new Rect([40, 375], [500, 60]).lineColor('#000000').end,
+        new Rect([40, 195], [500, 25]).lineColor('#000000').end,
+        new Rect([40, 245], [500, 55]).lineColor('#000000').end,
+        new Rect([40, 330], [500, 55]).lineColor('#000000').end,
+        new Rect([40, 415], [500, 120]).lineColor('#000000').end,
       ]).absolutePosition(0, 0).end
     );
     
@@ -261,7 +262,6 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
       new Txt('Solicitud de mediación').bold().fontSize(14).alignment('center').end
     );
 
-    pdf.add(' ');
     pdf.add(' ');
     
     pdf.add(
@@ -281,7 +281,6 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
       ]
     });    
 
-    pdf.add(' ');
     pdf.add(' ');
 
     //solicitante
@@ -313,7 +312,6 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
       ]
     });    
 
-    pdf.add(' ');
     pdf.add(' ');
 
     //motivo
@@ -361,25 +359,7 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
       ]
     });    
 
-    pdf.add(' ');
-    pdf.add(' ');
-
-    //convocados
-    pdf.add(
-      new Txt('Convocados').bold().fontSize(12).alignment('left').end
-    );
-      
-    pdf.add({
-      columns: [
-        new Cell (new Txt('Apellido y nombre: ').bold().fontSize(11).end).width(100).end,
-        new Cell (new Txt(this.dataTramite.convocados[0].apellido + ' ' + this.dataTramite.convocados[0].nombre ).fontSize(11).end).width(250).end,    
-            
-      ]
-    });    
-
-    pdf.add(' ');
-    pdf.add(' ');
-
+    pdf.add(' ');    
 
     //audiencia
     pdf.add(
@@ -400,6 +380,8 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
           new Cell (new Txt( this.listAudienciasActivas[0].hora_inicio.toString() ).fontSize(11).end).width(80).end        
         ]
       });    
+
+      pdf.add(' ');
       
       pdf.add({
         columns: [
@@ -408,6 +390,17 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
           
         ]
       });    
+
+      pdf.add(' ');
+  
+      pdf.add({
+        columns: [
+          new Cell (new Txt('Departamento: ').bold().fontSize(11).end).width(75).end,
+          new Cell (new Txt( this.listAudienciasActivas[0].centro_mediacion.departamento.departamento ).fontSize(11).end).width(170).end,    
+          new Cell (new Txt('Municipio: ').bold().fontSize(11).end).width(55).end,
+          new Cell (new Txt( this.listAudienciasActivas[0].centro_mediacion.municipio.municipio ).fontSize(11).end).width(150).end    
+        ]
+      });  
       pdf.add(' ');
   
       pdf.add({
@@ -422,22 +415,44 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
         ]
       });    
   
-      pdf.add(' ');
-  
-      pdf.add({
-        columns: [
-          new Cell (new Txt('Departamento: ').bold().fontSize(11).end).width(75).end,
-          new Cell (new Txt( this.listAudienciasActivas[0].centro_mediacion.departamento.departamento ).fontSize(11).end).width(170).end,    
-          new Cell (new Txt('Municipio: ').bold().fontSize(11).end).width(55).end,
-          new Cell (new Txt( this.listAudienciasActivas[0].centro_mediacion.municipio.municipio ).fontSize(11).end).width(150).end    
-        ]
-      });  
+      
     }
     else{
       pdf.add(
         new Txt('No tiene una audiencia programada').fontSize(11).alignment('left').end
       );
+      pdf.add(' ');
+      pdf.add(' ');
+      pdf.add(' ');
+      pdf.add(' ');
+      pdf.add(' ');
+      pdf.add(' ');
     }
+
+    pdf.add(' ');
+    pdf.add(' ');
+
+    //convocados
+    pdf.add(
+      new Txt('Convocados').bold().fontSize(12).alignment('left').end
+    );
+    
+    let misConvocados: string[] = [];
+    let miConvocado: string;
+    this.dataTramite.convocados.forEach(convocado => {
+      miConvocado = "Apellido y nombre: " + convocado.apellido + " " + convocado.nombre;
+      misConvocados.push(miConvocado);
+    });
+
+    pdf.add(
+      {
+        ul: misConvocados
+      }
+    );
+
+    pdf.add(' ');
+    pdf.add(' ');
+
 
     pdf.add(' ');
      
