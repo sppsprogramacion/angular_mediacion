@@ -28,6 +28,7 @@ import { ConvocadoModel } from 'src/app/models/convocado.model';
 import { VinculadoModel } from 'src/app/models/vinculado.model';
 import { Router } from '@angular/router';
 import { DataMokeadaService } from 'src/app/service/data-mokeada.service';
+import { PdfsService } from '../../../service/pdfs.service';
 
 @Component({
   selector: 'app-tramites-administrar',
@@ -50,6 +51,7 @@ export class TramitesAdministrarComponent implements OnInit {
 
   //listas
   listAudiencias: AudienciaModel[] = [];
+  listAudienciasActivas: AudienciaModel[] = [];
   listAudienciasUsuario: AudienciaModel[] = [];
   listCentrosMediacion: CentroMediacionModel[]=[];
   listModalidad: ModalidadModel[] = [];
@@ -92,11 +94,9 @@ export class TramitesAdministrarComponent implements OnInit {
     private audienciaService: AudienciasService,
     private centroMediacionService: CentrosMediacionService,
     private dataMokeadaService: DataMokeadaService,
-    private funcionTramiteService: FuncionTramiteService,
-    private tiposAudienciaService: TiposAudienciaService,
+    private pdfsService: PdfsService,
     private tramiteService: TramitesService,
     private usuariosCentroService: UsuariosCentroService,
-    private usuarioService: UsuariosService,
     private usuarioTramiteService: UsuariosTramiteService,
     
   ) { 
@@ -347,6 +347,7 @@ export class TramitesAdministrarComponent implements OnInit {
       .subscribe({
         next: (resultado) => {
           this.listAudiencias = resultado[0]; 
+          this.listAudienciasActivas = this.listAudiencias.filter(audiencia => audiencia.esta_cerrada === false);
           this.loadingAudiencia = false;     
         },
         error: (err) => {
@@ -626,4 +627,11 @@ export class TramitesAdministrarComponent implements OnInit {
     }
     return fechaAuxiliar;
   }
+
+
+  //CREAR PDF SOLICITUD
+  async generarPdfTramite(){
+    this.pdfsService.generarPdfSolicitudTramite(this.dataTramite, this.listAudienciasActivas);
+  }
+  //FIN CREAR PDF SOLICITUD....................................................................
 }
