@@ -8,6 +8,111 @@
             </p-toolbar>
             <p-tabView styleClass="mt-2">
                 <p-tabPanel header="Datos Personales" leftIcon="pi pi-id-card">
+                    <div class="grid justify-content-center">
+                        <div class="col-12">                        
+
+                            <div class="p-formgrid grid">                
+                                <!-- FORMULARIO USUARIO -->
+                                <div class="col-12">  
+                                    <form [formGroup]="formaUsuario">
+                                        <!-- CARD DATOS PERSONALES-->
+                                        <div class="card p-fluid">
+
+                                            <h5 class="block font-bold font-medium mb-2">Datos de personales</h5>
+                                            
+                                            <div class="formgrid grid">
+
+                                                <div class="field col-12 md:col-6 lg:col-6">
+                                                    <label for="dni">DNI usuario</label>
+                                                    <input type="text" pInputText id="dni" formControlName="dni" />
+                                                    <small *ngIf="isValid('dni')" class="p-error">
+                                                        <div *ngFor="let validation of user_validation_messages.dni" >
+                                                            <div  *ngIf="formaUsuario.get('dni')?.hasError(validation.type)">
+                                                                {{validation.message}}
+                                                            </div>
+                                                        </div>
+                                                    </small>
+                                                </div>
+                                            </div>
+                
+                                            <div class="formgrid grid">
+                                                <div class="field col-12 md:col-6 lg:col-6">
+                                                    <label for="apellido">Apellido</label>
+                                                    <input type="text" pInputText id="apellido" formControlName="apellido" />
+                                                    <small *ngIf="isValid('apellido')" class="p-error">
+                                                        <div *ngFor="let validation of user_validation_messages.apellido" >
+                                                            <div  *ngIf="formaUsuario.get('apellido')?.hasError(validation.type)">
+                                                                {{validation.message}}
+                                                            </div>
+                                                        </div>
+                                                    </small>
+                                                </div>
+                                                <div class="field col-12 md:col-6 lg:col-6">
+                                                    <label for="nombre">Nombre</label>
+                                                    <input type="text" pInputText id="nombre" formControlName="nombre" />
+                                                    <small *ngIf="isValid('nombre')" class="p-error">
+                                                        <div *ngFor="let validation of user_validation_messages.nombre" >
+                                                            <div  *ngIf="formaUsuario.get('nombre')?.hasError(validation.type)">
+                                                                {{validation.message}}
+                                                            </div>
+                                                        </div>
+                                                    </small>
+                                                </div>
+                                            </div>
+                    
+                                            <div class="formgrid grid">
+                                                <div class="field col-12 md:col-6 lg:col-6">
+                                                    <label for="sexo_id">Sexo</label>
+                                                    <p-dropdown id="sexo_id" [options]="listaSexo" optionLabel="sexo" optionValue="id_sexo" formControlName="sexo_id" placeholder="Seleccionar...">
+                                                    </p-dropdown>
+                                                </div>                                
+                                            </div>
+                                            
+                                        </div>
+                                        <!-- FIN CARD DATOS PERSONALES -->
+
+                                        <!-- CARD DATOS DE CONTACTO -->
+                                        <div  class="card p-fluid">
+                                            <h5 class="block font-bold font-medium mb-2">Datos de contacto</h5>
+                                            
+                                            <div class="formgrid grid">
+                                                <div class="field col">
+                                                    <label for="telefono">Teléfono</label>
+                                                    <input type="text" pInputText id="telefono" formControlName="telefono" />
+                                                    <small *ngIf="isValid('telefono')" class="p-error">
+                                                        <div *ngFor="let validation of user_validation_messages.telefono" >
+                                                            <div  *ngIf="formaUsuario.get('telefono')?.hasError(validation.type)">
+                                                                {{validation.message}}
+                                                            </div>
+                                                        </div>
+                                                    </small>
+                                                </div>
+                                            </div>
+                                            <div class="formgrid grid">
+                
+                                                <div class="field col">
+                                                    <label for="email">Correo electrónico</label>
+                                                    <input type="text" pInputText id="email" formControlName="email" />
+                                                    <small *ngIf="isValid('email')" class="p-error">
+                                                        <div *ngFor="let validation of user_validation_messages.email" >
+                                                            <div  *ngIf="formaUsuario.get('email')?.hasError(validation.type)">
+                                                                {{validation.message}}
+                                                            </div>
+                                                        </div>
+                                                    </small>
+                                                </div>
+                                            </div>    
+                                            
+                                        </div>
+                                        <!-- FIN CARD CENTRO MEDICAION -->
+                                    </form>
+                                </div>
+                                <!--  FIN FORMULARIO CIUDADANO -->
+                                
+                            </div>
+
+                        </div>
+                    </div>
 
                 </p-tabPanel>
                 <p-tabPanel header="Tramites Asignados" leftIcon="pi pi-send">
