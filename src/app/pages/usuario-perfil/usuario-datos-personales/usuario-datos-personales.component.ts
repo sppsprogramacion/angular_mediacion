@@ -115,7 +115,7 @@ export class UsuarioDatosPersonalesComponent implements OnInit {
   }
 
 
-  //GUARDAR CIUDADANO  
+  //GUARDAR USUARIO  
   submitFormUsuario(){
     
     if(this.formaUsuario.invalid){       
@@ -152,9 +152,9 @@ export class UsuarioDatosPersonalesComponent implements OnInit {
     //FIN GUARDAR EDICION CIUDADANO 
 
   }    
-  //FIN GUARDAR CIUDADANO............................................................
+  //FIN GUARDAR USUARIO............................................................
 
-  //CARGAR FORMULARIO CIUDADANO
+  //CARGAR FORMULARIO USUARIO
   cargarFormularioUsuario(){
     this.formaUsuario.get('dni')?.setValue(this.usuarioData.dni);
     this.formaUsuario.get('apellido')?.setValue(this.usuarioData.apellido);
@@ -163,9 +163,9 @@ export class UsuarioDatosPersonalesComponent implements OnInit {
     this.formaUsuario.get('telefono')?.setValue(this.usuarioData.telefono);
     this.formaUsuario.get('email')?.setValue(this.usuarioData.email);
   }
-  //FIN CARGAR FORMULARIO CIUDADANO......................
+  //FIN CARGAR FORMULARIO USUARIO......................
   
-  //BUSCAR CIUDADANO
+  //BUSCAR USUARIO
   buscarUsuario(){
     this.usuarioData = {};  
     this.usuarioService.buscarXDni(parseInt(this.formaUsuario.get('dni')?.value))
@@ -178,7 +178,7 @@ export class UsuarioDatosPersonalesComponent implements OnInit {
         }
       });    
   }
-  //FIN BUSCAR CIUDADANO
+  //FIN BUSCAR USUARIO
 
   //IR A PRINCIPAL
   irAPrincipal(){

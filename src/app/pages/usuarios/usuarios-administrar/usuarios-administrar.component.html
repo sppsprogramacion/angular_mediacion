@@ -108,7 +108,11 @@
                                     </form>
                                 </div>
                                 <!--  FIN FORMULARIO CIUDADANO -->
-                                
+                                <div  class="col-12 grid justify-content-center">
+                                    <button pButton pRipple type="button" label="Guardar" class="p-button-success" style="width: 47%;" (click)="submitFormUsuario()" ></button>
+                                    <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger ml-2" style="width: 47%;" (click)="cancelarModificacionUsuario()"></button>
+                                    
+                                </div>
                             </div>
 
                         </div>
@@ -137,56 +141,51 @@
                                 <th>
                                     <div class="flex justify-content-between align-items-center">
                                         Nº Tramite
-                                        <p-columnFilter type="text" field="numero_tramite" display="menu" placeholder="Buscar por tramite"></p-columnFilter>
+                                        <p-columnFilter type="text" field="tramite.numero_tramite" display="menu" placeholder="Buscar por tramite"></p-columnFilter>
                                     </div>
                                 </th>
                                 <th>
                                     <div class="flex justify-content-between align-items-center">
                                         Apellido
-                                        <p-columnFilter type="text" field="ciudadano.apellido" display="menu" placeholder="Buscar por apellido"></p-columnFilter>
-
+                                        <p-columnFilter type="text" field="tramite.ciudadano.apellido" display="menu" placeholder="Buscar por apellido"></p-columnFilter>
+        
                                     </div>
                                 </th>
                                 <th>
                                     <div class="flex justify-content-between align-items-center">
                                         Nombre
-                                        <p-columnFilter type="text" field="ciudadano.nombre" display="menu" placeholder="Buscar por nombre"></p-columnFilter>
-
+                                        <p-columnFilter type="text" field="tramite.ciudadano.nombre" display="menu" placeholder="Buscar por nombre"></p-columnFilter>
+        
                                     </div>
                                 </th>
                                 <th>
                                     <div class="flex justify-content-between align-items-center">
                                         DNI solicitante
-                                        <p-columnFilter type="text" field="tramite.dni_ciudadano" display="menu" placeholder="Buscar por dni"></p-columnFilter>
+                                        <p-columnFilter type="text" field="tramite.ciudadano.dni" display="menu" placeholder="Buscar por dni"></p-columnFilter>
                                     </div>
                                 </th>
                                 <th>
                                     <div class="flex justify-content-between align-items-center">
                                         Objeto
-                                        <p-columnFilter type="text" field="objeto.objeto" display="menu" placeholder="Buscar por objeto"></p-columnFilter>
-
                                     </div>
                                 </th>
                                 <th>
                                     <div class="flex justify-content-between align-items-center">
                                         Fecha tramite
-                                        <p-columnFilter type="date" field="fecha_tramite" display="menu" placeholder="dd/mm/yyyy"></p-columnFilter>
                                     </div>
                                 </th>
                                 <th>
                                     <div class="flex justify-content-between align-items-center">
                                         Expediente
-                                        <p-columnFilter type="text" field="descripcion" display="menu" placeholder="Buscar por descripción"></p-columnFilter>
-
+                                        <p-columnFilter type="text" field="tramite.expediente" display="menu" placeholder="Buscar por descripción"></p-columnFilter>
+        
                                     </div>
                                 </th>
                                 <th>
                                     <div class="flex justify-content-between align-items-center">
                                         Fecha expediente
-                                        <p-columnFilter type="date" field="fecha_tramite" display="menu" placeholder="dd/mm/yyyy"></p-columnFilter>
                                     </div>
                                 </th>
-
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-tramiteAsignado>
@@ -201,22 +200,22 @@
                                 <td style="min-width: 15rem;">
                                     {{tramiteAsignado.tramite.ciudadano.apellido}}
                                 </td>
-                                <td style="min-width: 2rem;">
+                                <td style="min-width: 15rem;">
                                     {{tramiteAsignado.tramite.ciudadano.nombre}}
                                 </td>
                                 <td style="min-width: 10rem;">
                                     {{tramiteAsignado.tramite.dni_ciudadano}}
                                 </td>
-                                <td style="min-width: 10rem;">
+                                <td style="min-width: 15rem;">
                                     {{tramiteAsignado.tramite.objeto.objeto}}
                                 </td>
-                                <td style="min-width: 5rem;">
+                                <td style="min-width: 10rem;">
                                     {{tramiteAsignado.tramite.fecha_tramite| date: 'dd/MM/yyyy'}}
                                 </td>
-                                <td style="min-width: 15rem;">
+                                <td style="min-width: 10rem;">
                                     {{tramiteAsignado.tramite.expediente}}
                                 </td>
-                                <td style="min-width: 5rem;">
+                                <td style="min-width: 10rem;">
                                     {{tramiteAsignado.tramite.fecha_expediente| date: 'dd/MM/yyyy'}}
                                 </td>
                             </tr>

@@ -10,6 +10,8 @@ import { AuthService } from '../../../service/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SexoModel } from 'src/app/models/sexo.model';
 import { DataMokeadaService } from 'src/app/service/data-mokeada.service';
+import { UsuariosService } from 'src/app/service/usuarios.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-usuarios-administrar',
@@ -26,6 +28,7 @@ export class UsuariosAdministrarComponent implements OnInit {
     //listas
     listaSexo: SexoModel[] = [];
     listTramitesAsignados: UsuarioTramiteModel[]=[];
+    listTramitesfinalizados: UsuarioTramiteModel[]=[];
 
   //FORMULARIOS
   formaUsuario: FormGroup;  
@@ -36,7 +39,8 @@ export class UsuariosAdministrarComponent implements OnInit {
     private authService: AuthService,
     
     private dataMokeadaService: DataMokeadaService,
-    public dataService: DataService,
+    public dataService: DataService,    
+    private usuarioService: UsuariosService,
     private usuarioTramiteService: UsuariosTramiteService,
     private router: Router
   ) {    
@@ -100,8 +104,13 @@ export class UsuariosAdministrarComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataUsuario = this.dataService.usuarioData;
-    this.cargarFormularioUsuario();
-    this.listarTramitesAsignados();
+    if(this.dataUsuario.dni){
+      this.cargarFormularioUsuario();
+      this.listarTramitesAsignados();
+    }
+    else{
+      this.router.navigateByUrl("admin/usuarios/lista");
+    }    
 
     //CARGA DE LISTADOS DESDE DATA MOKEADA
     this.dataMokeadaService.listarSexo().subscribe(sexos => {
@@ -110,6 +119,41 @@ export class UsuariosAdministrarComponent implements OnInit {
 
   }
   //FIN ONINIT.......................................................
+
+  //GUARDAR USUARIO  
+  submitFormUsuario(){
+    
+    if(this.formaUsuario.invalid){       
+        
+        Swal.fire('Formulario con errores',`Complete correctamente todos los campos del formulario`,"warning");
+        return Object.values(this.formaUsuario.controls).forEach(control => control.markAsTouched());
+    }
+
+    let dataRegistro: Partial<UsuarioModel>;
+    dataRegistro = {
+
+      dni: parseInt(this.formaUsuario.get('dni')?.value),
+      apellido: this.formaUsuario.get('apellido')?.value,
+      nombre: this.formaUsuario.get('nombre')?.value,
+      sexo_id: parseInt(this.formaUsuario.get('sexo_id')?.value),
+      telefono: this.formaUsuario.get('telefono')?.value,
+      email: this.formaUsuario.get('email')?.value,           
+    };
+    
+    //GUARDAR EDICION USUARIO
+    this.usuarioService.guardarEdicionPerfil(this.dataUsuario.id_usuario, dataRegistro)
+      .subscribe({
+        next: (resultado) => {
+            Swal.fire('Exito',`Se modificó los datos con exito`,"success");   
+        },
+        error: (error) => {
+            Swal.fire('Error',`Error al realizar la modificación: ${error.error.message}`,"error") 
+        }
+      });         
+    //FIN GUARDAR EDICION USUARIO 
+
+  }    
+  //FIN GUARDAR USUARIO............................................................
 
   //LISTADO DE TRAMITES ASIGNADOS
   listarTramitesAsignados(){    
@@ -122,7 +166,7 @@ export class UsuariosAdministrarComponent implements OnInit {
   }
   //FIN LISTADO DE TRAMITES ASIGNADOS.......................................................
 
-  //CARGAR FORMULARIO CIUDADANO
+  //CARGAR FORMULARIO USUARIO
   cargarFormularioUsuario(){
     this.formaUsuario.get('dni')?.setValue(this.dataUsuario.dni);
     this.formaUsuario.get('apellido')?.setValue(this.dataUsuario.apellido);
@@ -131,7 +175,7 @@ export class UsuariosAdministrarComponent implements OnInit {
     this.formaUsuario.get('telefono')?.setValue(this.dataUsuario.telefono);
     this.formaUsuario.get('email')?.setValue(this.dataUsuario.email);
   }
-  //FIN CARGAR FORMULARIO CIUDADANO......................
+  //FIN CARGAR FORMULARIO USUARIO......................
 
   //ACCEDER A DATA SERVICE
   administrarTramite(data: TramiteModel){
@@ -146,5 +190,19 @@ export class UsuariosAdministrarComponent implements OnInit {
     
   }
   //FIN ACCEDER A DATA SERVICE
+
+  //CANCELAR MODIFICACION DATOS USUARIO
+  cancelarModificacionUsuario(){
+    this.cargarFormularioUsuario();
+    Swal.fire('Cancelado',`Se canceló la modificación de los datos del usuario`,"info") 
+        
+  }
+  //CANCELAR MODIFICACION DATOS USUARIO.................
+
+  //IR A PRINCIPAL
+  irAPrincipal(){
+    this.router.navigateByUrl("admin/usuarios/lista");
+  }
+  //FIN IR A PRINCIPAL
 
 }
