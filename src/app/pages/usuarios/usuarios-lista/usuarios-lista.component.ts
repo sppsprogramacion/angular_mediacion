@@ -152,14 +152,16 @@ export class UsuariosListaComponent implements OnInit {
 
     this.dataMokeadaService.listarSexo().subscribe(sexos => {
       this.listSexo = sexos;
+      
+      this.filtroSexo = this.listSexo.map(respuesta => {
+        return {
+          label: respuesta.sexo.toLowerCase(),
+          value: respuesta.sexo,
+         }
+      });
+
     });
 
-    this.filtroSexo = this.listSexo.map(respuesta => {
-      return {
-        label: respuesta.sexo.toLowerCase(),
-        value: respuesta.sexo,
-       }
-    });
    
     
   }

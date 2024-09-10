@@ -133,7 +133,13 @@ export class TramitesPrincipalComponent implements OnInit {
   administrarTramite(data: TramiteModel){
     this.dataService.tramiteData = data;
     this.dataService.getTramiteData(data);
-    this.router.navigateByUrl("admin/tramites/administrar");
+    if(data.estado_tramite_id == 3){
+      this.router.navigateByUrl("admin/tramites/administrar-finalizado");
+    }
+    else{
+      this.router.navigateByUrl("admin/tramites/administrar");
+
+    }
   }
   //FIN ACCEDER A DATA SERVICE
 

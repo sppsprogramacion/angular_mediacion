@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DataService } from 'src/app/service/data.service';
 import { UsuariosTramiteService } from '../../../service/usuarios-tramite.service';
 import { UsuarioModel } from 'src/app/models/usuario.model';
@@ -12,6 +12,7 @@ import { SexoModel } from 'src/app/models/sexo.model';
 import { DataMokeadaService } from 'src/app/service/data-mokeada.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
 import Swal from 'sweetalert2';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-usuarios-administrar',
@@ -19,16 +20,20 @@ import Swal from 'sweetalert2';
   styleUrls: ['./usuarios-administrar.component.scss']
 })
 export class UsuariosAdministrarComponent implements OnInit {
+
+  //PARA FILTRAR EN TABLA
+  @ViewChild('dt') table: Table;
+  @ViewChild('filter') filter: ElementRef;
   
   loading:boolean = true;
 
   //MODELOS
   dataUsuario: UsuarioModel= new UsuarioModel;
 
-    //listas
-    listaSexo: SexoModel[] = [];
-    listTramitesAsignados: UsuarioTramiteModel[]=[];
-    listTramitesfinalizados: UsuarioTramiteModel[]=[];
+  //listas
+  listaSexo: SexoModel[] = [];
+  listTramitesAsignados: UsuarioTramiteModel[]=[];
+  listTramitesfinalizados: UsuarioTramiteModel[]=[];
 
   //FORMULARIOS
   formaUsuario: FormGroup;  
@@ -107,6 +112,7 @@ export class UsuariosAdministrarComponent implements OnInit {
     if(this.dataUsuario.dni){
       this.cargarFormularioUsuario();
       this.listarTramitesAsignados();
+      this.listarTramitesUsuarioFinalizados();
     }
     else{
       this.router.navigateByUrl("admin/usuarios/lista");
@@ -166,6 +172,21 @@ export class UsuariosAdministrarComponent implements OnInit {
   }
   //FIN LISTADO DE TRAMITES ASIGNADOS.......................................................
 
+  //LISTADO DE TRANITES USUARIO
+  listarTramitesUsuarioFinalizados(){
+    let id_usuario: number = this.dataUsuario.id_usuario;
+
+    //REVISAR PARA LISTAR TRAMITES FINALIZADOS
+    this.usuarioTramiteService.listarTramitesFinalizadosXUsuario(id_usuario).
+      subscribe(respuesta => {
+        this.listTramitesfinalizados= respuesta[0];
+        this.loading = false;  
+        console.log("tramites finalizado", this.listTramitesfinalizados);
+    
+      });
+  }
+  //FIN LISTADO DE TRAMITES USUARIO.......................................................
+
   //CARGAR FORMULARIO USUARIO
   cargarFormularioUsuario(){
     this.formaUsuario.get('dni')?.setValue(this.dataUsuario.dni);
@@ -181,7 +202,13 @@ export class UsuariosAdministrarComponent implements OnInit {
   administrarTramite(data: TramiteModel){
     this.dataService.tramiteData = data;
     if (this.authService.currentUserLogin) {
-      this.router.navigateByUrl("admin/tramites/administrar");
+      if(data.estado_tramite_id == 3){
+        this.router.navigateByUrl("admin/tramites/administrar-finalizado");
+      }
+      else{
+        this.router.navigateByUrl("admin/tramites/administrar");
+  
+      }
       
     }
     else{
@@ -194,10 +221,17 @@ export class UsuariosAdministrarComponent implements OnInit {
   //CANCELAR MODIFICACION DATOS USUARIO
   cancelarModificacionUsuario(){
     this.cargarFormularioUsuario();
-    Swal.fire('Cancelado',`Se canceló la modificación de los datos del usuario`,"info") 
+    Swal.fire('Operación ancelada','Se canceló la modificación de los datos del usuario',"info") 
         
   }
   //CANCELAR MODIFICACION DATOS USUARIO.................
+
+  //LIMPIAR FILTROS
+  clear(table: Table) {
+    table.clear();
+    this.filter.nativeElement.value = '';
+  } 
+  //FIN LIMPIAR FILTROS....................................................................................  
 
   //IR A PRINCIPAL
   irAPrincipal(){

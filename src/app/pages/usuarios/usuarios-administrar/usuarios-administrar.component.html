@@ -120,8 +120,8 @@
 
                 </p-tabPanel>
                 <p-tabPanel header="Tramites Asignados" leftIcon="pi pi-send">
-                    <!-- TABLA DE TRAMITES -->
-                    <p-table #dt1 [value]="listTramitesAsignados" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']"
+                    <!-- TABLA DE TRAMITES ASIGNADOS-->
+                    <p-table #dt1 [value]="listTramitesAsignados" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['tramite.numero_tramite', 'tramite.expediente' ,'tramite.ciudadano.apellido','tramite.ciudadano.nombre','tramite.ciudadano.dni']"
                         responsiveLayout="scroll">
                         <ng-template pTemplate="caption">
                             <div class="flex justify-content-between flex-column sm:flex-row">
@@ -204,7 +204,7 @@
                                     {{tramiteAsignado.tramite.ciudadano.nombre}}
                                 </td>
                                 <td style="min-width: 10rem;">
-                                    {{tramiteAsignado.tramite.dni_ciudadano}}
+                                    {{tramiteAsignado.tramite.ciudadano.dni}}
                                 </td>
                                 <td style="min-width: 15rem;">
                                     {{tramiteAsignado.tramite.objeto.objeto}}
@@ -232,10 +232,122 @@
                             </tr>
                         </ng-template>
                     </p-table>
-                    <!-- FIN TABLA DE TRAMITES -->
+                    <!-- FIN TABLA DE TRAMITES ASIGNADOS-->
                 </p-tabPanel>
                 <p-tabPanel header="Tramites Finalizados" leftIcon="pi pi-check-square">
-                    Content 3
+                    <!-- TABLA DE TRAMITES FINALIZADOS-->
+                    <p-table #dt2 [value]="listTramitesfinalizados" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['tramite.numero_tramite', 'tramite.expediente' ,'tramite.ciudadano.apellido','tramite.ciudadano.nombre','tramite.ciudadano.dni']"
+                        responsiveLayout="scroll">
+                        <ng-template pTemplate="caption">
+                            <div class="flex justify-content-between flex-column sm:flex-row">
+
+                                <div>
+                                    <button pButton label="Limpiar" icon="pi pi-filter-slash" class="p-button-outlined mr-1" (click)="clear(dt2)"></button>
+                                    <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" #filter (input)="dt2.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
+                            </span>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 3rem"></th>
+                                <th>
+                                    <div class="flex justify-content-between align-items-center">
+                                        Nº Tramite
+                                        <p-columnFilter type="text" field="tramite.numero_tramite" display="menu" placeholder="Buscar por tramite"></p-columnFilter>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="flex justify-content-between align-items-center">
+                                        Apellido
+                                        <p-columnFilter type="text" field="tramite.ciudadano.apellido" display="menu" placeholder="Buscar por apellido"></p-columnFilter>
+        
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="flex justify-content-between align-items-center">
+                                        Nombre
+                                        <p-columnFilter type="text" field="tramite.ciudadano.nombre" display="menu" placeholder="Buscar por nombre"></p-columnFilter>
+        
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="flex justify-content-between align-items-center">
+                                        DNI solicitante
+                                        <p-columnFilter type="text" field="tramite.ciudadano.dni" display="menu" placeholder="Buscar por dni"></p-columnFilter>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="flex justify-content-between align-items-center">
+                                        Objeto
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="flex justify-content-between align-items-center">
+                                        Fecha tramite
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="flex justify-content-between align-items-center">
+                                        Expediente
+                                        <p-columnFilter type="text" field="tramite.expediente" display="menu" placeholder="Buscar por descripción"></p-columnFilter>
+        
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="flex justify-content-between align-items-center">
+                                        Fecha expediente
+                                    </div>
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-tramiteFinalizado>
+                            <tr>
+                                <td>
+                                    <button *ngIf="tramiteFinalizado.tramite.estado_tramite_id==3" pButton pRipple type="button" icon="pi pi-folder-open text-orange-100" class="p-button-secondary p-button-rounded mr-1 mb-1" (click)="administrarTramite(tramiteFinalizado.tramite)"></button>
+                                </td>
+                                <td style="min-width: 10rem;">
+                                    {{tramiteFinalizado.tramite.numero_tramite}}
+                                </td>
+
+                                <td style="min-width: 15rem;">
+                                    {{tramiteFinalizado.tramite.ciudadano.apellido}}
+                                </td>
+                                <td style="min-width: 15rem;">
+                                    {{tramiteFinalizado.tramite.ciudadano.nombre}}
+                                </td>
+                                <td style="min-width: 10rem;">
+                                    {{tramiteFinalizado.tramite.ciudadano.dni}}
+                                </td>
+                                <td style="min-width: 15rem;">
+                                    {{tramiteFinalizado.tramite.objeto.objeto}}
+                                </td>
+                                <td style="min-width: 10rem;">
+                                    {{tramiteFinalizado.tramite.fecha_tramite| date: 'dd/MM/yyyy'}}
+                                </td>
+                                <td style="min-width: 10rem;">
+                                    {{tramiteFinalizado.tramite.expediente}}
+                                </td>
+                                <td style="min-width: 10rem;">
+                                    {{tramiteFinalizado.tramite.fecha_expediente| date: 'dd/MM/yyyy'}}
+                                </td>
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="8">No se encontraron tramites finalizados.</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="loadingbody">
+                            <tr>
+                                <td colspan="8">Cargando tramites... .</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                    <!-- FIN TABLA DE TRAMITES FINALIZADOS-->
                 </p-tabPanel>
             </p-tabView>
         </div>
