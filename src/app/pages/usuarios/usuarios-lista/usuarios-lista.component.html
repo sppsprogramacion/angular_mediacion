@@ -2,23 +2,19 @@
     <div class="col-12">
         <div class="card">
             <h5>Usuarios</h5>
-            <p-toolbar styleClass="mb-4">
-                <ng-template pTemplate="left">
-                    <div class="my-2">
-                        <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openDialogUsuario()"></button>
-                    </div>
-                </ng-template>
-
-            </p-toolbar>
+            
             <!-- TABLA DE USUARIOS -->
             <p-table #dt1 [value]="listUsuarios" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['dni','sexo.sexo','apellido','nombre','telefono','email']" responsiveLayout="scroll">
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-between flex-column sm:flex-row">
-                        <button pButton label="Limpiar" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
-                        <span class="p-input-icon-left mb-2">
-                            <i class="pi pi-search"></i>
-                            <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
-                        </span>
+                        <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openDialogUsuario()"></button>
+                        <div>
+                            <button pButton label="Limpiar" class="p-button-outlined mb-2 mr-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+                            <span class="p-input-icon-left mb-2">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
+                            </span>
+                        </div>
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header">
