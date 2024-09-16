@@ -126,7 +126,7 @@ export class AppMenuComponent implements OnInit {
                 {
                     label: 'Ciudadanos admin',
                     items: [
-                        {label: 'Ver ciudadanos', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/ciudadanos/lista']}
+                        {label: 'Ver ciudadanos', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/ciudadanos/buscar']}
                     ]
                 }, 
                 {
