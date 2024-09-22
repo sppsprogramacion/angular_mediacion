@@ -31,12 +31,18 @@ export class UsuariosAdministrarComponent implements OnInit {
   dataUsuario: UsuarioModel= new UsuarioModel;
 
   //listas
+  listaAnios: number[] = [];
+  listaAniosDropdown: { label: string, value: number }[] = [];
   listaSexo: SexoModel[] = [];
   listTramitesAsignados: UsuarioTramiteModel[]=[];
   listTramitesfinalizados: UsuarioTramiteModel[]=[];
 
   //FORMULARIOS
-  formaUsuario: FormGroup;  
+  formaUsuario: FormGroup; 
+  formaBusqueda: FormGroup;
+  
+  //VARIABLES
+  anioActual: number;
 
   constructor(
     private fb: FormBuilder,
@@ -57,6 +63,11 @@ export class UsuariosAdministrarComponent implements OnInit {
       sexo_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       email: ['',[Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],    
+      
+    });
+
+    this.formaBusqueda = this.fb.group({      
+      anio: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       
     });
     
@@ -112,7 +123,20 @@ export class UsuariosAdministrarComponent implements OnInit {
     if(this.dataUsuario.dni){
       this.cargarFormularioUsuario();
       this.listarTramitesAsignados();
-      this.listarTramitesUsuarioFinalizados();
+
+      //obtener anio actual para buscar por defecto los tramites del usuario de ese anio
+      this.anioActual = new Date().getFullYear();
+      this.listarTramitesUsuarioFinalizadosXAnio(this.anioActual);
+
+      //cargar lista de años
+      for (let anio = 2023; anio <= this.anioActual; anio++) {
+        this.listaAnios.push(anio);
+      }
+      this.listaAniosDropdown = this.listaAnios.map(anio => ({
+        label: anio.toString(),
+        value: anio
+      }));
+      this.formaBusqueda.get('anio')?.setValue(this.anioActual);
     }
     else{
       this.router.navigateByUrl("admin/usuarios/lista");
@@ -181,11 +205,28 @@ export class UsuariosAdministrarComponent implements OnInit {
       subscribe(respuesta => {
         this.listTramitesfinalizados= respuesta[0];
         this.loading = false;  
-        console.log("tramites finalizado", this.listTramitesfinalizados);
     
       });
   }
   //FIN LISTADO DE TRAMITES USUARIO.......................................................
+
+  //LISTADO DE TRANITES USUARIO
+  listarTramitesUsuarioFinalizadosXAnio(anio: number){
+    let id_usuario: number = this.dataUsuario.id_usuario;    
+
+    //REVISAR PARA LISTAR TRAMITES FINALIZADOS
+    this.usuarioTramiteService.listarTramitesFinalizadosXUsuarioXAnio(id_usuario, anio).
+      subscribe(respuesta => {
+        this.listTramitesfinalizados= respuesta[0];
+        this.loading = false;  
+      });
+  }
+  //FIN LISTADO DE TRAMITES USUARIO.......................................................
+
+  buscarFinalizadosXAnio(){
+    let anio = parseInt(this.formaBusqueda.get('anio')?.value);
+    this.listarTramitesUsuarioFinalizadosXAnio(anio);
+  }
 
   //CARGAR FORMULARIO USUARIO
   cargarFormularioUsuario(){

@@ -41,6 +41,10 @@ export class UsuariosTramiteService {
     return this.http.get<[tramite:UsuarioTramiteModel[], total: number]>(`${base_url}/usuarios-tramite/buscar-xusuario-finalizados?id_usuario=${id_usuariox}`)
   }
 
+  listarTramitesFinalizadosXUsuarioXAnio(id_usuariox: number, anio: number){
+    return this.http.get<[tramite:UsuarioTramiteModel[], total: number]>(`${base_url}/usuarios-tramite/buscar-xusuario-finalizados-xanio?id_usuario=${id_usuariox}&anio=${anio}`)
+  }
+
   listarTramitesAsignadosXCiudadano(id_ciudadanox: number){
     return this.http.get<[tramite:UsuarioTramiteModel[], total: number]>(`${base_url}/usuarios-tramite/buscar-xciudadano?id_ciudadano=${id_ciudadanox}`)
   }
