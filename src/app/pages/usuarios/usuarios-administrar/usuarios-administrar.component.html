@@ -124,10 +124,120 @@
                         <div class="col-12">                        
 
                             <div class="p-formgrid grid">                
-                                <!-- FORMULARIO USUARIO -->
-                                <div class="col-12">  
+                                <!-- CUENTA USUARIO USUARIO -->
+                                <div class="col-12">     
+                                    <!-- CARD CENTROS DE MEDIACION -->
+                                    <div  class="card p-fluid">
+                                        <h5 class="block font-bold font-medium mb-2">Centros de mediación</h5>                                            
+                                        
+                                        <!-- TABLA DE TRAMITES ASIGNADOS-->
+                                        <p-table #dt1 [value]="listTramitesAsignados" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['tramite.numero_tramite', 'tramite.expediente' ,'tramite.ciudadano.apellido','tramite.ciudadano.nombre','tramite.ciudadano.dni']"
+                                        responsiveLayout="scroll">
+                                        
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th style="width: 3rem"></th>
+                                                <th>
+                                                    <div class="flex justify-content-between align-items-center">
+                                                        Nº Tramite
+                                                        <p-columnFilter type="text" field="tramite.numero_tramite" display="menu" placeholder="Buscar por tramite"></p-columnFilter>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="flex justify-content-between align-items-center">
+                                                        Apellido
+                                                        <p-columnFilter type="text" field="tramite.ciudadano.apellido" display="menu" placeholder="Buscar por apellido"></p-columnFilter>
+                        
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="flex justify-content-between align-items-center">
+                                                        Nombre
+                                                        <p-columnFilter type="text" field="tramite.ciudadano.nombre" display="menu" placeholder="Buscar por nombre"></p-columnFilter>
+                        
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="flex justify-content-between align-items-center">
+                                                        DNI solicitante
+                                                        <p-columnFilter type="text" field="tramite.ciudadano.dni" display="menu" placeholder="Buscar por dni"></p-columnFilter>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="flex justify-content-between align-items-center">
+                                                        Objeto
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="flex justify-content-between align-items-center">
+                                                        Fecha tramite
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="flex justify-content-between align-items-center">
+                                                        Expediente
+                                                        <p-columnFilter type="text" field="tramite.expediente" display="menu" placeholder="Buscar por descripción"></p-columnFilter>
+                        
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="flex justify-content-between align-items-center">
+                                                        Fecha expediente
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-tramiteAsignado>
+                                            <tr>
+                                                <td>
+                                                    <button *ngIf="tramiteAsignado.tramite.estado_tramite_id==2" pButton pRipple type="button" icon="pi pi-folder-open text-orange-100" class="p-button-secondary p-button-rounded bg-orange-500 mr-1 mb-1" (click)="administrarTramite(tramiteAsignado.tramite)"></button>
+                                                </td>
+                                                <td style="min-width: 10rem;">
+                                                    {{tramiteAsignado.tramite.numero_tramite}}
+                                                </td>
+
+                                                <td style="min-width: 15rem;">
+                                                    {{tramiteAsignado.tramite.ciudadano.apellido}}
+                                                </td>
+                                                <td style="min-width: 15rem;">
+                                                    {{tramiteAsignado.tramite.ciudadano.nombre}}
+                                                </td>
+                                                <td style="min-width: 10rem;">
+                                                    {{tramiteAsignado.tramite.ciudadano.dni}}
+                                                </td>
+                                                <td style="min-width: 15rem;">
+                                                    {{tramiteAsignado.tramite.objeto.objeto}}
+                                                </td>
+                                                <td style="min-width: 10rem;">
+                                                    {{tramiteAsignado.tramite.fecha_tramite| date: 'dd/MM/yyyy'}}
+                                                </td>
+                                                <td style="min-width: 10rem;">
+                                                    {{tramiteAsignado.tramite.expediente}}
+                                                </td>
+                                                <td style="min-width: 10rem;">
+                                                    {{tramiteAsignado.tramite.fecha_expediente| date: 'dd/MM/yyyy'}}
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+
+                                        <ng-template pTemplate="emptymessage">
+                                            <tr>
+                                                <td colspan="8">No se encontraron tramites asignados.</td>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="loadingbody">
+                                            <tr>
+                                                <td colspan="8">Cargando tramites... .</td>
+                                            </tr>
+                                        </ng-template>
+                                        </p-table>
+                                        <!-- FIN TABLA DE TRAMITES ASIGNADOS-->
+                                    </div>
+                                    <!-- FIN CARD CENTROS DE MEDIACION -->    
+
+                                    <!-- ROL USUARIO-->
                                     <form [formGroup]="formaUsuario">
-                                        <!-- CARD DATOS PERSONALES-->
+                                        <!-- CARD ROL-->
                                         <div class="card p-fluid">
 
                                             <h5 class="block font-bold font-medium mb-2">Rol de usuario</h5>
@@ -179,31 +289,25 @@
                                                     </p-dropdown>
                                                 </div>                                
                                             </div>
-                                            
-                                        </div>
-                                        <!-- FIN CARD DATOS PERSONALES -->
-
-                                        <!-- CARD DATOS DE CONTACTO -->
-                                        <div  class="card p-fluid">
-                                            <h5 class="block font-bold font-medium mb-2">Datos de contacto</h5>
-                                            
-                                            <div class="formgrid grid">
-                                                <div class="field col">
-                                                    <label for="telefono">Teléfono</label>
-                                                    <input type="text" pInputText id="telefono" formControlName="telefono" />
-                                                    <small *ngIf="isValid('telefono')" class="p-error">
-                                                        <div *ngFor="let validation of user_validation_messages.telefono" >
-                                                            <div  *ngIf="formaUsuario.get('telefono')?.hasError(validation.type)">
-                                                                {{validation.message}}
-                                                            </div>
-                                                        </div>
-                                                    </small>
-                                                </div>
+                                            <div  class="col-12 grid mt-2">
+                                                <button pButton pRipple type="button" label="Guardar" class="p-button-success" style="width: 47%;" (click)="submitFormUsuario()" ></button>
+                                                <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger ml-2" style="width: 47%;" (click)="cancelarModificacionUsuario()"></button>
+                                                
                                             </div>
-                                            <div class="formgrid grid">
-                
+                                        </div>
+                                        <!-- FIN CARD ROL -->                                        
+                                    </form>                                    
+                                    <!-- FIN ROL USUARIO -->
+
+                                    <!-- RESET CONTRASEÑA -->
+                                    <form [formGroup]="formaUsuario">     
+                                        <!-- CARD RESET -->
+                                        <div  class="card p-fluid">
+                                            <h5 class="block font-bold font-medium mb-2">Reset contraseña</h5>                                            
+                                            
+                                            <div class="formgrid grid">                
                                                 <div class="field col">
-                                                    <label for="email">Correo electrónico</label>
+                                                    <label for="email">Escriba "RESET" para reestablecer la contraseña</label>
                                                     <input type="text" pInputText id="email" formControlName="email" />
                                                     <small *ngIf="isValid('email')" class="p-error">
                                                         <div *ngFor="let validation of user_validation_messages.email" >
@@ -214,17 +318,19 @@
                                                     </small>
                                                 </div>
                                             </div>    
-                                            
+                                            <div  class="col-12 grid">
+                                                <button pButton pRipple type="button" label="Resetear contraseña" class="p-button-warning" style="width: 47%;" (click)="submitFormUsuario()" ></button>
+                                                
+                                                
+                                            </div>
                                         </div>
-                                        <!-- FIN CARD CENTRO MEDICAION -->
+                                        <!-- FIN CARD RESET -->
                                     </form>
+                                    <!-- FIN RESET CONTRASEÑA -->
+
                                 </div>
-                                <!--  FIN FORMULARIO CIUDADANO -->
-                                <div  class="col-12 grid justify-content-center">
-                                    <button pButton pRipple type="button" label="Guardar" class="p-button-success" style="width: 47%;" (click)="submitFormUsuario()" ></button>
-                                    <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger ml-2" style="width: 47%;" (click)="cancelarModificacionUsuario()"></button>
-                                    
-                                </div>
+                                <!--  FIN CUENTA USUARIO -->
+                                
                             </div>
 
                         </div>
