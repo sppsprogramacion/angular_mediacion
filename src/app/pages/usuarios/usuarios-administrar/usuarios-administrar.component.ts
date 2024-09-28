@@ -13,6 +13,11 @@ import { DataMokeadaService } from 'src/app/service/data-mokeada.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
 import Swal from 'sweetalert2';
 import { Table } from 'primeng/table';
+import { UsuariosCentroService } from 'src/app/service/usuarios-centro.service';
+import { UsuarioCentroModel } from 'src/app/models/usuario_centro.model ';
+import { ElementoModel } from 'src/app/models/elemento.model';
+import { RolesService } from '../../../service/roles.service';
+import { RolModel } from 'src/app/models/rol.model';
 
 @Component({
   selector: 'app-usuarios-administrar',
@@ -34,12 +39,16 @@ export class UsuariosAdministrarComponent implements OnInit {
   listaAnios: number[] = [];
   listaAniosDropdown: { label: string, value: number }[] = [];
   listaSexo: SexoModel[] = [];
+  listaRoles: RolModel[] = [];
   listTramitesAsignados: UsuarioTramiteModel[]=[];
   listTramitesfinalizados: UsuarioTramiteModel[]=[];
+  listUsuarioCentrosMediacion: UsuarioCentroModel[]=[]; 
+  elementosCentroMediacion: ElementoModel[]=[];  
 
   //FORMULARIOS
   formaUsuario: FormGroup; 
   formaBusqueda: FormGroup;
+  formaRolUsuario: FormGroup;
   
   //VARIABLES
   anioActual: number;
@@ -51,6 +60,8 @@ export class UsuariosAdministrarComponent implements OnInit {
     
     private dataMokeadaService: DataMokeadaService,
     public dataService: DataService,    
+    private rolesService: RolesService,
+    private usuariosCentroService: UsuariosCentroService,
     private usuarioService: UsuariosService,
     private usuarioTramiteService: UsuariosTramiteService,
     private router: Router
@@ -68,6 +79,11 @@ export class UsuariosAdministrarComponent implements OnInit {
 
     this.formaBusqueda = this.fb.group({      
       anio: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      
+    });
+
+    this.formaRolUsuario = this.fb.group({
+      rol_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       
     });
     
@@ -122,6 +138,7 @@ export class UsuariosAdministrarComponent implements OnInit {
     this.dataUsuario = this.dataService.usuarioData;
     if(this.dataUsuario.dni){
       this.cargarFormularioUsuario();
+      this.cargarCentrosMediacionXUsuario(this.dataUsuario.id_usuario);
       this.listarTramitesAsignados();
 
       //obtener anio actual para buscar por defecto los tramites del usuario de ese anio
@@ -223,10 +240,39 @@ export class UsuariosAdministrarComponent implements OnInit {
   }
   //FIN LISTADO DE TRAMITES USUARIO.......................................................
 
+  //TRAMITES FINALIZADOS POR AÑO
   buscarFinalizadosXAnio(){
     let anio = parseInt(this.formaBusqueda.get('anio')?.value);
     this.listarTramitesUsuarioFinalizadosXAnio(anio);
   }
+  //FIN TRAMITES FINALIZADOS POR AÑO
+
+  //CARGA DE CENTROS DE MEDIACION
+  listarRoles(id_usuario: number){
+    this.rolesService.listarRolesTodos().
+      subscribe(respuesta => {
+        this.listaRoles= respuesta[0];
+             
+    
+    });  
+  }
+  //FIN CARGA DE CENTROS DE MEDIACION.............................................
+
+  //CARGA DE CENTROS DE MEDIACION
+  cargarCentrosMediacionXUsuario(id_usuario: number){
+    this.usuariosCentroService.listarCentrosActivosXUsuario(id_usuario).
+      subscribe(respuesta => {
+        this.listUsuarioCentrosMediacion= respuesta[0];
+        this.elementosCentroMediacion = this.listUsuarioCentrosMediacion.map(centro => {
+          return {
+            clave: centro.centro_mediacion.id_centro_mediacion,
+            value: centro.centro_mediacion.centro_mediacion + " (Municipio: " + centro.centro_mediacion.municipio.municipio + " - Barrio: " + centro.centro_mediacion.localidad_barrio + " - Dirección: " + centro.centro_mediacion.calle_direccion + " n°" + centro.centro_mediacion.numero_dom + ")"
+            }
+        });        
+    
+    });  
+  }
+  //FIN CARGA DE CENTROS DE MEDIACION.............................................
 
   //CARGAR FORMULARIO USUARIO
   cargarFormularioUsuario(){

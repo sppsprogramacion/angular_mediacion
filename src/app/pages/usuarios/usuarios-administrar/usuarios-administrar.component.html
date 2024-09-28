@@ -130,108 +130,19 @@
                                     <div  class="card p-fluid">
                                         <h5 class="block font-bold font-medium mb-2">Centros de mediación</h5>                                            
                                         
-                                        <!-- TABLA DE TRAMITES ASIGNADOS-->
-                                        <p-table #dt1 [value]="listTramitesAsignados" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['tramite.numero_tramite', 'tramite.expediente' ,'tramite.ciudadano.apellido','tramite.ciudadano.nombre','tramite.ciudadano.dni']"
-                                        responsiveLayout="scroll">
-                                        
-                                        <ng-template pTemplate="header">
-                                            <tr>
-                                                <th style="width: 3rem"></th>
-                                                <th>
-                                                    <div class="flex justify-content-between align-items-center">
-                                                        Nº Tramite
-                                                        <p-columnFilter type="text" field="tramite.numero_tramite" display="menu" placeholder="Buscar por tramite"></p-columnFilter>
+                                        <div class="formgrid grid">
+                                            <div class="field col-12">
+                                                <label for="centro_mediacion_id">Centro Mediación</label>
+                                                <p-listbox [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" styleClass="listbox1" [listStyle]="{'max-height':'250px'}" ></p-listbox>
+                                                <!-- <small *ngIf="isValid('centro_mediacion_id')" class="p-error">
+                                                    <div *ngFor="let validation of user_validation_messages.centro_mediacion_id" >
+                                                        <div  *ngIf="formaTramite.get('centro_mediacion_id')?.hasError(validation.type)">
+                                                            {{validation.message}}
+                                                        </div>
                                                     </div>
-                                                </th>
-                                                <th>
-                                                    <div class="flex justify-content-between align-items-center">
-                                                        Apellido
-                                                        <p-columnFilter type="text" field="tramite.ciudadano.apellido" display="menu" placeholder="Buscar por apellido"></p-columnFilter>
-                        
-                                                    </div>
-                                                </th>
-                                                <th>
-                                                    <div class="flex justify-content-between align-items-center">
-                                                        Nombre
-                                                        <p-columnFilter type="text" field="tramite.ciudadano.nombre" display="menu" placeholder="Buscar por nombre"></p-columnFilter>
-                        
-                                                    </div>
-                                                </th>
-                                                <th>
-                                                    <div class="flex justify-content-between align-items-center">
-                                                        DNI solicitante
-                                                        <p-columnFilter type="text" field="tramite.ciudadano.dni" display="menu" placeholder="Buscar por dni"></p-columnFilter>
-                                                    </div>
-                                                </th>
-                                                <th>
-                                                    <div class="flex justify-content-between align-items-center">
-                                                        Objeto
-                                                    </div>
-                                                </th>
-                                                <th>
-                                                    <div class="flex justify-content-between align-items-center">
-                                                        Fecha tramite
-                                                    </div>
-                                                </th>
-                                                <th>
-                                                    <div class="flex justify-content-between align-items-center">
-                                                        Expediente
-                                                        <p-columnFilter type="text" field="tramite.expediente" display="menu" placeholder="Buscar por descripción"></p-columnFilter>
-                        
-                                                    </div>
-                                                </th>
-                                                <th>
-                                                    <div class="flex justify-content-between align-items-center">
-                                                        Fecha expediente
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                        </ng-template>
-                                        <ng-template pTemplate="body" let-tramiteAsignado>
-                                            <tr>
-                                                <td>
-                                                    <button *ngIf="tramiteAsignado.tramite.estado_tramite_id==2" pButton pRipple type="button" icon="pi pi-folder-open text-orange-100" class="p-button-secondary p-button-rounded bg-orange-500 mr-1 mb-1" (click)="administrarTramite(tramiteAsignado.tramite)"></button>
-                                                </td>
-                                                <td style="min-width: 10rem;">
-                                                    {{tramiteAsignado.tramite.numero_tramite}}
-                                                </td>
-
-                                                <td style="min-width: 15rem;">
-                                                    {{tramiteAsignado.tramite.ciudadano.apellido}}
-                                                </td>
-                                                <td style="min-width: 15rem;">
-                                                    {{tramiteAsignado.tramite.ciudadano.nombre}}
-                                                </td>
-                                                <td style="min-width: 10rem;">
-                                                    {{tramiteAsignado.tramite.ciudadano.dni}}
-                                                </td>
-                                                <td style="min-width: 15rem;">
-                                                    {{tramiteAsignado.tramite.objeto.objeto}}
-                                                </td>
-                                                <td style="min-width: 10rem;">
-                                                    {{tramiteAsignado.tramite.fecha_tramite| date: 'dd/MM/yyyy'}}
-                                                </td>
-                                                <td style="min-width: 10rem;">
-                                                    {{tramiteAsignado.tramite.expediente}}
-                                                </td>
-                                                <td style="min-width: 10rem;">
-                                                    {{tramiteAsignado.tramite.fecha_expediente| date: 'dd/MM/yyyy'}}
-                                                </td>
-                                            </tr>
-                                        </ng-template>
-
-                                        <ng-template pTemplate="emptymessage">
-                                            <tr>
-                                                <td colspan="8">No se encontraron tramites asignados.</td>
-                                            </tr>
-                                        </ng-template>
-                                        <ng-template pTemplate="loadingbody">
-                                            <tr>
-                                                <td colspan="8">Cargando tramites... .</td>
-                                            </tr>
-                                        </ng-template>
-                                        </p-table>
-                                        <!-- FIN TABLA DE TRAMITES ASIGNADOS-->
+                                                </small> -->
+                                            </div>
+                                        </div>
                                     </div>
                                     <!-- FIN CARD CENTROS DE MEDIACION -->    
 
