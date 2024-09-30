@@ -8,8 +8,10 @@ import { TramiteModel } from '../../../models/tramite.model';
 import { UsuarioTramiteModel } from '../../../models/usuario_tramite.model';
 import { TramitesService } from '../../../service/tramites.service';
 import { AuthService } from 'src/app/service/auth.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import Swal from 'sweetalert2';
+import { CiudadanosService } from '../../../service/ciudadanos.service';
 
 @Component({
   selector: 'app-ciudadanos-administrar',
@@ -24,6 +26,7 @@ export class CiudadanosAdministrarComponent implements OnInit {
 
   //FORMULARIOS
   formaCiudadano: FormGroup;  
+  formaResetPassword: FormGroup;
 
   //LISTAS    
   listTramites: TramiteModel[]=[];
@@ -37,7 +40,7 @@ export class CiudadanosAdministrarComponent implements OnInit {
     private router: Router,
 
     public dataService: DataService,
-    private usuarioTramiteService: UsuariosTramiteService,
+    private ciudadanosService: CiudadanosService,
     private tramiteService: TramitesService,
   ) { 
     
@@ -52,6 +55,26 @@ export class CiudadanosAdministrarComponent implements OnInit {
       email: ['',],    
       
     });
+
+    this.formaResetPassword = this.fb.group({
+      confirmacion: ['',[Validators.required]],         
+    });
+  }
+
+  //MENSAJES DE VALIDACIONES
+  user_validation_messages = {
+    //datos tramite
+    'confirmacion': [
+      { type: 'required', message: 'Debe escribir la palabra.' },
+    ],
+    
+  }
+  //FIN MENSAJES DE VALIDACIONES...............................................................
+
+
+  isValidReset(campo: string): boolean{     
+    
+    return this.formaResetPassword.get(campo)?.invalid && this.formaResetPassword.get(campo)?.touched;      
   }
 
   ngOnInit(): void {
@@ -68,13 +91,46 @@ export class CiudadanosAdministrarComponent implements OnInit {
     }
   }
 
+  //GUARDAR RESET PASS CIUDADANO  
+  submitFormResetPass(){
+    
+    if(this.formaResetPassword.invalid){       
+        
+        Swal.fire('Formulario reset con errores',`Complete correctamente todos los campos del formulario`,"warning");
+        return Object.values(this.formaResetPassword.controls).forEach(control => control.markAsTouched());
+    }
+
+    if(this.formaResetPassword.get('confirmacion')?.value != "RESET"){             
+      Swal.fire('Formulario reset con errores',`Debe tipear la palabra RESET para continuar`,"warning");
+      return Object.values(this.formaResetPassword.controls).forEach(control => control.markAsTouched());
+    }
+
+    let dataRegistro: Partial<CiudadanoModel>;
+    dataRegistro = {
+      clave: this.dataCiudadano.dni.toString(),     
+    };
+        
+    //GUARDAR EDICION CIUDADANO
+    this.ciudadanosService.guardarCambiarContrasenia(this.dataCiudadano.id_ciudadano, dataRegistro)
+      .subscribe({
+        next: (resultado) => {
+            Swal.fire('Exito',`Se modificó los datos con exito`,"success");   
+        },
+        error: (error) => {
+            Swal.fire('Error',`Error al realizar la modificación: ${error.error.message}`,"error") 
+        }
+      });         
+    //FIN GUARDAR EDICION CIUDADANO 
+
+  }    
+  //FIN GUARDAR RESET PASS CIUDADANO............................................................
+
   //LISTADO DE TRAMITES ASIGNADOS
   listarTramites(){    
     this.tramiteService.listarTramitesXCiudadano(this.dataCiudadano.id_ciudadano)
         .subscribe({
           next: (respuesta) => {
             this.listTramites= respuesta[0];
-            console.log("tramites", this.listTramites);
             this.loading = false;  
           }
     });

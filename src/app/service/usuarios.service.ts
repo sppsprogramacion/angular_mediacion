@@ -36,6 +36,11 @@ export class UsuariosService {
     return this.http.patch(`${base_url}/usuarios/cambiar-password/${id}`, data);
   }
 
+  guardarResetContrasenia(id: number, data: any){    
+    
+    return this.http.patch(`${base_url}/usuarios/reset-password/${id}`, data);
+  }
+
   buscarXDni(dni: number){
     return this.http.get<UsuarioModel>(`${base_url}/usuarios/buscar-xdni?dni=${dni}`)
   }

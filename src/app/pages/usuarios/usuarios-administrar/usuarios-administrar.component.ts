@@ -129,8 +129,11 @@ export class UsuariosAdministrarComponent implements OnInit {
         { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
     ],
     'email': [
-      { type: 'required', message: 'El e-mail es requerido' },
+      { type: 'required', message: 'El e-mail es requerido.' },
       { type: 'pattern', message: 'El formato del e-mail no es correcto.' }
+    ],
+    'confirmacion': [
+      { type: 'required', message: 'Debe escribir la palabra.' },
     ],
     
   }
@@ -140,6 +143,11 @@ export class UsuariosAdministrarComponent implements OnInit {
   isValid(campo: string): boolean{     
     
     return this.formaUsuario.get(campo)?.invalid && this.formaUsuario.get(campo)?.touched;      
+  }
+
+  isValidReset(campo: string): boolean{     
+    
+    return this.formaResetPassword.get(campo)?.invalid && this.formaResetPassword.get(campo)?.touched;      
   }
 
 
@@ -183,26 +191,22 @@ export class UsuariosAdministrarComponent implements OnInit {
     
     if(this.formaResetPassword.invalid){       
         
-        Swal.fire('Formulario con errores',`Complete correctamente todos los campos del formulario`,"warning");
-        return Object.values(this.formaUsuario.controls).forEach(control => control.markAsTouched());
+        Swal.fire('Formulario reset con errores',`Complete correctamente todos los campos del formulario`,"warning");
+        return Object.values(this.formaResetPassword.controls).forEach(control => control.markAsTouched());
     }
 
-    console.log("confirmacion antes", this.formaResetPassword.get('confirmacion')?.value);
-
-    if(this.formaResetPassword.get('confirmacion')?.value != "RESET"){       
-      
-      console.log("confirmacion", this.formaResetPassword.get('confirmacion')?.value);
-      Swal.fire('Formulario con errores',`Debe tipear la palabra RESET para continuar`,"warning");
+    if(this.formaResetPassword.get('confirmacion')?.value != "RESET"){             
+      Swal.fire('Formulario reset con errores',`Debe tipear la palabra RESET para continuar`,"warning");
       return Object.values(this.formaResetPassword.controls).forEach(control => control.markAsTouched());
-  }
+    }
 
     let dataRegistro: Partial<UsuarioModel>;
-    dataRegistro = {     
-      clave: this.dataUsuario.dni.toString()
+    dataRegistro = {
+      clave: this.dataUsuario.dni.toString(),     
     };
-    
+        
     //GUARDAR EDICION USUARIO
-    this.usuarioService.guardarCambiarContrasenia(this.dataUsuario.id_usuario, dataRegistro)
+    this.usuarioService.guardarResetContrasenia(this.dataUsuario.id_usuario, dataRegistro)
       .subscribe({
         next: (resultado) => {
             Swal.fire('Exito',`Se modificó los datos con exito`,"success");   
@@ -283,21 +287,22 @@ export class UsuariosAdministrarComponent implements OnInit {
 
   //LISTADO DE TRAMITES ASIGNADOS
   listarTramitesAsignados(){    
-    this.usuarioTramiteService.listarTramitesAsignadosXUsuario(this.dataUsuario.id_usuario).
+    this.loading = true;
+    this.usuarioTramiteService.listarTramitesAsignadosXUsuarioAdministrado(this.dataUsuario.id_usuario).
         subscribe(respuesta => {
         this.listTramitesAsignados= respuesta[0];
         this.loading = false;  
-        console.log("tramites asignados", this.listTramitesAsignados);
     });
   }
   //FIN LISTADO DE TRAMITES ASIGNADOS.......................................................
 
   //LISTADO DE TRANITES USUARIO
   listarTramitesUsuarioFinalizados(){
+    this.loading = true;
     let id_usuario: number = this.dataUsuario.id_usuario;
 
     //REVISAR PARA LISTAR TRAMITES FINALIZADOS
-    this.usuarioTramiteService.listarTramitesFinalizadosXUsuario(id_usuario).
+    this.usuarioTramiteService.listarFinalizadosXUsuarioAdministrado(id_usuario).
       subscribe(respuesta => {
         this.listTramitesfinalizados= respuesta[0];
         this.loading = false;  
@@ -308,10 +313,11 @@ export class UsuariosAdministrarComponent implements OnInit {
 
   //LISTADO DE TRANITES USUARIO
   listarTramitesUsuarioFinalizadosXAnio(anio: number){
+    this.loading = true;
     let id_usuario: number = this.dataUsuario.id_usuario;    
 
     //REVISAR PARA LISTAR TRAMITES FINALIZADOS
-    this.usuarioTramiteService.listarTramitesFinalizadosXUsuarioXAnio(id_usuario, anio).
+    this.usuarioTramiteService.listarFinalizadosXUsuarioAdministradoXAnio(id_usuario, anio).
       subscribe(respuesta => {
         this.listTramitesfinalizados= respuesta[0];
         this.loading = false;  

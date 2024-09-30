@@ -89,6 +89,52 @@
 
                 </p-tabPanel>
 
+                <p-tabPanel *ngIf="isAdmin()" header="Datos de cuenta" leftIcon="pi pi-check-square">
+                    <div class="grid justify-content-center">
+                        <div class="col-12">                        
+
+                            <div class="p-formgrid grid">                
+                                <!-- CUENTA USUARIO USUARIO -->
+                                <div class="col-12">        
+
+                                    <!-- RESET CONTRASEÑA -->
+                                    <form [formGroup]="formaResetPassword">     
+                                        <!-- CARD RESET -->
+                                        <div  class="card p-fluid">
+                                            <h5 class="block font-bold font-medium mb-2">Reset contraseña</h5>                                            
+                                            
+                                            <div class="formgrid grid">                
+                                                <div class="field col">
+                                                    <label for="email">Escriba "RESET" para reestablecer la contraseña</label>
+                                                    <input type="text" pInputText id="confirmacion" formControlName="confirmacion" />
+                                                    <small *ngIf="isValidReset('confirmacion')" class="p-error">
+                                                        <div *ngFor="let validation of user_validation_messages.confirmacion" >
+                                                            <div  *ngIf="formaResetPassword.get('confirmacion')?.hasError(validation.type)">
+                                                                {{validation.message}}
+                                                            </div>
+                                                        </div>
+                                                    </small>
+                                                </div>
+                                            </div>    
+                                            <div  class="col-12 grid">
+                                                <button pButton pRipple type="button" label="Resetear contraseña" class="p-button-warning" style="width: 47%;" (click)="submitFormResetPass()" ></button>
+                                                
+                                                
+                                            </div>
+                                        </div>
+                                        <!-- FIN CARD RESET -->
+                                    </form>
+                                    <!-- FIN RESET CONTRASEÑA -->
+
+                                </div>
+                                <!--  FIN CUENTA USUARIO -->
+                                
+                            </div>
+
+                        </div>
+                    </div>
+                </p-tabPanel>
+
                 <!-- PANEL TRAMITES -->
                 <p-tabPanel header="Tramites" leftIcon="pi pi-fw pi-clone">
                     <!-- TABLA DE TRAMITES -->
@@ -189,9 +235,7 @@
                     <!-- FIN TABLA DE TRAMITES -->
                 </p-tabPanel>
 
-                <p-tabPanel header="Tramites Finalizados" leftIcon="pi pi-check-square">
-                    Content 3
-                </p-tabPanel>
+                
             </p-tabView>
         </div>
 

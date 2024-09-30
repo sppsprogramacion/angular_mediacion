@@ -195,7 +195,7 @@
                                                 <div class="field col">
                                                     <label for="email">Escriba "RESET" para reestablecer la contraseña</label>
                                                     <input type="text" pInputText id="confirmacion" formControlName="confirmacion" />
-                                                    <small *ngIf="isValid('confirmacion')" class="p-error">
+                                                    <small *ngIf="isValidReset('confirmacion')" class="p-error">
                                                         <div *ngFor="let validation of user_validation_messages.confirmacion" >
                                                             <div  *ngIf="formaResetPassword.get('confirmacion')?.hasError(validation.type)">
                                                                 {{validation.message}}
@@ -339,45 +339,46 @@
                     <!-- FIN TABLA DE TRAMITES ASIGNADOS-->
                 </p-tabPanel>
                 <p-tabPanel header="Tramites Finalizados" leftIcon="pi pi-check-square">
+                    <div>
+                        <div class="p-formgrid grid">                
+                            <!-- FORMULARIO BUSCAR -->
+                            <div class="col-12">  
+                                <form [formGroup]="formaBusqueda">
+                                    <!-- CARD DATOS BUSCAR-->
+                                    <div class="card p-fluid">
+                                                
+                                        <div class="formgrid grid">
+                                            <div class="field col-6 md:col-4 lg:col-4">
+                                                <label for="anio">Año</label>
+                                                <p-dropdown id="anio" [options]="listaAniosDropdown" optionLabel="label" optionValue="value" formControlName="anio" placeholder="Seleccinar...">
+                                                </p-dropdown>
+                                            </div>  
+
+                                            <div class="field col-6 md:col-4 lg:col-4">
+                                                <button pButton pRipple type="button" label="Buscar año" class="p-button-primary mt-4" (click)="buscarFinalizadosXAnio()" ></button>
+                                                
+                                            </div>  
+
+                                            <div class="field col-6 md:col-4 lg:col-4">                                                        
+                                                <button pButton pRipple type="button" label="Buscar todos" class="p-button-prymary mt-4" (click)="listarTramitesUsuarioFinalizados()"></button>
+                                            </div> 
+
+                                        </div>
+                                        
+                                    </div>
+                                    <!-- FIN CARD DATOS BUSCAR -->        
+                                    
+                                </form>
+                            </div>
+                            <!--  FIN FORMULARIO BUSCAR -->
+                            
+                        </div>
+                    </div>
                     <!-- TABLA DE TRAMITES FINALIZADOS-->
                     <p-table #dt2 [value]="listTramitesfinalizados" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['tramite.numero_tramite', 'tramite.expediente' ,'tramite.ciudadano.apellido','tramite.ciudadano.nombre','tramite.ciudadano.dni']"
                         responsiveLayout="scroll">
                         <ng-template pTemplate="caption">
-                            <div>
-                                <div class="p-formgrid grid">                
-                                    <!-- FORMULARIO BUSCAR -->
-                                    <div class="col-12">  
-                                        <form [formGroup]="formaBusqueda">
-                                            <!-- CARD DATOS BUSCAR-->
-                                            <div class="card p-fluid">
-                                                        
-                                                <div class="formgrid grid">
-                                                    <div class="field col-6 md:col-4 lg:col-4">
-                                                        <label for="anio">Año</label>
-                                                        <p-dropdown id="anio" [options]="listaAniosDropdown" optionLabel="label" optionValue="value" formControlName="anio" placeholder="Seleccinar...">
-                                                        </p-dropdown>
-                                                    </div>  
-
-                                                    <div class="field col-6 md:col-4 lg:col-4">
-                                                        <button pButton pRipple type="button" label="Buscar año" class="p-button-primary mt-4" (click)="buscarFinalizadosXAnio()" ></button>
-                                                        
-                                                    </div>  
-
-                                                    <div class="field col-6 md:col-4 lg:col-4">                                                        
-                                                        <button pButton pRipple type="button" label="Buscar todos" class="p-button-prymary mt-4" (click)="listarTramitesUsuarioFinalizados()"></button>
-                                                    </div> 
-
-                                                </div>
-                                                
-                                            </div>
-                                            <!-- FIN CARD DATOS BUSCAR -->        
-                                            
-                                        </form>
-                                    </div>
-                                    <!--  FIN FORMULARIO BUSCAR -->
-                                    
-                                </div>
-                            </div>
+                            
                             <div class="flex justify-content-between flex-column sm:flex-row">
                                 
                                 <div>
