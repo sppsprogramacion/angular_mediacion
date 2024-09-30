@@ -26,6 +26,11 @@ export class UsuariosService {
     return this.http.patch(`${base_url}/usuarios/editar-perfil/${id}`, this.usuario);
   }
 
+  guardarEdicionEstado(id: number, data: Partial<UsuarioModel>){    
+    this.usuario={...data};
+    return this.http.patch(`${base_url}/usuarios/editar-estado/${id}`, this.usuario);
+  }
+
   guardarCambiarContrasenia(id: number, data: any){    
     
     return this.http.patch(`${base_url}/usuarios/cambiar-password/${id}`, data);

@@ -134,84 +134,59 @@
                                             <div class="field col-12">
                                                 <label for="centro_mediacion_id">Centro Mediación</label>
                                                 <p-listbox [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" styleClass="listbox1" [listStyle]="{'max-height':'250px'}" ></p-listbox>
-                                                <!-- <small *ngIf="isValid('centro_mediacion_id')" class="p-error">
-                                                    <div *ngFor="let validation of user_validation_messages.centro_mediacion_id" >
-                                                        <div  *ngIf="formaTramite.get('centro_mediacion_id')?.hasError(validation.type)">
-                                                            {{validation.message}}
-                                                        </div>
-                                                    </div>
-                                                </small> -->
+                                                
                                             </div>
                                         </div>
                                     </div>
                                     <!-- FIN CARD CENTROS DE MEDIACION -->    
 
-                                    <!-- ROL USUARIO-->
-                                    <form [formGroup]="formaUsuario">
-                                        <!-- CARD ROL-->
-                                        <div class="card p-fluid">
-
-                                            <h5 class="block font-bold font-medium mb-2">Rol de usuario</h5>
-                                            
+                                    <!-- ROL USUARIO-->                                    
+                                    <!-- CARD ROL-->
+                                    <div class="card p-fluid">
+                                        <h5 class="block font-bold font-medium mb-2">Estado del usuario</h5>
+                                        <form [formGroup]="formaRolUsuario">
                                             <div class="formgrid grid">
-
                                                 <div class="field col-12 md:col-6 lg:col-6">
-                                                    <label for="dni">DNI usuario</label>
-                                                    <input type="text" pInputText id="dni" formControlName="dni" />
-                                                    <small *ngIf="isValid('dni')" class="p-error">
-                                                        <div *ngFor="let validation of user_validation_messages.dni" >
-                                                            <div  *ngIf="formaUsuario.get('dni')?.hasError(validation.type)">
-                                                                {{validation.message}}
-                                                            </div>
-                                                        </div>
-                                                    </small>
+                                                    <label for="rol">Rol actual</label>
+                                                    <input type="text" pInputText id="rol" formControlName="rol_actual" readonly />
+                                                    
+                                                </div>                                           
+                                                <div class="field col-12 md:col-6 lg:col-6">
+                                                    <label for="activo_actual">Activo actual</label>
+                                                    <input type="text" pInputText id="activo_actual" formControlName="activo_actual" readonly />
+                                                    
                                                 </div>
                                             </div>
-                
-                                            <div class="formgrid grid">
+
+                                            <div class="formgrid grid mt-2">    
+                                                <div class="field col-12 ">
+                                                    <label for="centro_mediacion_id">Modificar datos del estado</label>                                                
+                                                    
+                                                </div>                                             
                                                 <div class="field col-12 md:col-6 lg:col-6">
-                                                    <label for="apellido">Apellido</label>
-                                                    <input type="text" pInputText id="apellido" formControlName="apellido" />
-                                                    <small *ngIf="isValid('apellido')" class="p-error">
-                                                        <div *ngFor="let validation of user_validation_messages.apellido" >
-                                                            <div  *ngIf="formaUsuario.get('apellido')?.hasError(validation.type)">
-                                                                {{validation.message}}
-                                                            </div>
-                                                        </div>
-                                                    </small>
-                                                </div>
+                                                    <label for="rol_id">Nuevo rol</label>
+                                                    <p-dropdown id="rol_id" [options]="listaRoles" optionLabel="rol" optionValue="id_rol" formControlName="rol_id">
+                                                    </p-dropdown>
+                                                </div> 
                                                 <div class="field col-12 md:col-6 lg:col-6">
-                                                    <label for="nombre">Nombre</label>
-                                                    <input type="text" pInputText id="nombre" formControlName="nombre" />
-                                                    <small *ngIf="isValid('nombre')" class="p-error">
-                                                        <div *ngFor="let validation of user_validation_messages.nombre" >
-                                                            <div  *ngIf="formaUsuario.get('nombre')?.hasError(validation.type)">
-                                                                {{validation.message}}
-                                                            </div>
-                                                        </div>
-                                                    </small>
-                                                </div>
-                                            </div>
-                    
-                                            <div class="formgrid grid">
-                                                <div class="field col-12 md:col-6 lg:col-6">
-                                                    <label for="sexo_id">Sexo</label>
-                                                    <p-dropdown id="sexo_id" [options]="listaSexo" optionLabel="sexo" optionValue="id_sexo" formControlName="sexo_id" placeholder="Seleccionar...">
+                                                    <label for="activo">Activo</label>
+                                                    <p-dropdown id="activo" [options]="listaSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="activo">
                                                     </p-dropdown>
                                                 </div>                                
                                             </div>
+                                            
                                             <div  class="col-12 grid mt-2">
-                                                <button pButton pRipple type="button" label="Guardar" class="p-button-success" style="width: 47%;" (click)="submitFormUsuario()" ></button>
-                                                <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger ml-2" style="width: 47%;" (click)="cancelarModificacionUsuario()"></button>
+                                                <button pButton pRipple type="button" label="Guardar" class="p-button-success" style="width: 47%;" (click)="submitFormModificarEstadoUsuario()" ></button>
                                                 
                                             </div>
-                                        </div>
-                                        <!-- FIN CARD ROL -->                                        
-                                    </form>                                    
+                                        </form>
+                                    </div>
+                                    <!-- FIN CARD ROL -->                                        
+                                                                     
                                     <!-- FIN ROL USUARIO -->
 
                                     <!-- RESET CONTRASEÑA -->
-                                    <form [formGroup]="formaUsuario">     
+                                    <form [formGroup]="formaResetPassword">     
                                         <!-- CARD RESET -->
                                         <div  class="card p-fluid">
                                             <h5 class="block font-bold font-medium mb-2">Reset contraseña</h5>                                            
@@ -219,10 +194,10 @@
                                             <div class="formgrid grid">                
                                                 <div class="field col">
                                                     <label for="email">Escriba "RESET" para reestablecer la contraseña</label>
-                                                    <input type="text" pInputText id="email" formControlName="email" />
-                                                    <small *ngIf="isValid('email')" class="p-error">
-                                                        <div *ngFor="let validation of user_validation_messages.email" >
-                                                            <div  *ngIf="formaUsuario.get('email')?.hasError(validation.type)">
+                                                    <input type="text" pInputText id="confirmacion" formControlName="confirmacion" />
+                                                    <small *ngIf="isValid('confirmacion')" class="p-error">
+                                                        <div *ngFor="let validation of user_validation_messages.confirmacion" >
+                                                            <div  *ngIf="formaResetPassword.get('confirmacion')?.hasError(validation.type)">
                                                                 {{validation.message}}
                                                             </div>
                                                         </div>
@@ -230,7 +205,7 @@
                                                 </div>
                                             </div>    
                                             <div  class="col-12 grid">
-                                                <button pButton pRipple type="button" label="Resetear contraseña" class="p-button-warning" style="width: 47%;" (click)="submitFormUsuario()" ></button>
+                                                <button pButton pRipple type="button" label="Resetear contraseña" class="p-button-warning" style="width: 47%;" (click)="submitFormResetPass()" ></button>
                                                 
                                                 
                                             </div>

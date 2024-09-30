@@ -18,6 +18,7 @@ import { UsuarioCentroModel } from 'src/app/models/usuario_centro.model ';
 import { ElementoModel } from 'src/app/models/elemento.model';
 import { RolesService } from '../../../service/roles.service';
 import { RolModel } from 'src/app/models/rol.model';
+import { opcionSiNo } from 'src/app/common/data-mokeada';
 
 @Component({
   selector: 'app-usuarios-administrar',
@@ -39,6 +40,7 @@ export class UsuariosAdministrarComponent implements OnInit {
   listaAnios: number[] = [];
   listaAniosDropdown: { label: string, value: number }[] = [];
   listaSexo: SexoModel[] = [];
+  listaSiNo: any[] = [];
   listaRoles: RolModel[] = [];
   listTramitesAsignados: UsuarioTramiteModel[]=[];
   listTramitesfinalizados: UsuarioTramiteModel[]=[];
@@ -49,6 +51,7 @@ export class UsuariosAdministrarComponent implements OnInit {
   formaUsuario: FormGroup; 
   formaBusqueda: FormGroup;
   formaRolUsuario: FormGroup;
+  formaResetPassword: FormGroup;
   
   //VARIABLES
   anioActual: number;
@@ -82,9 +85,15 @@ export class UsuariosAdministrarComponent implements OnInit {
       
     });
 
+    this.formaResetPassword = this.fb.group({
+      confirmacion: ['',[Validators.required]],         
+    });
+
     this.formaRolUsuario = this.fb.group({
-      rol_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-      
+      rol_actual: ['',[Validators.required]],
+      activo_actual: ['', [Validators.required]],
+      rol_id: [,[Validators.required]],
+      activo: [,[Validators.required]]
     });
     
   }
@@ -139,7 +148,9 @@ export class UsuariosAdministrarComponent implements OnInit {
     if(this.dataUsuario.dni){
       this.cargarFormularioUsuario();
       this.cargarCentrosMediacionXUsuario(this.dataUsuario.id_usuario);
+      this.listarRoles();
       this.listarTramitesAsignados();
+      this.listaSiNo= opcionSiNo;
 
       //obtener anio actual para buscar por defecto los tramites del usuario de ese anio
       this.anioActual = new Date().getFullYear();
@@ -167,7 +178,75 @@ export class UsuariosAdministrarComponent implements OnInit {
   }
   //FIN ONINIT.......................................................
 
-  //GUARDAR USUARIO  
+  //GUARDAR RESET PASS USUARIO  
+  submitFormResetPass(){
+    
+    if(this.formaResetPassword.invalid){       
+        
+        Swal.fire('Formulario con errores',`Complete correctamente todos los campos del formulario`,"warning");
+        return Object.values(this.formaUsuario.controls).forEach(control => control.markAsTouched());
+    }
+
+    console.log("confirmacion antes", this.formaResetPassword.get('confirmacion')?.value);
+
+    if(this.formaResetPassword.get('confirmacion')?.value != "RESET"){       
+      
+      console.log("confirmacion", this.formaResetPassword.get('confirmacion')?.value);
+      Swal.fire('Formulario con errores',`Debe tipear la palabra RESET para continuar`,"warning");
+      return Object.values(this.formaResetPassword.controls).forEach(control => control.markAsTouched());
+  }
+
+    let dataRegistro: Partial<UsuarioModel>;
+    dataRegistro = {     
+      clave: this.dataUsuario.dni.toString()
+    };
+    
+    //GUARDAR EDICION USUARIO
+    this.usuarioService.guardarCambiarContrasenia(this.dataUsuario.id_usuario, dataRegistro)
+      .subscribe({
+        next: (resultado) => {
+            Swal.fire('Exito',`Se modificó los datos con exito`,"success");   
+        },
+        error: (error) => {
+            Swal.fire('Error',`Error al realizar la modificación: ${error.error.message}`,"error") 
+        }
+      });         
+    //FIN GUARDAR EDICION USUARIO 
+
+  }    
+  //FIN GUARDAR RESET PASS USUARIO............................................................
+
+  //GUARDAR MODIFICAR ESTADO USUARIO  
+  submitFormModificarEstadoUsuario(){
+    
+    if(this.formaRolUsuario.invalid){       
+        
+        Swal.fire('Formulario con errores',`Complete correctamente todos los campos del formulario`,"warning");
+        return Object.values(this.formaRolUsuario.controls).forEach(control => control.markAsTouched());
+    }
+
+    let dataRegistro: Partial<UsuarioModel>;
+    dataRegistro = {
+      rol_id: this.formaRolUsuario.get('rol_id')?.value,
+      activo: this.formaRolUsuario.get('activo')?.value,     
+    };
+    
+    //GUARDAR EDICION USUARIO
+    this.usuarioService.guardarEdicionEstado(this.dataUsuario.id_usuario, dataRegistro)
+      .subscribe({
+        next: (resultado) => {
+            Swal.fire('Exito',`Se modificó los datos con exito`,"success");   
+        },
+        error: (error) => {
+            Swal.fire('Error',`Error al realizar la modificación: ${error.error.message}`,"error") 
+        }
+      });         
+    //FIN GUARDAR EDICION USUARIO 
+
+  }    
+  //FIN GUARDAR MODIFICAR ESTADO USUARIO............................................................
+
+  //GUARDAR MODIFICAR USUARIO  
   submitFormUsuario(){
     
     if(this.formaUsuario.invalid){       
@@ -200,7 +279,7 @@ export class UsuariosAdministrarComponent implements OnInit {
     //FIN GUARDAR EDICION USUARIO 
 
   }    
-  //FIN GUARDAR USUARIO............................................................
+  //FIN GUARDAR MODIFICAR USUARIO............................................................
 
   //LISTADO DE TRAMITES ASIGNADOS
   listarTramitesAsignados(){    
@@ -247,16 +326,14 @@ export class UsuariosAdministrarComponent implements OnInit {
   }
   //FIN TRAMITES FINALIZADOS POR AÑO
 
-  //CARGA DE CENTROS DE MEDIACION
-  listarRoles(id_usuario: number){
+  //CARGA DE ROLES
+  listarRoles(){
     this.rolesService.listarRolesTodos().
       subscribe(respuesta => {
-        this.listaRoles= respuesta[0];
-             
-    
+        this.listaRoles= respuesta[0];    
     });  
   }
-  //FIN CARGA DE CENTROS DE MEDIACION.............................................
+  //FIN CARGA DE ROLES.............................................
 
   //CARGA DE CENTROS DE MEDIACION
   cargarCentrosMediacionXUsuario(id_usuario: number){
@@ -282,6 +359,11 @@ export class UsuariosAdministrarComponent implements OnInit {
     this.formaUsuario.get('sexo_id')?.setValue(this.dataUsuario.sexo_id);
     this.formaUsuario.get('telefono')?.setValue(this.dataUsuario.telefono);
     this.formaUsuario.get('email')?.setValue(this.dataUsuario.email);
+
+    this.formaRolUsuario.get('activo_actual')?.setValue(this.dataUsuario.activo?"SI":"NO");
+    this.formaRolUsuario.get('rol_actual')?.setValue(this.dataUsuario.rol.rol);
+    this.formaRolUsuario.get('rol_id')?.setValue(this.dataUsuario.rol.id_rol);
+    this.formaRolUsuario.get('activo')?.setValue(this.dataUsuario.activo);
   }
   //FIN CARGAR FORMULARIO USUARIO......................
 

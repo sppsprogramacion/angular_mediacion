@@ -19,6 +19,7 @@ export class UsuarioModel{
         public clave?: string,
         public rol_id?: string,
         public rol?: RolModel,
+        public activo?: boolean,
         public centros_mediacion?: CentroMediacionModel[]
 
     ){}
