@@ -10,6 +10,7 @@ import { DataService } from 'src/app/service/data.service';
 import { TramitesService } from 'src/app/service/tramites.service';
 import { UsuariosTramiteService } from 'src/app/service/usuarios-tramite.service';
 import { AuthService } from '../../../service/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-tramites-finalizados',
@@ -33,13 +34,24 @@ export class TramitesFinalizadosComponent implements OnInit {
   listSexo: SexoModel[]=[];
   listUsuariosTramites: UsuarioTramiteModel[]=[];
 
+   //FORMULARIOS
+   formaBusqueda: FormGroup;
+
   constructor(
+    private fb: FormBuilder,
+    
     private authService: AuthService,
     private tramitesService: TramitesService,
     private usuariosTramitesService: UsuariosTramiteService,
     public dataService: DataService,
     private router: Router
-  ) { }
+  ) { 
+    this.formaBusqueda = this.fb.group({      
+      anio: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+      
+    });
+
+  }
 
   ngOnInit(): void {
     this.listarTramitesUsuarioFinalizados();
