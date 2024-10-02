@@ -89,8 +89,9 @@ export class TramitesFinalizadosComponent implements OnInit {
   }
   //FIN LISTADO DE TRAMITES FINALIZADOS.......................................................
 
-  //LISTADO DE TRANITES USUARIO
+  //LISTADO DE TRANITES FINALIZADOS USUARIO
   listarTramitesUsuarioFinalizados(){
+    this.loading = true; 
     let id_usuario: number = this.authService.currentUserLogin.id_usuario;
 
     //REVISAR PARA LISTAR TRAMITES FINALIZADOS
@@ -101,7 +102,7 @@ export class TramitesFinalizadosComponent implements OnInit {
     
       });
   }
-  //FIN LISTADO DE TRAMITES USUARIO.......................................................
+  //FIN LISTADO DE TRAMITES FINALIZADOS USUARIO.......................................................
 
   //LISTADO DE TRANITES USUARIO
   listarTramitesUsuarioFinalizadosXAnio(anio: number){

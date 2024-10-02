@@ -7,7 +7,7 @@
                 </h5>
             </p-toolbar>
             <p-tabView styleClass="mt-2">
-                <p-tabPanel header="Datos Personales" leftIcon="pi pi-id-card">
+                <p-tabPanel *ngIf="isAdminCuenta()" header="Datos Personales" leftIcon="pi pi-id-card">
                     <div class="grid justify-content-center">
                         <div class="col-12">                        
 
@@ -119,7 +119,7 @@
                     </div>
 
                 </p-tabPanel>
-                <p-tabPanel header="Datos de cuenta" leftIcon="pi pi-id-card">
+                <p-tabPanel *ngIf="isAdminCuenta()" header="Datos de cuenta" leftIcon="pi pi-id-card">
                     <div class="grid justify-content-center">
                         <div class="col-12">                        
 
@@ -223,7 +223,138 @@
                     </div>
 
                 </p-tabPanel>
-                <p-tabPanel header="Tramites Asignados" leftIcon="pi pi-send">
+                
+                <p-tabPanel *ngIf="!isAdminCuenta()" header="Datos Personales" leftIcon="pi pi-id-card">
+                    <div class="grid justify-content-center">
+                        <div class="col-12">                        
+
+                            <div class="p-formgrid grid">                
+                                <!-- FORMULARIO USUARIO -->
+                                <div class="col-12">  
+                                    <form [formGroup]="formaUsuarioVer">
+                                        <!-- CARD DATOS PERSONALES-->
+                                        <div class="card p-fluid">
+
+                                            <h5 class="block font-bold font-medium mb-2">Datos de personales</h5>
+                                            
+                                            <div class="formgrid grid">
+
+                                                <div class="field col-12 md:col-6 lg:col-6">
+                                                    <label for="dni">DNI usuario</label>
+                                                    <input type="text" pInputText id="dni" formControlName="dni" readonly />
+                                                    
+                                                </div>
+                                            </div>
+                
+                                            <div class="formgrid grid">
+                                                <div class="field col-12 md:col-6 lg:col-6">
+                                                    <label for="apellido">Apellido</label>
+                                                    <input type="text" pInputText id="apellido" formControlName="apellido" readonly />
+                                                    
+                                                </div>
+                                                <div class="field col-12 md:col-6 lg:col-6">
+                                                    <label for="nombre">Nombre</label>
+                                                    <input type="text" pInputText id="nombre" formControlName="nombre" readonly />
+                                                    
+                                                </div>
+                                            </div>
+                    
+                                            <div class="formgrid grid">
+                                                <div class="field col-12 md:col-6 lg:col-6">
+                                                    <label for="sexo_id">Sexo</label>
+                                                    <input type="text" pInputText id="nombre" formControlName="sexo" readonly />
+                                                    
+                                                </div>                                
+                                            </div>
+                                            
+                                        </div>
+                                        <!-- FIN CARD DATOS PERSONALES -->
+
+                                        <!-- CARD DATOS DE CONTACTO -->
+                                        <div  class="card p-fluid">
+                                            <h5 class="block font-bold font-medium mb-2">Datos de contacto</h5>
+                                            
+                                            <div class="formgrid grid">
+                                                <div class="field col">
+                                                    <label for="telefono">Teléfono</label>
+                                                    <input type="text" pInputText id="telefono" formControlName="telefono" readonly />
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="formgrid grid">
+                
+                                                <div class="field col">
+                                                    <label for="email">Correo electrónico</label>
+                                                    <input type="text" pInputText id="email" formControlName="email" readonly />
+                                                    
+                                                </div>
+                                            </div>    
+                                            
+                                        </div>
+                                        <!-- FIN CARD CENTRO MEDICAION -->
+                                    </form>
+                                </div>
+                                <!--  FIN FORMULARIO CIUDADANO -->                                
+                            </div>
+
+                        </div>
+                    </div>
+
+                </p-tabPanel>
+                
+                <p-tabPanel *ngIf="!isAdminCuenta()" header="Datos de cuenta" leftIcon="pi pi-id-card">
+                    <div class="grid justify-content-center">
+                        <div class="col-12">                        
+
+                            <div class="p-formgrid grid">                
+                                <!-- CUENTA USUARIO USUARIO -->
+                                <div class="col-12">     
+                                    <!-- CARD CENTROS DE MEDIACION -->
+                                    <div  class="card p-fluid">
+                                        <h5 class="block font-bold font-medium mb-2">Centros de mediación</h5>                                            
+                                        
+                                        <div class="formgrid grid">
+                                            <div class="field col-12">
+                                                <label for="centro_mediacion_id">Centro Mediación</label>
+                                                <p-listbox [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" styleClass="listbox1" [listStyle]="{'max-height':'250px'}" ></p-listbox>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- FIN CARD CENTROS DE MEDIACION -->    
+
+                                    <!-- ROL USUARIO-->                                    
+                                    <!-- CARD ROL-->
+                                    <div class="card p-fluid">
+                                        <h5 class="block font-bold font-medium mb-2">Estado del usuario</h5>
+                                        <form [formGroup]="formaUsuarioVer">
+                                            <div class="formgrid grid">
+                                                <div class="field col-12 md:col-6 lg:col-6">
+                                                    <label for="rol">Rol actual</label>
+                                                    <input type="text" pInputText id="rol" formControlName="rol_actual" readonly />
+                                                    
+                                                </div>                                           
+                                                <div class="field col-12 md:col-6 lg:col-6">
+                                                    <label for="activo_actual">Activo actual</label>
+                                                    <input type="text" pInputText id="activo_actual" formControlName="activo_actual" readonly />
+                                                    
+                                                </div>
+                                            </div>                                            
+                                        </form>
+                                    </div>
+                                    <!-- FIN CARD ROL -->            
+                                    <!-- FIN ROL USUARIO -->
+
+                                </div>
+                                <!--  FIN CUENTA USUARIO -->
+                                
+                            </div>
+
+                        </div>
+                    </div>
+
+                </p-tabPanel>
+                <p-tabPanel *ngIf="!isAdminCuenta()" header="Tramites Asignados" leftIcon="pi pi-send">
                     <!-- TABLA DE TRAMITES ASIGNADOS-->
                     <p-table #dt1 [value]="listTramitesAsignados" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['tramite.numero_tramite', 'tramite.expediente' ,'tramite.ciudadano.apellido','tramite.ciudadano.nombre','tramite.ciudadano.dni']"
                         responsiveLayout="scroll">
@@ -338,7 +469,7 @@
                     </p-table>
                     <!-- FIN TABLA DE TRAMITES ASIGNADOS-->
                 </p-tabPanel>
-                <p-tabPanel header="Tramites Finalizados" leftIcon="pi pi-check-square">
+                <p-tabPanel *ngIf="!isAdminCuenta()" header="Tramites Finalizados" leftIcon="pi pi-check-square">
                     <div>
                         <div class="p-formgrid grid">                
                             <!-- FORMULARIO BUSCAR -->

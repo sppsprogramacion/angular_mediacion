@@ -18,6 +18,8 @@ import { MunicipioModel } from '../models/municipio.model';
 import { MunicipiosService } from './municipios.service';
 import { FuncionTtramiteModel } from '../models/funcion_tramite.model';
 import { FuncionTramiteService } from './funcion-tramite.service';
+import { RolModel } from '../models/rol.model';
+import { RolesService } from './roles.service';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +43,9 @@ export class DataMokeadaService {
   private listProvinciasSubject: BehaviorSubject<ProvinciaModel[]> = new BehaviorSubject<ProvinciaModel[]>([]);
   private listSexo: SexoModel[] = [];
   private listSexoSubject: BehaviorSubject<SexoModel[]> = new BehaviorSubject<SexoModel[]>([]);
+  private listRoles: RolModel[] = [];
+  private listRolesSubject: BehaviorSubject<RolModel[]> = new BehaviorSubject<RolModel[]>([]);
+  
   private listTiposAudiencia: TipoAudienciaModel[] = [];
   private listTiposAudienciaSubject: BehaviorSubject<TipoAudienciaModel[]> = new BehaviorSubject<TipoAudienciaModel[]>([]);
 
@@ -54,6 +59,7 @@ export class DataMokeadaService {
     private objetosService: ObjetosService,
     private provinciasService: ProvinciasService,
     private sexoService: SexoService,
+    private rolesService: RolesService,
     private tiposAudienciaService: TiposAudienciaService,
   ) { }
 
@@ -142,7 +148,6 @@ export class DataMokeadaService {
         subscribe(respuesta => {
             this.listProvincias= respuesta[0];
             this.listProvinciasSubject.next(this.listProvincias);
-            console.log("provincias dentro del metodo");
         });
     }
     return this.listProvinciasSubject.asObservable();
@@ -156,12 +161,24 @@ export class DataMokeadaService {
         subscribe(respuesta => {
             this.listSexo= respuesta[0];
             this.listSexoSubject.next(this.listSexo);
-            console.log("dentro del metodo");
         });
     }
     return this.listSexoSubject.asObservable();
   } 
   //FIN LISTADO DE SEXOS............................
+
+  //LISTADO DE ROLES
+  listarRoles(): Observable<RolModel[]> { 
+    if(this.listRoles.length == 0) {      
+      this.rolesService.listarRolesTodos().
+        subscribe(respuesta => {
+            this.listRoles= respuesta[0];
+            this.listRolesSubject.next(this.listRoles);
+        });
+    }
+    return this.listRolesSubject.asObservable();
+  } 
+  //FIN LISTADO DE ROLES............................
 
   //LISTADO DE TIPOS AUDIENCIA
   listarTipoAudiaencia(): Observable<TipoAudienciaModel[]> { 

@@ -49,6 +49,7 @@ export class UsuariosAdministrarComponent implements OnInit {
 
   //FORMULARIOS
   formaUsuario: FormGroup; 
+  formaUsuarioVer: FormGroup; 
   formaBusqueda: FormGroup;
   formaRolUsuario: FormGroup;
   formaResetPassword: FormGroup;
@@ -80,6 +81,25 @@ export class UsuariosAdministrarComponent implements OnInit {
       
     });
 
+    this.formaUsuarioVer = this.fb.group({
+      dni: ['',[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.minLength(5)]],
+      apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-zñÑ0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-zñÑ0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      sexo: [1,[Validators.required]],
+      telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+      email: ['',[Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],    
+      rol_actual: ['',[Validators.required]],
+      activo_actual: ['', [Validators.required]],
+
+    });
+
+    this.formaRolUsuario = this.fb.group({
+      rol_actual: ['',[Validators.required]],
+      activo_actual: ['', [Validators.required]],
+      rol_id: [,[Validators.required]],
+      activo: [,[Validators.required]]
+    });
+
     this.formaBusqueda = this.fb.group({      
       anio: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       
@@ -89,12 +109,6 @@ export class UsuariosAdministrarComponent implements OnInit {
       confirmacion: ['',[Validators.required]],         
     });
 
-    this.formaRolUsuario = this.fb.group({
-      rol_actual: ['',[Validators.required]],
-      activo_actual: ['', [Validators.required]],
-      rol_id: [,[Validators.required]],
-      activo: [,[Validators.required]]
-    });
     
   }
   //FIN CONSTRUCTOR..................................................
@@ -154,7 +168,13 @@ export class UsuariosAdministrarComponent implements OnInit {
   ngOnInit(): void {
     this.dataUsuario = this.dataService.usuarioData;
     if(this.dataUsuario.dni){
-      this.cargarFormularioUsuario();
+      if(this.isAdminCuenta()){
+        this.cargarFormularioUsuario();
+      }
+      else{
+        this.cargarFormularioUsuarioVer();
+      }
+      
       this.cargarCentrosMediacionXUsuario(this.dataUsuario.id_usuario);
       this.listarRoles();
       this.listarTramitesAsignados();
@@ -373,6 +393,20 @@ export class UsuariosAdministrarComponent implements OnInit {
   }
   //FIN CARGAR FORMULARIO USUARIO......................
 
+  //CARGAR FORMULARIO USUARIO VER
+  cargarFormularioUsuarioVer(){
+    this.formaUsuarioVer.get('dni')?.setValue(this.dataUsuario.dni);
+    this.formaUsuarioVer.get('apellido')?.setValue(this.dataUsuario.apellido);
+    this.formaUsuarioVer.get('nombre')?.setValue(this.dataUsuario.nombre);
+    this.formaUsuarioVer.get('sexo')?.setValue(this.dataUsuario.sexo.sexo);
+    this.formaUsuarioVer.get('telefono')?.setValue(this.dataUsuario.telefono);
+    this.formaUsuarioVer.get('email')?.setValue(this.dataUsuario.email);
+
+    this.formaUsuarioVer.get('activo_actual')?.setValue(this.dataUsuario.activo?"SI":"NO");
+    this.formaUsuarioVer.get('rol_actual')?.setValue(this.dataUsuario.rol.rol);
+  }
+  //FIN CARGAR FORMULARIO USUARIO VER......................
+
   //ACCEDER A DATA SERVICE
   administrarTramite(data: TramiteModel){
     this.dataService.tramiteData = data;
@@ -400,6 +434,16 @@ export class UsuariosAdministrarComponent implements OnInit {
         
   }
   //CANCELAR MODIFICACION DATOS USUARIO.................
+
+  //VERIFICAR ADMINISTRADOR
+  isAdminCuenta(): boolean{
+    if(this.authService.currentUserLogin.rol_id === "admincuentas"){
+      return true;
+    }
+
+    return false;
+  }
+  //FIN VERIFICAR ADMINISTRADOR
 
   //LIMPIAR FILTROS
   clear(table: Table) {

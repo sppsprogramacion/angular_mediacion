@@ -14,6 +14,10 @@ import { DataService } from '../../../service/data.service';
 import { Table } from 'primeng/table';
 import { Router } from '@angular/router';
 import { DataMokeadaService } from '../../../service/data-mokeada.service';
+import { AuthService } from 'src/app/service/auth.service';
+import { RolModel } from 'src/app/models/rol.model';
+import { opcionSiNo } from 'src/app/common/data-mokeada';
+import { FiltroBooleanModel } from 'src/app/models/filtro_boolean.model';
 
 @Component({
   selector: 'app-usuarios-lista',
@@ -41,12 +45,12 @@ export class UsuariosListaComponent implements OnInit {
   validacionClaves: boolean = true;
 
   //LISTAS    
-  listUsuarios: UsuarioModel[]=[];
-  listDepartamentos: DepartamentoModel[]=[];
-  listMunicipios: MunicipioModel[]= [];  
-  listMunicipiosCompleto: MunicipioModel[]=[];
+  listRoles: RolModel[]=[];
   listSexo: SexoModel[]=[];
+  listUsuarios: UsuarioModel[]=[];  
+  filtroRoles: FiltroModel[]=[];
   filtroSexo: FiltroModel[]=[];
+  filtroSiNoBoolean: FiltroBooleanModel[]=[];
 
   //FORMULARIOS
   formaUsuario: FormGroup;  
@@ -55,6 +59,7 @@ export class UsuariosListaComponent implements OnInit {
     private fb: FormBuilder,
     public configService: ConfigService,
     private readonly datePipe: DatePipe,
+    private authService: AuthService,
     private readonly dataService: DataService,
     private dataMokeadaService: DataMokeadaService,
     private usuariosService: UsuariosService,
@@ -142,12 +147,24 @@ export class UsuariosListaComponent implements OnInit {
     this.listarUsuarios();
 
     //CARGA DE LISTADOS DESDE DATA MOKEADA
-    this.dataMokeadaService.listarDepartamentos().subscribe(departamentos => {
-      this.listDepartamentos = departamentos;
-    });
+    // this.dataMokeadaService.listarDepartamentos().subscribe(departamentos => {
+    //   this.listDepartamentos = departamentos;
+    // });
 
-    this.dataMokeadaService.listarMunicipios().subscribe(municipios => {
-      this.listMunicipiosCompleto= municipios;
+    // this.dataMokeadaService.listarMunicipios().subscribe(municipios => {
+    //   this.listMunicipiosCompleto= municipios;
+    // });
+
+    this.dataMokeadaService.listarRoles().subscribe(roles => {
+      this.listRoles = roles;
+      
+      this.filtroRoles = this.listRoles.map(respuesta => {
+        return {
+          label: respuesta.rol.toLowerCase(),
+          value: respuesta.rol,
+         }
+      });
+
     });
 
     this.dataMokeadaService.listarSexo().subscribe(sexos => {
@@ -161,7 +178,13 @@ export class UsuariosListaComponent implements OnInit {
       });
 
     });
-
+    
+    this.filtroSiNoBoolean = opcionSiNo.map(respuesta => {
+      return {
+        label: respuesta.respuesta_sino.toUpperCase(),
+        value: respuesta.id_opcion_sino,
+       }
+    });
    
     
   }
@@ -242,25 +265,17 @@ export class UsuariosListaComponent implements OnInit {
     this.usuarioDialog = false;
   }    
   //FIN MANEJO FORMULARIO DIALOG....................................
+  
 
-
-  //CARGAR MUNICIPOS
-  cargarMunicipios(id_departamento: number){
-    this.listMunicipios=this.listMunicipiosCompleto.filter(municipio => {      
-      return municipio.id_municipio == 1 || municipio.departamento_id == id_departamento;
-    });    
-  }
-
-  onChangeDepartamento(){
-    const id = this.formaUsuario.get('departamento_id')?.value;
-    if(id != null){               
-        this.cargarMunicipios(parseInt(id.toString()));
-        this.formaUsuario.get('municipio_id')?.setValue(1);               
-        this.formaUsuario.get('municipio_id')?.markAsUntouched();
-        
+  //VERIFICAR ADMINISTRADOR
+  isAdminCuenta(): boolean{
+    if(this.authService.currentUserLogin.rol_id === "admincuentas"){
+      return true;
     }
+
+    return false;
   }
-  //FIN CARGAR MUNICIPOS..........................................................................
+  //FIN VERIFICAR ADMINISTRADOR
 
   //LIMPIAR FILTROS
   clear(table: Table) {
