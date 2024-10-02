@@ -5,6 +5,42 @@
 
             <h5>Tramites finalizados</h5>
 
+            <div>
+                <div class="p-formgrid grid">                
+                    <!-- FORMULARIO BUSCAR -->
+                    <div class="col-12">  
+                        <form [formGroup]="formaBusqueda">
+                            <!-- CARD DATOS BUSCAR-->
+                            <div class="card p-fluid">
+                                        
+                                <div class="formgrid grid">
+                                    <div class="field col-6 md:col-4 lg:col-4">
+                                        <label for="anio">Año</label>
+                                        <p-dropdown id="anio" [options]="listaAniosDropdown" optionLabel="label" optionValue="value" formControlName="anio" placeholder="Seleccinar...">
+                                        </p-dropdown>
+                                    </div>  
+
+                                    <div class="field col-6 md:col-4 lg:col-4">
+                                        <button pButton pRipple type="button" label="Buscar año" class="p-button-primary mt-4" (click)="buscarFinalizadosXAnio()" ></button>
+                                        
+                                    </div>  
+
+                                    <div class="field col-6 md:col-4 lg:col-4">                                                        
+                                        <button pButton pRipple type="button" label="Buscar todos" class="p-button-prymary mt-4" (click)="listarTramitesUsuarioFinalizados()"></button>
+                                    </div> 
+
+                                </div>
+                                
+                            </div>
+                            <!-- FIN CARD DATOS BUSCAR -->        
+                            
+                        </form>
+                    </div>
+                    <!--  FIN FORMULARIO BUSCAR -->
+                    
+                </div>
+            </div>
+            
             <!-- TABLA DE TRAMITES -->
             <p-table #dt1 [value]="listUsuariosTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['tramite.numero_tramite','tramite.ciudadano.apellido','tramite.ciudadano.nombre','tramite.ciudadano.dni','tramite.expediente']" responsiveLayout="scroll">
                 <ng-template pTemplate="caption">
