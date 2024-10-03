@@ -74,7 +74,7 @@ export class AppMenuComponent implements OnInit {
         //FIN MENU CIUDADANO.........................................................
 
         //MENU MEDIADOR
-        if(this.authService.currentUserLogin && this.authService.currentUserLogin.rol_id != "admnistrador"){
+        if(this.authService.currentUserLogin && this.authService.currentUserLogin.rol_id == "mediador"){
             
             this.nombre_completo = this.authService.currentUserLogin.apellido + " " + this.authService.currentUserLogin.nombre;
             this.model = [                
@@ -112,7 +112,7 @@ export class AppMenuComponent implements OnInit {
         //FIN MENU MEDIADOR..........................................................
 
         //MENU ADMINISTRADOR
-        if(this.authService.currentUserLogin && this.authService.currentUserLogin.rol_id == "administrador") {
+        if(this.authService.currentUserLogin && (this.authService.currentUserLogin.rol_id == "administrador" || this.authService.currentUserLogin.rol_id == "supervisor")) {
             this.nombre_completo = this.authService.currentUserLogin.apellido + " " + this.authService.currentUserLogin.nombre;
             this.model = [
                 {
@@ -166,6 +166,8 @@ export class AppMenuComponent implements OnInit {
         }
         //FIN MENU ADMINISTRADOR..................................
 
+        
+
         //MENU ADMINISTRADOR CUENTAS
         if(this.authService.currentUserLogin && this.authService.currentUserLogin.rol_id == "admincuentas") {
             this.nombre_completo = this.authService.currentUserLogin.apellido + " " + this.authService.currentUserLogin.nombre;
@@ -183,6 +185,12 @@ export class AppMenuComponent implements OnInit {
                         {label: 'Datos Personales', icon: 'pi pi-id-card', routerLink: ['/admin/miperfil/datospersonales']},
                         {label: 'Cambiar contraseña', icon: 'pi pi-circle', routerLink: ['/admin/miperfil/cambiarcontrasenia']},
                         
+                    ]
+                },
+                {
+                    label: 'Salir',
+                    items: [
+                        {label: 'Cerrar sesión', icon: 'pi pi-sign-out', routerLink: ['/login-admin-mediacion']},
                     ]
                 },
                 

@@ -63,6 +63,7 @@ import { AuthUsuarioGuard } from './auth/guards/auth-usuario.guard';
 import { CiudadanoCambiarPasswordComponent } from './pages/ciudadano-perfil/ciudadano-cambiar-password/ciudadano-cambiar-password.component';
 import { UsuarioDatosPersonalesComponent } from './pages/usuario-perfil/usuario-datos-personales/usuario-datos-personales.component';
 import { UsuarioCambiarContraseniaComponent } from './pages/usuario-perfil/usuario-cambiar-contrasenia/usuario-cambiar-contrasenia.component';
+import { TramitesAdministrarSupervisorComponent } from './pages/tramites-administrador/tramites-administrar-supervisor/tramites-administrar-supervisor.component';
 
 @NgModule({
     imports: [
@@ -95,6 +96,7 @@ import { UsuarioCambiarContraseniaComponent } from './pages/usuario-perfil/usuar
                     {path: 'tramites/administrar', component: TramitesAdministrarComponent},
                     {path: 'tramites/administrar-finalizado', component: TramitesAdministrarFinalizadoComponent},
                     {path: 'tramites/administrar-med', component: TramitesAdministrarMediadorComponent},
+                    {path: 'tramites/administrar-visor', component: TramitesAdministrarSupervisorComponent},
                     {path: 'tramites/asignados', component: TramitesAsignadosComponent},
                     {path: 'tramites/finalizados', component: TramitesFinalizadosComponent},
                     {path: 'tramites/nuevo', component: TramitesNuevoComponent},
