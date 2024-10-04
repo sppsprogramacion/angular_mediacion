@@ -128,15 +128,16 @@ export class TramitesAsignadosComponent implements OnInit {
       this.router.navigateByUrl("admin/tramites/administrar");
     }
 
+    //verificacion si el usuario tiene la funcion de administrativo en el tramite
+    if( this.authService.currentUserLogin.rol_id == "supervisor" || data.funcion_tramite_id == 1 ){
+      this.router.navigateByUrl("admin/tramites/administrar-visor");
+    }
+    
     //verificacion si el usuario tiene la funcion de mediador en el tramite
     if( this.authService.currentUserLogin.rol_id == "mediador" && data.funcion_tramite_id == 2 ){
       this.router.navigateByUrl("admin/tramites/administrar-med");
     }
 
-    //verificacion si el usuario tiene la funcion de administrativo en el tramite
-    if( this.authService.currentUserLogin.rol_id == "supervisor" || data.funcion_tramite_id == 1 ){
-      this.router.navigateByUrl("admin/tramites/administrar-visor");
-    }
 
     
   }

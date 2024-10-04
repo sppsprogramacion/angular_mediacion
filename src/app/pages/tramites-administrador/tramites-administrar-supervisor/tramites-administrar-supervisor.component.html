@@ -1,1 +1,711 @@
-<p>tramites-administrar-supervisor works!</p>
+<!-- Card Tramite -->
+<div class="card mb-0 ">
+    <p-toolbar styleClass="mb-3 bg-cyan-500">
+        <h5 class="block text-white font-bold font-medium mb-1 ">
+            Datos del tramite
+        </h5>
+    </p-toolbar>
+
+    <!-- CARD PRINCIPAL -->
+    <div class="card p-fluid">
+        <p-toolbar styleClass="mb-3 bg-orange-500">
+            <h5 class="block text-white  font-bold font-medium mb-1">Datos principales</h5>
+        </p-toolbar>
+        <div class="bg-cyan-600">
+
+        </div>
+        <div class="col-12 border-bottom-1 surface-border mt-4">
+            <div class="grid">
+                <div class="col-12 lg:col-3 xl:col-3">
+                    <span class="text font-medium text-1xl">Tramite N°:<span class="text ml-2 font-medium"> {{dataTramite.numero_tramite}} </span></span>
+                </div>
+                <div class="col-12 lg:col-3 xl:col-3 py-2">
+                    <span class="text font-medium text-1xl">Fecha inicia:<span class="text ml-1 font-medium"> {{dataTramite.fecha_tramite| date: 'dd/MM/yyyy'}}</span></span>
+                </div>
+                <div class="col-12 lg:col-3 xl:col-3 py-2">
+                    <span class="text font-medium text-1xl">N° expediente:<span class="text ml-1 font-medium"> {{dataTramite.expediente}}</span></span>
+                </div>
+                <div class="col-12 lg:col-3 xl:col-3 py-2">
+                    <span class="text font-medium text-1xl">Fecha exp.:<span class="text ml-1 font-medium"> {{dataTramite.fecha_expediente| date: 'dd/MM/yyyy'}}</span></span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- FIN CARD PRINCIPAL-->
+
+    <!-- CARD SOLICITANTE -->
+    <div class="card p-fluid">
+        <p-toolbar styleClass="mb-3 bg-orange-500">
+            <h5 class="block text-white  font-bold font-medium mb-1">Solicitante</h5>
+        </p-toolbar>
+        <div class="bg-cyan-600">
+
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12 lg:col-4 xl:col-4">
+                    <span class="text font-medium text-1xl">Nombre:<span class="text ml-1 font-medium"> {{dataTramite.ciudadano?.apellido}} {{dataTramite.ciudadano?.nombre}}</span></span>
+                </div>
+                <div class="col-12 lg:col-4 xl:col-4">
+                    <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{dataTramite.ciudadano?.dni}}</span></span>
+                </div>
+                <div class="col-12 lg:col-4 xl:col-4">
+                    <span class="text font-medium text-1xl">Sexo:<span class="text ml-1 font-medium"> {{dataTramite.ciudadano?.sexo.sexo}}</span></span>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-medium text-1xl">Departamento:<span class="text ml-1 font-medium"> {{dataTramite.departamento?.departamento}} </span></span>
+                </div>
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-medium text-1xl">Municipio:<span class="text ml-1 font-medium"> {{dataTramite.municipio?.municipio}} </span></span>
+                </div>
+                <div class="col-12">
+                    <span class="text font-medium text-1xl">Dirección:<span class="text ml-1 font-medium"> Barrio: {{dataTramite.localidad_barrio}} - Calle/Dirección: {{dataTramite.calle_direccion}} - Número: {{dataTramite.numero_dom}}</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-medium text-1xl">Telefono:<span class="text ml-1 font-medium"> {{dataTramite.ciudadano?.telefono}} </span></span>
+                </div>
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-medium text-1xl">Email:<span class="text ml-1 font-medium"> {{dataTramite.ciudadano?.email}} </span></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- FIN CARD SOLICITANTE-->
+
+    <!-- CARD MOTIVO -->
+    <div class="card p-fluid">
+        <p-toolbar styleClass="mb-3 bg-orange-500">
+            <h5 class="block text-white  font-bold font-medium mb-1">Motivo</h5>
+        </p-toolbar>
+        <div class="bg-cyan-600">
+
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12 lg:col-6 xl:col-6 py-2">
+                    <span class="text font-medium text-1xl">Motivo de la solicitud:<span class="text ml-1 font-medium"> {{dataTramite.objeto?.objeto}}</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12">
+                    <span class="text font-medium text-1xl">Existe violencia entre las partes:<span class="text ml-1 font-medium"> {{dataTramite.violencia_partes === true?"SI": "NO"}}</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12">
+                    <span class="text font-bold font-medium text-1xl">Violencia de género</span>
+                </div>
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-medium text-1xl">Existe violencia de género:<span class="text ml-1 font-medium"> {{dataTramite.violencia_genero === true?"SI": "NO" }} </span></span>
+                </div>
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-medium text-1xl">Existe denucnia:<span class="text ml-1 font-medium"> {{dataTramite.existe_denuncia === true?"SI": "NO"}} </span></span>
+                </div>
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-medium text-1xl">Existe medida cautelar?:<span class="text ml-1 font-medium"> {{dataTramite.medida_cautelar === true?"SI": "NO"}} </span></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- FIN CARD MOTIVO-->
+
+    <!-- CARD CENTRO DE MEDIACION -->
+    <div class="card p-fluid">
+        <p-toolbar styleClass="mb-3 bg-orange-500">
+            <h5 class="block text-white  font-bold font-medium mb-1">Centro de mediación</h5>
+        </p-toolbar>
+        <div class="bg-cyan-600">
+
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12">
+                    <span class="text font-medium text-1xl">Centro de Mediación:<span class="text ml-1 font-medium"> {{dataTramite.centro_mediacion?.centro_mediacion}}</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-medium text-1xl">Departamento:<span class="text ml-1 font-medium"> {{dataTramite.centro_mediacion?.departamento.departamento}} </span></span>
+                </div>
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-medium text-1xl">Municipio:<span class="text ml-1 font-medium"> {{dataTramite.centro_mediacion?.municipio.municipio}} </span></span>
+                </div>
+                <div class="col-12">
+                    <span class="text font-medium text-1xl">Dirección:<span class="text ml-1 font-medium"> Barrio: {{dataTramite.centro_mediacion?.localidad_barrio}} - Calle/Dirección: {{dataTramite.centro_mediacion?.calle_direccion}} - Número: {{dataTramite.centro_mediacion?.numero_dom}}</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-medium text-1xl">Telefono:<span class="text ml-1 font-medium"> {{dataTramite.centro_mediacion?.telefono}} </span></span>
+                </div>
+                <div class="col-12 lg:col-6 xl:col-6">
+                    <span class="text font-medium text-1xl">Email:<span class="text ml-1 font-medium"> {{dataTramite.centro_mediacion?.email}} </span></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- FIN CARD CENTRO DE MEDIACION-->
+
+    <!-- Card CONVOCADOS -->
+    <div class="card p-fluid mb-0 mt-2">
+        <p-toolbar styleClass="mb-3 bg-orange-500">
+            <h5 class="block text-white font-bold font-medium mb-1 ">
+                Personas convocadas
+            </h5>
+        </p-toolbar>
+
+        <!-- TABLA DE CONVOCADOS -->
+        <p-table #dt1 [value]="dataTramite.convocados" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 3rem"></th>
+                    <th>
+                        <div class="flex justify-content-between align-items-left">
+                            Apellido y nombre
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            DNI
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            Sexo
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            Provincia
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-convocado>
+                <tr>
+                    <td>
+                        <p-button icon="pi pi-search-plus" styleClass="p-button-rounded mb-1" (click)="openDialogConvocado(convocado)"></p-button>
+                    </td>
+                    <td style="min-width: 20rem;">
+                        {{convocado.apellido}} {{convocado.nombre}}
+                    </td>
+                    <td style="min-width: 10rem;">
+                        {{convocado.dni}}
+                    </td>
+                    <td style="min-width: 10rem;">
+                        {{convocado.sexo.sexo}}
+                    </td>
+                    <td style="min-width: 15rem;">
+                        {{convocado.provincia.provincia}}
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">No se encontraron convocados agregados.</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+                <tr>
+                    <td colspan="8">Cargando convocados... .</td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <!-- FIN TABLA DE CONVOCADOS -->
+
+        <!-- DIALOG CONVOCADOS -->
+        <p-dialog id="convocadoDialog" [(visible)]="convocadoDialog" [style]="{width: '500px','min-height':'400px'}" class="p-fluid" header="Datos de convocado" [closable]="false" [modal]="true">
+
+            <ng-template pTemplate="content">
+                <div class="col-12 border-bottom-1 surface-border">
+                    <h6 class="block font-bold font-medium">Datos personales</h6>
+                    <div class="grid">
+                        <div class="col-12 lg:col-12 xl:col-12">
+                            <span class="text font-medium text-1xl">Nombre:<span class="text ml-1 font-medium"> {{dataConvocado.apellido}} {{dataConvocado.nombre}}</span></span>
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col-12 lg:col-6 xl:col-6">
+                            <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{dataConvocado.dni}}</span></span>
+                        </div>
+                        <div class="col-12 lg:col-6 xl:col-6">
+                            <span class="text font-medium text-1xl">Sexo:<span class="text ml-1 font-medium"> {{dataConvocado.sexo.sexo}}</span></span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-12 border-bottom-1 surface-border">
+                    <h6 class="block font-bold font-medium">Domicilio</h6>
+                    <div class="grid">
+                        <div class="col-12 lg:col-6 xl:col-6">
+                            <span class="text font-medium text-1xl">Provincia:<span class="text ml-1 font-medium"> {{dataConvocado.provincia.provincia}} </span></span>
+                        </div>
+                        <div class="col-12 lg:col-6 xl:col-6">
+                            <span class="text font-medium text-1xl">Departamento:<span class="text ml-1 font-medium"> {{dataConvocado.departamento.departamento}}</span></span>
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col-12 lg:col-6 xl:col-6">
+                            <span class="text font-medium text-1xl">Municipio:<span class="text ml-1 font-medium"> {{dataConvocado.municipio.municipio}}</span></span>
+                        </div>
+                        <div class="col-12 lg:col-6 xl:col-6">
+                            <span class="text font-medium text-1xl">Codigo Postal:<span class="text ml-1 font-medium"> {{dataConvocado.codigo_postal}}</span></span>
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col-12 lg:col-12 xl:col-12">
+                            <span class="text font-medium text-1xl">B°:<span class="text ml-1 font-medium"> {{dataConvocado.localidad_barrio}} - Direccion: {{dataConvocado.calle_direccion}} - N° {{dataConvocado.numero_dom}}</span></span>
+                        </div>
+                        <div class="col-12 lg:col-12 xl:col-12">
+                            <span class="text font-medium text-1xl">Punto de Referencia:<span class="text ml-1 font-medium"> {{dataConvocado.punto_referencia}}</span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 border-bottom-1 surface-border">
+                    <h6 class="block font-bold font-medium">Contacto</h6>
+                    <div class="grid">
+                        <div class="col-12 lg:col-12 xl:col-12">
+                            <span class="text font-medium text-1xl">Telefono:<span class="text ml-1 font-medium"> {{dataConvocado.telefono}}</span></span>
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col-12 lg:col-12 xl:col-12">
+                            <span class="text font-medium text-1xl">Correo Electronico:<span class="text ml-1 font-medium"> {{dataConvocado.email}}</span></span>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer" class="mt-1">
+                <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogConvocado()"></button>
+            </ng-template>
+        </p-dialog>
+        <!-- FIN DIALOG CONVOCADOS -->
+    </div>
+    <!-- Fin Card CONVOCADOS -->
+
+    <!-- Card VINCULADOS -->
+    <div class="card p-fluid mb-0 mt-2">
+        <p-toolbar styleClass="mb-3 bg-orange-500">
+            <h5 class="block text-white font-bold font-medium mb-1 ">
+                Personas vinculadas
+            </h5>
+        </p-toolbar>
+
+        <!-- TABLA DE VINCULADOS -->
+        <p-table #dt1 [value]="dataTramite.vinculados" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 3rem"></th>
+                    <th>
+                        <div class="flex justify-content-between align-items-left">
+                            Apellido y nombre
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            DNI
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            Sexo
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            Telefono
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-vinculado>
+                <tr>
+                    <td>
+                        <p-button icon="pi pi-search-plus" styleClass="p-button-rounded mb-1" (click)="openDialogVinculado(vinculado)"></p-button>
+                    </td>
+                    <td style="min-width: 20rem;">
+                        {{vinculado.apellido}} {{vinculado.nombre}}
+                    </td>
+                    <td style="min-width: 10rem;">
+                        {{vinculado.dni}}
+                    </td>
+                    <td style="min-width: 10rem;">
+                        {{vinculado.sexo.sexo}}
+                    </td>
+                    <td style="min-width: 15rem;">
+                        {{vinculado.categoria.categoria}}
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">No se encontraron vinculados agregados.</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+                <tr>
+                    <td colspan="8">Cargando vinculados... .</td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <!-- FIN TABLA DE VINCULADOS -->
+
+        <!-- DIALOG VINCULADOS -->
+        <p-dialog id="vinculadoDialog" [(visible)]="vinculadoDialog" [style]="{width: '500px','min-height':'350px'}" class="p-fluid" header="Datos de vinculado" [closable]="false" [modal]="true">
+
+            <ng-template pTemplate="content">
+                <div class="col-12 border-bottom-1 surface-border">
+                    <h6 class="block font-bold font-medium">Datos personales</h6>
+                    <div class="grid">
+                        <div class="col-12 lg:col-12 xl:col-12">
+                            <span class="text font-medium text-1xl">Nombre:<span class="text ml-1 font-medium"> {{dataVinculado.apellido}} {{dataVinculado.nombre}}</span></span>
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col-12 lg:col-6 xl:col-6">
+                            <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{dataVinculado.dni}}</span></span>
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col-12 lg:col-6 xl:col-6">
+                            <span class="text font-medium text-1xl">Sexo:<span class="text ml-1 font-medium"> {{dataVinculado.sexo.sexo}}</span></span>
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col-12 lg:col-12 xl:col-12">
+                            <span class="text font-medium text-1xl">Telefono:<span class="text ml-1 font-medium"> {{dataVinculado.telefono}}</span></span>
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col-12 lg:col-12 xl:col-12">
+                            <span class="text font-medium text-1xl">Categoría:<span class="text ml-1 font-medium"> {{dataVinculado.categoria.categoria}}</span></span>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer" class="mt-1">
+                <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogVinculado()"></button>
+            </ng-template>
+        </p-dialog>
+        <!-- FIN DIALOG VINCULADOS -->
+    </div>
+    <!-- Fin Card VINCULADOS -->
+
+
+</div>
+<!-- FIN Card Tramite -->
+
+
+<!-- Card Usuarios -->
+<div class="card p-fluid mb-0 mt-2">
+    <p-toolbar styleClass="mb-3 bg-cyan-500">
+        <h5 class="block text-white font-bold font-medium mb-1 ">
+            Asignacion de usuario
+        </h5>
+    </p-toolbar>
+
+    <!-- CARD MEDIADOR -->
+    <div class="card p-fluid">
+        <p-toolbar styleClass="mb-3 bg-orange-500">
+            <h5 class="block text-white  font-bold font-medium mb-1">Mediador actual</h5>
+        </p-toolbar>
+        <div class="bg-cyan-600">
+
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12 lg:col-4 xl:col-4">
+                    <span class="text font-medium text-1xl">Mediador:<span class="text ml-1 font-medium"> {{dataUsuarioTramite.usuario?.apellido}} {{dataUsuarioTramite.usuario?.nombre}}</span></span>
+                </div>
+                <div class="col-12 lg:col-4 xl:col-4">
+                    <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{dataUsuarioTramite.usuario?.dni}}</span></span>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-12 border-bottom-1 surface-border">
+            <div class="grid">
+                <div class="col-12 lg:col-4 xl:col-4">
+                    <span class="text font-medium text-1xl">Fecha asignacion:<span class="text ml-1 font-medium"> {{dataUsuarioTramite.fecha_asignacion| date: 'dd/MM/yyyy'}}</span></span>
+                </div>
+                <div class="col-12 lg:col-4 xl:col-4">
+                    <span class="text font-medium text-1xl">Detalle:<span class="text ml-1 font-medium"> {{dataUsuarioTramite.detalles}}</span></span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- FIN CARD MEDIADOR -->
+
+</div>
+<!-- FIN Card Usuarios -->
+
+<!-- CARD AUDIENCIAS -->
+<div class="card p-fluid mb-0 mt-2">
+    <p-toolbar styleClass="mb-3 bg-cyan-500">
+        <h5 class="block text-white font-bold font-medium mb-1 ">
+            Audiencia
+        </h5>
+    </p-toolbar>
+
+    <div class="col-12 border-bottom-1 surface-border">
+       
+
+        <!-- TABLA DE AUDIENCIA -->
+        <p-table #dt1 [value]="listAudiencias" [rows]="10" [loading]="loadingAudiencia" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['usuario.dni','usuario.apellido','usuario.nombre','usuario.telefono','objeto.objeto','expediente']"
+            responsiveLayout="scroll">
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 3rem"></th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            NUM-AUDIENCIA
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            F-AUDIENCIA
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            HORA INI
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            HORA-FIN
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            CENTRO MEDIACION
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            TIPO
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-between align-items-center">
+                            MODALIDAD
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-audiencia>
+                <tr>
+                    <td>
+                        <button *ngIf="audiencia.esta_cerrada" type="button" pButton pRipple class="p-button-secondary p-button-rounded mr-2 mb-2" icon="pi pi-search-plus" (click)="openDialogAudienciaFinalizada(audiencia)"></button>
+                    </td>
+                    <td style="min-width: 10rem;">
+                        {{audiencia.num_audiencia}}
+                    </td>
+                    <td style="min-width: 10rem;">
+                        {{audiencia.fecha_inicio | date: 'dd/MM/yyyy'}}
+                    </td>
+                    <td style="min-width: 10rem;">
+                        {{audiencia.hora_inicio}}
+                    </td>
+                    <td style="min-width: 10rem;">
+                        {{audiencia.hora_fin}}
+                    </td>
+
+                    <td style="min-width: 7rem;">
+                        {{audiencia.centro_mediacion.centro_mediacion}}
+                    </td>
+                    <td style="min-width: 15rem;">
+                        {{audiencia.tipo_audiencia.tipo_audiencia}}
+                    </td>
+                    <td style="min-width: 5rem;">
+                        {{audiencia.modalidad.modalidad}}
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">No se encontraron audiencias para este tramite.</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+                <tr>
+                    <td colspan="8">Cargando audiencias... .</td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <!-- FIN TABLA DE AUDIENCIA -->
+    </div>
+
+    <!-- DIALOG VER AUDIENCIA FINALIZADA-->
+    <p-dialog id="audienciaFinalizadaDialog" [(visible)]="audienciaFinalizadaDialog" [style]="{width: '500px','min-height':'350px'}" class="p-fluid" header="Datos de la audiencia" [closable]="false" [modal]="true">
+         
+        <ng-template pTemplate="content">
+            <div class="col-12 border-bottom-2 surface-border">
+                <div class="grid">
+                    <div class="col-12 md:col-6 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Tramite:<span class="text ml-1 font-medium"> {{dataAudiencia.tramite_numero}}</span></span>
+                    </div>
+
+                    <div class="col-12 md:col-6 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Audiencia N°:<span class="text ml-1 font-medium"> {{dataAudiencia.num_audiencia}}</span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 border-bottom-2 surface-border">
+                <div class="grid">
+                    <div class="col-12 md:col-12 lg:col-12 xl:col-12">
+                        <span class="text font-medium text-1xl">Fecha:<span class="text ml-1 font-medium"> {{dataAudiencia.fecha_inicio| date: 'dd/MM/yyyy'}}</span></span>
+                    </div>
+                    <div class="col-12 md:col-6 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Hora inicio:<span class="text ml-1 font-medium"> {{dataAudiencia.hora_inicio}}</span></span>
+                    </div>
+                    <div class="col-12 md:col-6 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Hora fin:<span class="text ml-1 font-medium"> {{dataAudiencia.hora_fin}}</span></span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-12 border-bottom-2 surface-border">
+                <div class="grid">
+                    <div class="col-12 lg:col-12 xl:col-12">
+                        <span class="text font-medium text-1xl">Centro de mediacion:<span class="text ml-1 font-medium"> {{dataAudiencia.centro_mediacion.centro_mediacion}}</span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 border-bottom-2 surface-border">
+                <div class="grid">
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Departamento:<span class="text ml-1 font-medium"> {{dataAudiencia.centro_mediacion?.departamento.departamento}} </span></span>
+                    </div>
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Municipio:<span class="text ml-1 font-medium"> {{dataAudiencia.centro_mediacion?.municipio.municipio}} </span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 border-bottom-2 surface-border">
+                <div class="grid">
+                    <div class="col-12 md:col-12 lg:col-12 xl:col-12">
+                        <span class="text font-medium text-1xl">Detalles:<span class="text ml-1 font-medium"> {{dataAudiencia.detalles}} </span></span>
+                    </div>                    
+                </div>
+            </div>
+            <div class="col-12 border-bottom-2 surface-border">
+                <div class="grid">
+                    <div class="col-12 md:col-12 lg:col-12 xl:col-12">
+                        <span class="text font-medium text-1xl">DNI Mediador:<span class="text ml-1 font-medium"> {{dataAudiencia.usuario.dni}} </span></span>
+                    </div>
+                    <div class="col-12 md:col-12 lg:col-12 xl:col-12">
+                        <span class="text font-medium text-1xl">Mediador:<span class="text ml-1 font-medium"> {{dataAudiencia.usuario.apellido}} {{dataAudiencia.usuario.nombre}}</span></span>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-12 border-bottom-1 surface-border">
+                <div class="grid">
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Tipo audiencia:<span class="text ml-1 font-medium"> {{dataAudiencia.tipo_audiencia?.tipo_audiencia}} </span></span>
+                    </div>
+                    <div class="col-12 lg:col-6 xl:col-6">
+                        <span class="text font-medium text-1xl">Modalidad:<span class="text ml-1 font-medium"> {{dataAudiencia.modalidad?.modalidad}} </span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 border-bottom-2 surface-border">
+                <div class="grid">
+                    <div class="col-12">
+                        <span class="text font-medium text-1xl">Resultado de la audiencia:<span class="text ml-1 font-medium"> {{dataAudiencia.resultado_audiencia?.resultado_audiencia}} </span></span>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-12 border-bottom-2 surface-border">
+                <div class="grid">
+                    
+                    <div class="col-12 ">
+                        <span class="text font-medium text-1xl">Observaciones del resultado:<span class="text ml-1 font-medium"> {{dataAudiencia.observacion_resultado}} </span></span>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="footer" class="mt-1">
+            <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogAudienciaFinalizada()"></button>
+        </ng-template>
+    </p-dialog>
+    <!-- FIN DIALOG VER AUDIENCIA FINALIZADA -->
+
+    
+
+</div>
+<!-- FIN CARD  AUDIENCIAS -->
+
+<!-- CARD FINALIZAR TRAMITE -->
+<div class="card p-fluid mb-0 mt-2">
+    <p-toolbar styleClass="mb-3 bg-cyan-500">
+        <h5 class="block text-white font-bold font-medium mb-1 ">
+            Datos de finalización
+        </h5>
+    </p-toolbar>
+
+    <div class="col-12 border-bottom-1 surface-border">
+        <div class="grid">
+            <div class="col-12 lg:col-12 xl:col-12">
+                <span class="text font-medium text-1xl">Fecha de finalización:<span class="text ml-2 font-medium"> {{dataTramite.fecha_finalizacion| date: 'dd/MM/yyyy'}} </span></span>
+            </div>
+            
+        </div>
+    </div>
+    <div class="col-12 border-bottom-1 surface-border">
+        <div class="grid">
+            <div class="col-12 lg:col-12 xl:col-12">
+                <span class="text font-medium text-1xl">Observación:<span class="text ml-2 font-medium"> {{dataTramite.observacion_finalizacion}} </span></span>
+            </div>
+
+        </div>
+    </div>
+    
+</div>
+<!-- FIN CARD FINALIZAR TRAMITE -->
+
+<!-- CARD PIE -->
+<div class="card p-fluid mb-0 mt-2">
+    
+    <div class="col-12 border-bottom-1 surface-border">
+        <div class="p-formgrid grid">            
+            <div class="col-6">
+                <button pButton pRipple type="button" label="IMPRIMIR tramite" class="p-button mr-2 mb-2" ></button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FIN CARD PIE -->

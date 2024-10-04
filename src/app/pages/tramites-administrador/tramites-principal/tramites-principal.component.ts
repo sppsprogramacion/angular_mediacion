@@ -52,7 +52,7 @@ export class TramitesPrincipalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.authService.currentUserLogin.rol_id == "administrador") {
+    if (this.authService.currentUserLogin.rol_id == "administrador" || this.authService.currentUserLogin.rol_id == "supervisor") {
       this.tituloPagina ="Usuario: Administrador";
       this.listarTramitesAdministrador();
     }
@@ -133,13 +133,27 @@ export class TramitesPrincipalComponent implements OnInit {
   administrarTramite(data: TramiteModel){
     this.dataService.tramiteData = data;
     this.dataService.getTramiteData(data);
+
+    if( this.authService.currentUserLogin.rol_id == "administrador" && data.estado_tramite_id != 3){
+      this.router.navigateByUrl("admin/tramites/administrar");
+    }    
+
+    //verificacion si el usuario tiene la funcion de administrativo en el tramite
+    if( this.authService.currentUserLogin.rol_id == "supervisor" && data.estado_tramite_id != 3 ){
+      this.router.navigateByUrl("admin/tramites/administrar-visor");
+    }
+    
+    //verificacion si el usuario tiene la funcion de mediador en el tramite
+    if( this.authService.currentUserLogin.rol_id == "mediador" && data.estado_tramite_id != 3){
+      this.router.navigateByUrl("admin/tramites/administrar-med" );
+    }
+
+
     if(data.estado_tramite_id == 3){
       this.router.navigateByUrl("admin/tramites/administrar-finalizado");
     }
-    else{
-      this.router.navigateByUrl("admin/tramites/administrar");
-
-    }
+    
+    
   }
   //FIN ACCEDER A DATA SERVICE
 
