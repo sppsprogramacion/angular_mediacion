@@ -10,6 +10,7 @@ import { VinculadoModel } from 'src/app/models/vinculado.model';
 import { AudienciasService } from 'src/app/service/audiencias.service';
 import { AuthService } from 'src/app/service/auth.service';
 import { DataService } from 'src/app/service/data.service';
+import { PdfsService } from 'src/app/service/pdfs.service';
 import { TramitesService } from 'src/app/service/tramites.service';
 import { UsuariosTramiteService } from 'src/app/service/usuarios-tramite.service';
 
@@ -30,6 +31,7 @@ export class TramitesAdministrarSupervisorComponent implements OnInit {
   
   //listas
   listAudiencias: AudienciaModel[] = [];
+  listAudienciasActivas: AudienciaModel[] = [];
   listAudienciasUsuario: AudienciaModel[] = [];
   listResultadosAudiencia: ResultadoAudienciaModel[]=[];
   listUsuarios: UsuarioModel[]=[];
@@ -53,6 +55,7 @@ export class TramitesAdministrarSupervisorComponent implements OnInit {
   
     private audienciaService: AudienciasService,    
     private authService: AuthService,
+    private pdfsService: PdfsService,
     private tramiteService: TramitesService,  
     private usuarioTramiteService: UsuariosTramiteService,
   ) { }
@@ -99,7 +102,8 @@ export class TramitesAdministrarSupervisorComponent implements OnInit {
     this.audienciaService.listarAudienciasByTramite(this.dataService.tramiteData.numero_tramite)
       .subscribe({
         next: (resultado) => {
-          this.listAudiencias = resultado[0]; 
+          this.listAudiencias = resultado[0];
+          this.listAudienciasActivas = this.listAudiencias.filter(audiencia => audiencia.esta_cerrada === false);
           this.loadingAudiencia = false;     
         },
         error: (err) => {
@@ -123,7 +127,7 @@ export class TramitesAdministrarSupervisorComponent implements OnInit {
           this.dataTramite = {};
           this.dataTramite = resultado; 
           
-          if(this.dataTramite.estado_tramite_id === 3) {
+          if(this.dataTramite.estado_tramite_id === 2) {
             this.buscarMediadorByNumTramiteActivo();
           }
         }
@@ -138,6 +142,7 @@ export class TramitesAdministrarSupervisorComponent implements OnInit {
       .subscribe({
         next: (resultado) => {
           this.dataUsuarioTramite = resultado; 
+          console.log("usuario en tramite", this.dataUsuarioTramite);
           this.loadingUsuariosTramite = false;     
         },
         error: (err) => {
@@ -194,6 +199,10 @@ export class TramitesAdministrarSupervisorComponent implements OnInit {
   }
   //FIN MANEJO FORMULARIO DIALOG VER AUDIENCIA FINALIZADA................................................
 
-
+  //CREAR PDF SOLICITUD
+  async generarPdfTramite(){
+    this.pdfsService.generarPdfSolicitudTramite(this.dataTramite, this.listAudienciasActivas);
+  }
+  //FIN CREAR PDF SOLICITUD...................................................................
 
 }
