@@ -29,5 +29,16 @@ export const tiposBusquedaCiudadano = [
     },
 ];
 
+export const tiposBusquedaTramites = [
+    {
+        "id_tipo_busqueda": "dni",
+        "tipo_busqueda": "Buscar por DNI"
+    },
+    {
+        "id_tipo_busqueda": "numtramite",
+        "tipo_busqueda": "Buscar por numero de tramite"
+    },
+];
+
 
 

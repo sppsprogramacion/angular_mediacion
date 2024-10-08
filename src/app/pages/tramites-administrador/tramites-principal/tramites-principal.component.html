@@ -12,7 +12,7 @@
             </div>
 
         </div>
-    </div>
+    </div>    
     <div class="col-6 sm:col-6 lg:col-3 xl:col-3">
         <div class="card mb-0">
             <div class="flex justify-content-between mb-2">
@@ -59,6 +59,54 @@
 
         </div>
     </div>
+
+    <!-- CARD BUSQUEDA-->
+    <div class="col-12 xl:col-12">
+        <div class="card">
+            
+            <div class="p-formgrid grid">                
+                <!-- FORMULARIO BUSCAR -->
+                <div class="col-12">  
+                    <form [formGroup]="formaBuscar">
+                        <!-- CARD DATOS BUSQUEDA-->
+                        <div class="card p-fluid">                            
+                            <div class="formgrid grid">
+                                <div class="field col-12 md:col-6 lg:col-6">
+                                    <label for="id_tipo_busqueda">Tipo busqueda</label>
+                                    <p-dropdown id="id_tipo_busqueda" [options]="listTiposBusqueda" optionLabel="tipo_busqueda" optionValue="id_tipo_busqueda" formControlName="id_tipo_busqueda" placeholder="Seleccionar...">
+                                    </p-dropdown>
+                                </div>
+
+                                <div class="field col-12 md:col-6 lg:col-6">
+                                    <label for="buscar">Buscar</label>
+                                    <input type="text" pInputText id="buscar" formControlName="buscar" />
+                                    <small *ngIf="isValid('buscar')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.buscar" >
+                                            <div  *ngIf="formaBuscar.get('buscar')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
+                                </div>
+                                
+                            </div>
+
+                            <!-- boton buscar -->
+                            <div  class="col-12 grid justify-content-between">
+                                <button pButton pRipple type="button" label="Buscar" class="p-button-primary" style="width: 47%;" (click)="buscarCiudadanos()" ></button>
+                                
+                            </div>
+                        </div>
+                        <!-- FIN CARD DATOS BUSQUEDA -->
+                        
+                    </form>
+                </div>
+                <!--  FIN FORMULARIO BUSCAR -->
+                
+            </div>
+        </div>
+    </div>
+    <!-- FIN CARD BUSQUEDA..................................-->
 
     <div class="col-12">
         <div class="card">

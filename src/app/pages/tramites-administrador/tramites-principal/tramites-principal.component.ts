@@ -12,6 +12,9 @@ import { UsuariosTramiteService } from '../../../service/usuarios-tramite.servic
 import { UsuarioTramiteModel } from '../../../models/usuario_tramite.model';
 import { AuthService } from '../../../service/auth.service';
 import { Table } from 'primeng/table';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { tiposBusquedaTramites } from 'src/app/common/data-mokeada';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tramites-principal',
@@ -41,15 +44,27 @@ export class TramitesPrincipalComponent implements OnInit {
   listUsuariosTramites: UsuarioTramiteModel[]=[];
   listDepartamentos: DepartamentoModel[]=[];
   listMunicipios: MunicipioModel[]= [];
-  listSexo: SexoModel[]=[];
+  listSexo: SexoModel[]=[];  
+  listTiposBusqueda: any[] = [];
+
+  //FORMULARIOS
+  formaBuscar: FormGroup;
 
   constructor(
+    private fb: FormBuilder,
+    
     private authService: AuthService,
     private tramitesService: TramitesService,
     private usuariosTramitesService: UsuariosTramiteService,
     public dataService: DataService,
     private router: Router
-  ) { }
+  ) { 
+    this.formaBuscar = this.fb.group({
+      id_tipo_busqueda: [,[Validators.required]],
+      buscar: ['',[Validators.required]],
+
+    });
+  }
 
   ngOnInit(): void {
     if (this.authService.currentUserLogin.rol_id == "administrador" || this.authService.currentUserLogin.rol_id == "supervisor") {
@@ -72,12 +87,75 @@ export class TramitesPrincipalComponent implements OnInit {
 
     this.contarTramitesXEstado();
     
+    this.listTiposBusqueda = tiposBusquedaTramites;
   }
+  //FIN ONINIT.........................................
 
+  //VALIDACIONES DE FORMULARIO
+  isValid(campo: string): boolean{     
+    
+    return this.formaBuscar.get(campo)?.invalid && this.formaBuscar.get(campo)?.touched;      
+  }
+  //FIN VALIDACIONES DE FORMULARIO............................................................
+
+  //MENSAJES DE VALIDACIONES
+  user_validation_messages = {
+    //datos tramite
+    'id_tipo_busqueda': [
+      { type: 'required', message: 'El tipo de busqueda es requerido' },
+    ],
+    'buscar': [
+      { type: 'required', message: 'El dato a buscar es requerido ' },
+    ],
+  }
+  //FIN MENSAJES DE VALIDACIONES...............................................................
+
+  //BUSCAR CIUDADANOS
+  buscarCiudadanos(){
+    this.loading = true;
+
+    if(this.formaBuscar.invalid){    
+
+      this.loading = false;
+      //Swal.fire('Formulario con errores',`Complete correctamente todos los campos del formulario`,"warning");
+      return Object.values(this.formaBuscar.controls).forEach(control => control.markAsTouched());
+    }
+
+    if(this.formaBuscar.get('id_tipo_busqueda')?.value === "dni"){
+
+      const dato = this.formaBuscar.get('buscar')?.value;
+      if(Number.isInteger(Number(dato))){
+
+        this.listarTramitesAdministradorXDniCiudadano(+dato);
+      }
+      else{
+        this.loading = false;
+        Swal.fire('Formulario con errores',`El DNI debe ser un número`,"warning");
+      }
+    }
+
+    if(this.formaBuscar.get('id_tipo_busqueda')?.value === "apellido"){
+      //this.listarCiudadanosApellido();
+    }
+
+    
+  }
 
   //LISTADO DE TRAMITES ADMINISTRADOR
   listarTramitesAdministrador(){    
     this.tramitesService.listarTramitesTodos().
+        subscribe(respuesta => {
+        this.listTramites= respuesta[0];
+        this.totalTramite = respuesta[1];
+        this.loading=false;
+    
+    });
+  }
+  //FIN LISTADO DE TRAMITES............................
+
+  //LISTADO DE TRAMITES ADMINISTRADOR
+  listarTramitesAdministradorXDniCiudadano(dni: number){    
+    this.tramitesService.listarTramitesTodosDniCiudadano(dni).
         subscribe(respuesta => {
         this.listTramites= respuesta[0];
         this.totalTramite = respuesta[1];

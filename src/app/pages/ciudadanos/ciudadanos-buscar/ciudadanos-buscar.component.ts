@@ -86,8 +86,7 @@ export class CiudadanosBuscarComponent implements OnInit {
   ngOnInit(): void {
 
     this.loading = false;
-    this.listTiposBusqueda = tiposBusquedaCiudadano;
-    
+    this.listTiposBusqueda = tiposBusquedaCiudadano;    
   }
 
   //BUSCAR CIUDADANOS
