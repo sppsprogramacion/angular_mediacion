@@ -31,13 +31,26 @@ export const tiposBusquedaCiudadano = [
 
 export const tiposBusquedaTramites = [
     {
+        "id_tipo_busqueda": "apellido",
+        "tipo_busqueda": "Apelido del ciudadano"
+    },
+    {
         "id_tipo_busqueda": "dni",
-        "tipo_busqueda": "Buscar por DNI"
+        "tipo_busqueda": "DNI del ciudadano"
+    },
+    {
+        "id_tipo_busqueda": "expediente",
+        "tipo_busqueda": "Expediente"
+    },
+    {
+        "id_tipo_busqueda": "fecha",
+        "tipo_busqueda": "Fecha del trámite"
     },
     {
         "id_tipo_busqueda": "numtramite",
-        "tipo_busqueda": "Buscar por numero de tramite"
+        "tipo_busqueda": "Número de trámite"
     },
+    
 ];
 
 

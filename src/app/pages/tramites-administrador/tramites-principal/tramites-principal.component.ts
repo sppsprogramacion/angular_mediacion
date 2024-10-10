@@ -27,6 +27,9 @@ export class TramitesPrincipalComponent implements OnInit {
   @ViewChild('dt') table: Table;
   @ViewChild('filter') filter: ElementRef;
 
+  //iidiomas
+  es: any = {};
+
   loading:boolean = true;
 
   //VARIABLES TRAMITE    
@@ -111,7 +114,7 @@ export class TramitesPrincipalComponent implements OnInit {
   //FIN MENSAJES DE VALIDACIONES...............................................................
 
   //BUSCAR CIUDADANOS
-  buscarCiudadanos(){
+  buscarTramites(){
     this.loading = true;
 
     if(this.formaBuscar.invalid){    
@@ -120,51 +123,105 @@ export class TramitesPrincipalComponent implements OnInit {
       //Swal.fire('Formulario con errores',`Complete correctamente todos los campos del formulario`,"warning");
       return Object.values(this.formaBuscar.controls).forEach(control => control.markAsTouched());
     }
+    
+    const dato = this.formaBuscar.get('buscar')?.value;
+    
+    if(this.formaBuscar.get('id_tipo_busqueda')?.value === "apellido"){
+      this.listarTramitesAdministradorXApellidoCiudadano(dato);
+    }
 
     if(this.formaBuscar.get('id_tipo_busqueda')?.value === "dni"){
-
-      const dato = this.formaBuscar.get('buscar')?.value;
+      
       if(Number.isInteger(Number(dato))){
 
         this.listarTramitesAdministradorXDniCiudadano(+dato);
       }
       else{
         this.loading = false;
-        Swal.fire('Formulario con errores',`El DNI debe ser un número`,"warning");
+        Swal.fire('Error en busqueda',`El DNI debe ser un número`,"warning");
       }
     }
 
-    if(this.formaBuscar.get('id_tipo_busqueda')?.value === "apellido"){
-      //this.listarCiudadanosApellido();
+    if(this.formaBuscar.get('id_tipo_busqueda')?.value === "expediente"){
+      this.listarTramitesAdministradorXExpediente(dato);
     }
 
+    if(this.formaBuscar.get('id_tipo_busqueda')?.value === "numtramite"){
+      
+      if(Number.isInteger(Number(dato))){
+
+        this.listarTramitesAdministradorXNumeroTramite(+dato);
+      }
+      else{
+        this.loading = false;
+        Swal.fire('Error en busqueda',`El número de trámite debe ser un número`,"warning");
+      }
+    }
+
+      
     
   }
 
   //LISTADO DE TRAMITES ADMINISTRADOR
   listarTramitesAdministrador(){    
     this.tramitesService.listarTramitesTodos().
-        subscribe(respuesta => {
+      subscribe(respuesta => {
         this.listTramites= respuesta[0];
         this.totalTramite = respuesta[1];
         this.loading=false;
     
-    });
+      });
   }
   //FIN LISTADO DE TRAMITES............................
+
+  //LISTADO DE TRAMITES ADMINISTRADOR PAELLIDO
+  listarTramitesAdministradorXApellidoCiudadano(apellido: string){    
+    this.tramitesService.listarTramitesTodosApellidoCiudadano(apellido).
+      subscribe(respuesta => {
+        this.listTramites= respuesta[0];
+        this.totalTramite = respuesta[1];
+        this.loading=false;
+    
+      });
+  }
+  //FIN LISTADO DE TRAMITES ADMINISTRADOR APELLIDO............................
 
   //LISTADO DE TRAMITES ADMINISTRADOR
   listarTramitesAdministradorXDniCiudadano(dni: number){    
     this.tramitesService.listarTramitesTodosDniCiudadano(dni).
-        subscribe(respuesta => {
+      subscribe(respuesta => {
         this.listTramites= respuesta[0];
         this.totalTramite = respuesta[1];
         this.loading=false;
     
-    });
+      });
   }
-  //FIN LISTADO DE TRAMITES............................
+  //FIN LISTADO DE TRAMITES ADMINISTRADOR............................
 
+  //LISTADO DE TRAMITES ADMINISTRADOR ExPEDIENTE
+  listarTramitesAdministradorXExpediente(expediente: string){    
+    this.tramitesService.listarTramitesTodosExpediente(expediente).
+      subscribe(respuesta => {
+        this.listTramites= respuesta[0];
+        this.totalTramite = respuesta[1];
+        this.loading=false;
+    
+      });
+  }
+  //FIN LISTADO DE TRAMITES ADMINISTRADOR EXPEDIENTE............................
+
+  //LISTADO DE TRAMITES ADMINISTRADOR
+  listarTramitesAdministradorXNumeroTramite(numeroTramite: number){    
+    this.tramitesService.listarTramitesTodosNumeroTramite(numeroTramite).
+      subscribe(respuesta => {
+        this.listTramites= respuesta[0];
+        this.totalTramite = respuesta[1];
+        this.loading=false;
+    
+      });
+  }
+  //FIN LISTADO DE TRAMITES ADMINISTRADOR............................
+  
   //LISTADO DE TRANITES USUARIO
   listarTramitesUsuario(){
     let id_usuario: number = 0;

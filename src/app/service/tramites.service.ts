@@ -35,8 +35,24 @@ export class TramitesService {
     return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites`)
   }
 
+  listarTramitesTodosApellidoCiudadano(apellido: string){
+    return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/todos-xapellidociudadano?apellido=${apellido}`)
+  }
+
   listarTramitesTodosDniCiudadano(dni: number){
     return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/todos-xdniciudadano?numero_dni=${dni}`)
+  }
+
+  listarTramitesTodosExpediente(expediente: string){
+    return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/todos-xexpediente?expediente=${expediente}`)
+  }
+
+  listarTramitesTodosFecha(fecha_ini: string, fecha_fin){
+    return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/todos-xfecha?fecha_ini=${fecha_ini}&fecha_fin=${fecha_fin}`)
+  }
+
+  listarTramitesTodosNumeroTramite(numero_tramite: number){
+    return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/todos-xnumtramite?numero_tramite=${numero_tramite}`)
   }
 
   listarTramitesXCiudadano(id_ciudadano: number){
