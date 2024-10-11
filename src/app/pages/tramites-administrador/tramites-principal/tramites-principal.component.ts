@@ -30,8 +30,7 @@ export class TramitesPrincipalComponent implements OnInit {
   //iidiomas
   es: any = {};
 
-  loading:boolean = true;
-
+  
   //VARIABLES TRAMITE    
   tramite: TramiteModel;
   tramiteDialog: boolean;
@@ -41,7 +40,7 @@ export class TramitesPrincipalComponent implements OnInit {
   totalTramite: number= 0;
   totalesTramites: TotalesTramitesModel= {};
   tituloPagina: string ="Usuario: Administrador"
-
+  
   //LISTAS    
   listTramites: TramiteModel[]=[];
   listUsuariosTramites: UsuarioTramiteModel[]=[];
@@ -49,7 +48,11 @@ export class TramitesPrincipalComponent implements OnInit {
   listMunicipios: MunicipioModel[]= [];
   listSexo: SexoModel[]=[];  
   listTiposBusqueda: any[] = [];
-
+  
+  //booleanas
+  loading:boolean = true;
+  isFecha: boolean = false;
+  
   //FORMULARIOS
   formaBuscar: FormGroup;
 
@@ -65,6 +68,8 @@ export class TramitesPrincipalComponent implements OnInit {
     this.formaBuscar = this.fb.group({
       id_tipo_busqueda: [,[Validators.required]],
       buscar: ['',[Validators.required]],
+      fecha_ini: ['',[Validators.required]],
+      fecha_fin: ['',[Validators.required]],
 
     });
   }
@@ -108,7 +113,13 @@ export class TramitesPrincipalComponent implements OnInit {
       { type: 'required', message: 'El tipo de busqueda es requerido' },
     ],
     'buscar': [
-      { type: 'required', message: 'El dato a buscar es requerido ' },
+      { type: 'required', message: 'El dato a buscar es requerido' },
+    ],
+    'fecha_ini': [
+      { type: 'required', message: 'La fecha inicio es requerida' },
+    ],
+    'fecha_fin': [
+      { type: 'required', message: 'La fecha fin es requerida' },
     ],
   }
   //FIN MENSAJES DE VALIDACIONES...............................................................
@@ -158,6 +169,11 @@ export class TramitesPrincipalComponent implements OnInit {
       }
     }
 
+    if(this.formaBuscar.get('id_tipo_busqueda')?.value === "fecha"){
+      
+      //seguir
+    }
+
       
     
   }
@@ -173,6 +189,24 @@ export class TramitesPrincipalComponent implements OnInit {
       });
   }
   //FIN LISTADO DE TRAMITES............................
+
+
+  onChangeTipoBusqueda(){
+    const id = this.formaBuscar.get('id_tipo_busqueda')?.value;
+    if(id == "fecha"){  
+        this.isFecha = true;
+        this.formaBuscar.get('buscar')?.setValue("en fecha");
+        this.formaBuscar.get('fecha_ini')?.setValue(null);
+        this.formaBuscar.get('fecha_fin')?.setValue(null);
+         
+    }
+    else{
+      this.isFecha = false;
+      this.formaBuscar.get('buscar')?.setValue("");
+      this.formaBuscar.get('fecha_ini')?.setValue("01/01/2024");
+      this.formaBuscar.get('fecha_fin')?.setValue(this.dataService.getchangeFormatoFechaRetornar(new Date));
+    }
+  }
 
   //LISTADO DE TRAMITES ADMINISTRADOR PAELLIDO
   listarTramitesAdministradorXApellidoCiudadano(apellido: string){    

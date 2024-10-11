@@ -73,11 +73,11 @@
                             <div class="formgrid grid">
                                 <div class="field col-12 md:col-6 lg:col-6">
                                     <label for="id_tipo_busqueda">Tipo busqueda</label>
-                                    <p-dropdown id="id_tipo_busqueda" [options]="listTiposBusqueda" optionLabel="tipo_busqueda" optionValue="id_tipo_busqueda" formControlName="id_tipo_busqueda" placeholder="Seleccionar...">
+                                    <p-dropdown id="id_tipo_busqueda" [options]="listTiposBusqueda" optionLabel="tipo_busqueda" optionValue="id_tipo_busqueda" formControlName="id_tipo_busqueda" placeholder="Seleccionar..." (onChange)="onChangeTipoBusqueda()">
                                     </p-dropdown>
                                 </div>
 
-                                <div class="field col-12 md:col-6 lg:col-6">
+                                <div *ngIf="!isFecha" class="field col-12 md:col-6 lg:col-6">
                                     <label for="buscar">Buscar</label>
                                     <input type="text" pInputText id="buscar" formControlName="buscar" />
                                     <small *ngIf="isValid('buscar')" class="p-error">
@@ -91,17 +91,31 @@
                                 
                             </div>
 
-                            <div class="formgrid grid">
+                            <div *ngIf="isFecha" class="formgrid grid">
                                 <div class="field col-12 md:col-6 lg:col-6">
-                                    <label for="fecha_nac">Fecha inicio</label>
-                                    <p-calendar p-inputtext formControlName="buscar" dateFormat="dd/mm/yy" view="" styleClass="" [locale]="es"></p-calendar>
-
+                                    <label for="fecha_ini">Fecha inicio</label>
+                                    <p-calendar p-inputtext formControlName="fecha_ini" dateFormat="dd/mm/yy" view="" styleClass="" [locale]="es"></p-calendar>
+                                    <small *ngIf="isValid('fecha_ini')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.fecha_ini" >
+                                            <div  *ngIf="formaBuscar.get('fecha_ini')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
                                 </div>
 
-                                <div class="field col-12 md:col-6 lg:col-6">
-                                    <label for="fecha_nac">Fecha fin</label>
-                                    <p-calendar p-inputtext formControlName="buscar" dateFormat="dd/mm/yy" view="" styleClass="" [locale]="es"></p-calendar>
 
+
+                                <div class="field col-12 md:col-6 lg:col-6">
+                                    <label for="fecha_fin">Fecha fin</label>
+                                    <p-calendar p-inputtext formControlName="fecha_fin" dateFormat="dd/mm/yy" view="" styleClass="" [locale]="es"></p-calendar>
+                                    <small *ngIf="isValid('fecha_fin')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.fecha_fin" >
+                                            <div  *ngIf="formaBuscar.get('fecha_fin')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
                                 </div>
                                 
                             </div>
