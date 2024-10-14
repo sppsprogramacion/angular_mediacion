@@ -60,9 +60,9 @@ export class TramitesPrincipalComponent implements OnInit {
     private fb: FormBuilder,
     
     private authService: AuthService,
+    private dataService: DataService,
     private tramitesService: TramitesService,
     private usuariosTramitesService: UsuariosTramiteService,
-    public dataService: DataService,
     private router: Router
   ) { 
     this.formaBuscar = this.fb.group({
@@ -170,7 +170,10 @@ export class TramitesPrincipalComponent implements OnInit {
     }
 
     if(this.formaBuscar.get('id_tipo_busqueda')?.value === "fecha"){
-      
+      let fecha_ini = this.dataService.getchangeFormatoFechaGuardar(this.formaBuscar.get('fecha_ini')?.value)
+      let fecha_fin = this.dataService.getchangeFormatoFechaGuardar(this.formaBuscar.get('fecha_fin')?.value);
+
+      this.listarTramitesAdministradorXFecha(fecha_ini, fecha_fin);
       //seguir
     }
 
@@ -235,6 +238,18 @@ export class TramitesPrincipalComponent implements OnInit {
   //LISTADO DE TRAMITES ADMINISTRADOR ExPEDIENTE
   listarTramitesAdministradorXExpediente(expediente: string){    
     this.tramitesService.listarTramitesTodosExpediente(expediente).
+      subscribe(respuesta => {
+        this.listTramites= respuesta[0];
+        this.totalTramite = respuesta[1];
+        this.loading=false;
+    
+      });
+  }
+  //FIN LISTADO DE TRAMITES ADMINISTRADOR EXPEDIENTE............................
+
+  //LISTADO DE TRAMITES ADMINISTRADOR ExPEDIENTE
+  listarTramitesAdministradorXFecha(fecha_ini: string, fecha_fin: string){    
+    this.tramitesService.listarTramitesTodosFecha(fecha_ini, fecha_fin).
       subscribe(respuesta => {
         this.listTramites= respuesta[0];
         this.totalTramite = respuesta[1];

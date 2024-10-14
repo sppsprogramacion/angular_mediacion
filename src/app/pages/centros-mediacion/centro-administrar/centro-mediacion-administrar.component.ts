@@ -164,7 +164,8 @@ export class CentroAdministrarComponent implements OnInit {
         this.listarUsuariosActivosCentroMediacion();
       },
       error: (err) => {
-        Swal.fire('Fallo ',`El usuario no fue deshabilitado`,"error");
+        Swal.fire('Fallo ',`El usuario no fue deshabilitado` + err,"error");
+        console.log(err);
         // this.msgs = [];
         // this.msgs.push({ severity: 'error', summary: 'Error al guardar', detail: ` ${err.error.message}` });
       }

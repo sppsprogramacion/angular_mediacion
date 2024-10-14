@@ -47,7 +47,7 @@ export class TramitesService {
     return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/todos-xexpediente?expediente=${expediente}`)
   }
 
-  listarTramitesTodosFecha(fecha_ini: string, fecha_fin){
+  listarTramitesTodosFecha(fecha_ini: string, fecha_fin: string){
     return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/todos-xfecha?fecha_ini=${fecha_ini}&fecha_fin=${fecha_fin}`)
   }
 
