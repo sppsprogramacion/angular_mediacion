@@ -15,6 +15,8 @@ import { Table } from 'primeng/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { tiposBusquedaTramites } from 'src/app/common/data-mokeada';
 import Swal from 'sweetalert2';
+import { DatePipe } from '@angular/common';
+import { throwIfEmpty } from 'rxjs';
 
 @Component({
   selector: 'app-tramites-principal',
@@ -32,12 +34,15 @@ export class TramitesPrincipalComponent implements OnInit {
 
   
   //VARIABLES TRAMITE    
+  cantidadAsignados: number;
+  cantidadNuevos: number;
+  cantidadFinalizados: number;
+  totalTramite: number= 0;
   tramite: TramiteModel;
   tramiteDialog: boolean;
   nuevoTramite: boolean;
   submitted: boolean;
   urlTramite: string = 'tramites/administrar';
-  totalTramite: number= 0;
   totalesTramites: TotalesTramitesModel= {};
   tituloPagina: string ="Usuario: Administrador"
   
@@ -52,18 +57,21 @@ export class TramitesPrincipalComponent implements OnInit {
   //booleanas
   loading:boolean = true;
   isFecha: boolean = false;
+  mostrarFecha: boolean = false;
+  mostrarBuscar: boolean = false;
   
   //FORMULARIOS
   formaBuscar: FormGroup;
 
   constructor(
     private fb: FormBuilder,
+    private readonly datePipe: DatePipe,
+    private router: Router,
     
     private authService: AuthService,
     private dataService: DataService,
     private tramitesService: TramitesService,
     private usuariosTramitesService: UsuariosTramiteService,
-    private router: Router
   ) { 
     this.formaBuscar = this.fb.group({
       id_tipo_busqueda: [,[Validators.required]],
@@ -77,14 +85,13 @@ export class TramitesPrincipalComponent implements OnInit {
   ngOnInit(): void {
     if (this.authService.currentUserLogin.rol_id == "administrador" || this.authService.currentUserLogin.rol_id == "supervisor") {
       this.tituloPagina ="Usuario: Administrador";
-      this.listarTramitesAdministrador();
+      this.listarTramitesAdministradorAnioActual();
     }
 
     if (this.authService.currentCiudadanoLogin) {
       this.tituloPagina ="Ciudadano: " + this.authService.currentCiudadanoLogin.apellido + " " + this.authService.currentCiudadanoLogin.nombre;
       this.listTramites = [];
       this.loading = false;
-      //this.listarTramitesCiudadano();
     }
     
     if (this.authService.currentUserLogin) {
@@ -128,17 +135,24 @@ export class TramitesPrincipalComponent implements OnInit {
   buscarTramites(){
     this.loading = true;
 
-    if(this.formaBuscar.invalid){    
+    if(this.formaBuscar.invalid && this.formaBuscar.get('id_tipo_busqueda')?.value != "anioActual"){    
 
       this.loading = false;
       //Swal.fire('Formulario con errores',`Complete correctamente todos los campos del formulario`,"warning");
       return Object.values(this.formaBuscar.controls).forEach(control => control.markAsTouched());
+    }
+    else{
+      this.formaBuscar.get('buscar').markAsUntouched();
     }
     
     const dato = this.formaBuscar.get('buscar')?.value;
     
     if(this.formaBuscar.get('id_tipo_busqueda')?.value === "apellido"){
       this.listarTramitesAdministradorXApellidoCiudadano(dato);
+    }
+
+    if(this.formaBuscar.get('id_tipo_busqueda')?.value === "anioActual"){
+      this.listarTramitesAdministradorAnioActual();
     }
 
     if(this.formaBuscar.get('id_tipo_busqueda')?.value === "dni"){
@@ -157,6 +171,7 @@ export class TramitesPrincipalComponent implements OnInit {
       this.listarTramitesAdministradorXExpediente(dato);
     }
 
+
     if(this.formaBuscar.get('id_tipo_busqueda')?.value === "numtramite"){
       
       if(Number.isInteger(Number(dato))){
@@ -173,11 +188,11 @@ export class TramitesPrincipalComponent implements OnInit {
       let fecha_ini = this.dataService.getchangeFormatoFechaGuardar(this.formaBuscar.get('fecha_ini')?.value)
       let fecha_fin = this.dataService.getchangeFormatoFechaGuardar(this.formaBuscar.get('fecha_fin')?.value);
 
-      this.listarTramitesAdministradorXFecha(fecha_ini, fecha_fin);
-      //seguir
+      this.listarTramitesAdministradorXFecha(fecha_ini, fecha_fin);      
     }
 
-      
+    //contar la cantidad de nuevos, asignados y finalizados
+    this.contarTramitesArrayXEstado(this.listTramites);
     
   }
 
@@ -192,26 +207,48 @@ export class TramitesPrincipalComponent implements OnInit {
       });
   }
   //FIN LISTADO DE TRAMITES............................
+  
 
 
   onChangeTipoBusqueda(){
+     
     const id = this.formaBuscar.get('id_tipo_busqueda')?.value;
     if(id == "fecha"){  
         this.isFecha = true;
+        this.mostrarFecha = true;
+        this.mostrarBuscar = false;
         this.formaBuscar.get('buscar')?.setValue("en fecha");
         this.formaBuscar.get('fecha_ini')?.setValue(null);
         this.formaBuscar.get('fecha_fin')?.setValue(null);
          
     }
-    else{
-      this.isFecha = false;
+
+    if(id == "anioActual"){  
+      this.isFecha = true;
+      this.mostrarFecha = false;
+      this.mostrarBuscar = false;
+      this.formaBuscar.get('buscar')?.setValue("en fecha");
+      this.formaBuscar.get('fecha_ini')?.setValue("01/01/2024");
+      this.formaBuscar.get('fecha_fin')?.setValue(this.dataService.getchangeFormatoFechaRetornar(new Date));
+  
+       
+    }  
+    
+    //cuando es cualquier otra opcion
+    if((id != "fecha") && (id != "anioActual")){ 
+      this.mostrarFecha = false;
+      this.mostrarBuscar = true;
       this.formaBuscar.get('buscar')?.setValue("");
       this.formaBuscar.get('fecha_ini')?.setValue("01/01/2024");
       this.formaBuscar.get('fecha_fin')?.setValue(this.dataService.getchangeFormatoFechaRetornar(new Date));
     }
+
+    this.formaBuscar.get('buscar').markAsUntouched();     
+    
+    
   }
 
-  //LISTADO DE TRAMITES ADMINISTRADOR PAELLIDO
+  //LISTADO DE TRAMITES ADMINISTRADOR APELLIDO
   listarTramitesAdministradorXApellidoCiudadano(apellido: string){    
     this.tramitesService.listarTramitesTodosApellidoCiudadano(apellido).
       subscribe(respuesta => {
@@ -223,7 +260,7 @@ export class TramitesPrincipalComponent implements OnInit {
   }
   //FIN LISTADO DE TRAMITES ADMINISTRADOR APELLIDO............................
 
-  //LISTADO DE TRAMITES ADMINISTRADOR
+  //LISTADO DE TRAMITES ADMINISTRADOR X DNI CIUDADANO
   listarTramitesAdministradorXDniCiudadano(dni: number){    
     this.tramitesService.listarTramitesTodosDniCiudadano(dni).
       subscribe(respuesta => {
@@ -233,7 +270,7 @@ export class TramitesPrincipalComponent implements OnInit {
     
       });
   }
-  //FIN LISTADO DE TRAMITES ADMINISTRADOR............................
+  //FIN LISTADO DE TRAMITES ADMINISTRADOR X DNI CIUDADANO............................
 
   //LISTADO DE TRAMITES ADMINISTRADOR ExPEDIENTE
   listarTramitesAdministradorXExpediente(expediente: string){    
@@ -247,7 +284,26 @@ export class TramitesPrincipalComponent implements OnInit {
   }
   //FIN LISTADO DE TRAMITES ADMINISTRADOR EXPEDIENTE............................
 
-  //LISTADO DE TRAMITES ADMINISTRADOR ExPEDIENTE
+  //LISTADO DE TRAMITES ADMINISTRADOR DEL AÑO ACTUAL
+  listarTramitesAdministradorAnioActual(){   
+    let fechaActual: Date = new Date();
+    let anioActual: number;
+    let fechaInicio: string;
+
+    anioActual = fechaActual.getFullYear();
+    fechaInicio = anioActual.toString() + "-01-01";
+
+    this.tramitesService.listarTramitesTodosFecha(fechaInicio, this.datePipe.transform(fechaActual, "yyyy-MM-dd")).
+      subscribe(respuesta => {
+        this.listTramites= respuesta[0];
+        this.totalTramite = respuesta[1];
+        this.loading=false;
+    
+      });
+  }
+  //FIN LISTADO DE TRAMITES ADMINISTRADOR DEL AÑO ACTUAL............................
+
+  //LISTADO DE TRAMITES ADMINISTRADOR X FECHA
   listarTramitesAdministradorXFecha(fecha_ini: string, fecha_fin: string){    
     this.tramitesService.listarTramitesTodosFecha(fecha_ini, fecha_fin).
       subscribe(respuesta => {
@@ -257,9 +313,9 @@ export class TramitesPrincipalComponent implements OnInit {
     
       });
   }
-  //FIN LISTADO DE TRAMITES ADMINISTRADOR EXPEDIENTE............................
+  //FIN LISTADO DE TRAMITES ADMINISTRADOR X FECHA............................
 
-  //LISTADO DE TRAMITES ADMINISTRADOR
+  //LISTADO DE TRAMITES ADMINISTRADOR X NUMERO DE TRAMITE
   listarTramitesAdministradorXNumeroTramite(numeroTramite: number){    
     this.tramitesService.listarTramitesTodosNumeroTramite(numeroTramite).
       subscribe(respuesta => {
@@ -269,7 +325,7 @@ export class TramitesPrincipalComponent implements OnInit {
     
       });
   }
-  //FIN LISTADO DE TRAMITES ADMINISTRADOR............................
+  //FIN LISTADO DE TRAMITES ADMINISTRADOR X NUMERO DE TRAMITE............................
   
   //LISTADO DE TRANITES USUARIO
   listarTramitesUsuario(){
@@ -302,6 +358,14 @@ export class TramitesPrincipalComponent implements OnInit {
         subscribe(respuesta => {
         this.totalesTramites = respuesta;    
     });
+  }
+  //FIN CONTAR TRAMITES............................
+
+  //CONTAR TRAMITES
+  contarTramitesArrayXEstado(tramitesx: TramiteModel[]){    
+    this.cantidadNuevos = tramitesx.filter(tramitex => tramitex.estado_tramite_id === 1).length;
+    this.cantidadAsignados = tramitesx.filter(tramitex => tramitex.estado_tramite_id === 2).length;
+    this.cantidadFinalizados = tramitesx.filter(tramitex => tramitex.estado_tramite_id === 3).length;
   }
   //FIN CONTAR TRAMITES............................
 

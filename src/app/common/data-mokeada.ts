@@ -35,6 +35,10 @@ export const tiposBusquedaTramites = [
         "tipo_busqueda": "Apelido del ciudadano"
     },
     {
+        "id_tipo_busqueda": "anioActual",
+        "tipo_busqueda": "Año actual"
+    },
+    {
         "id_tipo_busqueda": "dni",
         "tipo_busqueda": "DNI del ciudadano"
     },
