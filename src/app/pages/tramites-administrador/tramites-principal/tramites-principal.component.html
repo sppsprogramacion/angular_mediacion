@@ -137,13 +137,14 @@
     </div>
     <!-- FIN CARD BUSQUEDA..................................-->
 
+    <!-- CARD TABLA TRAMITES-->
     <div class="col-12">
         <div class="card">
 
             <h5>Tramites</h5>
 
             <!-- TABLA DE TRAMITES -->
-            <p-table #dt1 [value]="listTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['numero_tramite','ciudadano.apellido','ciudadano.nombre','dni_ciudadano','objeto.objeto','expediente']"
+            <p-table #dt1 [value]="listTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['numero_tramite','ciudadano.apellido','ciudadano.nombre','ciudadano.dni','objeto.objeto','expediente']"
                 responsiveLayout="scroll">
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-between flex-column sm:flex-row">
@@ -183,7 +184,7 @@
                         <th>
                             <div class="flex justify-content-between align-items-center">
                                 DNI solicitante
-                                <p-columnFilter type="text" field="dni_ciudadano" display="menu" placeholder="Buscar por dni"></p-columnFilter>
+                                <p-columnFilter type="text" field="ciudadano.dni" display="menu" placeholder="Buscar por dni"></p-columnFilter>
                             </div>
                         </th>
                         <th>
@@ -264,7 +265,7 @@
 
         </div>
     </div>
-
+    <!-- FIN CARD TABLA TRAMITES..................................-->
 
 
 </div>

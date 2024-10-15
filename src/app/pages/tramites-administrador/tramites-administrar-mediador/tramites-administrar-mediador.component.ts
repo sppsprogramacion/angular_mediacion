@@ -758,6 +758,12 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   }
   //FIN CREAR PDF SOLICITUD....................................................................
 
+  //CREAR PDF SOLICITUD
+  async generarPdfFormularioAudiencia(){
+    this.pdfsService.generarPdfFormularioAudiencia(this.dataTramite, this.listAudienciasActivas);
+  }
+  //FIN CREAR PDF SOLICITUD....................................................................
+
   //ACCEDER A TRAMITES FINALIZADOS
   irTramitesFinalizados(){
     this.router.navigateByUrl("admin/tramites/finalizados");    

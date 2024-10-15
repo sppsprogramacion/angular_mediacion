@@ -4,6 +4,8 @@ import { TramiteModel } from '../models/tramite.model';
 import { AudienciaModel } from '../models/audiencia.model';
 import { DatePipe } from '@angular/common';
 
+import * as pdfFonts from 'pdfmake/build/vfs_fonts'; // Fuentes de pdfMake
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,8 +13,33 @@ export class PdfsService {
 
   constructor(    
     private readonly datePipe: DatePipe,
+    
 
-  ) { }
+  ) { 
+    PdfMakeWrapper.setFonts(pdfFonts);
+  }
+
+  async generarPdfFormularioAudienciax() {
+    const pdf = new PdfMakeWrapper();
+    
+    pdf.pageSize('A4'); // Tamaño de página
+    pdf.pageMargins([40, 30, 0, 0]); // Sin márgenes para que la imagen ocupe todo
+    
+    // Cargar la imagen en base64 o desde assets
+    const imgBase64 = await new Img('../assets/imagenes/general/formulario-audiencia.jpg').fit([540,750]).absolutePosition(40,30).build(); // O usa una imagen en base64
+       
+
+    // Utilizamos un canvas para el fondo
+    pdf.add(
+      imgBase64
+    );
+    // Agregar contenido encima del fondo
+    pdf.add(
+      new Txt("fecha_completa").fontSize(11).alignment('right').end 
+    );
+
+    pdf.create().open();
+  }
 
 
   //CREAR PDF solicitud DEL TRAMITE
@@ -248,6 +275,71 @@ export class PdfsService {
     pdf.add(' ');
 
 
+    pdf.add(' ');
+     
+    pdf.create().open();
+                             
+  }
+  //FIN CREAR PDF solicitud del tramite................................................
+
+  //CREAR PDF solicitud DEL TRAMITE
+  async generarPdfFormularioAudiencia(dataTramite: TramiteModel, listAudienciasActivas: AudienciaModel[]) {
+    let meses_texto=["Enero", "Febrero","Marzo","Abril","Mayo","Junio", "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+    
+    //fecha completa
+    let fecha_hoy: Date = new Date();
+    let fecha_completa: string;
+    let fecha: string;
+    let fechaAudiencia: Date = new Date(listAudienciasActivas[0].fecha_inicio);
+    // let anio:number= fecha_hoy.getFullYear(); 
+    // let mes: number= fecha_hoy.getMonth();
+    // let dia: number= fecha_hoy.getDate();
+
+    let anio:number= fechaAudiencia.getFullYear(); 
+    let mes: number= fechaAudiencia.getMonth();
+    let dia: number= fechaAudiencia.getDate();
+
+    fecha_completa = "Salta, " + dia + " de " + meses_texto[mes] + " de " +  anio;
+    
+    const pdf = new PdfMakeWrapper();
+    pdf.pageMargins([45,40])
+
+    
+    // Cargar la imagen en base64 o desde assets
+    const imgBase64 = await new Img('../assets/imagenes/general/formulario-audiencia.jpg').fit([540,750]).absolutePosition(40,30).build(); // O usa una imagen en base64
+    const caratula: string = dataTramite.ciudadano.apellido + " " + dataTramite.ciudadano.nombre + "/ " + dataTramite.convocados[0].apellido + " " + dataTramite.convocados[0].nombre
+  
+    // Utilizamos un canvas para el fondo
+    pdf.add(
+      imgBase64
+    );
+
+    pdf.add(
+      new Txt(listAudienciasActivas[0].centro_mediacion.centro_mediacion.toString()).fontSize(11).relativePosition(140,112).end      
+    );
+
+    pdf.add(
+      new Txt(dataTramite.expediente).fontSize(11).relativePosition(160,140).end      
+    );   
+
+    pdf.add(
+      new Txt(caratula).fontSize(11).relativePosition(55,160).end      
+    ); 
+    
+    pdf.add(
+      new Txt(listAudienciasActivas[0].num_audiencia.toString()).fontSize(11).relativePosition(70,205).end      
+    );
+
+    pdf.add(
+      new Txt(listAudienciasActivas[0].hora_inicio.toString()).fontSize(11).relativePosition(128,205).end      
+    );
+    
+    pdf.add(
+      new Txt(fecha_completa).fontSize(11).relativePosition(128,225).end      
+    );
+
+    
+    
     pdf.add(' ');
      
     pdf.create().open();

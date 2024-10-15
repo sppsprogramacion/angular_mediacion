@@ -74,7 +74,7 @@ export class TramitesPrincipalComponent implements OnInit {
     private usuariosTramitesService: UsuariosTramiteService,
   ) { 
     this.formaBuscar = this.fb.group({
-      id_tipo_busqueda: [,[Validators.required]],
+      id_tipo_busqueda: ['anioActual',[Validators.required]],
       buscar: ['',[Validators.required]],
       fecha_ini: ['',[Validators.required]],
       fecha_fin: ['',[Validators.required]],
@@ -98,9 +98,7 @@ export class TramitesPrincipalComponent implements OnInit {
       this.tituloPagina ="Usuario: " + this.authService.currentUserLogin.apellido + " " + this.authService.currentUserLogin.nombre;
       this.listTramites = [];
       this.loading = false;
-    }
-
-    this.contarTramitesXEstado();
+    }    
     
     this.listTiposBusqueda = tiposBusquedaTramites;
   }
@@ -254,6 +252,7 @@ export class TramitesPrincipalComponent implements OnInit {
       subscribe(respuesta => {
         this.listTramites= respuesta[0];
         this.totalTramite = respuesta[1];
+        this.contarTramitesArrayXEstado(this.listTramites);
         this.loading=false;
     
       });
@@ -266,6 +265,7 @@ export class TramitesPrincipalComponent implements OnInit {
       subscribe(respuesta => {
         this.listTramites= respuesta[0];
         this.totalTramite = respuesta[1];
+        this.contarTramitesArrayXEstado(this.listTramites);
         this.loading=false;
     
       });
@@ -278,6 +278,7 @@ export class TramitesPrincipalComponent implements OnInit {
       subscribe(respuesta => {
         this.listTramites= respuesta[0];
         this.totalTramite = respuesta[1];
+        this.contarTramitesArrayXEstado(this.listTramites);
         this.loading=false;
     
       });
@@ -297,6 +298,7 @@ export class TramitesPrincipalComponent implements OnInit {
       subscribe(respuesta => {
         this.listTramites= respuesta[0];
         this.totalTramite = respuesta[1];
+        this.contarTramitesArrayXEstado(this.listTramites);
         this.loading=false;
     
       });
@@ -309,6 +311,7 @@ export class TramitesPrincipalComponent implements OnInit {
       subscribe(respuesta => {
         this.listTramites= respuesta[0];
         this.totalTramite = respuesta[1];
+        this.contarTramitesArrayXEstado(this.listTramites);
         this.loading=false;
     
       });
@@ -321,6 +324,7 @@ export class TramitesPrincipalComponent implements OnInit {
       subscribe(respuesta => {
         this.listTramites= respuesta[0];
         this.totalTramite = respuesta[1];
+        this.contarTramitesArrayXEstado(this.listTramites);
         this.loading=false;
     
       });
