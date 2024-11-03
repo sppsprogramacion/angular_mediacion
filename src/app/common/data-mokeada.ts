@@ -32,7 +32,7 @@ export const tiposBusquedaCiudadano = [
 export const tiposBusquedaTramites = [
     {
         "id_tipo_busqueda": "apellido",
-        "tipo_busqueda": "Apelido del ciudadano"
+        "tipo_busqueda": "Apellido del ciudadano"
     },
     {
         "id_tipo_busqueda": "anioActual",
