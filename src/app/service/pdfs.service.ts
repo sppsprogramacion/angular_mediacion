@@ -19,30 +19,7 @@ export class PdfsService {
     PdfMakeWrapper.setFonts(pdfFonts);
   }
 
-  async generarPdfFormularioAudienciax() {
-    const pdf = new PdfMakeWrapper();
-    
-    pdf.pageSize('A4'); // Tamaño de página
-    pdf.pageMargins([40, 30, 0, 0]); // Sin márgenes para que la imagen ocupe todo
-    
-    // Cargar la imagen en base64 o desde assets
-    const imgBase64 = await new Img('../assets/imagenes/general/formulario-audiencia.jpg').fit([540,750]).absolutePosition(40,30).build(); // O usa una imagen en base64
-       
-
-    // Utilizamos un canvas para el fondo
-    pdf.add(
-      imgBase64
-    );
-    // Agregar contenido encima del fondo
-    pdf.add(
-      new Txt("fecha_completa").fontSize(11).alignment('right').end 
-    );
-
-    pdf.create().open();
-  }
-
-
-  //CREAR PDF solicitud DEL TRAMITE
+   //CREAR PDF solicitud DEL TRAMITE
   async generarPdfSolicitudTramite(dataTramite: TramiteModel, listAudienciasActivas: AudienciaModel[]) {
     let meses_texto=["Enero", "Febrero","Marzo","Abril","Mayo","Junio", "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
     
@@ -284,30 +261,25 @@ export class PdfsService {
 
   //CREAR PDF solicitud DEL TRAMITE
   async generarPdfFormularioAudiencia(dataTramite: TramiteModel, listAudienciasActivas: AudienciaModel[]) {
+    const pdf = new PdfMakeWrapper();
+    pdf.pageMargins([45,40,110,0])
+    
     let meses_texto=["Enero", "Febrero","Marzo","Abril","Mayo","Junio", "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
     
     //fecha completa
-    let fecha_hoy: Date = new Date();
     let fecha_completa: string;
-    let fecha: string;
     let fechaAudiencia: Date = new Date(listAudienciasActivas[0].fecha_inicio);
-    // let anio:number= fecha_hoy.getFullYear(); 
-    // let mes: number= fecha_hoy.getMonth();
-    // let dia: number= fecha_hoy.getDate();
 
     let anio:number= fechaAudiencia.getFullYear(); 
     let mes: number= fechaAudiencia.getMonth();
     let dia: number= fechaAudiencia.getDate();
 
     fecha_completa = "Salta, " + dia + " de " + meses_texto[mes] + " de " +  anio;
-    
-    const pdf = new PdfMakeWrapper();
-    pdf.pageMargins([45,40])
 
-    
     // Cargar la imagen en base64 o desde assets
-    const imgBase64 = await new Img('../assets/imagenes/general/formulario-audiencia.jpg').fit([540,750]).absolutePosition(40,30).build(); // O usa una imagen en base64
-    const caratula: string = dataTramite.ciudadano.apellido + " " + dataTramite.ciudadano.nombre + "/ " + dataTramite.convocados[0].apellido + " " + dataTramite.convocados[0].nombre
+    const imgBase64 = await new Img('../assets/imagenes/general/formulario-audiencia2.jpg').fit([540,750]).absolutePosition(40,30).build(); // O usa una imagen en base64
+    const caratula: string = dataTramite.ciudadano.apellido + " " + dataTramite.ciudadano.nombre + " c/ " + dataTramite.convocados[0].apellido + " " 
+                            + dataTramite.convocados[0].nombre + " por " + dataTramite.objeto.objeto
   
     // Utilizamos un canvas para el fondo
     pdf.add(
@@ -315,27 +287,27 @@ export class PdfsService {
     );
 
     pdf.add(
-      new Txt(listAudienciasActivas[0].centro_mediacion.centro_mediacion.toString()).fontSize(11).relativePosition(140,112).end      
+      new Txt(listAudienciasActivas[0].centro_mediacion.centro_mediacion.toString()).fontSize(11).relativePosition(145,110).end      
     );
 
     pdf.add(
-      new Txt(dataTramite.expediente).fontSize(11).relativePosition(160,140).end      
+      new Txt(dataTramite.expediente).fontSize(11).relativePosition(165,125).end      
     );   
 
     pdf.add(
-      new Txt(caratula).fontSize(11).relativePosition(55,160).end      
+      new Txt(caratula + " " + caratula + " " + caratula).fontSize(11).relativePosition(60,147).end      
     ); 
     
     pdf.add(
-      new Txt(listAudienciasActivas[0].num_audiencia.toString()).fontSize(11).relativePosition(70,205).end      
+      new Txt(listAudienciasActivas[0].num_audiencia.toString()).fontSize(11).relativePosition(75,208).end      
     );
 
     pdf.add(
-      new Txt(listAudienciasActivas[0].hora_inicio.toString()).fontSize(11).relativePosition(128,205).end      
+      new Txt(listAudienciasActivas[0].hora_inicio.toString()).fontSize(11).relativePosition(135,208).end      
     );
     
     pdf.add(
-      new Txt(fecha_completa).fontSize(11).relativePosition(128,225).end      
+      new Txt(fecha_completa).fontSize(11).relativePosition(135,228).end      
     );
 
     
