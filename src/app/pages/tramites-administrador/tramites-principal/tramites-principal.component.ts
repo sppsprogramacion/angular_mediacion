@@ -7,7 +7,6 @@ import { DataService } from 'src/app/service/data.service';
 import { TramiteModel } from '../../../models/tramite.model';
 import { TramitesService } from '../../../service/tramites.service';
 import { TotalesTramitesModel } from '../../../models/totales_tramites.model';
-import { globalConstants } from '../../../common/global-constants';
 import { UsuariosTramiteService } from '../../../service/usuarios-tramite.service';
 import { UsuarioTramiteModel } from '../../../models/usuario_tramite.model';
 import { AuthService } from '../../../service/auth.service';

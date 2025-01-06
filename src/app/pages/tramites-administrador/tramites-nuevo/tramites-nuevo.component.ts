@@ -154,7 +154,6 @@ export class TramitesNuevoComponent implements OnInit {
   ngOnInit(): void {
     
     this.ciudadanoData = this.dataService.ciudadanoData
-    console.log("ciudadanoData nuevo", this.ciudadanoData);
 
     //CARGA DE LISTADOS DESDE DATA MOKEADA
 
@@ -178,7 +177,6 @@ export class TramitesNuevoComponent implements OnInit {
 
     this.cargarMunicipios(1);
     
-    console.log("sino", this.listSiNo);
     this.listarCiudadanos();
   }
 
@@ -227,8 +225,6 @@ export class TramitesNuevoComponent implements OnInit {
       variante_id: parseInt(this.formaTramite.get('variante_id')?.value),
     }
   }
-    
-    console.log("form tramite", this.formaTramite);
     
     //GUARDAR NUEVO TRAMITE
     this.tramiteService.guardarTramite(data)

@@ -24,6 +24,7 @@ import { Router } from '@angular/router';
 import { CategoriaModel } from 'src/app/models/categoria.model';
 import { AuthService } from '../../../service/auth.service';
 import { DataMokeadaService } from '../../../service/data-mokeada.service';
+import { DepartamentosService } from '../../../service/departamentos.service';
 
 @Component({
   selector: 'app-ciudadano-tramites-nuevo',
@@ -100,6 +101,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
 
     private centroMediacionService: CentrosMediacionService,
     private dataMokeadaService: DataMokeadaService,
+    private departamentosService: DepartamentosService,
     private tramiteService: TramitesService,
     public dataService: DataService,
   ) {
@@ -108,7 +110,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       esta_asesorado: [false,[Validators.requiredTrue]],
       departamento_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(2)]],      
       municipio_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(2)]],
-      departamento_id_centro: [0,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(2)]],
+      departamento_id_centro: [,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(2)]],
       centro_mediacion_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(1)]],
       localidad_barrio: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       calle_direccion: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],        
@@ -318,33 +320,23 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.msgsDatosPersonales.push({ severity: 'warning', detail: 'Debe estar asesordo/a por un abogado antes de iniciar un tramite de mediación.'});
 
     
-    //CARGA DE LISTADOS DESDE DATA MOKEADA    
-    
+    //CARGA DE LISTADOS DESDE DATA MOKEADA        
     this.dataMokeadaService.listarObjetos().subscribe(objetos => {
       this.listObjetos = objetos;
 
-    });    
-    
+    });       
     
     this.dataMokeadaService.listarDepartamentos().subscribe(departamentos => {
       this.listaDepartamentos = departamentos;
-      
+
       this.dataMokeadaService.listarMunicipios().subscribe(municipios => {
         this.listMunicipiosCompleto= municipios;
-      });
-
-      this.cargarDepartamentosconCentroMediacion();
+      }); 
 
     });
     
-    this.listSiNo = opcionSiNo;
-
-    this.dataMokeadaService.listarSexo().subscribe(sexos => {
-      this.listSexo = sexos;
-    });
-
-    
-    // this.cargarMunicipios(1);        
+    this.listSiNo = opcionSiNo;  
+           
   }
   //FIN ONINIT................................................................
   //..........................................................................
@@ -440,7 +432,6 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   //AGREGAR CONVOCADOS
   agregarConvocado(){
     let id_provincia: number = parseInt(this.formaProvincia.get('provincia_id')?.value);
-    
     
     //SIN SELECCIONAR PROVINCIA
     if(id_provincia == 1){
@@ -639,9 +630,13 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
 
   //CARGA DEPARTAMENTOS CON CENTRO DE EMDIACION
   cargarDepartamentosconCentroMediacion(){
-    this.listaDepartamentosConCentros= this.listaDepartamentos.filter(departamento => {      
-      return departamento.tiene_centro_mediacion == true;
-    });    
+    this.departamentosService.listarDepartamentosConCentros()
+      .subscribe({
+        next: (respuesta) => {
+          this.listaDepartamentosConCentros= respuesta;         
+          console.log("departamentos", this.listaDepartamentosConCentros);
+        }     
+    });      
   }
   //FIN CARGA DEPARTAMENTOS CON CENTRO DE EMDIACION
 
@@ -758,6 +753,12 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     if(this.formaTramite.get('esta_asesorado')?.value == true){
       Object.values(this.formaTramite.controls).forEach(control => control.markAsUntouched());
       this.estaAsesorado = true;
+
+      this.dataMokeadaService.listarSexo().subscribe(sexos => {
+        this.listSexo = sexos;
+      });
+      
+      this.cargarDepartamentosconCentroMediacion();
       
     }
     else{

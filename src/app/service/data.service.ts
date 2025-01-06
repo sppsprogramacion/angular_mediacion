@@ -4,6 +4,7 @@ import { TramiteModel } from '../models/tramite.model';
 import { UsuarioModel } from '../models/usuario.model';
 import { CentroMediacionModel } from '../models/centro_mediacion.model';
 import { CiudadanoModel } from '../models/ciudadano.model';
+import { AuthService } from './auth.service';
 
 
 @Injectable({
@@ -19,7 +20,10 @@ export class DataService {
   
   usuarioData: UsuarioModel ={};
 
-  constructor(private readonly datePipe: DatePipe,) { }
+  constructor(
+    private readonly authService: AuthService,
+    private readonly datePipe: DatePipe,
+  ) { }
 
   getTramiteData(data: TramiteModel){
     this.tramiteData = data;
@@ -55,4 +59,19 @@ export class DataService {
 
     return fechaAuxiliar;
   }
+
+  getToken(){
+    let token: string = "";
+
+    if (this.authService.currentCiudadanoLogin) {
+      token = localStorage.getItem('token-ciudadano');
+    }
+
+    if (this.authService.currentUserLogin) {
+      token = localStorage.getItem('token-usuario');
+    }
+
+    return token;
+  }
+
 }

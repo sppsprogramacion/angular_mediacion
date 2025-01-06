@@ -148,12 +148,23 @@ export class AppMenuComponent implements OnInit {
                     ]
                 }, 
                 {
+                    label: 'Departamentos',
+                    items: [
+                        {label: 'Ver departamentos', icon: 'pi pi-fw pi-star', routerLink: ['/admin/departamentos/lista']}
+                    ]
+                },   
+                {
                     label: 'Categorias',
                     items: [
                         {label: 'Ver categorias', icon: 'pi pi-fw pi-star', routerLink: ['/admin/categoria/lista']}
                     ]
                 },   
-                
+                {
+                    label: 'Objetos',
+                    items: [
+                        {label: 'Ver objetos', icon: 'pi pi-fw pi-star', routerLink: ['/admin/objetos']}
+                    ]
+                },  
                 {
                     label: 'Salir',
                     items: [

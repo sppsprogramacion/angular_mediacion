@@ -38,6 +38,7 @@ export class CiudadanoTramitesNuevoslistaComponent implements OnInit {
   ) { 
     //recuperar ciudadano seleccioando
     this.dataCiudadano = authService.currentCiudadanoLogin;
+    console.log("ciudadano obtenido", this.dataCiudadano)
   }
 
   ngOnInit(): void {

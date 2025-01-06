@@ -64,6 +64,8 @@ import { CiudadanoCambiarPasswordComponent } from './pages/ciudadano-perfil/ciud
 import { UsuarioDatosPersonalesComponent } from './pages/usuario-perfil/usuario-datos-personales/usuario-datos-personales.component';
 import { UsuarioCambiarContraseniaComponent } from './pages/usuario-perfil/usuario-cambiar-contrasenia/usuario-cambiar-contrasenia.component';
 import { TramitesAdministrarSupervisorComponent } from './pages/tramites-administrador/tramites-administrar-supervisor/tramites-administrar-supervisor.component';
+import { ObjetosComponent } from './pages/objetos/objetos.component';
+import { DepartamentosListaComponent } from './pages/departamentos/departamentos-lista/departamentos-lista.component';
 
 @NgModule({
     imports: [
@@ -86,9 +88,14 @@ import { TramitesAdministrarSupervisorComponent } from './pages/tramites-adminis
                     
                     {path: 'centro-mediacion/lista', component: CentrosMediacionListaComponent},
                     {path: 'centro-mediacion/administrar', component: CentroAdministrarComponent},
+
+                    {path: 'departamentos/lista', component: DepartamentosListaComponent},
                     
                     {path: 'miperfil/datospersonales', component: UsuarioDatosPersonalesComponent},
                     {path: 'miperfil/cambiarcontrasenia', component: UsuarioCambiarContraseniaComponent},
+
+                    //{path: 'categoria/lista', component: CategoriasListaComponent},
+                    {path: 'objetos', component: ObjetosComponent},                    
 
                     {path: 'usuarios/administrar', component: UsuariosAdministrarComponent},
                     {path: 'usuarios/lista', component: UsuariosListaComponent},

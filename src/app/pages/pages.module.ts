@@ -56,6 +56,7 @@ import { UsuarioCambiarContraseniaComponent } from './usuario-perfil/usuario-cam
 import { UsuarioDatosPersonalesComponent } from './usuario-perfil/usuario-datos-personales/usuario-datos-personales.component';
 import { TramitesAdministrarSupervisorComponent } from './tramites-administrador/tramites-administrar-supervisor/tramites-administrar-supervisor.component';
 import { ObjetosComponent } from './objetos/objetos.component';
+import { DepartamentosListaComponent } from './departamentos/departamentos-lista/departamentos-lista.component';
 
 // fonts provided for pdfmake
 
@@ -123,6 +124,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
     UsuarioDatosPersonalesComponent,
     TramitesAdministrarSupervisorComponent,
     ObjetosComponent,
+    DepartamentosListaComponent,
     
   ],
   

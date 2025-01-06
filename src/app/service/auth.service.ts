@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { LoginModel } from '../models/login.model';
@@ -8,6 +8,7 @@ import { CiudadanoModel } from '../models/ciudadano.model';
 import { Observable, catchError, map, of, tap } from 'rxjs';
 import { LoginResponseUsuarioModel } from '../models/login_response_usuario.model';
 import { LoginResponseCiudadanoModel } from '../models/login_response_ciudadano.model';
+import { ClassGetter } from '@angular/compiler/src/output/output_ast';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class AuthService {
   constructor(
     private readonly http: HttpClient,
     //private router: Router,
-    public dataService: DataService,
+    //public dataService: DataService,
   ) { }
 
   //LOGUEO DE CIUDADANO
@@ -41,8 +42,6 @@ export class AuthService {
           ciudadano =>{
             this.ciudadanoLoginResponse = ciudadano;
           }),
-        //tap(ciudadano => localStorage.setItem('token_ciudadano', this.ciudadanoLoggedIn.id_ciudadano.toString())),
-        tap(ciudadano => localStorage.setItem('token_ciudadano', this.ciudadanoLoggedIn.id_ciudadano.toString())),
         tap(ciudadano => localStorage.setItem('token-ciudadano', this.ciudadanoLoginResponse.token)),
         tap(ciudadano => this.usuarioLoggedIn = null)
       );    
@@ -63,7 +62,6 @@ export class AuthService {
           usuario =>{
             this.usuarioLoginResponse = usuario;
           }),
-        tap(usuario => localStorage.setItem('token_usuario', this.usuarioLoggedIn.id_usuario.toString())),
         tap(usuario => localStorage.setItem('token-usuario', this.usuarioLoginResponse.token)),
         tap(usuario => this.ciudadanoLoggedIn = null)
       ); 
@@ -91,11 +89,12 @@ export class AuthService {
   //CONTROLAR AUTENTICACION USUARIO
   checkAutenticationUsuario(): Observable<boolean> {
 
-    if( !localStorage.getItem('token_usuario') ) return of(false);
+    if( !localStorage.getItem('token-usuario') ) return of(false);
 
-    const token = localStorage.getItem('token_usuario');
+    const token = localStorage.getItem('token-usuario');
 
-    return this.http.get<UsuarioModel>(`${this.base_url}/usuarios/${token}`)
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<UsuarioModel>(`${this.base_url}/auth/check-auth-status-usuario`, { headers })
       .pipe(
         tap( usuario => this.usuarioLoggedIn = usuario),
         tap( usuario => this.ciudadanoLoggedIn = null),
@@ -108,13 +107,15 @@ export class AuthService {
   //CONTROLAR AUTENTICACION CIUDADANO
   checkAutenticationCiudadano(): Observable<boolean> {
 
-    if( !localStorage.getItem('token_ciudadano') ) return of(false);
+    if( !localStorage.getItem('token-ciudadano') ) return of(false);
 
-    const token = localStorage.getItem('token_ciudadano');
+    const token = localStorage.getItem('token-ciudadano');
 
-    return this.http.get<UsuarioModel>(`${this.base_url}/ciudadanos/${token}`)
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<CiudadanoModel>(`${this.base_url}/auth/check-auth-status-ciudadano`, { headers })
       .pipe(
         tap( ciudadano => this.ciudadanoLoggedIn = ciudadano),
+        tap( ciudadano => console.log("ciudadano dvuelto", this.ciudadanoLoggedIn)),
         tap( ciudadano => this.usuarioLoggedIn = null),
         map( ciudadano => !!ciudadano),
         catchError( err => of(false) )
@@ -125,14 +126,14 @@ export class AuthService {
   //CERRAR SESION CIUDADANO
   logoutCiudadano(){
     this.ciudadanoLoggedIn = undefined;
-    localStorage.removeItem('token_ciudadano');
+    localStorage.removeItem('token-ciudadano');
   }
   //FIN CERRAR SESION CIUDADANO................................................
 
   //CERRAR SESION CIUDADANO
   logoutUsuario(){
     this.usuarioLoggedIn = undefined;
-    localStorage.removeItem('token_usuario');
+    localStorage.removeItem('token-usuario');
   }
   //FIN CERRAR SESION CIUDADANO................................................
 

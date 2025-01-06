@@ -758,11 +758,16 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   }
   //FIN CREAR PDF SOLICITUD....................................................................
 
-  //CREAR PDF SOLICITUD
+  //CREAR PDF Formulario audiencia
   async generarPdfFormularioAudiencia(){
+    if(this.listAudienciasActivas.length == 0){
+      Swal.fire('No se puede ver el formulario de audiencia',`El tramite no tiene una audiencia activa.`,"warning");
+      return
+    }
+
     this.pdfsService.generarPdfFormularioAudiencia(this.dataTramite, this.listAudienciasActivas);
   }
-  //FIN CREAR PDF SOLICITUD....................................................................
+  //FIN CREAR PDF Formulario audiencia....................................................................
 
   //ACCEDER A TRAMITES FINALIZADOS
   irTramitesFinalizados(){
