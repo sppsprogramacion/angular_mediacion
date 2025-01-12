@@ -3,14 +3,14 @@
         <div class="card">
             <p-toolbar styleClass="mb-3 bg-cyan-500 ">
                 <h5 class="block text-white font-bold font-medium mb-1 ">
-                    Tramites nuevos
+                    Trámites nuevos
                 </h5>
             </p-toolbar>
             <!-- TABLA DE TRAMITES -->
             <p-table #dt1 [value]="listTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-between flex-column sm:flex-row">
-                        <button pButton label="Solicitar tramite" icon="pi pi-plus" class="p-button-info mr-2" (click)="openDialogDatosPersonales()"></button>
+                        <button pButton label="Solicitar trámite" icon="pi pi-plus" class="p-button-info mr-2" (click)="openDialogDatosPersonales()"></button>
 
                     </div>
                 </ng-template>
@@ -139,7 +139,7 @@
 
                 <ng-template pTemplate="footer" class="mt-1">           
                     
-                    <button pButton pRipple type="button" label="Coninuar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="abrirNuevoTramite()"></button>
+                    <button pButton pRipple type="button" label="Continuar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="abrirNuevoTramite()"></button>
                     <button pButton pRipple type="button" label="Modificar datos" class="p-button-outlined p-button-warning mr-2 mb-2" (click)="abrirModificarDatosPersonales()"></button>
                     <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogDatosPersonales()"></button>
                 </ng-template>

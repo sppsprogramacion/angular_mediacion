@@ -101,7 +101,7 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: (resultado) => {
           this.dataCiudadano = resultado;  
-          
+          console.log("ciudadano en login", this.dataCiudadano)
           this.router.navigateByUrl("ciudadano/tramites/nuevos");
         }, 
         error: (err) => {

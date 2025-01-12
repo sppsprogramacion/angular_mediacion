@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, Message, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { AppConfig } from 'src/app/api/appconfig';
-import { DataMokeada, departamentos, municipios, objetos, opcionSiNo } from 'src/app/common/data-mokeada';
+import { opcionSiNo } from 'src/app/common/data-mokeada';
 import { CentroMediacionModel } from 'src/app/models/centro_mediacion.model';
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
@@ -17,8 +17,8 @@ import { CiudadanosService } from 'src/app/service/ciudadanos.service';
 import { DataService } from 'src/app/service/data.service';
 import { TramitesService } from 'src/app/service/tramites.service';
 import Swal from 'sweetalert2';
-import { globalConstants } from '../../../common/global-constants';
 import { ElementoModel } from 'src/app/models/elemento.model';
+import { DataMokeadaService } from '../../../service/data-mokeada.service';
 
 @Component({
   selector: 'app-tramites-nuevo',
@@ -36,7 +36,8 @@ export class TramitesNuevoComponent implements OnInit {
 
   //listas  
   listaCentrosMediacion: CentroMediacionModel[]=[];
-  listaMunicipios: MunicipioModel[] = [];
+  listaMunicipios: MunicipioModel[] = [];  
+  listMunicipiosCompleto: MunicipioModel[]=[];
   listaDepartamentos: DepartamentoModel[] = [];
   listObjetos: ObjetoModel[] = [];
   listSexo: SexoModel[] = [];
@@ -56,9 +57,9 @@ export class TramitesNuevoComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private readonly datePipe: DatePipe,
-    private serviceMensajes: MessageService,
     private centroMediacionService: CentrosMediacionService,
     private ciudadanoService: CiudadanosService,
+    private dataMokeadaService: DataMokeadaService,
     private tramiteService: TramitesService,
     public dataService: DataService,
   ) {
@@ -153,16 +154,29 @@ export class TramitesNuevoComponent implements OnInit {
   ngOnInit(): void {
     
     this.ciudadanoData = this.dataService.ciudadanoData
-    console.log("ciudadanoData nuevo", this.ciudadanoData);
 
     //CARGA DE LISTADOS DESDE DATA MOKEADA
-    this.listObjetos = objetos;
-    this.listSexo = DataMokeada.sexos;
+
+    this.dataMokeadaService.listarDepartamentos().subscribe(departamentos => {
+      this.listaDepartamentos = departamentos;
+    });
+
+    this.dataMokeadaService.listarMunicipios().subscribe(municipios => {
+      this.listMunicipiosCompleto= municipios;
+    });
+
+    this.dataMokeadaService.listarObjetos().subscribe(objetos => {
+      this.listObjetos = objetos;
+    });
+
+    this.dataMokeadaService.listarSexo().subscribe(sexos => {
+      this.listSexo = sexos;
+    });
+
     this.listSiNo = opcionSiNo;
-    this.listaDepartamentos = departamentos;
+
     this.cargarMunicipios(1);
     
-    console.log("sino", this.listSiNo);
     this.listarCiudadanos();
   }
 
@@ -212,8 +226,6 @@ export class TramitesNuevoComponent implements OnInit {
     }
   }
     
-    console.log("form tramite", this.formaTramite);
-    
     //GUARDAR NUEVO TRAMITE
     this.tramiteService.guardarTramite(data)
       .subscribe({
@@ -246,7 +258,7 @@ export class TramitesNuevoComponent implements OnInit {
   }
 
   cargarMunicipios(id_departamento: number){
-    this.listaMunicipios=municipios.filter(municipio => {      
+    this.listaMunicipios=this.listMunicipiosCompleto.filter(municipio => {      
       return municipio.id_municipio == 1 || municipio.departamento_id == id_departamento;
     });    
   }

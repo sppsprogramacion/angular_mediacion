@@ -1,12 +1,5 @@
 <div class="grid">
-    <div class="col-12 xl:col-12">
-        <div class="card">
-            <h5>
-                <!-- <span class="text-orange-600"><b>{{(sector != null)?sector.organismo.organismo : "Sin organismo"}}</b></span>
-                <span class="text-orange-500"> - {{(sector != null)?sector.sector : "sin sector"}}</span> -->
-            </h5>
-        </div>
-    </div>
+    
     <div class="col-12">
         <div class="card">
 
@@ -16,11 +9,13 @@
             <p-table #dt1 [value]="listCiudadanos" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-between flex-column sm:flex-row">
-                        <button pButton label="Limpiar" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
-                        <span class="p-input-icon-left mb-2">
-                            <i class="pi pi-search"></i>
-                            <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
-                        </span>
+                        <div>
+                            <button pButton label="Limpiar" class="p-button-outlined mb-2 mr-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+                            <span class="p-input-icon-left mb-2">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
+                            </span>
+                        </div>
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header">

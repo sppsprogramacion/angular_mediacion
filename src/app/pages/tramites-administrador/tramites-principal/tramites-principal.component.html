@@ -12,13 +12,13 @@
             </div>
 
         </div>
-    </div>
+    </div>    
     <div class="col-6 sm:col-6 lg:col-3 xl:col-3">
         <div class="card mb-0">
             <div class="flex justify-content-between mb-2">
                 <div>
                     <span class="block text-500 font-medium mb-3">Nuevos</span>
-                    <div class="text-900 font-medium text-xl">{{totalesTramites.nuevos}}</div>
+                    <div class="text-900 font-medium text-xl">{{cantidadNuevos}}</div>
 
                 </div>
                 <div class="flex align-items-center justify-content-center bg-purple-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
@@ -32,13 +32,11 @@
             <div class="flex justify-content-between mb-2">
                 <div>
                     <span class="block text-500 font-medium mb-3">Asignados</span>
-                    <div class="text-900 font-medium text-xl">{{totalesTramites.asignados}}</div>
-
+                    <div class="text-900 font-medium text-xl">{{cantidadAsignados}}</div>
                 </div>
                 <div class="flex align-items-center justify-content-center bg-orange-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
                     <i class="pi pi-fw pi-send  text-orange-500 text-xl"></i>
                 </div>
-
             </div>
 
         </div>
@@ -48,7 +46,7 @@
             <div class="flex justify-content-between mb-2">
                 <div>
                     <span class="block text-500 font-medium mb-3">Finalizados</span>
-                    <div class="text-900 font-medium text-xl">{{totalesTramites.finalizados}}</div>
+                    <div class="text-900 font-medium text-xl">{{cantidadFinalizados}}</div>
 
                 </div>
                 <div class="flex align-items-center justify-content-center bg-bluegray-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
@@ -60,17 +58,95 @@
         </div>
     </div>
 
+    <!-- CARD BUSQUEDA-->
+    <div class="col-12 xl:col-12">
+        <div class="card">
+            
+            <div class="p-formgrid grid">                
+                <!-- FORMULARIO BUSCAR -->
+                <div class="col-12">  
+                    <form [formGroup]="formaBuscar">
+                        <!-- CARD DATOS BUSQUEDA-->
+                        <div class="card p-fluid">                            
+                            <div class="formgrid grid">
+                                <div class="field col-12 md:col-6 lg:col-6">
+                                    <label for="id_tipo_busqueda">Tipo busqueda</label>
+                                    <p-dropdown id="id_tipo_busqueda" [options]="listTiposBusqueda" optionLabel="tipo_busqueda" optionValue="id_tipo_busqueda" formControlName="id_tipo_busqueda" placeholder="Seleccionar..." (onChange)="onChangeTipoBusqueda()">
+                                    </p-dropdown>
+                                </div>
+
+                                <div *ngIf="!mostrarFecha && mostrarBuscar" class="field col-12 md:col-6 lg:col-6">
+                                    <label for="buscar">Buscar</label>
+                                    <input type="text" pInputText id="buscar" formControlName="buscar" />
+                                    <small *ngIf="isValid('buscar')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.buscar" >
+                                            <div  *ngIf="formaBuscar.get('buscar')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
+                                </div>
+                                
+                            </div>
+
+                            <div *ngIf="mostrarFecha && !mostrarBuscar" class="formgrid grid">
+                                <div class="field col-12 md:col-6 lg:col-6">
+                                    <label for="fecha_ini">Fecha inicio</label>
+                                    <p-calendar p-inputtext formControlName="fecha_ini" dateFormat="dd/mm/yy" view="" styleClass="" [locale]="es"></p-calendar>
+                                    <small *ngIf="isValid('fecha_ini')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.fecha_ini" >
+                                            <div  *ngIf="formaBuscar.get('fecha_ini')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
+                                </div>
+
+
+
+                                <div class="field col-12 md:col-6 lg:col-6">
+                                    <label for="fecha_fin">Fecha fin</label>
+                                    <p-calendar p-inputtext formControlName="fecha_fin" dateFormat="dd/mm/yy" view="" styleClass="" [locale]="es"></p-calendar>
+                                    <small *ngIf="isValid('fecha_fin')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.fecha_fin" >
+                                            <div  *ngIf="formaBuscar.get('fecha_fin')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
+                                </div>
+                                
+                            </div>
+
+                            <!-- boton buscar -->
+                            <div  class="col-12 grid justify-content-between">
+                                <button pButton pRipple type="button" label="Buscar" class="p-button-primary" style="width: 47%;" (click)="buscarTramites()" ></button>
+                                
+                            </div>
+                        </div>
+                        <!-- FIN CARD DATOS BUSQUEDA -->
+                        
+                    </form>
+                </div>
+                <!--  FIN FORMULARIO BUSCAR -->
+                
+            </div>
+        </div>
+    </div>
+    <!-- FIN CARD BUSQUEDA..................................-->
+
+    <!-- CARD TABLA TRAMITES-->
     <div class="col-12">
         <div class="card">
 
             <h5>Tramites</h5>
 
             <!-- TABLA DE TRAMITES -->
-            <p-table #dt1 [value]="listTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['numero_tramite','ciudadano.apellido','ciudadano.nombre','dni_ciudadano','objeto.objeto','expediente']"
+            <p-table #dt1 [value]="listTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['numero_tramite','ciudadano.apellido','ciudadano.nombre','ciudadano.dni','objeto.objeto','expediente']"
                 responsiveLayout="scroll">
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-between flex-column sm:flex-row">
-                        <button pButton label="Solicitar tramite" icon="pi pi-plus" class="p-button-success mr-2" (click)="abrirNuevoTramite()"></button>
+                        
                         <div>
                             <button pButton label="Limpiar" icon="pi pi-filter-slash" class="p-button-outlined mr-1" (click)="clear(dt1)"></button>
                             <span class="p-input-icon-left">
@@ -106,7 +182,7 @@
                         <th>
                             <div class="flex justify-content-between align-items-center">
                                 DNI solicitante
-                                <p-columnFilter type="text" field="dni_ciudadano" display="menu" placeholder="Buscar por dni"></p-columnFilter>
+                                <p-columnFilter type="text" field="ciudadano.dni" display="menu" placeholder="Buscar por dni"></p-columnFilter>
                             </div>
                         </th>
                         <th>
@@ -155,7 +231,7 @@
                             {{tramite.ciudadano.nombre}}
                         </td>
                         <td style="min-width: 10rem;">
-                            {{tramite.dni_ciudadano}}
+                            {{tramite.ciudadano.dni}}
                         </td>
                         <td style="min-width: 15rem;">
                             {{tramite.objeto.objeto}}
@@ -187,7 +263,7 @@
 
         </div>
     </div>
-
+    <!-- FIN CARD TABLA TRAMITES..................................-->
 
 
 </div>

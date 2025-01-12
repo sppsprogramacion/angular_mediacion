@@ -1,0 +1,209 @@
+<div class="grid">
+
+    <div class="col-12">
+        <div class="card">
+            <h5>Departamentos</h5>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Actualizar departamentos" class="p-button-success mr-2" (click)="listarActualizarDepartamentos()"></button>
+
+                    </div>
+                </ng-template>
+            </p-toolbar>
+            <!-- TABLA DE DEPARTAMENTOS -->
+            <p-table #dt1 [value]="listDepartamentos" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['departamento']" responsiveLayout="scroll">
+                <ng-template pTemplate="caption">
+                    <div class="flex justify-content-between flex-column sm:flex-row">
+                        <button pButton label="Limpiar" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+
+                        <span class="p-input-icon-left mb-2">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem"></th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                ID
+                                
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Departamento
+                                <p-columnFilter type="text" field="departamento" display="menu" placeholder="Buscar por departamento"></p-columnFilter>
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Tiene centro       
+                                <p-columnFilter field="tiene_centro_mediacion" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                                    <ng-template pTemplate="header">
+                                        <div class="px-3 pt-3 pb-0">
+                                            <span class="font-bold">Tiene</span>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                        <p-dropdown [ngModel]="value" [options]="filtroSiNoBoolean" (onChange)="filter($event.value)" placeholder="seleccionar" [showClear]="true">
+                                            <ng-template let-option pTemplate="item">
+                                                <span class="ml-2">{{option.label}}</span>
+                                            </ng-template>
+                                        </p-dropdown>
+                                    </ng-template>
+                                </p-columnFilter>                      
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-departamento>
+                    <tr>
+                        <td style="min-width: 10rem;">
+                            <button *ngIf="departamento.tiene_centro_mediacion" type="button" pButton pRipple class="p-button-rounded p-button mr-2 mb-2" icon="pi pi-building" (click)="openDialogCentrosMediacion(departamento)"></button>
+                            <button *ngIf="!departamento.tiene_centro_mediacion" type="button" pButton pRipple class="p-button-rounded p-button-warning mr-2 mb-2" icon="pi pi-building" (click)="openDialogCentrosMediacion(departamento)"></button>
+                        </td>
+                        <td style="min-width: 3rem;">
+                            {{departamento.id_departamento}}
+                        </td>
+                        <td style="min-width: 20rem;">
+                            {{departamento.departamento}}
+                        </td>
+                        <td style="min-width: 5rem;">
+                            {{departamento.tiene_centro_mediacion? "SI": "NO"}}
+                        </td>
+                        
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="8">No se encontraron departamentos registrados.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="8">Cargando departamentos... .</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <!-- FIN TABLA DE OBJETOS -->
+        </div>
+
+        <!-- DIALOG CENTROS -->
+        <p-dialog id="centrosDialog" [(visible)]="centrosDialog" [style]="{width: '650px'}" header="Centros de mediación" [closable]="false" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="header">
+                <div class="formgrid grid">
+                    <h5 class="mb-1" style="width: 100%;">{{tituloDialog}}</h5>                    
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="content">
+                <!-- TABLA DE CENTROS MEDIACION -->
+                <p-table #dt1 [value]="listCentrosMediacion" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="[]" responsiveLayout="scroll">
+                    
+                    <ng-template pTemplate="header">
+                        <tr>
+                            
+                            <th>
+                                <div class="flex justify-content-between align-items-center">
+                                    Activo                                    
+                                </div>
+                            </th>
+                            <th>
+                                <div class="flex justify-content-between align-items-center">
+                                    Centro Mediación                                    
+                                </div>
+                            </th>
+                            <th>
+                                <div class="flex justify-content-between align-items-center">
+                                    Dirección                                
+                                </div>
+                            </th>
+                            <th>
+                                <div class="flex justify-content-between align-items-center">
+                                    Departamento                                    
+                                </div>
+                            </th>
+                            <th>
+                                <div class="flex justify-content-between align-items-center">
+                                    Municipio                              
+                                </div>
+                            </th>
+                            <th>
+                                <div class="flex justify-content-between align-items-center">
+                                    Telefono
+                                </div>
+                            </th>
+                            <th>
+                                <div class="flex justify-content-between align-items-center">
+                                    E-mail                                
+                                </div>
+                            </th>
+                            <th>
+                                <div class="flex justify-content-between align-items-center">
+                                    Admin responsable   
+                                </div>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-centro>
+                        <tr>                            
+                            <td style="min-width: 5rem;">
+                                <div *ngIf="centro.activo" class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                                    <i class="pi pi-fw text-blue-500 text-xl">SI</i>
+                                </div>
+                                <div *ngIf="!centro.activo" class="flex align-items-center justify-content-center bg-orange-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                                    <i class="pi pi-fw text-orange-500 text-xl">NO</i>
+                                </div>
+                            </td>
+                            <td style="min-width: 15rem;">
+                                {{centro.centro_mediacion}}
+                            </td>
+                            <td style="min-width: 20rem;">
+                                Barrio: {{centro.localidad_barrio}} - Calle/Dirección:{{centro.calle_direccion}} - N° {{centro.numero_dom}}
+                            </td>
+                            <td style="min-width: 15rem;">
+                                {{centro.departamento.departamento}}
+                            </td>
+                            <td style="min-width: 10rem;">
+                                {{centro.municipio.municipio}}
+                            </td>
+                            <td style="min-width: 10rem;">
+                                {{centro.telefono}}
+                            </td>
+                            <td style="min-width: 5rem;">
+                                {{centro.email}}
+                            </td>
+                            <td style="min-width: 3rem;">
+                                {{centro.admin_es_responsable? "SI": "NO"}}
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="8">No se encontraron centros registrados.</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="loadingbody">
+                        <tr>
+                            <td colspan="8">Cargando centros... .</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <!-- FIN TABLA DE CENTROS MEDIACION -->
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogCentrosMediacion()"></button>
+            </ng-template>
+        </p-dialog>
+        <!-- FIN DIALOG CENTROS -->
+
+    </div>
+</div>
+

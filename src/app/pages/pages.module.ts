@@ -53,7 +53,12 @@ import { TagModule } from 'primeng/tag';
 import { PdfMakeWrapper } from 'pdfmake-wrapper';
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { UsuarioCambiarContraseniaComponent } from './usuario-perfil/usuario-cambiar-contrasenia/usuario-cambiar-contrasenia.component';
-import { UsuarioDatosPersonalesComponent } from './usuario-perfil/usuario-datos-personales/usuario-datos-personales.component'; // fonts provided for pdfmake
+import { UsuarioDatosPersonalesComponent } from './usuario-perfil/usuario-datos-personales/usuario-datos-personales.component';
+import { TramitesAdministrarSupervisorComponent } from './tramites-administrador/tramites-administrar-supervisor/tramites-administrar-supervisor.component';
+import { ObjetosComponent } from './objetos/objetos.component';
+import { DepartamentosListaComponent } from './departamentos/departamentos-lista/departamentos-lista.component';
+
+// fonts provided for pdfmake
 
 // If any issue using previous fonts import. you can try this:
 // import pdfFonts from "pdfmake/build/vfs_fonts";
@@ -116,7 +121,10 @@ PdfMakeWrapper.setFonts(pdfFonts);
     TramitesAdministrarFinalizadoComponent,
     CiudadanoCambiarPasswordComponent,    
     UsuarioCambiarContraseniaComponent,
-    UsuarioDatosPersonalesComponent
+    UsuarioDatosPersonalesComponent,
+    TramitesAdministrarSupervisorComponent,
+    ObjetosComponent,
+    DepartamentosListaComponent,
     
   ],
   

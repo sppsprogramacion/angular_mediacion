@@ -1,8 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DataMokeada } from 'src/app/common/data-mokeada';
-import { globalConstants } from 'src/app/common/global-constants';
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { SexoModel } from 'src/app/models/sexo.model';
 import { ConfigService } from 'src/app/service/app.config.service';
@@ -11,6 +9,7 @@ import Swal from 'sweetalert2';
 import { DataService } from '../../../service/data.service';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/service/auth.service';
+import { DataMokeadaService } from '../../../service/data-mokeada.service';
 
 @Component({
   selector: 'app-ciudadano-datospersonales',
@@ -39,6 +38,7 @@ export class CiudadanoDatospersonalesComponent implements OnInit {
 
     private authService: AuthService,
     private dataService: DataService,    
+    private dataMokeadaService: DataMokeadaService,
     private ciudadanoService: CiudadanosService,
   ) {
 
@@ -111,7 +111,10 @@ export class CiudadanoDatospersonalesComponent implements OnInit {
     //fin cargar datos del ciudadano en el formulario
 
     //CARGA DE LISTADOS DESDE DATA MOKEADA
-    this.listaSexo = DataMokeada.sexos;
+    this.dataMokeadaService.listarSexo().subscribe(sexo => {
+      this.listaSexo = sexo;
+    });
+
   }
 
 
@@ -157,10 +160,7 @@ export class CiudadanoDatospersonalesComponent implements OnInit {
   //FIN GUARDAR CIUDADANO............................................................
 
   //CARGAR FORMULARIO CIUDADANO
-  cargarFormularioCiudadano(){
-    console.log("fecha nacimiento", this.dataService.getchangeFormatoFechaRetornar(this.ciudadanoData.fecha_nac));
-    console.log("fecha nacimiento", this.ciudadanoData.fecha_nac);
-    
+  cargarFormularioCiudadano(){    
     this.formaCiudadano.get('dni')?.setValue(this.ciudadanoData.dni);
     this.formaCiudadano.get('apellido')?.setValue(this.ciudadanoData.apellido);
     this.formaCiudadano.get('nombre')?.setValue(this.ciudadanoData.nombre);

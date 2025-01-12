@@ -14,7 +14,6 @@ import { FuncionTramiteService } from '../../../service/funcion-tramite.service'
 import { FuncionTtramiteModel } from 'src/app/models/funcion_tramite.model';
 import { ElementoModel } from '../../../models/elemento.model';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
-import { departamentos, modalidad, tiposAudiencia } from 'src/app/common/data-mokeada';
 import { CentroMediacionModel } from 'src/app/models/centro_mediacion.model';
 import { CentrosMediacionService } from '../../../service/centros-mediacion.service';
 import { UsuariosCentroService } from '../../../service/usuarios-centro.service';
@@ -28,6 +27,8 @@ import { AudienciasService } from '../../../service/audiencias.service';
 import { ConvocadoModel } from 'src/app/models/convocado.model';
 import { VinculadoModel } from 'src/app/models/vinculado.model';
 import { Router } from '@angular/router';
+import { DataMokeadaService } from 'src/app/service/data-mokeada.service';
+import { PdfsService } from '../../../service/pdfs.service';
 
 @Component({
   selector: 'app-tramites-administrar',
@@ -50,6 +51,7 @@ export class TramitesAdministrarComponent implements OnInit {
 
   //listas
   listAudiencias: AudienciaModel[] = [];
+  listAudienciasActivas: AudienciaModel[] = [];
   listAudienciasUsuario: AudienciaModel[] = [];
   listCentrosMediacion: CentroMediacionModel[]=[];
   listModalidad: ModalidadModel[] = [];
@@ -73,7 +75,8 @@ export class TramitesAdministrarComponent implements OnInit {
   loadingMediadores: boolean = true;
   loadingFuncionTramite: boolean = true;
   audienciaDialog: boolean = false;
-  audienciaUsuarioDialog: boolean = false;  
+  audienciaUsuarioDialog: boolean = false;
+  audienciaVerDialog: Boolean = false;  
   convocadoDialog: boolean = false;  
   usuarioTramiteDialog: boolean = false;
   vinculadoDialog: boolean = false;
@@ -90,11 +93,10 @@ export class TramitesAdministrarComponent implements OnInit {
     public dataService: DataService,
     private audienciaService: AudienciasService,
     private centroMediacionService: CentrosMediacionService,
-    private funcionTramiteService: FuncionTramiteService,
-    private tiposAudienciaService: TiposAudienciaService,
+    private dataMokeadaService: DataMokeadaService,
+    private pdfsService: PdfsService,
     private tramiteService: TramitesService,
     private usuariosCentroService: UsuariosCentroService,
-    private usuarioService: UsuariosService,
     private usuarioTramiteService: UsuariosTramiteService,
     
   ) { 
@@ -102,7 +104,7 @@ export class TramitesAdministrarComponent implements OnInit {
     
     //FORMULARIO 
     this.formaMediadorAsignado = this.fb.group({
-      detalles: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(200)]],     
+      detalles: ['',[Validators.maxLength(300)]],     
       centro_mediacion_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]],         
       departamento_id_centro: [1,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(2)]],     
       funcion_tramite_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
@@ -111,11 +113,11 @@ export class TramitesAdministrarComponent implements OnInit {
 
     this.formaAudiencia = this.fb.group({
       centro_mediacion_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
-      detalles: ['',[Validators.required, Validators.minLength(5), Validators.maxLength(200)]], 
+      detalles: ['',[Validators.maxLength(300)]], 
       fecha_inicio: [,[Validators.required]],   
       hora_inicio: [,[Validators.required, Validators.pattern(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/)]],     
       hora_fin: [,[Validators.required]],          
-      modalidad_id: [1,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(2)]],     
+      modalidad_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(2)]],     
       tipo_audiencia_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(1)]]
     });
   }
@@ -131,8 +133,7 @@ export class TramitesAdministrarComponent implements OnInit {
     ],    
     'detalles': [
       { type: 'required', message: 'El detalle es requerido.' },
-      { type: 'minlength', message: 'La cantidad mínima de caracteres es 5.' },
-      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 200.' }
+      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 300.' }
     ],  
     'departamento_id_centro': [
       { type: 'required', message: 'El departamento es requerido.' },
@@ -198,10 +199,13 @@ export class TramitesAdministrarComponent implements OnInit {
       this.router.navigateByUrl("admin/tramites/nuevoslis");
     }   
 
-    this.listDepartamentos = departamentos;
-    this.listTipoAudiencia = tiposAudiencia;
-    this.listModalidad = modalidad;
-    this.listarMediadores();
+    //CARGA DESDE DATA MOKEADA
+    this.dataMokeadaService.listarDepartamentos().subscribe(departamentos => {
+      this.listDepartamentos = departamentos;
+    });   
+    //FIN CARGA DESDE DATA MOKEADA
+
+    //this.listarMediadores();
     
   }
   //FIN ONINIT......................................................................................
@@ -248,7 +252,6 @@ export class TramitesAdministrarComponent implements OnInit {
     if(this.formaAudiencia.invalid){
       this.msgs = [];
       this.msgs.push({ severity: 'error', summary: 'Datos inválidos', detail: 'Revise los datos cargados. ' });
-      console.log("formulario Audiencia", this.formaAudiencia.controls);
       return Object.values(this.formaAudiencia.controls).forEach(control => control.markAsTouched());
     }
 
@@ -332,7 +335,6 @@ export class TramitesAdministrarComponent implements OnInit {
           if(this.dataTramite.estado_tramite_id === 2) {
             this.buscarMediadorByNumTramiteActivo();
           }
-          console.log("tramite recibido", this.dataTramite);    
         }
       });    
   }
@@ -344,6 +346,7 @@ export class TramitesAdministrarComponent implements OnInit {
       .subscribe({
         next: (resultado) => {
           this.listAudiencias = resultado[0]; 
+          this.listAudienciasActivas = this.listAudiencias.filter(audiencia => audiencia.esta_cerrada === false);
           this.loadingAudiencia = false;     
         },
         error: (err) => {
@@ -407,58 +410,11 @@ export class TramitesAdministrarComponent implements OnInit {
   }
   //FIN DESHABILITAR USUARIO-CENTRO.................................................
 
-  //LISTADO DE MEDIADORES
-  listarMediadores(){    
-    this.usuarioService.listarUsuariosTodos()
-      .subscribe(respuesta => {
-        this.listUsuarios= respuesta[0];
-        this.loadingMediadores = false;  
-        this.elementosUsuarios = this.listUsuarios.map(usuario => {
-          return {
-            clave: usuario.id_usuario,
-            value: usuario.apellido + " " + usuario.nombre + " (" + usuario.dni + ")"
-            }
-        });
 
-        //BUSCAR FUNCIONES
-        this.funcionTramiteService.listarFuncionTramitesTodos()
-          .subscribe(respuesta => {
-            this.listFuncionTramite= respuesta[0];
-            console.log("funciones", this.listFuncionTramite);
-            this.loadingFuncionTramite = false;  
-          
-          });
-    
-      });
-  }  
-  //FIN LISTADO DE MEDIADORES............................
-
-  //LISTADO DE TRAMITES
-  listarFuncionTramite(){    
-    this.funcionTramiteService.listarFuncionTramitesTodos().
-        subscribe(respuesta => {
-        this.listFuncionTramite= respuesta[0];
-        console.log("funciones", this.listFuncionTramite);
-        this.loadingFuncionTramite = false;  
-    
-    });
-  }
-  //FIN LISTADO DE TRAMITES............................
-
-  //LISTADO DE TIPO AUDIENCIAS
-  listarTiposAudiencia(){    
-    this.tiposAudienciaService.listarTodos().
-        subscribe(respuesta => {
-        this.listTipoAudiencia= respuesta[0];
-    
-    });
-  }
-  //FIN LISTADO DE TIPO AUDIENCIAS............................
-
-  
   onChangeDepartamentoParaCentros(){
     const id = this.formaMediadorAsignado.get('departamento_id_centro')?.value;
-    if(id != null){               
+    if(id != null){  
+        this.elementosUsuariosCentro = [];             
         this.cargarCentrosMediacion(parseInt(id.toString()));        
     }
   }
@@ -484,8 +440,7 @@ export class TramitesAdministrarComponent implements OnInit {
           }
         });   
         if(this.elementosCentroMediacion.length > 0 ){
-          let idCentroAux: number = this.elementosCentroMediacion[0].clave;
-          console.log("value array", idCentroAux);            
+          let idCentroAux: number = this.elementosCentroMediacion[0].clave;          
           this.formaMediadorAsignado.get('centro_mediacion_id')?.setValue(idCentroAux);
           this.cargarUsuarios(idCentroAux)
         }
@@ -537,8 +492,6 @@ export class TramitesAdministrarComponent implements OnInit {
     this.usuariosCentroService.listarUsuariosActivosXCentro(id_centro_mediacion)
     .subscribe({
       next: (resultado) => {
-        console.log("id centro cargar usuario", id_centro_mediacion);
-        console.log("resultado", resultado);
         this.listUsuariosCentro = resultado[0]
         this.elementosUsuariosCentro = [];
         this.elementosUsuariosCentro = this.listUsuariosCentro.map(usuarioCentro => {
@@ -547,8 +500,8 @@ export class TramitesAdministrarComponent implements OnInit {
             value: usuarioCentro.usuario.apellido +  " " + usuarioCentro.usuario.nombre + " (" + usuarioCentro.usuario.dni + ")"
             
           }
-        });
-        console.log("elementos usuqarios", this.listUsuariosCentro);
+        });       
+        
       },
       error: (err) => {
         Swal.fire('Error al listar los usuarios',`${err.error.message}`,"error");
@@ -586,22 +539,29 @@ export class TramitesAdministrarComponent implements OnInit {
   }    
   //FIN MANEJO FORMULARIO DIALOG VINCULADO....................................
 
-  //MANEJO DE FORMULARIO DIALOG
-  openDialogUsuarioTramite() {
-    //this.listarFuncionTramite();
+  //MANEJO DE FORMULARIO DIALOG USUARIO TRAMITE
+  async openDialogUsuarioTramite() {
     this.usuarioTramiteDialog = true;
-    this.formaMediadorAsignado.reset();    
-    return Object.values(this.formaMediadorAsignado.controls).forEach(control => control.markAsUntouched());
     
+    //CARGA DESDE DATA MOKEADA
+    this.dataMokeadaService.listarFuncionTramite().subscribe(funcionTramite => {
+      this.listFuncionTramite = funcionTramite;      
+    });   
+    //FIN CARGA DESDE DATA MOKEADA
+    
+    this.formaMediadorAsignado.reset(); 
+    return Object.values(this.formaMediadorAsignado.controls).forEach(control => control.markAsUntouched());
   }
   
   hideDialogUsuarioTramite() {
     this.elementosUsuarios = [];
+    this.elementosUsuariosCentro = [];
     this.elementosCentroMediacion = [];
     this.msgs = [];
     this.usuarioTramiteDialog = false;
     
-  }    
+  }   
+  //FIN MANEJO DE FORMULARIO DIALOG USUARIO TRAMITE.............................. 
 
   //MANEJO DE FORMULARIO DIALOG AUDIENCIAS
   openDialogAudiencia() {
@@ -611,7 +571,17 @@ export class TramitesAdministrarComponent implements OnInit {
     }
 
     this.cargarCentrosMediacionXUsuario(this.dataUsuarioTramite.usuario_id);
-    //this.listarTiposAudiencia()
+    
+    //CARGA DESDE DATA MOKEADA
+    this.dataMokeadaService.listarTipoAudiaencia().subscribe(tiposAudiencia => {
+      this.listTipoAudiencia = tiposAudiencia;
+    });
+
+    this.dataMokeadaService.listarModalidad().subscribe(modalidad => {
+      this.listModalidad = modalidad;
+    });
+    //FIN CARGA DESDE DATA MOKEADA
+
     this.audienciaDialog = true;
     this.formaAudiencia.reset();    
 
@@ -628,17 +598,23 @@ export class TramitesAdministrarComponent implements OnInit {
 
   openDialogAudienciaUsuario() {
     this.buscarAudienciasByUsuario();
-    this.audienciaUsuarioDialog = true;
-    // this.formaAudiencia.reset();    
-
-    // return Object.values(this.formaAudiencia.controls).forEach(control => control.markAsUntouched());    
+    this.audienciaUsuarioDialog = true;   
   }
   
   hideDialogAudienciaUsuario() {
     
     this.msgs = [];
-    this.audienciaUsuarioDialog = false;
+    this.audienciaUsuarioDialog = false;    
+  }
+
+  openDialogAudienciaVer(audiencia: AudienciaModel) {
+    this.dataAudiencia = audiencia;
+    this.audienciaVerDialog = true;
+  }
+  
+  hideDialogAudienciaVer() {
     
+    this.audienciaVerDialog = false;    
   }
   //FIN MANEJO FORMULARIO DIALOG AUDIENCIAS....................................
 
@@ -650,4 +626,11 @@ export class TramitesAdministrarComponent implements OnInit {
     }
     return fechaAuxiliar;
   }
+
+
+  //CREAR PDF SOLICITUD
+  async generarPdfTramite(){
+    this.pdfsService.generarPdfSolicitudTramite(this.dataTramite, this.listAudienciasActivas);
+  }
+  //FIN CREAR PDF SOLICITUD....................................................................
 }

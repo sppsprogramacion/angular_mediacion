@@ -120,13 +120,25 @@ export class TramitesNuevoslisComponent implements OnInit {
   //ACCEDER A DATA SERVICE
   administrarTramite(data: TramiteModel){
     this.dataService.tramiteData = data;
-    console.log("tramite en lista", this.dataService.tramiteData);
-    if( this.authService.currentUserLogin.rol_id == "administrador" ){
+
+    if( this.authService.currentUserLogin.rol_id == "administrador" && data.estado_tramite_id != 3){
       this.router.navigateByUrl("admin/tramites/administrar");
+    }    
+
+    //verificacion si el usuario tiene la funcion de administrativo en el tramite
+    if( this.authService.currentUserLogin.rol_id == "supervisor" && data.estado_tramite_id != 3 ){
+      this.router.navigateByUrl("admin/tramites/administrar-visor");
     }
-    else{
-      this.router.navigateByUrl("admin/tramites/administrar-med");
+    
+    //verificacion si el usuario tiene la funcion de mediador en el tramite
+    if( this.authService.currentUserLogin.rol_id == "mediador" && data.estado_tramite_id != 3){
+      this.router.navigateByUrl("admin/tramites/administrar-med" );
     }
+
+    if(data.estado_tramite_id == 3){
+      this.router.navigateByUrl("admin/tramites/administrar-finalizado");
+    }
+
     
   }
   //FIN ACCEDER A DATA SERVICE

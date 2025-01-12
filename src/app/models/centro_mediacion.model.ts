@@ -16,7 +16,9 @@ export class CentroMediacionModel{
         public calle_direccion?: string,
         public numero_dom?: number,
         public telefono?: string,
-        public email?: string
+        public email?: string,
+        public admin_es_responsable?: boolean,
+        public activo?: boolean
         //public clave?: string
 
     ){}

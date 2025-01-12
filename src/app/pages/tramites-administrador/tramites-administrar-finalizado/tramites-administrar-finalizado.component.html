@@ -570,7 +570,7 @@
     <p-dialog id="audienciaFinalizadaDialog" [(visible)]="audienciaFinalizadaDialog" [style]="{width: '500px','min-height':'350px'}" class="p-fluid" header="Datos de la audiencia" [closable]="false" [modal]="true">
          
         <ng-template pTemplate="content">
-            <div class="col-12 border-bottom-1 surface-border">
+            <div class="col-12 border-bottom-2 surface-border">
                 <div class="grid">
                     <div class="col-12 md:col-6 lg:col-6 xl:col-6">
                         <span class="text font-medium text-1xl">Tramite:<span class="text ml-1 font-medium"> {{dataAudiencia.tramite_numero}}</span></span>
@@ -581,7 +581,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 border-bottom-1 surface-border">
+            <div class="col-12 border-bottom-2 surface-border">
                 <div class="grid">
                     <div class="col-12 md:col-12 lg:col-12 xl:col-12">
                         <span class="text font-medium text-1xl">Fecha:<span class="text ml-1 font-medium"> {{dataAudiencia.fecha_inicio| date: 'dd/MM/yyyy'}}</span></span>
@@ -595,14 +595,14 @@
 
                 </div>
             </div>
-            <div class="col-12 border-bottom-1 surface-border">
+            <div class="col-12 border-bottom-2 surface-border">
                 <div class="grid">
                     <div class="col-12 lg:col-12 xl:col-12">
                         <span class="text font-medium text-1xl">Centro de mediacion:<span class="text ml-1 font-medium"> {{dataAudiencia.centro_mediacion.centro_mediacion}}</span></span>
                     </div>
                 </div>
             </div>
-            <div class="col-12 border-bottom-1 surface-border">
+            <div class="col-12 border-bottom-2 surface-border">
                 <div class="grid">
                     <div class="col-12 lg:col-6 xl:col-6">
                         <span class="text font-medium text-1xl">Departamento:<span class="text ml-1 font-medium"> {{dataAudiencia.centro_mediacion?.departamento.departamento}} </span></span>
@@ -610,6 +610,24 @@
                     <div class="col-12 lg:col-6 xl:col-6">
                         <span class="text font-medium text-1xl">Municipio:<span class="text ml-1 font-medium"> {{dataAudiencia.centro_mediacion?.municipio.municipio}} </span></span>
                     </div>
+                </div>
+            </div>
+            <div class="col-12 border-bottom-2 surface-border">
+                <div class="grid">
+                    <div class="col-12 md:col-12 lg:col-12 xl:col-12">
+                        <span class="text font-medium text-1xl">Detalles:<span class="text ml-1 font-medium"> {{dataAudiencia.detalles}} </span></span>
+                    </div>                    
+                </div>
+            </div>
+            <div class="col-12 border-bottom-2 surface-border">
+                <div class="grid">
+                    <div class="col-12 md:col-12 lg:col-12 xl:col-12">
+                        <span class="text font-medium text-1xl">DNI Mediador:<span class="text ml-1 font-medium"> {{dataAudiencia.usuario.dni}} </span></span>
+                    </div>
+                    <div class="col-12 md:col-12 lg:col-12 xl:col-12">
+                        <span class="text font-medium text-1xl">Mediador:<span class="text ml-1 font-medium"> {{dataAudiencia.usuario.apellido}} {{dataAudiencia.usuario.nombre}}</span></span>
+                    </div>
+                    
                 </div>
             </div>
             <div class="col-12 border-bottom-1 surface-border">
@@ -622,7 +640,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 border-bottom-1 surface-border">
+            <div class="col-12 border-bottom-2 surface-border">
                 <div class="grid">
                     <div class="col-12">
                         <span class="text font-medium text-1xl">Resultado de la audiencia:<span class="text ml-1 font-medium"> {{dataAudiencia.resultado_audiencia?.resultado_audiencia}} </span></span>
@@ -630,7 +648,7 @@
                     
                 </div>
             </div>
-            <div class="col-12 border-bottom-1 surface-border">
+            <div class="col-12 border-bottom-2 surface-border">
                 <div class="grid">
                     
                     <div class="col-12 ">
@@ -685,7 +703,7 @@
     <div class="col-12 border-bottom-1 surface-border">
         <div class="p-formgrid grid">            
             <div class="col-6">
-                <button pButton pRipple type="button" label="IMPRIMIR tramite" class="p-button mr-2 mb-2" ></button>
+                <button pButton pRipple type="button" label="Imprimir tramite" class="p-button mr-2 mb-2" (click)="generarPdfTramite()"></button>
             </div>
         </div>
     </div>

@@ -14,8 +14,9 @@ import { Message, MessageService } from 'primeng/api';
 import { TramitesService } from 'src/app/service/tramites.service';
 import { AudienciasService } from 'src/app/service/audiencias.service';
 import { AudienciaModel } from 'src/app/models/audiencia.model';
-import { Img, PdfMakeWrapper, Txt } from 'pdfmake-wrapper';
+
 import { Router } from '@angular/router';
+import { PdfsService } from 'src/app/service/pdfs.service';
 @Component({
   selector: 'app-ciudadano-tramite-administrar',
   templateUrl: './ciudadano-tramite-administrar.component.html',
@@ -38,6 +39,7 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
 
   //listas
   listAudiencias: AudienciaModel[] = [];
+  listAudienciasActivas: AudienciaModel[] = [];
   listUsuariosTramite: UsuarioTramiteModel[]=[];
 
   //variables booleanas
@@ -58,11 +60,8 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
     private router: Router,
     public dataService: DataService,
     private audienciaService: AudienciasService,
-    private centroMediacionService: CentrosMediacionService,
-    private funcionTramiteService: FuncionTramiteService,
-    private tramiteService: TramitesService,   
-    private usuariosCentroService: UsuariosCentroService,
-    private usuarioService: UsuariosService,
+    private pdfsService: PdfsService,
+    private tramiteService: TramitesService,
     private usuarioTramiteService: UsuariosTramiteService,
     
   ) {     
@@ -150,14 +149,13 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
 
           this.msgsAudienciasTramite=[];
           if(this.listAudiencias.length > 0){
-            let listAudienciasActivas: AudienciaModel[] = this.listAudiencias.filter(audiencia => audiencia.esta_cerrada === false);
-            if(listAudienciasActivas.length > 0 ){
+            this.listAudienciasActivas = this.listAudiencias.filter(audiencia => audiencia.esta_cerrada === false);
+            if(this.listAudienciasActivas.length > 0 ){
               this.msgsAudienciasTramite.push({ severity: 'success', summary: 'Audiencia', detail: 'Tiene una audiencia programada pendiente.' });
 
             }
           }
           else{
-            console.log("audiencia numero", this.listAudiencias.length);
             this.msgsAudienciasTramite.push({ severity: 'warn', summary: 'Audiencia', detail: 'No tiene una audiencia programada' });
           
           }
@@ -222,36 +220,251 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
   //FIN MANEJO FORMULARIO DIALOG VINCULADO....................................
 
   //CREAR PDF DEL TRAMITE
-  async generarPdfTramite() {
-    const pdf = new PdfMakeWrapper();
+  // async generarPdfTramite() {
+  //   let meses_texto=["Enero", "Febrero","Marzo","Abril","Mayo","Junio", "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
     
-    //agrega imagen
-    pdf.add( await new Img('../../../assets/imagenes/general/logo-gobierno-salta.png').fit([120,120]).alignment('left').build());
-    pdf.add(
-      new Txt('Fecha: Salta 25/06/2024').fontSize(11).alignment('right').end      
-    );
-    pdf.add(' ');
-    pdf.add(
-      new Txt('Datos del tramite').bold().fontSize(12).alignment('center').end
-    );
-    pdf.add(' ');
-    //agrega imagen
-    //pdf.add( await new Img(this.imagenUrl).fit([100,100]).alignment('center').build());
+  //   //fecha completa
+  //   let fecha_hoy: Date = new Date();
+  //   let fecha_completa: string;
+  //   let fecha: string;
+  //   let anio:number= fecha_hoy.getFullYear(); 
+  //   let mes: number= fecha_hoy.getMonth();
+  //   let dia: number= fecha_hoy.getDate();
+  //   fecha_completa = "Salta, " + dia + " de " + meses_texto[mes] + " de " +  anio;
+    
+  //   const pdf = new PdfMakeWrapper();
+  //   pdf.pageMargins([45,40])
+
+  //   //Rectangulos
+  //   pdf.add(
+  //     new Canvas([
+  //       // Bottom
+  //       new Rect([35, 170], [510, 600]).lineColor('#000000').end,
+  //       new Rect([40, 195], [500, 25]).lineColor('#000000').end,
+  //       new Rect([40, 245], [500, 55]).lineColor('#000000').end,
+  //       new Rect([40, 330], [500, 55]).lineColor('#000000').end,
+  //       new Rect([40, 415], [500, 120]).lineColor('#000000').end,
+  //     ]).absolutePosition(0, 0).end
+  //   );
+    
+    
+  //   //agrega imagen
+  //   pdf.add( await new Img('../../../assets/imagenes/general/logo-gobierno-salta.png').fit([120,120]).alignment('left').build());
+  //   pdf.add(
+  //     new Txt(fecha_completa).fontSize(11).alignment('right').end      
+  //   );
+
+  //   pdf.add(' ');
+
+  //   pdf.add(
+  //     new Txt('Solicitud de mediación').bold().fontSize(14).alignment('center').end
+  //   );
+
+  //   pdf.add(' ');
+    
+  //   pdf.add(
+  //     new Txt('Datos principales').bold().fontSize(12).alignment('left').end
+  //   );
+
+  //   pdf.add(' ');
+
+  //   pdf.add({      
+  //     columns: [
+  //       new Cell (new Txt( 'Tramite N°: ').bold().fontSize(11).end).width(60).end,
+  //       new Cell (new Txt( this.dataTramite.numero_tramite.toString() ).fontSize(11).end).width(90).end,
+  //       new Cell (new Txt('Fecha inicia: ').bold().fontSize(11).end).width(65).end,
+  //       new Cell (new Txt( this.datePipe.transform(this.dataTramite.fecha_tramite, "dd/MM/yyyy") ).fontSize(11).end).width(90).end,
+  //       new Cell (new Txt('Expediente: ').bold().fontSize(11).end).width(60).end,
+  //       new Cell (new Txt( this.dataTramite.expediente ).fontSize(11).end).width(150).end
+  //     ]
+  //   });    
+
+  //   pdf.add(' ');
+
+  //   //solicitante
+  //   pdf.add(
+  //     new Txt('Solicitante').bold().fontSize(12).alignment('left').end
+  //   );
+
+  //   pdf.add(' ');
+
+  //   pdf.add({
+  //     columns: [
+  //       new Cell (new Txt('Nombre: ').bold().fontSize(11).end).width(45).end,
+  //       new Cell (new Txt(this.dataTramite.ciudadano.apellido + ' ' + this.dataTramite.ciudadano.nombre).fontSize(11).end).width(310).end,
+  //       new Cell (new Txt('DNI: ').bold().fontSize(11).end).width(25).end,
+  //       new Cell (new Txt( this.dataTramite.ciudadano.dni.toString()).fontSize(11).end).width(85).end
+  //     ]
+  //   });    
+
+  //   pdf.add(' ');
+    
+  //   pdf.add({      
+  //     columns: [
+  //       new Cell (new Txt('Sexo: ').bold().fontSize(11).end).width(30).end,
+  //       new Cell (new Txt( this.dataTramite.ciudadano.sexo.sexo ).fontSize(11).end).width(80).end,
+  //       new Cell (new Txt('Teléfono: ').bold().fontSize(11).end).width(50).end,
+  //       new Cell (new Txt( this.dataTramite.ciudadano.telefono.toString() ).fontSize(11).end).width(90).end,
+  //       new Cell (new Txt('Email: ').bold().fontSize(11).end).width(35).end,
+  //       new Cell (new Txt( this.dataTramite.ciudadano.email.toString() ).fontSize(11).end).border([true]).width(210).end
+  //     ]
+  //   });    
+
+  //   pdf.add(' ');
+
+  //   //motivo
+  //   pdf.add(
+  //     new Txt('Motivo de la solicitud').bold().fontSize(12).alignment('left').end
+  //   );
+
+  //   pdf.add(' ');
+
+  //   let existe_violencia: string = "NO";
+  //   let existe_violencia_genero: string = "NO";
+  //   let existe_denuncia: string = "NO";
+  //   let existe_cautelar: string = "NO";
+  //   if (this.dataTramite.violencia_partes){
+  //     existe_violencia = "SI";
+  //   }
+  //   if (this.dataTramite.violencia_genero){
+  //     existe_violencia_genero = "SI";
+  //   }
+  //   if (this.dataTramite.existe_denuncia){
+  //     existe_denuncia = "SI";
+  //   }
+  //   if (this.dataTramite.medida_cautelar){
+  //     existe_cautelar = "SI";
+  //   }
+      
+  //   pdf.add({
+  //     columns: [
+  //       new Cell (new Txt('Motivo: ').bold().fontSize(11).end).width(40).end,
+  //       new Cell (new Txt(this.dataTramite.objeto.objeto ).fontSize(11).end).width(300).end,    
+  //       new Cell (new Txt('Existe violencia: ').bold().fontSize(11).end).width(85).end,
+  //       new Cell (new Txt( existe_violencia ).fontSize(11).end).width(30).end    
+  //     ]
+  //   });    
+  //   pdf.add(' ');
+
+  //   pdf.add({
+  //     columns: [
+  //       new Cell (new Txt( 'Existe violencia de género: ').bold().fontSize(11).end).width(135).end,
+  //       new Cell (new Txt( existe_violencia_genero ).fontSize(11).end).width(50).end,
+  //       new Cell (new Txt( 'Existe denuncia: ').bold().fontSize(11).end).width(85).end,
+  //       new Cell (new Txt( existe_denuncia ).fontSize(11).end).width(50).end,
+  //       new Cell (new Txt( 'Existe cautelar: ').bold().fontSize(11).end).width(80).end,
+  //       new Cell (new Txt( existe_cautelar ).fontSize(11).end).width(50).end        
+  //     ]
+  //   });    
+
+  //   pdf.add(' ');    
+
+  //   //audiencia
+  //   pdf.add(
+  //     new Txt('Audiencia').bold().fontSize(12).alignment('left').end
+  //   );
+
+  //   pdf.add(' ');
+  //   console.log("audiencia", this.listAudienciasActivas);
+  //   if(this.listAudienciasActivas.length > 0){
+
+  //     pdf.add({
+  //       columns: [
+  //         new Cell (new Txt( 'N° audiencia: ').bold().fontSize(11).end).width(70).end,
+  //         new Cell (new Txt( this.listAudienciasActivas[0].num_audiencia.toString() ).fontSize(11).end).width(80).end,
+  //         new Cell (new Txt( 'Fecha: ').bold().fontSize(11).end).width(35).end,
+  //         new Cell (new Txt( this.datePipe.transform(this.listAudienciasActivas[0].fecha_inicio, "dd/MM/yyyy") ).fontSize(11).end).width(80).end,
+  //         new Cell (new Txt( 'Hora: ').bold().fontSize(11).end).width(35).end,
+  //         new Cell (new Txt( this.listAudienciasActivas[0].hora_inicio.toString() ).fontSize(11).end).width(80).end        
+  //       ]
+  //     });    
+
+  //     pdf.add(' ');
+      
+  //     pdf.add({
+  //       columns: [
+  //         new Cell (new Txt('Centro de mediación: ').bold().fontSize(11).end).width(110).end,
+  //         new Cell (new Txt( this.listAudienciasActivas[0].centro_mediacion.centro_mediacion ).fontSize(11).end).width(200).end,    
+          
+  //       ]
+  //     });    
+
+  //     pdf.add(' ');
+  
+  //     pdf.add({
+  //       columns: [
+  //         new Cell (new Txt('Departamento: ').bold().fontSize(11).end).width(75).end,
+  //         new Cell (new Txt( this.listAudienciasActivas[0].centro_mediacion.departamento.departamento ).fontSize(11).end).width(170).end,    
+  //         new Cell (new Txt('Municipio: ').bold().fontSize(11).end).width(55).end,
+  //         new Cell (new Txt( this.listAudienciasActivas[0].centro_mediacion.municipio.municipio ).fontSize(11).end).width(150).end    
+  //       ]
+  //     });  
+  //     pdf.add(' ');
+  
+  //     pdf.add({
+  //       columns: [
+  //         new Cell (new Txt('Domicilio: ').bold().fontSize(11).end).width(55).end,
+  //         new Cell (new Txt( 
+  //           'Barrio: ' + this.listAudienciasActivas[0].centro_mediacion.localidad_barrio +
+  //           ' - Calle/Direccion: ' + this.listAudienciasActivas[0].centro_mediacion.calle_direccion +
+  //           ' - N°: ' + this.listAudienciasActivas[0].centro_mediacion.numero_dom 
+          
+  //         ).fontSize(11).end).width(400).end    
+  //       ]
+  //     });    
+  
+      
+  //   }
+  //   else{
+  //     pdf.add(
+  //       new Txt('No tiene una audiencia programada').fontSize(11).alignment('left').end
+  //     );
+  //     pdf.add(' ');
+  //     pdf.add(' ');
+  //     pdf.add(' ');
+  //     pdf.add(' ');
+  //     pdf.add(' ');
+  //     pdf.add(' ');
+  //   }
+
+  //   pdf.add(' ');
+  //   pdf.add(' ');
+
+  //   //convocados
+  //   pdf.add(
+  //     new Txt('Convocados').bold().fontSize(12).alignment('left').end
+  //   );
+    
+  //   let misConvocados: string[] = [];
+  //   let miConvocado: string;
+  //   this.dataTramite.convocados.forEach(convocado => {
+  //     miConvocado = "Apellido y nombre: " + convocado.apellido + " " + convocado.nombre;
+  //     misConvocados.push(miConvocado);
+  //   });
+
+  //   pdf.add(
+  //     {
+  //       ul: misConvocados
+  //     }
+  //   );
+
+  //   pdf.add(' ');
+  //   pdf.add(' ');
 
 
-    pdf.add(' ');
-
-
-    pdf.add(
-      new Txt('Nombre: '+this.dataTramite.ciudadano.apellido).fontSize(11).end
+  //   pdf.add(' ');
      
-    );  
-     
-    pdf.create().open();
+  //   pdf.create().open();
                              
-  }
+  // }
 
   //FIN CREAR PDF DEL TRAMITE
+
+  //CREAR PDF SOLICITUD
+  async generarPdfTramite(){
+    this.pdfsService.generarPdfSolicitudTramite(this.dataTramite, this.listAudienciasActivas);
+  }
+  //FIN CREAR PDF SOLICITUD....................................................................
 
   //IR A RPINCIPAL
   irAPrincipal(){

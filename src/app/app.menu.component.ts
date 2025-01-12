@@ -43,6 +43,7 @@ export class AppMenuComponent implements OnInit {
 
     ngOnInit() {        
 
+        //MENU CIUDADANO
         if(this.authService.currentCiudadanoLogin){
             this.nombre_completo = this.authService.currentCiudadanoLogin.apellido + " " + this.authService.currentCiudadanoLogin.nombre;
             this.model = [                
@@ -70,7 +71,10 @@ export class AppMenuComponent implements OnInit {
                 },
             ]
         }
-        if(this.authService.currentUserLogin && this.authService.currentUserLogin.rol_id != "admnistrador"){
+        //FIN MENU CIUDADANO.........................................................
+
+        //MENU MEDIADOR
+        if(this.authService.currentUserLogin && this.authService.currentUserLogin.rol_id == "mediador"){
             
             this.nombre_completo = this.authService.currentUserLogin.apellido + " " + this.authService.currentUserLogin.nombre;
             this.model = [                
@@ -105,8 +109,10 @@ export class AppMenuComponent implements OnInit {
                 },
             ]
         }
+        //FIN MENU MEDIADOR..........................................................
 
-        if(this.authService.currentUserLogin && this.authService.currentUserLogin.rol_id == "administrador") {
+        //MENU ADMINISTRADOR
+        if(this.authService.currentUserLogin && (this.authService.currentUserLogin.rol_id == "administrador" || this.authService.currentUserLogin.rol_id == "supervisor")) {
             this.nombre_completo = this.authService.currentUserLogin.apellido + " " + this.authService.currentUserLogin.nombre;
             this.model = [
                 {
@@ -126,7 +132,7 @@ export class AppMenuComponent implements OnInit {
                 {
                     label: 'Ciudadanos admin',
                     items: [
-                        {label: 'Ver ciudadanos', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/ciudadanos/lista']}
+                        {label: 'Ver ciudadanos', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/ciudadanos/buscar']}
                     ]
                 }, 
                 {
@@ -142,32 +148,56 @@ export class AppMenuComponent implements OnInit {
                     ]
                 }, 
                 {
+                    label: 'Departamentos',
+                    items: [
+                        {label: 'Ver departamentos', icon: 'pi pi-fw pi-star', routerLink: ['/admin/departamentos/lista']}
+                    ]
+                },   
+                {
                     label: 'Categorias',
                     items: [
                         {label: 'Ver categorias', icon: 'pi pi-fw pi-star', routerLink: ['/admin/categoria/lista']}
                     ]
                 },   
-                // {
-                //     label: 'Ciudadanos opciones',
-                //     items: [                    
-                //         {label: 'Tramites nuevos', icon: 'pi pi-fw pi-bookmark', routerLink: ['/ciudadano/tramites/nuevoslis']},
-                //         {label: 'Tramites con mediador', icon: 'pi pi-fw pi-send', routerLink: ['/ciudadano/tramites/asignados']},
-                //         {label: 'Tramites finalizados', icon: 'pi pi-fw pi-check-square', routerLink: ['/ciudadano/tramites/finalizados']}
-                //     ]
-                // },
-                // {
-                //     label: 'Usuarios opciones',
-                //     items: [
-                //         {label: 'Tramites asignados', icon: 'pi pi-fw pi-send', routerLink: ['/usuario/tramites/asignados']},
-                //         {label: 'Tramites finalizados', icon: 'pi pi-fw pi-check-square', routerLink: ['/usuario/tramites/finalizados']}
-                //     ]
-                // },
-                // {
-                //     label: 'Seleccionar usuario/ciudadano',
-                //     items: [
-                //         {label: 'Seleccionar', icon: 'pi pi-fw pi-users', routerLink: ['/admin/ciudadanos-usuarios/administrar']},
-                //     ]
-                // },
+                {
+                    label: 'Objetos',
+                    items: [
+                        {label: 'Ver objetos', icon: 'pi pi-fw pi-star', routerLink: ['/admin/objetos']}
+                    ]
+                },  
+                {
+                    label: 'Salir',
+                    items: [
+                        {label: 'Cerrar sesión', icon: 'pi pi-sign-out', routerLink: ['/login-admin-mediacion']},
+                    ]
+                },
+                                
+            ];
+
+        }
+        //FIN MENU ADMINISTRADOR..................................
+
+        
+
+        //MENU ADMINISTRADOR CUENTAS
+        if(this.authService.currentUserLogin && this.authService.currentUserLogin.rol_id == "admincuentas") {
+            this.nombre_completo = this.authService.currentUserLogin.apellido + " " + this.authService.currentUserLogin.nombre;
+            this.model = [
+                
+                {
+                    label: 'Usuarios Admin',
+                    items: [
+                        {label: 'Ver usuarios', icon: 'pi pi-fw pi-user', routerLink: ['/admin/usuarios/lista']}
+                    ]
+                },     
+                {
+                    label: 'Mi perfil',
+                    items: [
+                        {label: 'Datos Personales', icon: 'pi pi-id-card', routerLink: ['/admin/miperfil/datospersonales']},
+                        {label: 'Cambiar contraseña', icon: 'pi pi-circle', routerLink: ['/admin/miperfil/cambiarcontrasenia']},
+                        
+                    ]
+                },
                 {
                     label: 'Salir',
                     items: [
@@ -175,89 +205,10 @@ export class AppMenuComponent implements OnInit {
                     ]
                 },
                 
-                // {
-                //     label:'Prime Blocks',
-                //     items:[
-                //         {label: 'Free Blocks', icon: 'pi pi-fw pi-eye', routerLink: ['/blocks'], badge: 'NEW'},
-                //         {label: 'All Blocks', icon: 'pi pi-fw pi-globe', url: ['https://www.primefaces.org/primeblocks-ng'], target: '_blank'},
-                //     ]
-                // },
-                // {
-                //     label:'Utilities',
-                //     items:[
-                //         {label: 'PrimeIcons', icon: 'pi pi-fw pi-prime', routerLink: ['/icons']},
-                //         {label: 'PrimeFlex', icon: 'pi pi-fw pi-desktop', url: ['https://www.primefaces.org/primeflex/'], target: '_blank'},
-                //     ]
-                // },
-                // {
-                //     label: 'Pages',
-                //     items: [
-                //         {label: 'Crud', icon: 'pi pi-fw pi-user-edit', routerLink: ['/pages/crud']},
-                //         {label: 'Timeline', icon: 'pi pi-fw pi-calendar', routerLink: ['/pages/timeline']},
-                //         {label: 'Landing', icon: 'pi pi-fw pi-globe', routerLink: ['pages/landing']},
-                //         {label: 'Login', icon: 'pi pi-fw pi-sign-in', routerLink: ['pages/login']},
-                //         {label: 'Error', icon: 'pi pi-fw pi-times-circle', routerLink: ['pages/error']},
-                //         {label: 'Not Found', icon: 'pi pi-fw pi-exclamation-circle', routerLink: ['pages/notfound']},
-                //         {label: 'Access Denied', icon: 'pi pi-fw pi-lock', routerLink: ['pages/access']},
-                //         {label: 'Empty', icon: 'pi pi-fw pi-circle', routerLink: ['/pages/empty']}
-                //     ]
-                // },
-                // {
-                //     label: 'Hierarchy',
-                //     items: [
-                //         {
-                //             label: 'Submenu 1', icon: 'pi pi-fw pi-bookmark',
-                //             items: [
-                //                 {
-                //                     label: 'Submenu 1.1', icon: 'pi pi-fw pi-bookmark',
-                //                     items: [
-                //                         {label: 'Submenu 1.1.1', icon: 'pi pi-fw pi-bookmark'},
-                //                         {label: 'Submenu 1.1.2', icon: 'pi pi-fw pi-bookmark'},
-                //                         {label: 'Submenu 1.1.3', icon: 'pi pi-fw pi-bookmark'},
-                //                     ]
-                //                 },
-                //                 {
-                //                     label: 'Submenu 1.2', icon: 'pi pi-fw pi-bookmark',
-                //                     items: [
-                //                         {label: 'Submenu 1.2.1', icon: 'pi pi-fw pi-bookmark'}
-                //                     ]
-                //                 },
-                //             ]
-                //         },
-                //         {
-                //             label: 'Submenu 2', icon: 'pi pi-fw pi-bookmark',
-                //             items: [
-                //                 {
-                //                     label: 'Submenu 2.1', icon: 'pi pi-fw pi-bookmark',
-                //                     items: [
-                //                         {label: 'Submenu 2.1.1', icon: 'pi pi-fw pi-bookmark'},
-                //                         {label: 'Submenu 2.1.2', icon: 'pi pi-fw pi-bookmark'},
-                //                     ]
-                //                 },
-                //                 {
-                //                     label: 'Submenu 2.2', icon: 'pi pi-fw pi-bookmark',
-                //                     items: [
-                //                         {label: 'Submenu 2.2.1', icon: 'pi pi-fw pi-bookmark'},
-                //                     ]
-                //                 },
-                //             ]
-                //         }
-                //     ]
-                // },
-                // {
-                //     label:'Get Started',
-                //     items:[
-                //         {
-                //             label: 'Documentation', icon: 'pi pi-fw pi-question', routerLink: ['/documentation']
-                //         },
-                //         {
-                //             label: 'View Source', icon: 'pi pi-fw pi-search', url: ['https://github.com/primefaces/sakai-ng'], target: '_blank'
-                //         }
-                //     ]
-                // }
             ];
 
         }
+        //FIN MENU ADMINISTRADOR CUENTAS..................................
     }
 
     onKeydown(event: KeyboardEvent) {

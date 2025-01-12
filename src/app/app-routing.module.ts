@@ -63,6 +63,9 @@ import { AuthUsuarioGuard } from './auth/guards/auth-usuario.guard';
 import { CiudadanoCambiarPasswordComponent } from './pages/ciudadano-perfil/ciudadano-cambiar-password/ciudadano-cambiar-password.component';
 import { UsuarioDatosPersonalesComponent } from './pages/usuario-perfil/usuario-datos-personales/usuario-datos-personales.component';
 import { UsuarioCambiarContraseniaComponent } from './pages/usuario-perfil/usuario-cambiar-contrasenia/usuario-cambiar-contrasenia.component';
+import { TramitesAdministrarSupervisorComponent } from './pages/tramites-administrador/tramites-administrar-supervisor/tramites-administrar-supervisor.component';
+import { ObjetosComponent } from './pages/objetos/objetos.component';
+import { DepartamentosListaComponent } from './pages/departamentos/departamentos-lista/departamentos-lista.component';
 
 @NgModule({
     imports: [
@@ -85,9 +88,14 @@ import { UsuarioCambiarContraseniaComponent } from './pages/usuario-perfil/usuar
                     
                     {path: 'centro-mediacion/lista', component: CentrosMediacionListaComponent},
                     {path: 'centro-mediacion/administrar', component: CentroAdministrarComponent},
+
+                    {path: 'departamentos/lista', component: DepartamentosListaComponent},
                     
                     {path: 'miperfil/datospersonales', component: UsuarioDatosPersonalesComponent},
                     {path: 'miperfil/cambiarcontrasenia', component: UsuarioCambiarContraseniaComponent},
+
+                    //{path: 'categoria/lista', component: CategoriasListaComponent},
+                    {path: 'objetos', component: ObjetosComponent},                    
 
                     {path: 'usuarios/administrar', component: UsuariosAdministrarComponent},
                     {path: 'usuarios/lista', component: UsuariosListaComponent},
@@ -95,6 +103,7 @@ import { UsuarioCambiarContraseniaComponent } from './pages/usuario-perfil/usuar
                     {path: 'tramites/administrar', component: TramitesAdministrarComponent},
                     {path: 'tramites/administrar-finalizado', component: TramitesAdministrarFinalizadoComponent},
                     {path: 'tramites/administrar-med', component: TramitesAdministrarMediadorComponent},
+                    {path: 'tramites/administrar-visor', component: TramitesAdministrarSupervisorComponent},
                     {path: 'tramites/asignados', component: TramitesAsignadosComponent},
                     {path: 'tramites/finalizados', component: TramitesFinalizadosComponent},
                     {path: 'tramites/nuevo', component: TramitesNuevoComponent},

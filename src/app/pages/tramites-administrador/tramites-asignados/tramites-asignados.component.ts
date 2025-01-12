@@ -50,19 +50,17 @@ export class TramitesAsignadosComponent implements OnInit {
   ngOnInit(): void {
 
     if (this.authService.currentUserLogin.rol_id == "administrador") {
-      console.log("administrador ", this.authService.currentUserLogin);
       this.tituloPagina ="Usuario: Administrador"
       this.listarTramitesUsuario();
     }
 
     if (this.authService.currentCiudadanoLogin) {
-      console.log("ciudadano", this.authService.currentCiudadanoLogin);
       this.tituloPagina ="Ciudadano: " + this.authService.currentCiudadanoLogin.apellido + " " + this.authService.currentCiudadanoLogin.nombre
       this.listarTramitesCiudadano();
     }
     
     if (this.authService.currentUserLogin && this.authService.currentUserLogin.rol_id != "administrador") {
-      console.log("usuario", this.authService.currentUserLogin);
+
       this.tituloPagina ="Usuario: " + this.authService.currentUserLogin.apellido + " " + this.authService.currentUserLogin.nombre
       this.listTramites = [];
       this.listarTramitesUsuario();
@@ -110,7 +108,6 @@ export class TramitesAsignadosComponent implements OnInit {
         next: (respuesta) => {
           this.listUsuariosTramites= respuesta[0];
           this.loading = false;  
-          console.log("asignados usuario", this.listUsuariosTramites);
         }  
       });
   }
@@ -130,9 +127,17 @@ export class TramitesAsignadosComponent implements OnInit {
     if( this.authService.currentUserLogin.rol_id == "administrador" ){
       this.router.navigateByUrl("admin/tramites/administrar");
     }
-    else{
+
+    //verificacion si el usuario tiene la funcion de administrativo en el tramite
+    if( this.authService.currentUserLogin.rol_id == "supervisor" || data.funcion_tramite_id == 1 ){
+      this.router.navigateByUrl("admin/tramites/administrar-visor");
+    }
+    
+    //verificacion si el usuario tiene la funcion de mediador en el tramite
+    if( this.authService.currentUserLogin.rol_id == "mediador" && data.funcion_tramite_id == 2 ){
       this.router.navigateByUrl("admin/tramites/administrar-med");
     }
+
 
     
   }

@@ -1,35 +1,20 @@
 <div class="grid">
-    <div class="col-12 xl:col-12">
-        <div class="card">
-            <h5>
-                <!-- <span class="text-orange-600"><b>{{(sector != null)?sector.organismo.organismo : "Sin organismo"}}</b></span>
-                <span class="text-orange-500"> - {{(sector != null)?sector.sector : "sin sector"}}</span> -->
-            </h5>
-        </div>
-    </div>
     <div class="col-12">
         <div class="card">
             <h5>Usuarios</h5>
-            <p-toolbar styleClass="mb-4">
-                <ng-template pTemplate="left">
-                    <div class="my-2">
-                        <!-- <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNewTramite()"></button>
-                        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
-                        <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openDialogUsuario()"></button>
-                        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"></button>
-                    </div>
-                </ng-template>
-
-            </p-toolbar>
+            
             <!-- TABLA DE USUARIOS -->
             <p-table #dt1 [value]="listUsuarios" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['dni','sexo.sexo','apellido','nombre','telefono','email']" responsiveLayout="scroll">
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-between flex-column sm:flex-row">
-                        <button pButton label="Limpiar" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
-                        <span class="p-input-icon-left mb-2">
-                            <i class="pi pi-search"></i>
-                            <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
-                        </span>
+                        <button *ngIf="isAdminCuenta()" pButton label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openDialogUsuario()"></button>                        
+                        <div>
+                            <button pButton label="Limpiar" class="p-button-outlined mb-2 mr-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+                            <span class="p-input-icon-left mb-2">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
+                            </span>
+                        </div>
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header">
@@ -77,15 +62,41 @@
                         </th>
                         <th>
                             <div class="flex justify-content-between align-items-center">
-                                Telefono
+                                Rol
+                                <p-columnFilter field="rol.rol" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                                    <ng-template pTemplate="header">
+                                        <div class="px-3 pt-3 pb-0">
+                                            <span class="font-bold">Rol</span>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                        <p-dropdown [ngModel]="value" [options]="filtroRoles" (onChange)="filter($event.value)" placeholder="seleccionar" [showClear]="true">
+                                            <ng-template let-option pTemplate="item">
+                                                <span class="ml-2">{{option.label}}</span>
+                                            </ng-template>
+                                        </p-dropdown>
+                                    </ng-template>
+                                </p-columnFilter>
 
                             </div>
                         </th>
                         <th>
                             <div class="flex justify-content-between align-items-center">
-                                E-mail
-                                <p-columnFilter type="text" field="email" display="menu" placeholder="Buscar por e-mail"></p-columnFilter>
-
+                                Activo         
+                                <p-columnFilter field="activo" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                                    <ng-template pTemplate="header">
+                                        <div class="px-3 pt-3 pb-0">
+                                            <span class="font-bold">Activo</span>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                        <p-dropdown [ngModel]="value" [options]="filtroSiNoBoolean" (onChange)="filter($event.value)" placeholder="seleccionar" [showClear]="true">
+                                            <ng-template let-option pTemplate="item">
+                                                <span class="ml-2">{{option.label}}</span>
+                                            </ng-template>
+                                        </p-dropdown>
+                                    </ng-template>
+                                </p-columnFilter>                      
                             </div>
                         </th>
                     </tr>
@@ -93,8 +104,9 @@
                 <ng-template pTemplate="body" let-usuario>
                     <tr>
                         <td>
-                            <button type="button" pButton pRipple class="p-button-rounded p-button-info mr-2 mb-2" icon="pi pi-eye" (click)="administrarUsuario(usuario)"></button>
-                        </td>
+                            <button *ngIf="usuario.activo" type="button" pButton pRipple class="p-button-rounded p-button-info mr-2 mb-2" icon="pi pi-eye" (click)="administrarUsuario(usuario)"></button>
+                            <button *ngIf="!usuario.activo" type="button" pButton pRipple class="p-button-rounded p-button-danger mr-2 mb-2" icon="pi pi-eye" (click)="administrarUsuario(usuario)"></button>
+                            
                         <td style="min-width: 10rem;">
                             {{usuario.dni}}
                         </td>
@@ -109,10 +121,10 @@
                             {{usuario.sexo.sexo}}
                         </td>
                         <td style="min-width: 10rem;">
-                            {{usuario.telefono}}
+                            {{usuario.rol.rol}}
                         </td>
-                        <td style="min-width: 5rem;">
-                            {{usuario.email}}
+                        <td style="min-width: 3rem;">
+                            {{usuario.activo? "SI": "NO"}}
                         </td>
                     </tr>
                 </ng-template>
@@ -131,9 +143,9 @@
             <!-- FIN TABLA DE USUARIOS -->
 
             <!-- DIALOG FORMULARIO USUARIOS -->
-            <p-dialog id="formUsuarioDialog" [(visible)]="usuarioDialog" [style]="{width: '450px'}" header="Nuevo Usuario" [closable]="false" [modal]="true" class="p-fluid">
+            <p-dialog id="formUsuarioDialog" [(visible)]="usuarioDialog" [style]="{width: '500px'}" header="Nuevo Usuario" [closable]="false" [modal]="true" class="p-fluid">
                 <ng-template pTemplate="content">
-                    <!-- FORMULARIO TRAMITES -->
+                    <!-- FORMULARIO USUARIO -->
                     <form [formGroup]="formaUsuario">
                         <div class="formgrid grid">
                             <div class="field col">
@@ -238,12 +250,12 @@
 
                         </div>
                     </form>
-                    <!--  FIN FORMULARIO TRAMITES -->
+                    <!--  FIN FORMULARIO USUARIO -->
                 </ng-template>
 
                 <ng-template pTemplate="footer">
-                    <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogUsuario()"></button>
                     <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormUsuario()"></button>
+                    <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogUsuario()"></button>
                 </ng-template>
             </p-dialog>
             <!-- FIN DIALOG FORMULARIO  USUARIOS -->

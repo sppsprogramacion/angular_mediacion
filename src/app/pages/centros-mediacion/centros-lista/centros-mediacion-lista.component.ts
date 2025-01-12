@@ -2,8 +2,6 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CentrosMediacionService } from '../../../service/centros-mediacion.service';
 import { CentroMediacionModel } from '../../../models/centro_mediacion.model';
 import { FiltroModel } from '../../../models/filtro.model';
-import { municipios } from 'src/app/common/data-mokeada';
-import { departamentos } from '../../../common/data-mokeada';
 import { Table } from 'primeng/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
@@ -13,6 +11,9 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Message, MessageService } from 'primeng/api';
+import { DataMokeadaService } from '../../../service/data-mokeada.service';
+import { opcionSiNo } from 'src/app/common/data-mokeada';
+import { FiltroBooleanModel } from 'src/app/models/filtro_boolean.model';
 
 @Component({
   selector: 'app-centros-lista',
@@ -45,8 +46,11 @@ export class CentrosMediacionListaComponent implements OnInit {
   listCentrosMediacion: CentroMediacionModel[]=[];
   listDepartamentos: DepartamentoModel[]=[];
   listMunicipios: MunicipioModel[]=[];
+  listMunicipiosCompleto: MunicipioModel[]=[];
+  listSiNo: any[] = [];
   filtroDepartamentos: FiltroModel[]=[];
   filtroMunicipios: FiltroModel[]=[];
+  filtroSiNoBoolean: FiltroBooleanModel[]=[];
 
   //FORMULARIOS
   formaCentroMediacion: FormGroup;  
@@ -54,8 +58,8 @@ export class CentrosMediacionListaComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private serviceMensajes: MessageService,
     private readonly dataService: DataService,
+    private dataMokeadaService: DataMokeadaService,
     private centrosMediacionService: CentrosMediacionService,
   ) {
     this.formaCentroMediacion = this.fb.group({
@@ -67,13 +71,20 @@ export class CentrosMediacionListaComponent implements OnInit {
       numero_dom: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       email: ['',[Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],  
+      admin_es_responsable: [,[Validators.required]],
+      activo: [,[Validators.required]],
     
     });
   }
 
   //MENSAJES DE VALIDACIONES
   user_validation_messages = {    
-    
+    'activo': [
+      { type: 'required', message: 'Debe especificar si está activo o no.' },
+    ],   
+    'admin_es_responsable': [
+      { type: 'required', message: 'Debe especificar si el administrador es responsable o no.' },
+    ],   
     'centro_mediacion': [
       { type: 'required', message: 'El centro de mediacion es requerido' },
       { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
@@ -126,25 +137,45 @@ export class CentrosMediacionListaComponent implements OnInit {
   ngOnInit(): void {
     //CARGAR cENTROS DE MEDIACION
     this.listarCentrosMediacion();
-    
-    //LISTAS PARA FILTROS
-    this.filtroMunicipios = municipios.map(respuesta => {
-      return {
-        label: respuesta.municipio,
-        value: respuesta.municipio,
-       }
-    });
-
-    this.filtroDepartamentos = departamentos.map(respuesta => {
-      return {
-        label: respuesta.departamento,
-        value: respuesta.departamento,
-       }
-    });
-    //FIN LISTAS PARA FILTROS.......................
 
     //CARGA DE LISTAS
-    this.listDepartamentos = departamentos;
+    this.dataMokeadaService.listarDepartamentos().subscribe(departamentos => {
+      this.listDepartamentos = departamentos;
+
+      //LISTAS PARA FILTROS    
+      this.filtroDepartamentos = this.listDepartamentos.map(respuesta => {
+        return {
+          label: respuesta.departamento,
+          value: respuesta.departamento,
+        }
+      });
+      //FIN LISTAS PARA FILTROS.......................
+
+    });
+
+    this.dataMokeadaService.listarMunicipios().subscribe(municipios => {
+      this.listMunicipiosCompleto= municipios;
+
+      //LISTAS PARA FILTROS
+      this.filtroMunicipios = this.listMunicipiosCompleto.map(respuesta => {
+        return {
+          label: respuesta.municipio,
+          value: respuesta.municipio,
+        }
+      });
+      //FIN LISTAS PARA FILTROS.......................
+
+    });
+    
+    this.filtroSiNoBoolean = opcionSiNo.map(respuesta => {
+      return {
+        label: respuesta.respuesta_sino.toUpperCase(),
+        value: respuesta.id_opcion_sino,
+       }
+    });
+
+
+    this.listSiNo = opcionSiNo;
 
     //FIN LISTAS.....................................
   }
@@ -170,19 +201,22 @@ export class CentrosMediacionListaComponent implements OnInit {
     
 
     let dataRegistro: Partial<CentroMediacionModel>;
-    dataRegistro = {
-      centro_mediacion: this.formaCentroMediacion.get('centro_mediacion')?.value,
-      departamento_id: parseInt(this.formaCentroMediacion.get('departamento_id')?.value),
-      municipio_id: parseInt(this.formaCentroMediacion.get('municipio_id')?.value),
-      localidad_barrio: this.formaCentroMediacion.get('localidad_barrio')?.value,
-      calle_direccion: this.formaCentroMediacion.get('calle_direccion')?.value,        
-      numero_dom: parseInt(this.formaCentroMediacion.get('numero_dom')?.value),
-      telefono: this.formaCentroMediacion.get('telefono')?.value,
-      email: this.formaCentroMediacion.get('email')?.value, 
-    };    
+    
     
     //GUARDAR NUEVO CENTRO
     if(this.editarCentro==false){
+      dataRegistro = {
+        centro_mediacion: this.formaCentroMediacion.get('centro_mediacion')?.value,
+        departamento_id: parseInt(this.formaCentroMediacion.get('departamento_id')?.value),
+        municipio_id: parseInt(this.formaCentroMediacion.get('municipio_id')?.value),
+        localidad_barrio: this.formaCentroMediacion.get('localidad_barrio')?.value,
+        calle_direccion: this.formaCentroMediacion.get('calle_direccion')?.value,        
+        numero_dom: parseInt(this.formaCentroMediacion.get('numero_dom')?.value),
+        telefono: this.formaCentroMediacion.get('telefono')?.value,
+        email: this.formaCentroMediacion.get('email')?.value, 
+        admin_es_responsable: this.formaCentroMediacion.get('admin_es_responsable')?.value,
+      };    
+
       this.centrosMediacionService.guardarCentroMediacion(dataRegistro)        
         .subscribe({
           next: (resultado) => {
@@ -201,6 +235,19 @@ export class CentrosMediacionListaComponent implements OnInit {
 
     //GUARDAR EDICION CENTRO
     if(this.editarCentro===true){
+      dataRegistro = {
+        centro_mediacion: this.formaCentroMediacion.get('centro_mediacion')?.value,
+        departamento_id: parseInt(this.formaCentroMediacion.get('departamento_id')?.value),
+        municipio_id: parseInt(this.formaCentroMediacion.get('municipio_id')?.value),
+        localidad_barrio: this.formaCentroMediacion.get('localidad_barrio')?.value,
+        calle_direccion: this.formaCentroMediacion.get('calle_direccion')?.value,        
+        numero_dom: parseInt(this.formaCentroMediacion.get('numero_dom')?.value),
+        telefono: this.formaCentroMediacion.get('telefono')?.value,
+        email: this.formaCentroMediacion.get('email')?.value, 
+        admin_es_responsable: this.formaCentroMediacion.get('admin_es_responsable')?.value,
+        activo: this.formaCentroMediacion.get('activo')?.value,
+      };    
+      
       this.centrosMediacionService.guardarEdicionCentroMediacion(this.id_centro_editar, dataRegistro)        
         .subscribe({
           next: (resultado) => {
@@ -250,6 +297,8 @@ export class CentrosMediacionListaComponent implements OnInit {
     this.formaCentroMediacion.get('numero_dom')?.setValue(data.numero_dom);
     this.formaCentroMediacion.get('telefono')?.setValue(data.telefono);
     this.formaCentroMediacion.get('email')?.setValue(data.email);
+    this.formaCentroMediacion.get('admin_es_responsable')?.setValue(data.admin_es_responsable);
+    this.formaCentroMediacion.get('activo')?.setValue(data.activo);
 
     this.editarCentro = true;
     this.centroMediacionDialog = true;
@@ -271,7 +320,7 @@ export class CentrosMediacionListaComponent implements OnInit {
 
   //CARGAR MUNICIPOS
   cargarMunicipios(id_departamento: number){
-    this.listMunicipios=municipios.filter(municipio => {      
+    this.listMunicipios=this.listMunicipiosCompleto.filter(municipio => {      
       return municipio.id_municipio == 1 || municipio.departamento_id == id_departamento;
     });    
   }

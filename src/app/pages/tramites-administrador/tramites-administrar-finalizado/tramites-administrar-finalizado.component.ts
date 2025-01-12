@@ -20,6 +20,7 @@ import { UsuariosCentroService } from 'src/app/service/usuarios-centro.service';
 import { UsuariosTramiteService } from 'src/app/service/usuarios-tramite.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
 import { AuthService } from '../../../service/auth.service';
+import { PdfsService } from 'src/app/service/pdfs.service';
 
 @Component({
   selector: 'app-tramites-administrar-finalizado',
@@ -62,6 +63,7 @@ export class TramitesAdministrarFinalizadoComponent implements OnInit {
 
     private audienciaService: AudienciasService,    
     private authService: AuthService,
+    private pdfsService: PdfsService,
     private tramiteService: TramitesService,  
     private usuarioTramiteService: UsuariosTramiteService,
   ) { }
@@ -204,6 +206,11 @@ export class TramitesAdministrarFinalizadoComponent implements OnInit {
   //FIN MANEJO FORMULARIO DIALOG VER AUDIENCIA FINALIZADA................................................
 
 
+  //CREAR PDF TRAMITE FINALIZADO
+  async generarPdfTramite(){
+    this.pdfsService.generarPdfTramiteFinalizado(this.dataTramite, this.listAudiencias);
+  }
+  //FIN CREAR PDF TRAMITE FINALIZADO....................................................................
   
 
 

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, Message, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { AppConfig } from 'src/app/api/appconfig';
 import Swal from 'sweetalert2';
 import { ConfigService } from 'src/app/service/app.config.service';
 import { DatePipe } from '@angular/common';
@@ -11,10 +10,9 @@ import { Router } from '@angular/router';
 import { CiudadanosService } from '../../service/ciudadanos.service';
 import { CiudadanoModel } from '../../models/ciudadano.model';
 import { DepartamentoModel } from '../../models/departamento.model';
-import { DataMokeada, departamentos } from 'src/app/common/data-mokeada';
 import { MunicipioModel } from 'src/app/models/municipio.model';
-import { municipios } from '../../common/data-mokeada';
 import { SexoModel } from 'src/app/models/sexo.model';
+import { DataMokeadaService } from '../../service/data-mokeada.service';
 
 @Component({
   selector: 'app-registro',
@@ -55,8 +53,8 @@ export class RegistroComponent implements OnInit {
     public configService: ConfigService,
     private readonly datePipe: DatePipe,
     private router: Router,
-    private serviceMensajes: MessageService,
     private ciudadanoService: CiudadanosService,
+    private dataMokeadaService: DataMokeadaService
     
   ){ 
     this.formaRegistro = this.fb.group({
@@ -146,11 +144,11 @@ export class RegistroComponent implements OnInit {
     // });
 
     
-    //CARGA DE LISTADOS DESDE DATA MOKEADA
-    this.listaSexo = DataMokeada.sexos;
-    this.listaDepartamentos = departamentos;
-    this.cargarMunicipios(1);    
-    
+    //CARGA DE LISTADOS DESDE DATA MOKEADA 
+    this.dataMokeadaService.listarSexo().subscribe(sexos => {
+      this.listaSexo = sexos;
+    });
+        
   }
   //FIN ONINIT...................................................
 
@@ -211,21 +209,6 @@ export class RegistroComponent implements OnInit {
     this.formRegistroDialog= false;
   }
 
-  cargarMunicipios(id_departamento: number){
-    this.listaMunicipios=municipios.filter(municipio => {      
-      return municipio.id_municipio == 1 || municipio.departamento_id == id_departamento;
-    });    
-  }
-
-  onChangeDepartamento(){
-    const id = this.formaRegistro.get('departamento_id')?.value;
-    if(id != null){               
-        this.cargarMunicipios(parseInt(id.toString()));
-        this.formaRegistro.get('municipio_id')?.setValue(1);               
-        this.formaRegistro.get('municipio_id')?.markAsUntouched();
-        
-    }
-  }
 
   changeFormatoFechaGuardar(nuevaFecha: Date){
     let fechaAuxiliar:any = null;
