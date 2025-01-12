@@ -252,7 +252,6 @@ export class TramitesAdministrarComponent implements OnInit {
     if(this.formaAudiencia.invalid){
       this.msgs = [];
       this.msgs.push({ severity: 'error', summary: 'Datos inválidos', detail: 'Revise los datos cargados. ' });
-      console.log("formulario Audiencia", this.formaAudiencia.controls);
       return Object.values(this.formaAudiencia.controls).forEach(control => control.markAsTouched());
     }
 
