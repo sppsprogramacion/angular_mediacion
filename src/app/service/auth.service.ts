@@ -8,7 +8,7 @@ import { CiudadanoModel } from '../models/ciudadano.model';
 import { Observable, catchError, map, of, tap } from 'rxjs';
 import { LoginResponseUsuarioModel } from '../models/login_response_usuario.model';
 import { LoginResponseCiudadanoModel } from '../models/login_response_ciudadano.model';
-import { ClassGetter } from '@angular/compiler/src/output/output_ast';
+//import { ClassGetter } from '@angular/compiler/src/output/output_ast';
 
 @Injectable({
   providedIn: 'root'
