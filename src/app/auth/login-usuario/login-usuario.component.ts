@@ -80,7 +80,7 @@ export class LoginUsuarioComponent implements OnInit {
     };
     
     
-    //INICIO LOGIN
+    //INICIO LOGIN usuario
     this.authService.loginUsuario(dataLogin)
       .subscribe({
         next: (resultado) => {
