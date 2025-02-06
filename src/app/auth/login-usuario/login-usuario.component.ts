@@ -89,7 +89,7 @@ export class LoginUsuarioComponent implements OnInit {
           if(this.dataUsuario.rol_id == "administrador"){
             this.router.navigateByUrl("admin/principal");
           }
-          if(this.dataUsuario.rol_id == "admincuentas"){
+          if(this.dataUsuario.rol_id == "admincuentas" || this.dataUsuario.rol_id == "superadmincuentas"){
             this.router.navigateByUrl("admin/usuarios/lista");
           }
           if(this.dataUsuario.rol_id == "supervisor"){
