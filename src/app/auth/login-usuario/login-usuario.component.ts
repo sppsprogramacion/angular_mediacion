@@ -67,8 +67,7 @@ export class LoginUsuarioComponent implements OnInit {
   submitFormLogin(){
     
     if(this.formaLogin.invalid){                        
-        
-        console.log("errores formulario");
+       
         return Object.values(this.formaLogin.controls).forEach(control => control.markAsTouched());
     }    
 
@@ -103,7 +102,6 @@ export class LoginUsuarioComponent implements OnInit {
           
         }, 
         error: (err) => {
-          console.log("error", err);
           Swal.fire('Error',`Error al realizar el login: ${err.error.message}`,"error") ;
         }           
       

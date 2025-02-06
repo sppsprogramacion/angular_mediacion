@@ -119,8 +119,7 @@ export class TramitesAdministrarSupervisorComponent implements OnInit {
   //BUSCAR TRAMITE 
   buscarTramite(){  
     this.dataTramite = {};  
-    console.log("numero tramite finalizado", this.dataService.tramiteData.numero_tramite);
-    console.log("tramite finalizado ", this.dataService.tramiteData);
+    
     this.tramiteService.buscarTramiteNumTram(this.dataService.tramiteData.numero_tramite)
       .subscribe({
         next: (resultado) => {          
@@ -141,8 +140,7 @@ export class TramitesAdministrarSupervisorComponent implements OnInit {
     this.usuarioTramiteService.buscarMediadorByNumTramiteActivo(this.dataService.tramiteData.numero_tramite)
       .subscribe({
         next: (resultado) => {
-          this.dataUsuarioTramite = resultado; 
-          console.log("usuario en tramite", this.dataUsuarioTramite);
+          this.dataUsuarioTramite = resultado;           
           this.loadingUsuariosTramite = false;     
         },
         error: (err) => {

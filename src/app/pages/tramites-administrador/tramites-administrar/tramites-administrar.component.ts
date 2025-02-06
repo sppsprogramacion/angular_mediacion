@@ -215,7 +215,7 @@ export class TramitesAdministrarComponent implements OnInit {
     if(this.formaMediadorAsignado.invalid){
       this.msgs = [];
       this.msgs.push({ severity: 'error', summary: 'Datos inválidos', detail: 'Revise los datos cargados. ' });
-      console.log("formulario enviado", this.formaMediadorAsignado.controls);
+      
       return Object.values(this.formaMediadorAsignado.controls).forEach(control => control.markAsTouched());
     }
 
@@ -311,8 +311,7 @@ export class TramitesAdministrarComponent implements OnInit {
     this.usuarioTramiteService.buscarMediadorByNumTramiteActivo(this.dataService.tramiteData.numero_tramite)
       .subscribe({
         next: (resultado) => {
-          this.dataUsuarioTramite = resultado; 
-          console.log("mediador del tramite", this.dataUsuarioTramite); 
+          this.dataUsuarioTramite = resultado;           
           this.loadingUsuariosTramite = false;     
         },
         error: (err) => {
@@ -477,8 +476,7 @@ export class TramitesAdministrarComponent implements OnInit {
       id = this.formaAudiencia.get('centro_mediacion_id')?.value;
     }
     
-    console.log("formulario usado", formulario);
-    console.log("centro de mediacion onChange", id);
+    
     if(id != null){               
         this.cargarUsuarios(parseInt(id.toString()));
         this.formaMediadorAsignado.get('usuario_id')?.setValue(0);               

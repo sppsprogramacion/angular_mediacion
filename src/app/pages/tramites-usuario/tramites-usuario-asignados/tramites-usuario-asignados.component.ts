@@ -45,7 +45,7 @@ export class TramitesUsuarioAsignadosComponent implements OnInit {
     this.usuariosTramitesService.listarTramitesAsignadosXUsuario(id_usuario).
         subscribe(respuesta => {
         this.listTramites= respuesta[0];
-        console.log("tramites", this.listTramites);
+        
         this.loading = false;  
     
     });

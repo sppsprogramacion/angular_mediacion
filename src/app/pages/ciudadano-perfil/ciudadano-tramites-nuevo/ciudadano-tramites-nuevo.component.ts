@@ -346,7 +346,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     if(this.formaTramite.invalid){                        
         Swal.fire('Formulario incompleto',`Complete correctamente todos los campos del formulario`,"warning");
         let fechaAuxiliar = this.datePipe.transform(this.formaTramite.get('fecha_nac')?.value,"yyyy-MM-dd")!;
-        console.log(this.formaTramite.controls);
+        
         return Object.values(this.formaTramite.controls).forEach(control => control.markAsTouched());
     }
     
@@ -502,7 +502,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
         municipio: municipioAux[0].municipio,      
         tipo: "salta"
       }
-      console.log("convocado aux", this.convocadoAux);      
+            
       this.listConvocadosAux.push(this.convocadoAux);
 
       this.convocado = {};
@@ -634,7 +634,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       .subscribe({
         next: (respuesta) => {
           this.listaDepartamentosConCentros= respuesta;         
-          console.log("departamentos", this.listaDepartamentosConCentros);
+          
         }     
     });      
   }
@@ -659,7 +659,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   onChangeProvincia(){
     this.reiniciarformularios();
     const id = this.formaProvincia.get('provincia_id')?.value;
-    console.log("id provincia", id);
+    
     if(id != null){
         if (id == 18) {
           this.isSalta = true;
@@ -800,23 +800,19 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   quitarConvocado(){
 
     if (this.convocadoAux.tipo === "salta") {
-      
-      console.log("Convocado Quitar Salta", this.convocadoAux);
+            
       this.listConvocados = this.listConvocados.filter(convocado => convocado.apellido + convocado.nombre !== this.convocadoAux.apellido + this.convocadoAux.nombre)
-      console.log("convocados Salta", this.listConvocados);
+      
     }
 
     if (this.convocadoAux.tipo === "noSalta") {
-      
-      console.log("Convocado Quitar No salta", this.convocadoAux.apellido + this.convocadoAux.nombre);
+            
       this.listConvocadosNoSalta = this.listConvocadosNoSalta.filter(convocado => convocado.apellido + convocado.nombre !== this.convocadoAux.apellido + this.convocadoAux.nombre)
-      console.log("convocados No Salta", this.listConvocadosNoSalta);
+      
     }    
-
-    console.log("convocado auxiliar", this.convocadoAux);
+    
     this.listConvocadosAux = this.listConvocadosAux.filter(convocado => convocado !== this.convocadoAux)
-    console.log("convocados auxiliar", this.listConvocadosAux);
-
+    
     this.convocadoAux = {};
     this.convocadoSaltaDialog = false;
     this.convocadoNoSaltaDialog = false;

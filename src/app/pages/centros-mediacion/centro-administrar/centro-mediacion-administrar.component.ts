@@ -165,9 +165,7 @@ export class CentroAdministrarComponent implements OnInit {
       },
       error: (err) => {
         Swal.fire('Fallo ',`El usuario no fue deshabilitado` + err,"error");
-        console.log(err);
-        // this.msgs = [];
-        // this.msgs.push({ severity: 'error', summary: 'Error al guardar', detail: ` ${err.error.message}` });
+        
       }
     });
   }

@@ -201,9 +201,7 @@ export class UsuariosListaComponent implements OnInit {
         Swal.fire('Formulario con errores',`Complete correctamente todos los campos del formulario`,"warning");
         
         let fechaAuxiliar = this.datePipe.transform(this.formaUsuario.get('fecha_nac')?.value,"yyyy-MM-dd")!;
-        
-
-        console.log("errores formulario");
+                
         return Object.values(this.formaUsuario.controls).forEach(control => control.markAsTouched());
     }
     this.validacionClaves = this.clavesValidationIguales();
@@ -247,8 +245,7 @@ export class UsuariosListaComponent implements OnInit {
   listarUsuarios(){    
     this.usuariosService.listarUsuariosTodos().
         subscribe(respuesta => {
-        this.listUsuarios= respuesta[0];
-        console.log("lista usuarios",this.listUsuarios);
+        this.listUsuarios= respuesta[0];        
         this.loading = false;  
     
     });

@@ -365,7 +365,7 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
   //   );
 
   //   pdf.add(' ');
-  //   console.log("audiencia", this.listAudienciasActivas);
+ 
   //   if(this.listAudienciasActivas.length > 0){
 
   //     pdf.add({

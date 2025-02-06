@@ -13,7 +13,7 @@ export class AuthUsuarioGuard implements CanActivate {
 ){  }
 
 canActivate( route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
-  console.log("Can activate");
+  
   return this.authService.checkAutenticationUsuario()
     .pipe(
       tap( isAutenticado => {

@@ -192,9 +192,7 @@ export class TramitesNuevoComponent implements OnInit {
         //     'Formulario Tramite con errores','Complete correctamente todos los campos del formulario',"warning"
         //     );
         let fechaAuxiliar = this.datePipe.transform(this.formaTramite.get('fecha_nac')?.value,"yyyy-MM-dd")!;
-        // console.log("fecha", this.formaRegistro.get('fecha_nac')?.value);
-        // console.log("fecha aux", fechaAuxiliar);
-        console.log("errores formulario");
+        
         return Object.values(this.formaTramite.controls).forEach(control => control.markAsTouched());
     }
 
