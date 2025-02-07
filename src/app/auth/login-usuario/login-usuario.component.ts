@@ -67,8 +67,7 @@ export class LoginUsuarioComponent implements OnInit {
   submitFormLogin(){
     
     if(this.formaLogin.invalid){                        
-        
-        console.log("errores formulario");
+       
         return Object.values(this.formaLogin.controls).forEach(control => control.markAsTouched());
     }    
 
@@ -89,7 +88,7 @@ export class LoginUsuarioComponent implements OnInit {
           if(this.dataUsuario.rol_id == "administrador"){
             this.router.navigateByUrl("admin/principal");
           }
-          if(this.dataUsuario.rol_id == "admincuentas"){
+          if(this.dataUsuario.rol_id == "admincuentas" || this.dataUsuario.rol_id == "superadmincuentas"){
             this.router.navigateByUrl("admin/usuarios/lista");
           }
           if(this.dataUsuario.rol_id == "supervisor"){
@@ -103,7 +102,6 @@ export class LoginUsuarioComponent implements OnInit {
           
         }, 
         error: (err) => {
-          console.log("error", err);
           Swal.fire('Error',`Error al realizar el login: ${err.error.message}`,"error") ;
         }           
       

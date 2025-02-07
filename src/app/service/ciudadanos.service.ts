@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { CiudadanoModel } from '../models/ciudadano.model';
+import { DataService } from './data.service';
 
 const base_url = environment.URL_BASE
 
@@ -11,6 +12,7 @@ const base_url = environment.URL_BASE
 export class CiudadanosService {
   ciudadano: CiudadanoModel = new CiudadanoModel();
   constructor(
+    private readonly dataService: DataService,
     private readonly http: HttpClient
   ) { }
 
@@ -21,32 +23,52 @@ export class CiudadanosService {
 
   guardarEdicionCiudadano(id: number, data: Partial<CiudadanoModel>){    
     this.ciudadano={...data};
-    return this.http.patch(`${base_url}/ciudadanos/${id}`, this.ciudadano);
+
+    const token = this.dataService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.patch(`${base_url}/ciudadanos/${id}`, this.ciudadano, { headers });
   }
 
   guardarCambiarContrasenia(id: number, data: any){    
     
-    return this.http.patch(`${base_url}/ciudadanos/cambiar-password/${id}`, data);
+    const token = this.dataService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.patch(`${base_url}/ciudadanos/cambiar-password/${id}`, data, { headers });
   }
 
   listarCiudadanosTodos(){
-    return this.http.get<[ciudadano:CiudadanoModel[], total: number]>(`${base_url}/ciudadanos`)
+
+    const token = this.dataService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<[ciudadano:CiudadanoModel[], total: number]>(`${base_url}/ciudadanos`, { headers })
   }
 
   listarCiudadanosXDni(dni:number){
-    return this.http.get<[ciudadano:CiudadanoModel[], total: number]>(`${base_url}/ciudadanos/buscarlista-xdni?dni=${dni}`)
+
+    const token = this.dataService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<[ciudadano:CiudadanoModel[], total: number]>(`${base_url}/ciudadanos/buscarlista-xdni?dni=${dni}`, { headers })
   }
 
   listarCiudadanosXApellido(apellido:string){
-    return this.http.get<[ciudadano:CiudadanoModel[], total: number]>(`${base_url}/ciudadanos/buscarlista-xapellido?apellido=${apellido}`)
+
+    const token = this.dataService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<[ciudadano:CiudadanoModel[], total: number]>(`${base_url}/ciudadanos/buscarlista-xapellido?apellido=${apellido}`, { headers })
   }
 
   buscarXDni(dni: number){
-    return this.http.get<CiudadanoModel>(`${base_url}/ciudadanos/buscar-xdni?dni=${dni}`)
+
+    const token = this.dataService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<CiudadanoModel>(`${base_url}/ciudadanos/buscar-xdni?dni=${dni}`, { headers })
   }
 
   buscarXId(id: number){
-    return this.http.get<CiudadanoModel>(`${base_url}/ciudadanos/${id}`)
+
+    const token = this.dataService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<CiudadanoModel>(`${base_url}/ciudadanos/${id}`, { headers })
   }
 
   

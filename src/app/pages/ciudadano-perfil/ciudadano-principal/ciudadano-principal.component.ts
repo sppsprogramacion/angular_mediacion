@@ -47,8 +47,8 @@ export class CiudadanoPrincipalComponent implements OnInit {
     this.tramiteService.listarTramitesXCiudadano(this.dataCiudadano.id_ciudadano)
         .subscribe({
           next: (respuesta) => {
-            this.listTramites= respuesta[0];
-            console.log("tramites", this.listTramites);
+            this.listTramites= respuesta[0];            
+            
             this.loading = false;  
           }
     });
@@ -60,8 +60,7 @@ export class CiudadanoPrincipalComponent implements OnInit {
     this.tramiteService.listarTramitesNuevos(this.dataCiudadano.id_ciudadano)
         .subscribe({
           next: (respuesta) => {
-            this.listTramitesNuevos= respuesta[0];
-            console.log("tramites nuevos", this.listTramitesNuevos);
+            this.listTramitesNuevos= respuesta[0];            
             this.loading = false;  
           }
     });

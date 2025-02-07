@@ -44,8 +44,7 @@ export class CiudadanosListaComponent implements OnInit {
   listarCiudadanos(){    
     this.ciudadanosService.listarCiudadanosTodos().
         subscribe(respuesta => {
-        this.listCiudadanos= respuesta[0];
-        console.log("ciudadanos", this.listCiudadanos);
+        this.listCiudadanos= respuesta[0];        
         this.loading = false;  
     
     });

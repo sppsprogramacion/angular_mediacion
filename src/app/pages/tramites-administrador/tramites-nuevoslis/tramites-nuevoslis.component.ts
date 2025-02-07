@@ -52,13 +52,11 @@ export class TramitesNuevoslisComponent implements OnInit {
   ngOnInit(): void {
     
     if (this.authService.currentUserLogin.rol_id == "administrador") {
-      console.log("administrador ", this.authService.currentUserLogin);
-      // this.tituloPagina ="Usuario: Administrador"
-      // this.listarTramitesAdministrador();
+      
     }
     
     if (this.authService.currentUserLogin) {
-      console.log("usuario", this.authService.currentUserLogin);
+      
       this.tituloPagina ="Usuario: " + this.authService.currentUserLogin.apellido + " " + this.authService.currentUserLogin.nombre;
       this.listarTramitesAdministrador();
     }
@@ -71,7 +69,7 @@ export class TramitesNuevoslisComponent implements OnInit {
     this.tramitesService.listarTramitesNuevosAdministrador(this.authService.currentUserLogin.id_usuario).
         subscribe(respuesta => {
         this.listTramites= respuesta[0];
-        console.log("tramites nuevos", this.listTramites);
+        
         this.loading = false;  
     
     });

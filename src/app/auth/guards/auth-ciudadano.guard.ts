@@ -14,8 +14,7 @@ export class AuthCiudadanoGuard implements CanActivate {
 ){  }
   
   canActivate( route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
-    console.log("Can activate");
-    console.log("ciudadano can", this.authService.currentCiudadanoLogin);
+    
     return this.authService.checkAutenticationCiudadano()
       .pipe(
         tap( isAutenticado => {

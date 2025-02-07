@@ -94,9 +94,11 @@ export class AuthService {
     const token = localStorage.getItem('token-usuario');
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<UsuarioModel>(`${this.base_url}/auth/check-auth-status-usuario`, { headers })
+    return this.http.get(`${this.base_url}/auth/check-auth-status-usuario`, { headers })
       .pipe(
         tap( usuario => this.usuarioLoggedIn = usuario),
+        tap( usuario => this.usuarioLoginResponse = usuario),
+        tap(usuario => localStorage.setItem('token-usuario', this.usuarioLoginResponse.token)),
         tap( usuario => this.ciudadanoLoggedIn = null),
         map( usuario => !!usuario),
         catchError( err => of(false) )
@@ -112,11 +114,15 @@ export class AuthService {
     const token = localStorage.getItem('token-ciudadano');
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<CiudadanoModel>(`${this.base_url}/auth/check-auth-status-ciudadano`, { headers })
+    return this.http.get(`${this.base_url}/auth/check-auth-status-ciudadano`, { headers })
       .pipe(
-        tap( ciudadano => this.ciudadanoLoggedIn = ciudadano),
-        tap( ciudadano => console.log("ciudadano dvuelto", this.ciudadanoLoggedIn)),
+        tap( ciudadano => this.ciudadanoLoggedIn = ciudadano),        
+        tap(
+          ciudadano =>{
+            this.ciudadanoLoginResponse = ciudadano;
+          }),        
         tap( ciudadano => this.usuarioLoggedIn = null),
+        tap( ciudadano => localStorage.setItem('token-ciudadano', this.ciudadanoLoginResponse.token)),
         map( ciudadano => !!ciudadano),
         catchError( err => of(false) )
       )

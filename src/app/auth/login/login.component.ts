@@ -100,8 +100,7 @@ export class LoginComponent implements OnInit {
     this.authService.loginCiudadano(dataLogin)
       .subscribe({
         next: (resultado) => {
-          this.dataCiudadano = resultado;  
-          console.log("ciudadano en login", this.dataCiudadano)
+          this.dataCiudadano = resultado;            
           this.router.navigateByUrl("ciudadano/tramites/nuevos");
         }, 
         error: (err) => {

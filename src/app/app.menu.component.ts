@@ -180,7 +180,7 @@ export class AppMenuComponent implements OnInit {
         
 
         //MENU ADMINISTRADOR CUENTAS
-        if(this.authService.currentUserLogin && this.authService.currentUserLogin.rol_id == "admincuentas") {
+        if(this.authService.currentUserLogin && (this.authService.currentUserLogin.rol_id == "admincuentas" || this.authService.currentUserLogin.rol_id == "superadmincuentas")) {
             this.nombre_completo = this.authService.currentUserLogin.apellido + " " + this.authService.currentUserLogin.nombre;
             this.model = [
                 

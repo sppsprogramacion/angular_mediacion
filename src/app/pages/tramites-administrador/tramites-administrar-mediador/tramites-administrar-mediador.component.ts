@@ -282,9 +282,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   //GUARDAR USUARIO-TRAMITE  
   submitFormUsuarioTramite(){
     if(this.formaMediadorAsignado.invalid){     
-        
-        console.log("formulario", this.formaMediadorAsignado);
-        console.log("errores formulario");
+                
         Swal.fire('Formulario incompleto',`Complete correctamente todos los campos del formulario`,"error");
         return Object.values(this.formaMediadorAsignado.controls).forEach(control => control.markAsTouched());
     }
@@ -322,7 +320,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     if(this.formaAudiencia.invalid){
       this.msgs = [];
       this.msgs.push({ severity: 'error', summary: 'Datos inválidos', detail: 'Revise los datos cargados. ' });
-      console.log("formulario Audiencia", this.formaAudiencia.controls);
+      
       return Object.values(this.formaAudiencia.controls).forEach(control => control.markAsTouched());
     }
 

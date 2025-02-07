@@ -126,8 +126,7 @@ export class TramitesAdministrarFinalizadoComponent implements OnInit {
   //BUSCAR TRAMITE 
   buscarTramite(){  
     this.dataTramite = {};  
-    console.log("numero tramite finalizado", this.dataService.tramiteData.numero_tramite);
-    console.log("tramite finalizado ", this.dataService.tramiteData);
+    
     this.tramiteService.buscarTramiteNumTram(this.dataService.tramiteData.numero_tramite)
       .subscribe({
         next: (resultado) => {          
