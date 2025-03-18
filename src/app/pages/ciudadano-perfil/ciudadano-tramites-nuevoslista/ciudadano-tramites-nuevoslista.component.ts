@@ -8,6 +8,7 @@ import { TramiteModel } from 'src/app/models/tramite.model';
 import { TramitesService } from 'src/app/service/tramites.service';
 import { UsuariosTramiteService } from 'src/app/service/usuarios-tramite.service';
 import { AuthService } from 'src/app/service/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ciudadano-tramites-nuevoslista',
@@ -57,6 +58,16 @@ export class CiudadanoTramitesNuevoslistaComponent implements OnInit {
               }
             })
             this.loading = false;  
+          },
+          error: (err) => {
+            if (err.error.statusCode == 401){
+              Swal.fire('Fallo ',`No tiene autorización para continuar `,"error");
+              this.loading = false;
+              return;
+            }
+
+            Swal.fire('Fallo ',`No se pudo obtener los tramites ` + err.error.message,"error");
+            this.loading = false; 
           }
     });
   }

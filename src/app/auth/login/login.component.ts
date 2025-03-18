@@ -52,6 +52,22 @@ export class LoginComponent implements OnInit {
       password: ['',[Validators.required]],
           
     });
+
+    //CONTROL SESION INICIADA
+    const token = localStorage.getItem('token-usuario');
+    if (token) {
+      // Redirige automáticamente si ya hay una sesión activa
+      this.authService.checkAutenticationCiudadano()
+      .subscribe({
+        next: (resultado) => {          
+          this.dataCiudadano = this.authService.currentCiudadanoLogin;            
+          if(this.dataCiudadano){
+            this.router.navigateByUrl("ciudadano/tramites/nuevos");
+          }
+        }
+      });
+    }
+    //FIN CONTROL SESION INICIADA........................................
   }
   //FIN CONSTRUCTOR...................
 

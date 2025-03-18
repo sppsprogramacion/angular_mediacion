@@ -62,13 +62,7 @@ export class AppMenuComponent implements OnInit {
                         
                     ]
                 },
-                {
-                    label: 'Salir',
-                    items: [
-                        {label: 'Cerrar sesión', icon: 'pi pi-sign-out', routerLink: ['/login'] },
-                        
-                    ]
-                },
+                
             ]
         }
         //FIN MENU CIUDADANO.........................................................
@@ -99,14 +93,7 @@ export class AppMenuComponent implements OnInit {
                         {label: 'Cambiar contraseña', icon: 'pi pi-circle', routerLink: ['/admin/miperfil/cambiarcontrasenia']},
                         
                     ]
-                },
-                {
-                    label: 'Salir',
-                    items: [
-                        {label: 'Cerrar sesión', icon: 'pi pi-sign-out', routerLink: ['/login-admin-mediacion']},
-                            
-                    ]
-                },
+                },                
             ]
         }
         //FIN MENU MEDIADOR..........................................................
@@ -165,13 +152,7 @@ export class AppMenuComponent implements OnInit {
                         {label: 'Ver objetos', icon: 'pi pi-fw pi-star', routerLink: ['/admin/objetos']}
                     ]
                 },  
-                {
-                    label: 'Salir',
-                    items: [
-                        {label: 'Cerrar sesión', icon: 'pi pi-sign-out', routerLink: ['/login-admin-mediacion']},
-                    ]
-                },
-                                
+                                                
             ];
 
         }
@@ -198,13 +179,7 @@ export class AppMenuComponent implements OnInit {
                         
                     ]
                 },
-                {
-                    label: 'Salir',
-                    items: [
-                        {label: 'Cerrar sesión', icon: 'pi pi-sign-out', routerLink: ['/login-admin-mediacion']},
-                    ]
-                },
-                
+                               
             ];
 
         }
