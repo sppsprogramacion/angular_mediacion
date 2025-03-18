@@ -125,3 +125,5 @@ export class TramitesService {
     return this.http.get<TotalesTramitesModel>(`${base_url}/tramites/totales-tramites`, { headers })
   }
 }
+
+

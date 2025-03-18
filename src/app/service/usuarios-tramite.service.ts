@@ -30,14 +30,14 @@ export class UsuariosTramiteService {
 
     const token = this.dataService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<[usuarioTramite:UsuarioTramiteModel[], total: number]>(`${base_url}/usuarios-tramite/buscar-xnumtramite-activo?numero_tramite=${num_tramite}`)
+    return this.http.get<[usuarioTramite:UsuarioTramiteModel[], total: number]>(`${base_url}/usuarios-tramite/buscar-xnumtramite-activo?numero_tramite=${num_tramite}`, { headers })
   }
 
   buscarMediadorByNumTramiteActivo(num_tramite: number){
 
     const token = this.dataService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<UsuarioTramiteModel>(`${base_url}/usuarios-tramite/buscar-mediador-xnumtramite-activo?numero_tramite=${num_tramite}`)
+    return this.http.get<UsuarioTramiteModel>(`${base_url}/usuarios-tramite/buscar-mediador-xnumtramite-activo?numero_tramite=${num_tramite}`, { headers })
   }
 
   listarTramitesAsignadosTodos(){

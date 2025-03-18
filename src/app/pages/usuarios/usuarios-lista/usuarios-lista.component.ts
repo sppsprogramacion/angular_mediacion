@@ -266,7 +266,7 @@ export class UsuariosListaComponent implements OnInit {
 
   //VERIFICAR ADMINISTRADOR
   isAdminCuenta(): boolean{
-    if(this.authService.currentUserLogin.rol_id === "admincuentas"){
+    if(this.authService.currentUserLogin.rol_id === "admincuentas" || this.authService.currentUserLogin.rol_id === "superadmincuentas"){
       return true;
     }
 

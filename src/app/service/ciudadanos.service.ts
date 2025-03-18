@@ -31,9 +31,10 @@ export class CiudadanosService {
   }
 
   guardarCambiarContrasenia(id: number, data: any){    
+    
     const token = this.dataService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.patch(`${base_url}/ciudadanos/cambiar-password/${id}`, data , { headers });
+    return this.http.patch(`${base_url}/ciudadanos/cambiar-password/${id}`, data, { headers });
   }
 
   listarCiudadanosTodos(){
