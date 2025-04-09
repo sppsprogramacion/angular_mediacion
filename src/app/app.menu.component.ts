@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AppMainComponent } from './app.main.component';
-import { globalConstants } from './common/global-constants';
 import { CiudadanoModel } from './models/ciudadano.model';
 import { DataService } from './service/data.service';
 import { AuthService } from './service/auth.service';
@@ -177,6 +176,14 @@ export class AppMenuComponent implements OnInit {
                         {label: 'Datos Personales', icon: 'pi pi-id-card', routerLink: ['/admin/miperfil/datospersonales']},
                         {label: 'Cambiar contraseña', icon: 'pi pi-circle', routerLink: ['/admin/miperfil/cambiarcontrasenia']},
                         
+                    ]
+                },
+                {
+                    label: 'Descargas',
+                    items: [
+                        {label: 'Tramites', icon: 'pi pi-circle', routerLink: ['/admin/descargas/tramites']},
+                        {label: 'Audiencias', icon: 'pi pi-circle', routerLink: ['/admin/descargas/audiencias']},
+                        {label: 'Asignaciones de tramites a usuarios', icon: 'pi pi-circle', routerLink: ['/admin/descargas/tramites-asignacion']},                        
                     ]
                 },
                                

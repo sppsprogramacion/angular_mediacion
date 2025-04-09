@@ -57,6 +57,9 @@ import { UsuarioDatosPersonalesComponent } from './usuario-perfil/usuario-datos-
 import { TramitesAdministrarSupervisorComponent } from './tramites-administrador/tramites-administrar-supervisor/tramites-administrar-supervisor.component';
 import { ObjetosComponent } from './objetos/objetos.component';
 import { DepartamentosListaComponent } from './departamentos/departamentos-lista/departamentos-lista.component';
+import { DescargasAudienciasComponent } from './descargas/descargas-audiencias/descargas-audiencias.component';
+import { DescargasTramitesComponent } from './descargas/descargas-tramites/descargas-tramites.component';
+import { DescargasTramitesAsignadosComponent } from './descargas/descargas-tramites-asignados/descargas-tramites-asignados.component';
 
 // fonts provided for pdfmake
 
@@ -125,6 +128,9 @@ PdfMakeWrapper.setFonts(pdfFonts);
     TramitesAdministrarSupervisorComponent,
     ObjetosComponent,
     DepartamentosListaComponent,
+    DescargasAudienciasComponent,
+    DescargasTramitesComponent,
+    DescargasTramitesAsignadosComponent,
     
   ],
   

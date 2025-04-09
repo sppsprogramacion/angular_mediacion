@@ -66,6 +66,9 @@ import { UsuarioCambiarContraseniaComponent } from './pages/usuario-perfil/usuar
 import { TramitesAdministrarSupervisorComponent } from './pages/tramites-administrador/tramites-administrar-supervisor/tramites-administrar-supervisor.component';
 import { ObjetosComponent } from './pages/objetos/objetos.component';
 import { DepartamentosListaComponent } from './pages/departamentos/departamentos-lista/departamentos-lista.component';
+import { DescargasAudienciasComponent } from './pages/descargas/descargas-audiencias/descargas-audiencias.component';
+import { DescargasTramitesComponent } from './pages/descargas/descargas-tramites/descargas-tramites.component';
+import { DescargasTramitesAsignadosComponent } from './pages/descargas/descargas-tramites-asignados/descargas-tramites-asignados.component';
 
 @NgModule({
     imports: [
@@ -91,6 +94,10 @@ import { DepartamentosListaComponent } from './pages/departamentos/departamentos
 
                     {path: 'departamentos/lista', component: DepartamentosListaComponent},
                     
+                    {path: 'descargas/audiencias', component: DescargasAudienciasComponent},
+                    {path: 'descargas/tramites', component: DescargasTramitesComponent},
+                    {path: 'descargas/tramites-asignacion', component: DescargasTramitesAsignadosComponent},
+
                     {path: 'miperfil/datospersonales', component: UsuarioDatosPersonalesComponent},
                     {path: 'miperfil/cambiarcontrasenia', component: UsuarioCambiarContraseniaComponent},
 
