@@ -114,6 +114,14 @@ export class DescargasTramitesComponent implements OnInit {
       this.listarTramitesAdministradorXFecha(fecha_ini, fecha_fin); 
       
     }
+    //FIN BUSCAR TRAMITES....................................
+
+    //DESCARGAR LISTA DE TRAMITES
+    descargarTramitesExcel(){
+      let listTramitesExcel: any;
+      
+    }
+    //FIN DESCARGAR LISTA DE TRAMITES....................................................
   
     //LISTADO DE TRAMITES ADMINISTRADOR
     listarTramitesAdministrador(){    
