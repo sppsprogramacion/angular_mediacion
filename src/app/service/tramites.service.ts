@@ -76,6 +76,13 @@ export class TramitesService {
     return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/todos-xfecha?fecha_ini=${fecha_ini}&fecha_fin=${fecha_fin}`, { headers })
   }
 
+  listarTramitesFechaExcel(fecha_ini: string, fecha_fin: string){
+
+    const token = this.dataService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/todos-xfecha-excel?fecha_ini=${fecha_ini}&fecha_fin=${fecha_fin}`, { headers })
+  }
+    
   listarTramitesTodosNumeroTramite(numero_tramite: number){
 
     const token = this.dataService.getToken();
