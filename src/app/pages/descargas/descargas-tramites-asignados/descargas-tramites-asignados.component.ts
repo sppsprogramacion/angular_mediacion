@@ -1,18 +1,19 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { globalConstants } from 'src/app/common/global-constants';
+import { Table } from 'primeng/table';
+import Swal from 'sweetalert2';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
+
+import { AuthService } from 'src/app/service/auth.service';
+import { DataService } from 'src/app/service/data.service';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
 import { MunicipioModel } from 'src/app/models/municipio.model';
 import { SexoModel } from 'src/app/models/sexo.model';
 import { TramiteModel } from 'src/app/models/tramite.model';
 import { UsuarioTramiteModel } from 'src/app/models/usuario_tramite.model';
-import { DataService } from 'src/app/service/data.service';
-import { TramitesService } from 'src/app/service/tramites.service';
 import { UsuariosTramiteService } from '../../../service/usuarios-tramite.service';
-import { AuthService } from 'src/app/service/auth.service';
-import { Table } from 'primeng/table';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-descargas-tramites-asignados',
@@ -105,29 +106,112 @@ export class DescargasTramitesAsignadosComponent implements OnInit {
   //FIN MENSAJES DE VALIDACIONES...............................................................
   
   //BUSCAR TRAMITES
-  buscarTramites(){
-    this.loading = true;
-    console.log("en buscar");
+  // buscarTramites(){
+  //   this.loading = true;
 
-    if(this.formaBuscar.invalid){    
+  //   if(this.formaBuscar.invalid){    
 
-      this.loading = false;
-      Swal.fire('Formulario con errores',`Complete correctamente todos los campos del formulario`,"warning");
-      return Object.values(this.formaBuscar.controls).forEach(control => control.markAsTouched());
-    }      
+  //     this.loading = false;
+  //     Swal.fire('Formulario con errores',`Complete correctamente todos los campos del formulario`,"warning");
+  //     return Object.values(this.formaBuscar.controls).forEach(control => control.markAsTouched());
+  //   }      
     
-    let fecha_ini = this.dataService.getchangeFormatoFechaGuardar(this.formaBuscar.get('fecha_ini')?.value)
-    let fecha_fin = this.dataService.getchangeFormatoFechaGuardar(this.formaBuscar.get('fecha_fin')?.value);
+  //   let fecha_ini = this.dataService.getchangeFormatoFechaGuardar(this.formaBuscar.get('fecha_ini')?.value)
+  //   let fecha_fin = this.dataService.getchangeFormatoFechaGuardar(this.formaBuscar.get('fecha_fin')?.value);
 
-    this.listarTramitesAdministradorXFecha(fecha_ini, fecha_fin); 
+  //   this.listarTramitesAdministradorXFecha(fecha_ini, fecha_fin); 
     
-  }
+  // }
   //FIN BUSCAR TRAMITES....................................................
 
+  //DESCARGAR LISTA DE TRAMITES
+  // descargarTramitesExcel(){
+  //   let tramiteExcel: TramiteExcelModel = {};
+  //   let listTramitesExcel: TramiteExcelModel[]=[];
+  //   //definir lista para excel
+  //   for (const tramite of this.listTramites){
+  //     tramiteExcel= {};
+
+  //     tramiteExcel.id_tramite = tramite.id_tramite;
+  //     tramiteExcel.numero_tramite = tramite.numero_tramite;
+  //     tramiteExcel.id_ciudadano = tramite.ciudadano.id_ciudadano;
+  //     tramiteExcel.dni = tramite.ciudadano.dni;
+  //     tramiteExcel.apellido = tramite.ciudadano.apellido;
+  //     tramiteExcel.nombre = tramite.ciudadano.nombre;
+  //     tramiteExcel.id_sexo = tramite.ciudadano.sexo_id;
+  //     tramiteExcel.sexo = tramite.ciudadano.sexo.sexo;     
+  //     tramiteExcel.telefono = tramite.ciudadano.telefono;
+  //     tramiteExcel.fecha_nac = tramite.ciudadano.fecha_nac;
+  //     tramiteExcel.email = tramite.ciudadano.email; 
+  //     tramiteExcel.id_provincia = tramite.provincia.id_provincia;
+  //     tramiteExcel.provincia = tramite.provincia.provincia;
+  //     tramiteExcel.id_departamento = tramite.departamento.id_departamento;
+  //     tramiteExcel.departamento = tramite.departamento.departamento;
+  //     tramiteExcel.id_municipio = tramite.municipio.id_municipio;
+  //     tramiteExcel.municipio = tramite.municipio.municipio;
+  //     tramiteExcel.localidad_barrio = tramite.localidad_barrio;
+  //     tramiteExcel.calle_direccion = tramite.calle_direccion;
+  //     tramiteExcel.numero_dom = tramite.numero_dom;
+  //     tramiteExcel.id_centro_mediacion = tramite.centro_mediacion.id_centro_mediacion;
+  //     tramiteExcel.centro_mediacion = tramite.centro_mediacion.centro_mediacion;       
+  //     tramiteExcel.id_departamento_centro = tramite.departamento.id_departamento;
+  //     tramiteExcel.departamento_centro = tramite.departamento.departamento;
+  //     tramiteExcel.id_municipio_centro = tramite.municipio.id_municipio;
+  //     tramiteExcel.municipio_centro = tramite.municipio.municipio;
+  //     tramiteExcel.fecha_tramite = tramite.fecha_tramite;
+  //     tramiteExcel.es_expediente = tramite.es_expediente;
+  //     tramiteExcel.expediente = tramite.expediente;
+  //     tramiteExcel.fecha_expediente = tramite.fecha_expediente;
+  //     tramiteExcel.esta_asesorado = tramite.esta_asesorado;
+  //     tramiteExcel.id_objeto = tramite.objeto.id_objeto;
+  //     tramiteExcel.objeto = tramite.objeto.objeto;
+  //     tramiteExcel.violencia_genero = tramite.violencia_genero;
+  //     tramiteExcel.violencia_partes = tramite.violencia_partes;
+  //     tramiteExcel.existe_denuncia = tramite.existe_denuncia;
+  //     tramiteExcel.medida_cautelar = tramite.medida_cautelar;     
+  //     tramiteExcel.id_estado_tramite = tramite.estado_tramite.id_estado_tramite;
+  //     tramiteExcel.estado_tramite = tramite.estado_tramite.estado_tramite;       
+  //     tramiteExcel.fecha_finalizacion = tramite.fecha_finalizacion;
+  //     tramiteExcel.observacion_finalizacion = tramite.observacion_finalizacion;
+      
+  //     listTramitesExcel.push(tramiteExcel);
+  //   }
+
+  //   //crear archivo excel para descargar
+  //   // 1. Crear hoja de Excel
+  //   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(listTramitesExcel);
+
+  //   // 2. Crear libro de Excel y añadir hoja
+  //   const wb: XLSX.WorkBook = {
+  //     Sheets: { 'Trámites': ws },
+  //     SheetNames: ['Trámites']
+  //   };
+
+  //   // 3. Generar buffer
+  //   const excelBuffer: any = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+
+  //   // 4. Guardar archivo
+  //   const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+
+  //   const now = new Date();
+  //   //utilizo tambien metodo
+  //   const fechaFormateada = `${this.completarCeros(now.getDate())}${this.completarCeros(now.getMonth() + 1)}${now.getFullYear()}-${this.completarCeros(now.getHours())}${this.completarCeros(now.getMinutes())}`;
+
+  //   FileSaver.saveAs(blob, `Tramites_${fechaFormateada}.xlsx`);
+    
+  // }
+  //FIN DESCARGAR LISTA DE TRAMITES....................................................
+    
+    //COMPETAR CON CEROS
+    private completarCeros(n: number): string {
+      return n < 10 ? '0' + n : n.toString();
+    }
+    //FIN COMPLETAR CON CEROS............................................................
+      
+
   //LISTADO DE TRAMITES ADMINISTRADOR X FECHA
-  listarTramitesAdministradorXFecha(fecha_ini: string, fecha_fin: string){    
-    console.log("En metodo");
-    this.usuariosTramitesService.listarTramitesTodosFecha(fecha_ini, fecha_fin).
+  listarTramitesAdministradorXFecha(fecha_ini: string, fecha_fin: string){   
+    this.usuariosTramitesService.listarTramitesTodosFechaExcel(fecha_ini, fecha_fin).
       subscribe(respuesta => {
         this.listUsuariosTramites= respuesta[0];
         this.loading=false;
@@ -136,19 +220,7 @@ export class DescargasTramitesAsignadosComponent implements OnInit {
   }
   //FIN LISTADO DE TRAMITES ADMINISTRADOR X FECHA............................
 
-  //LISTADO DE TRAMITES ADMINISTRADOR ASIGNADOS
-  listarTramitesAdministrador(){    
-    
-    this.usuariosTramitesService.listarTramitesAsignadosXCiudadano(0)
-      .subscribe({
-        next: (respuesta) => {
-          this.listUsuariosTramites= respuesta[0];
-          this.loading = false; 
-        }     
-      });
-  }
-  //FIN LISTADO DE TRAMITES ADMINISTRADOR ASIGNADOS....................................................... 
-   
+  
 
   //LIMPIAR FILTROS
   clear(table: Table) {
@@ -157,23 +229,5 @@ export class DescargasTramitesAsignadosComponent implements OnInit {
   } 
   //FIN LIMPIAR FILTROS....................................................................................  
 
-
-  //ACCEDER A DATA SERVICE
-  administrarTramite(data: UsuarioTramiteModel){
-    this.dataService.tramiteData = data.tramite;
-    if( this.authService.currentUserLogin.rol_id == "administrador" ){
-      this.router.navigateByUrl("admin/tramites/administrar");
-    }
-
-    //verificacion si el usuario tiene la funcion de administrativo en el tramite
-    if( this.authService.currentUserLogin.rol_id == "supervisor" || data.funcion_tramite_id == 1 ){
-      this.router.navigateByUrl("admin/tramites/administrar-visor");
-    }
-    
-    //verificacion si el usuario tiene la funcion de mediador en el tramite
-    if( this.authService.currentUserLogin.rol_id == "mediador" && data.funcion_tramite_id == 2 ){
-      this.router.navigateByUrl("admin/tramites/administrar-med");
-    }
-  }
 
 }

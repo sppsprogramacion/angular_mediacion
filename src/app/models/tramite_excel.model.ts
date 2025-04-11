@@ -1,17 +1,3 @@
-import { SexoModel } from './sexo.model';
-import { ProvinciaModel } from './provincia.model';
-import { DepartamentoModel } from './departamento.model';
-import { MunicipioModel } from './municipio.model';
-import { ObjetoModel } from './objeto.model';
-import { ModalidadModel } from './modalidad.model';
-import { VarianteModel } from './variante.model';
-import { EstadoTramiteModel } from './estado_tramite.model';
-import { CiudadanoModel } from './ciudadano.model';
-import { UsuarioTramiteModel } from './usuario_tramite.model';
-import { CentroMediacionModel } from './centro_mediacion.model';
-import { ConvocadoModel } from './convocado.model';
-import { VinculadoModel } from './vinculado.model';
-
 
 export class TramiteExcelModel{
     constructor(
@@ -51,11 +37,7 @@ export class TramiteExcelModel{
         public violencia_genero?: boolean,
         public violencia_partes?: boolean,
         public existe_denuncia?: boolean,
-        public medida_cautelar?: boolean,        
-        public id_modalidad?: number,
-        public modalidad?: string,
-        public id_variante?: number,
-        public variante?: string,
+        public medida_cautelar?: boolean, 
         public id_estado_tramite?: number,
         public estado_tramite?: string,        
         public fecha_finalizacion?: Date,

@@ -124,11 +124,8 @@ export class DescargasTramitesComponent implements OnInit {
     descargarTramitesExcel(){
       let tramiteExcel: TramiteExcelModel = {};
       let listTramitesExcel: TramiteExcelModel[]=[];
-      console.log("lista",this.listTramites);
       //definir lista para excel
       for (const tramite of this.listTramites){
-        console.log("tramite",tramite);
-        //let tramite: TramiteModel = elemento;
         tramiteExcel= {};
 
         tramiteExcel.id_tramite = tramite.id_tramite;
@@ -167,19 +164,13 @@ export class DescargasTramitesComponent implements OnInit {
         tramiteExcel.violencia_genero = tramite.violencia_genero;
         tramiteExcel.violencia_partes = tramite.violencia_partes;
         tramiteExcel.existe_denuncia = tramite.existe_denuncia;
-        tramiteExcel.medida_cautelar = tramite.medida_cautelar;       
-        tramiteExcel.id_modalidad = tramite.modalidad.id_modalidad;
-        tramiteExcel.modalidad = tramite.modalidad.modalidad;
-        tramiteExcel.id_variante = tramite.variante.id_variante;
-        tramiteExcel.variante = tramite.variante.variante;
+        tramiteExcel.medida_cautelar = tramite.medida_cautelar;     
         tramiteExcel.id_estado_tramite = tramite.estado_tramite.id_estado_tramite;
         tramiteExcel.estado_tramite = tramite.estado_tramite.estado_tramite;       
         tramiteExcel.fecha_finalizacion = tramite.fecha_finalizacion;
         tramiteExcel.observacion_finalizacion = tramite.observacion_finalizacion;
         
-        console.log("tramite excel",tramiteExcel);
         listTramitesExcel.push(tramiteExcel);
-        console.log("lista tramite excel",listTramitesExcel);
       }
 
       //crear archivo excel para descargar
@@ -197,12 +188,21 @@ export class DescargasTramitesComponent implements OnInit {
   
       // 4. Guardar archivo
       const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
-      FileSaver.saveAs(blob, `Tramites_${new Date().getTime()}.xlsx`);
-  
+
+      const now = new Date();
+      //utilizo tambien metodo
+      const fechaFormateada = `${this.completarCeros(now.getDate())}${this.completarCeros(now.getMonth() + 1)}${now.getFullYear()}-${this.completarCeros(now.getHours())}${this.completarCeros(now.getMinutes())}`;
+
+      FileSaver.saveAs(blob, `Tramites_${fechaFormateada}.xlsx`);
       
     }
     //FIN DESCARGAR LISTA DE TRAMITES....................................................
   
+    //COMPETAR CON CEROS
+    private completarCeros(n: number): string {
+      return n < 10 ? '0' + n : n.toString();
+    }
+    //FIN COMPLETAR CON CEROS............................................................
     
    
     //LISTADO DE TRAMITES ADMINISTRADOR X FECHA
