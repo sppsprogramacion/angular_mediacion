@@ -33,8 +33,7 @@
                                         </div>
                                     </div>
                                 </small>
-                            </div>
-                            
+                            </div>                            
                         </div>
 
                         <!-- boton buscar -->
@@ -73,6 +72,8 @@
                                 <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
                             </span>
                         </div>
+                        <button pButton label="Descargar" icon="pi pi-download" class="p-button-success p-button-outlined mr-1" (click)="descargarTramitesExcel()"></button>
+                
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header">
