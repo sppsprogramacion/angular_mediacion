@@ -8,10 +8,6 @@ import * as FileSaver from 'file-saver';
 
 import { AuthService } from 'src/app/service/auth.service';
 import { DataService } from 'src/app/service/data.service';
-import { DepartamentoModel } from 'src/app/models/departamento.model';
-import { MunicipioModel } from 'src/app/models/municipio.model';
-import { SexoModel } from 'src/app/models/sexo.model';
-import { TramiteModel } from 'src/app/models/tramite.model';
 import { UsuarioTramiteModel } from 'src/app/models/usuario_tramite.model';
 import { UsuariosTramiteService } from '../../../service/usuarios-tramite.service';
 import { UsuarioTramiteExcelModel } from 'src/app/models/usuario_tramite_excel.model';
@@ -33,21 +29,14 @@ export class DescargasTramitesAsignadosComponent implements OnInit {
   loading:boolean = false;
 
   //VARIABLES TRAMITE    
-  tramite: TramiteModel;
-  tramiteDialog: boolean;
-  nuevoTramite: boolean;
   submitted: boolean;
   tituloPagina: string = "Usuario: Administrador";
 
   //LISTAS    
-  listTramites: TramiteModel[]=[];
   listUsuariosTramites: UsuarioTramiteModel[]=[];
-  listDepartamentos: DepartamentoModel[]=[];
-  listMunicipios: MunicipioModel[]= [];
-  listSexo: SexoModel[]=[];
 
   //FORMULARIOS
-      formaBuscar: FormGroup;
+  formaBuscar: FormGroup;
 
   constructor(
     private authService: AuthService,

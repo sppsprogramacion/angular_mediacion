@@ -56,6 +56,13 @@ export class AudienciasService {
     return this.http.get<[audiencias:AudienciaModel[], total: number]>(`${base_url}/audiencias/buscar-xtramite?id_tramite=${num_tramite}`, {headers})
   }
 
+  listarAudienciasTodasFechaExcel(fecha_ini: string, fecha_fin: string){
+    
+    const token = this.dataService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<[audiencias:AudienciaModel[], total: number]>(`${base_url}/audiencias/todos-xfecha-excel?fecha_ini=${fecha_ini}&fecha_fin=${fecha_fin}`, { headers })
+  }
+
   listarAudienciasAbiertasByUsuario(id_usuario: number){
 
     const token = this.dataService.getToken();
