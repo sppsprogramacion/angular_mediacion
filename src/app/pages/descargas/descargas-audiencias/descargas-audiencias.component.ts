@@ -193,7 +193,7 @@ export class DescargasAudienciasComponent implements OnInit {
       //utilizo tambien metodo
       const fechaFormateada = `${this.completarCeros(now.getDate())}${this.completarCeros(now.getMonth() + 1)}${now.getFullYear()}-${this.completarCeros(now.getHours())}${this.completarCeros(now.getMinutes())}`;
   
-      FileSaver.saveAs(blob, `Tramites_con_usuario_${fechaFormateada}.xlsx`);
+      FileSaver.saveAs(blob, `Audiencias_${fechaFormateada}.xlsx`);
       
     }
     //FIN DESCARGAR LISTA DE TRAMITES....................................................

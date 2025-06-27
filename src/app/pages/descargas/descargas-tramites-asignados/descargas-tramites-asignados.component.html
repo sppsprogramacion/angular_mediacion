@@ -1,61 +1,59 @@
-    
-<!-- CARD BUSQUEDA-->
-<div class="col-12 xl:col-12">
-    <div class="card">
-        <h5>Buscar asignaciones de tramites</h5>
-        <div class="p-formgrid grid">                
-            <!-- FORMULARIO BUSCAR -->
-            <div class="col-12">  
-                <form [formGroup]="formaBuscar">
-                    <!-- CARD DATOS BUSQUEDA-->
-                    <div class="card p-fluid">                            
-                        
-                        <div class="formgrid grid">
-                            <div class="field col-12 md:col-6 lg:col-6">
-                                <label for="fecha_ini">Fecha inicio</label>
-                                <p-calendar p-inputtext formControlName="fecha_ini" dateFormat="dd/mm/yy" view="" styleClass="" [locale]="es"></p-calendar>
-                                <small *ngIf="isValid('fecha_ini')" class="p-error">
-                                    <div *ngFor="let validation of user_validation_messages.fecha_ini" >
-                                        <div  *ngIf="formaBuscar.get('fecha_ini')?.hasError(validation.type)">
-                                            {{validation.message}}
+<div class="grid">   
+    <!-- CARD BUSQUEDA-->
+    <div class="col-12 xl:col-12">
+        <div class="card">
+            <h5>Buscar asignaciones de tramites</h5>
+            <div class="p-formgrid grid">                
+                <!-- FORMULARIO BUSCAR -->
+                <div class="col-12">  
+                    <form [formGroup]="formaBuscar">
+                        <!-- CARD DATOS BUSQUEDA-->
+                        <div class="card p-fluid">                            
+                            
+                            <div class="formgrid grid">
+                                <div class="field col-12 md:col-6 lg:col-6">
+                                    <label for="fecha_ini">Fecha inicio</label>
+                                    <p-calendar p-inputtext formControlName="fecha_ini" dateFormat="dd/mm/yy" view="" styleClass="" [locale]="es"></p-calendar>
+                                    <small *ngIf="isValid('fecha_ini')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.fecha_ini" >
+                                            <div  *ngIf="formaBuscar.get('fecha_ini')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
                                         </div>
-                                    </div>
-                                </small>
+                                    </small>
+                                </div>
+
+                                <div class="field col-12 md:col-6 lg:col-6">
+                                    <label for="fecha_fin">Fecha fin</label>
+                                    <p-calendar p-inputtext formControlName="fecha_fin" dateFormat="dd/mm/yy" view="" styleClass="" [locale]="es"></p-calendar>
+                                    <small *ngIf="isValid('fecha_fin')" class="p-error">
+                                        <div *ngFor="let validation of user_validation_messages.fecha_fin" >
+                                            <div  *ngIf="formaBuscar.get('fecha_fin')?.hasError(validation.type)">
+                                                {{validation.message}}
+                                            </div>
+                                        </div>
+                                    </small>
+                                </div>                            
                             </div>
 
-                            <div class="field col-12 md:col-6 lg:col-6">
-                                <label for="fecha_fin">Fecha fin</label>
-                                <p-calendar p-inputtext formControlName="fecha_fin" dateFormat="dd/mm/yy" view="" styleClass="" [locale]="es"></p-calendar>
-                                <small *ngIf="isValid('fecha_fin')" class="p-error">
-                                    <div *ngFor="let validation of user_validation_messages.fecha_fin" >
-                                        <div  *ngIf="formaBuscar.get('fecha_fin')?.hasError(validation.type)">
-                                            {{validation.message}}
-                                        </div>
-                                    </div>
-                                </small>
-                            </div>                            
+                            <!-- boton buscar -->
+                            <div  class="col-12 grid justify-content-between">
+                                <button pButton pRipple type="button" label="Buscar" class="p-button-primary" style="width: 47%;" (click)="buscarTramites()" ></button>
+                                
+                            </div>
                         </div>
-
-                        <!-- boton buscar -->
-                        <div  class="col-12 grid justify-content-between">
-                            <button pButton pRipple type="button" label="Buscar" class="p-button-primary" style="width: 47%;" (click)="buscarTramites()" ></button>
-                            
-                        </div>
-                    </div>
-                    <!-- FIN CARD DATOS BUSQUEDA -->
-                    
-                </form>
+                        <!-- FIN CARD DATOS BUSQUEDA -->
+                        
+                    </form>
+                </div>
+                <!--  FIN FORMULARIO BUSCAR -->
+                
             </div>
-            <!--  FIN FORMULARIO BUSCAR -->
-            
         </div>
     </div>
-</div>
-<!-- FIN CARD BUSQUEDA..................................-->
+    <!-- FIN CARD BUSQUEDA..................................-->
 
-<!-- CARD TRAMITES..................................-->
-<div class="grid">    
-
+    <!-- CARD TRAMITES ASIGNADOS..................................-->
     <div class="col-12">
         <div class="card">
 

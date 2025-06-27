@@ -25,6 +25,21 @@
                                 
                             </div>
 
+                            <!-- recomendacion asesoramiento -->
+                            <p-messages severity="info">
+                                <ng-template pTemplate>                                    
+                                    <div class="ml-1">
+                                        La asesoría previa a una mediación es obligatoria para asegurar que las partes entiendan si 
+                                        su conflicto puede ser mediado y qué deben solicitar para resolverlo. Garantizando que el 
+                                        objeto de la mediación esté claramente definido, evitando acuerdos incorrectos y protegiendo 
+                                        los derechos de todos los involucrados.
+                                        <br>
+                                        “Esta Dirección cuenta con Abogados que brindan Asesoramiento Jurídico Gratuito”
+                                    </div>
+                                </ng-template>
+                            </p-messages>
+                            <!-- fin recomendacion asesoramiento -->
+
                             <div class="formgrid grid">                                    
                                 <div class="field col-12 sm:col-6 md:col-6">
                                     <label for="esta_asesorado">¿Está asesorado?</label>
@@ -37,6 +52,20 @@
                             </div>
                         </div>
                         <!-- FIN CARD ASESORADO-->
+
+                        <!-- Inicio -->
+                        <p-messages severity="info">
+                            <ng-template pTemplate>                                    
+                                <div class="ml-1">
+                                    Luego de completar toda la información en el formulario y enviar la solicitud de mediacion, 
+                                    los administradores le asignarán una fecha y hora de audiencia.
+                                    <br>
+                                    Usted puede consultar en todo momento 
+                                    
+                                </div>
+                            </ng-template>
+                        </p-messages>
+                        <!-- fin inicio -->
 
                         <!-- CARD MENSAJE -->
                         <div *ngIf="estaAsesorado" class="card p-fluid">  
@@ -134,6 +163,19 @@
                             <div class="bg-cyan-600">
 
                             </div>
+
+                            <!-- elegor centro -->
+                            <p-messages severity="info">
+                                <ng-template pTemplate>                                    
+                                    <div class="ml-1">
+                                        Elija el centro de mediación mas cercano a su domicilio o que sea mas comodo para 
+                                        que pueda realizar la audiencia de mediación.
+                                         
+                                    </div>
+                                </ng-template>
+                            </p-messages>
+                            <!-- fin elegir centro -->
+
                             <div class="formgrid grid">
                                 <div class="field col-12 md:col-8 lg:col-6">
                                     <label for="departamento_id_centro">Departamento</label>
@@ -238,6 +280,19 @@
                             <div class="bg-cyan-600">
 
                             </div>
+
+                            <!-- agregar convocado -->
+                            <p-messages severity="info">
+                                <ng-template pTemplate>                                    
+                                    <div class="ml-1">
+                                        Ingrese los datos de la persona con la que desea realizar la  mediacion. Puede elegir mas de una persona.
+                                        <br>
+                                        Recuerde comlpletar correctamente los datos, ya que con ellos se realizara la correspondiente notificacion
+                                        al convocado.
+                                    </div>
+                                </ng-template>
+                            </p-messages>
+                            <!-- fin agregar convocado -->
 
                             <div class="col-12 border-bottom-1 surface-border">
                                 <p-toolbar styleClass="mb-4">
@@ -705,6 +760,17 @@
                             <div class="bg-cyan-600">
 
                             </div>
+
+                            <!-- agregar vinculado -->
+                            <p-messages severity="info">
+                                <ng-template pTemplate>                                    
+                                    <div class="ml-1">
+                                        Ingrese los datos de la persona que necesite que este presente y/o acompañe en la audiencia.
+                                        
+                                    </div>
+                                </ng-template>
+                            </p-messages>
+                            <!-- fin agregar vinculado -->
 
                             <div class="col-12 border-bottom-1 surface-border">
                                 <p-toolbar styleClass="mb-4">
