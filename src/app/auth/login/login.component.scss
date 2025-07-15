@@ -1,0 +1,26 @@
+.login-min-width {
+  min-width: 80%;
+}
+
+.login-card-wrapper {
+  border-radius: 56px;
+  padding: 0.3rem;
+  background: linear-gradient(180deg, var(--cyan-600) 10%, rgba(33, 150, 243, 0) 50%);
+}
+
+.login-card {
+  border-radius: 53px;
+  background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));
+}
+
+.login-input-padding {
+  padding: 1rem;
+}
+
+.text-primary {
+  color: var(--primary-color);
+}
+
+::ng-deep .p-password-full input {
+  width: 100%;
+}

@@ -1,0 +1,5 @@
+/* Asegura que el input de <p-password> tome el 100% del contenedor */
+::ng-deep .p-password-full input {
+  width: 100% !important;
+  box-sizing: border-box;
+}

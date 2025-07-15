@@ -1,289 +1,474 @@
 <div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <h5>Centros de mediación</h5>
+      <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+          <div class="my-2">
+            <button
+              pButton
+              pRipple
+              label="Nuevo"
+              icon="pi pi-plus"
+              class="p-button-success mr-2"
+              (click)="openDialogCentroMediacion()"
+            ></button>
+          </div>
+        </ng-template>
+      </p-toolbar>
+      <!-- TABLA DE CENTROS MEDIACION -->
+      <p-table
+        #dt1
+        [value]="listCentrosMediacion"
+        [rows]="10"
+        [loading]="loading"
+        [rowHover]="true"
+        styleClass="p-datatable-striped"
+        [paginator]="true"
+        [globalFilterFields]="['centro_mediacion','departamento.departamento']"
+        responsiveLayout="scroll"
+      >
+        <ng-template pTemplate="caption">
+          <div class="flex justify-content-between flex-column sm:flex-row">
+            <button
+              pButton
+              label="Limpiar"
+              class="p-button-outlined mb-2"
+              icon="pi pi-filter-slash"
+              (click)="clear(dt1)"
+            ></button>
 
-    <div class="col-12">
-        <div class="card">
-            <h5>Centros de mediación</h5>
-            <p-toolbar styleClass="mb-4">
-                <ng-template pTemplate="left">
-                    <div class="my-2">
-                        <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openDialogCentroMediacion()"></button>
-
+            <span class="p-input-icon-left mb-2">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                #filter
+                (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                placeholder="Buscar palabra"
+                class="w-full"
+              />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="w-12"></th>
+            <th>
+              <div class="flex justify-content-between align-items-center">
+                ID
+                <p-columnFilter
+                  type="text"
+                  field="id_centro_mediacion"
+                  display="menu"
+                  placeholder="Buscar por ID"
+                ></p-columnFilter>
+              </div>
+            </th>
+            <th>
+              <div class="flex justify-content-between align-items-center">
+                Centro Mediación
+                <p-columnFilter
+                  type="text"
+                  field="centro_mediacion"
+                  display="menu"
+                  placeholder="Buscar por centro"
+                ></p-columnFilter>
+              </div>
+            </th>
+            <th>
+              <div class="flex justify-content-between align-items-center">
+                Dirección
+              </div>
+            </th>
+            <th>
+              <div class="flex justify-content-between align-items-center">
+                Departamento
+                <p-columnFilter
+                  field="departamento.departamento"
+                  matchMode="equals"
+                  display="menu"
+                  [showMatchModes]="false"
+                  [showOperator]="false"
+                  [showAddButton]="false"
+                >
+                  <ng-template pTemplate="header">
+                    <div class="px-3 pt-3 pb-0">
+                      <span class="font-bold">Departamento</span>
                     </div>
-                </ng-template>
-            </p-toolbar>
-            <!-- TABLA DE CENTROS MEDIACION -->
-            <p-table #dt1 [value]="listCentrosMediacion" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['centro_mediacion','departamento.departamento']" responsiveLayout="scroll">
-                <ng-template pTemplate="caption">
-                    <div class="flex justify-content-between flex-column sm:flex-row">
-                        <button pButton label="Limpiar" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
-
-                        <span class="p-input-icon-left mb-2">
-                            <i class="pi pi-search"></i>
-                            <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
-                        </span>
+                  </ng-template>
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-dropdown
+                      [ngModel]="value"
+                      [options]="filtroDepartamentos"
+                      (onChange)="filter($event.value)"
+                      placeholder="seleccionar"
+                      [showClear]="true"
+                    >
+                      <ng-template let-option pTemplate="item">
+                        <span class="ml-2">{{ option.label }}</span>
+                      </ng-template>
+                    </p-dropdown>
+                  </ng-template>
+                </p-columnFilter>
+              </div>
+            </th>
+            <th>
+              <div class="flex justify-content-between align-items-center">
+                Municipio
+              </div>
+            </th>
+            <th>
+              <div class="flex justify-content-between align-items-center">
+                Telefono
+              </div>
+            </th>
+            <th>
+              <div class="flex justify-content-between align-items-center">
+                E-mail
+              </div>
+            </th>
+            <th>
+              <div class="flex justify-content-between align-items-center">
+                Admin responsable
+                <p-columnFilter
+                  field="admin_es_responsable"
+                  matchMode="equals"
+                  display="menu"
+                  [showMatchModes]="false"
+                  [showOperator]="false"
+                  [showAddButton]="false"
+                >
+                  <ng-template pTemplate="header">
+                    <div class="px-3 pt-3 pb-0">
+                      <span class="font-bold">Activo</span>
                     </div>
-                </ng-template>
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th style="width: 3rem"></th>
-                        <th>
-                            <div class="flex justify-content-between align-items-center">
-                                ID
-                                <p-columnFilter type="text" field="id_centro_mediacion" display="menu" placeholder="Buscar por ID"></p-columnFilter>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="flex justify-content-between align-items-center">
-                                Centro Mediación
-                                <p-columnFilter type="text" field="centro_mediacion" display="menu" placeholder="Buscar por centro"></p-columnFilter>
+                  </ng-template>
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-dropdown
+                      [ngModel]="value"
+                      [options]="filtroSiNoBoolean"
+                      (onChange)="filter($event.value)"
+                      placeholder="seleccionar"
+                      [showClear]="true"
+                    >
+                      <ng-template let-option pTemplate="item">
+                        <span class="ml-2">{{ option.label }}</span>
+                      </ng-template>
+                    </p-dropdown>
+                  </ng-template>
+                </p-columnFilter>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-centro>
+          <tr>
+            <td class="min-w-10rem">
+              <button
+                *ngIf="centro.activo"
+                type="button"
+                pButton
+                pRipple
+                class="p-button-rounded p-button-info mr-2 mb-2"
+                icon="pi pi-eye"
+                (click)="administrarCentroMediacion(centro)"
+              ></button>
+              <button
+                *ngIf="!centro.activo"
+                type="button"
+                pButton
+                pRipple
+                class="p-button-rounded p-button-danger mr-2 mb-2"
+                icon="pi pi-eye"
+                (click)="administrarCentroMediacion(centro)"
+              ></button>
+              <button
+                type="button"
+                pButton
+                pRipple
+                class="p-button-rounded p-button-warning mr-2 mb-2"
+                icon="pi pi-pencil"
+                (click)="editDialogCentroMediacion(centro)"
+              ></button>
+            </td>
+            <td class="min-w-8rem">{{ centro.id_centro_mediacion }}</td>
+            <td class="min-w-15rem">{{ centro.centro_mediacion }}</td>
+            <td class="min-w-35rem">
+              Barrio: {{ centro.localidad_barrio }} - Calle/Dirección:
+              {{ centro.calle_direccion }} - N° {{ centro.numero_dom }}
+            </td>
+            <td class="min-w-15rem">{{ centro.departamento.departamento }}</td>
+            <td class="min-w-10rem">{{ centro.municipio.municipio }}</td>
+            <td class="min-w-10rem">{{ centro.telefono }}</td>
+            <td class="min-w-5rem">{{ centro.email }}</td>
+            <td class="min-w-3rem">{{ centro.admin_es_responsable ? "SI" : "NO" }}</td>
+          </tr>
+        </ng-template>
 
-                            </div>
-                        </th>
-                        <th>
-                            <div class="flex justify-content-between align-items-center">
-                                Dirección                                
-                            </div>
-                        </th>
-                        <th>
-                            <div class="flex justify-content-between align-items-center">
-                                Departamento
-                                <p-columnFilter field="departamento.departamento" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                                    <ng-template pTemplate="header">
-                                        <div class="px-3 pt-3 pb-0">
-                                            <span class="font-bold">Departamento</span>
-                                        </div>
-                                    </ng-template>
-                                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                        <p-dropdown [ngModel]="value" [options]="filtroDepartamentos" (onChange)="filter($event.value)" placeholder="seleccionar" [showClear]="true">
-                                            <ng-template let-option pTemplate="item">
-                                                <span class="ml-2">{{option.label}}</span>
-                                            </ng-template>
-                                        </p-dropdown>
-                                    </ng-template>
-                                </p-columnFilter>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="flex justify-content-between align-items-center">
-                                Municipio                              
-                            </div>
-                        </th>
-                        <th>
-                            <div class="flex justify-content-between align-items-center">
-                                Telefono
-                            </div>
-                        </th>
-                        <th>
-                            <div class="flex justify-content-between align-items-center">
-                                E-mail                                
-                            </div>
-                        </th>
-                        <th>
-                            <div class="flex justify-content-between align-items-center">
-                                Admin responsable         
-                                <p-columnFilter field="admin_es_responsable" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                                    <ng-template pTemplate="header">
-                                        <div class="px-3 pt-3 pb-0">
-                                            <span class="font-bold">Activo</span>
-                                        </div>
-                                    </ng-template>
-                                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                        <p-dropdown [ngModel]="value" [options]="filtroSiNoBoolean" (onChange)="filter($event.value)" placeholder="seleccionar" [showClear]="true">
-                                            <ng-template let-option pTemplate="item">
-                                                <span class="ml-2">{{option.label}}</span>
-                                            </ng-template>
-                                        </p-dropdown>
-                                    </ng-template>
-                                </p-columnFilter>                      
-                            </div>
-                        </th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-centro>
-                    <tr>
-                        <td style="min-width: 10rem;">
-                            <button *ngIf="centro.activo" type="button" pButton pRipple class="p-button-rounded p-button-info mr-2 mb-2" icon="pi pi-eye" (click)="administrarCentroMediacion(centro)"></button>
-                            <button *ngIf="!centro.activo" type="button" pButton pRipple class="p-button-rounded p-button-danger mr-2 mb-2" icon="pi pi-eye" (click)="administrarCentroMediacion(centro)"></button>
-                            <button type="button" pButton pRipple class="p-button-rounded p-button-warning mr-2 mb-2" icon="pi pi-pencil" (click)="editDialogCentroMediacion(centro)"></button>
-                        </td>
-                        <td style="min-width: 8rem;">
-                            {{centro.id_centro_mediacion}}
-                        </td>
-                        <td style="min-width: 15rem;">
-                            {{centro.centro_mediacion}}
-                        </td>
-                        <td style="min-width: 20rem;">
-                            Barrio: {{centro.localidad_barrio}} - Calle/Dirección:{{centro.calle_direccion}} - N° {{centro.numero_dom}}
-                        </td>
-                        <td style="min-width: 15rem;">
-                            {{centro.departamento.departamento}}
-                        </td>
-                        <td style="min-width: 10rem;">
-                            {{centro.municipio.municipio}}
-                        </td>
-                        <td style="min-width: 10rem;">
-                            {{centro.telefono}}
-                        </td>
-                        <td style="min-width: 5rem;">
-                            {{centro.email}}
-                        </td>
-                        <td style="min-width: 3rem;">
-                            {{centro.admin_es_responsable? "SI": "NO"}}
-                        </td>
-                    </tr>
-                </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="9">No se encontraron centros registrados.</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="loadingbody">
+          <tr>
+            <td colspan="9">Cargando centros... .</td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <!-- FIN TABLA DE CENTROS MEDIACION -->
 
-                <ng-template pTemplate="emptymessage">
-                    <tr>
-                        <td colspan="8">No se encontraron centros registrados.</td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="loadingbody">
-                    <tr>
-                        <td colspan="8">Cargando centros... .</td>
-                    </tr>
-                </ng-template>
-            </p-table>
-            <!-- FIN TABLA DE CENTROS MEDIACION -->
+      <!-- DIALOG FORMULARIO CENTRO MEDIACION -->
+      <p-dialog
+        id="formCentroDialog"
+        [(visible)]="centroMediacionDialog"
+        class="p-fluid"
+        [style]="{ width: '600px' }"
+        header="Nuevo Centro de Mediación"
+        [closable]="false"
+        [modal]="true"
+      >
+        <ng-template pTemplate="header">
+          <div class="formgrid grid">
+            <h5 class="mb-1 w-full">{{ tituloDialog }}</h5>
+            <!-- MENSAJE DE ERROR -->
+            <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
+          </div>
+        </ng-template>
 
-
-
-        </div>
-        <!-- DIALOG FORMULARIO CENTRO MEDIACION -->
-        <p-dialog id="formCentroDialog" [(visible)]="centroMediacionDialog" class="p-fluid" [style]="{width: '600px'}" header="Nuevo Centro de Mediación" [closable]="false" [modal]="true" >
-            <ng-template pTemplate="header">
-                <div class="formgrid grid">
-                    <h5 class="mb-1" style="width: 100%;">{{tituloDialog}}</h5>
-                    <!-- MENSAJE DE ERROR -->
-                    <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
-                </div>
-            </ng-template>
-
-            <ng-template pTemplate="content">
-                <!-- FORMULARIO CENTRO MEDIACION -->
-                <form [formGroup]="formaCentroMediacion">
-                    <div class="formgrid grid">
-                        <div class="field col">
-                            <label for="apellido">Nombre</label>
-                            <input type="text" pInputText id="centro_mediacion" formControlName="centro_mediacion" />
-                            <small *ngIf="isValid('centro_mediacion')" class="p-error">
-                                <div *ngFor="let validation of user_validation_messages.centro_mediacion" >
-                                    <div  *ngIf="formaCentroMediacion.get('centro_mediacion')?.hasError(validation.type)">
-                                        {{validation.message}}
-                                    </div>
-                                </div>
-                            </small>
-                        </div>
+        <ng-template pTemplate="content">
+          <!-- FORMULARIO CENTRO MEDIACION -->
+          <form [formGroup]="formaCentroMediacion">
+            <div class="formgrid grid">
+              <div class="field col">
+                <label for="centro_mediacion">Nombre</label>
+                <input
+                  type="text"
+                  pInputText
+                  id="centro_mediacion"
+                  formControlName="centro_mediacion"
+                />
+                <small *ngIf="isValid('centro_mediacion')" class="p-error">
+                  <div *ngFor="let validation of user_validation_messages.centro_mediacion">
+                    <div
+                      *ngIf="
+                        formaCentroMediacion.get('centro_mediacion')?.hasError(
+                          validation.type
+                        )
+                      "
+                    >
+                      {{ validation.message }}
                     </div>
-                    <div class="formgrid grid">
-                        <div class="field col-12 sm:col-8 md:col-6">
-                            <label for="id_opcion_sino">El administrador es responsable</label>
-                            <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="admin_es_responsable">
-                            </p-dropdown>
-                        </div>
-                        <div *ngIf="editarCentro"  class="field col-12 sm:col-8 md:col-6">
-                            <label for="id_opcion_sino">Activo</label>
-                            <p-dropdown id="id_opcion_sino" [options]="listSiNo" optionLabel="respuesta_sino" optionValue="id_opcion_sino" formControlName="activo" (onChange)="onChangeViolenciaGenero()">
-                            </p-dropdown>
-                        </div>
+                  </div>
+                </small>
+              </div>
+            </div>
+            <div class="formgrid grid">
+              <div class="field col-12 sm:col-8 md:col-6">
+                <label for="id_opcion_sino">El administrador es responsable</label>
+                <p-dropdown
+                  id="id_opcion_sino"
+                  [options]="listSiNo"
+                  optionLabel="respuesta_sino"
+                  optionValue="id_opcion_sino"
+                  formControlName="admin_es_responsable"
+                >
+                </p-dropdown>
+              </div>
+              <div
+                *ngIf="editarCentro"
+                class="field col-12 sm:col-8 md:col-6"
+              >
+                <label for="id_opcion_sino">Activo</label>
+                <p-dropdown
+                  id="id_opcion_sino"
+                  [options]="listSiNo"
+                  optionLabel="respuesta_sino"
+                  optionValue="id_opcion_sino"
+                  formControlName="activo"
+                  (onChange)="onChangeViolenciaGenero()"
+                >
+                </p-dropdown>
+              </div>
+            </div>
+            <div class="formgrid grid">
+              <div class="field col">
+                <label for="departamento_id">Departamento</label>
+                <p-dropdown
+                  id="departamento_id"
+                  [options]="listDepartamentos"
+                  optionLabel="departamento"
+                  optionValue="id_departamento"
+                  formControlName="departamento_id"
+                  placeholder="Seleccionar..."
+                  (onChange)="onChangeDepartamento()"
+                >
+                </p-dropdown>
+                <small *ngIf="departamentoInvalid" class="p-error">
+                  Debe seleccionar un departamento
+                </small>
+              </div>
+              <div class="field col">
+                <label for="municipio_id">Municipio</label>
+                <p-dropdown
+                  id="municipio_id"
+                  [options]="listMunicipios"
+                  optionLabel="municipio"
+                  optionValue="id_municipio"
+                  formControlName="municipio_id"
+                  placeholder="Seleccionar..."
+                >
+                </p-dropdown>
+                <small *ngIf="municipioInvalid" class="p-error">
+                  Debe seleccionar un municipio
+                </small>
+              </div>
+            </div>
+
+            <div class="formgrid grid">
+              <div class="field col">
+                <label for="localidad_barrio">Barrio</label>
+                <input
+                  type="text"
+                  pInputText
+                  id="localidad_barrio"
+                  formControlName="localidad_barrio"
+                />
+                <small *ngIf="isValid('localidad_barrio')" class="p-error">
+                  <div *ngFor="let validation of user_validation_messages.localidad_barrio">
+                    <div
+                      *ngIf="
+                        formaCentroMediacion.get('localidad_barrio')?.hasError(
+                          validation.type
+                        )
+                      "
+                    >
+                      {{ validation.message }}
                     </div>
-                    <div class="formgrid grid">
-                        <div class="field col">
-                            <label for="departamento_id">Departamento</label>
-                            <p-dropdown id="departamento_id" [options]="listDepartamentos" optionLabel="departamento" optionValue="id_departamento" formControlName="departamento_id" placeholder="Seleccionar..." (onChange)="onChangeDepartamento()">
-                            </p-dropdown>
-                            <small *ngIf="departamentoInvalid" class="p-error">
-                                Debe seleccionar un departamento
-                            </small>
-                        </div>
-                        <div class="field col">
-                            <label for="municipio_id">Municipio</label>
-                            <p-dropdown id="municipio_id" [options]="listMunicipios" optionLabel="municipio" optionValue="id_municipio" formControlName="municipio_id" placeholder="Seleccionar...">
-                            </p-dropdown>
-                            <small *ngIf="municipioInvalid" class="p-error">
-                                Debe seleccionar un municipio
-                            </small>
-                        </div>
+                  </div>
+                </small>
+              </div>
+            </div>
+            <div class="formgrid grid">
+              <div class="field col">
+                <label for="calle_direccion">Calle/dirección</label>
+                <input
+                  type="text"
+                  pInputText
+                  id="calle_direccion"
+                  formControlName="calle_direccion"
+                />
+                <small *ngIf="isValid('calle_direccion')" class="p-error">
+                  <div *ngFor="let validation of user_validation_messages.calle_direccion">
+                    <div
+                      *ngIf="
+                        formaCentroMediacion.get('calle_direccion')?.hasError(
+                          validation.type
+                        )
+                      "
+                    >
+                      {{ validation.message }}
                     </div>
-
-                    <div class="formgrid grid">
-                        <div class="field col">
-                            <label for="localidad_barrio">Barrio</label>
-                            <input type="text" pInputText id="localidad_barrio" formControlName="localidad_barrio" />
-                            <small *ngIf="isValid('localidad_barrio')" class="p-error">
-                                <div *ngFor="let validation of user_validation_messages.localidad_barrio" >
-                                    <div  *ngIf="formaCentroMediacion.get('localidad_barrio')?.hasError(validation.type)">
-                                        {{validation.message}}
-                                    </div>
-                                </div>
-                            </small>
-                        </div>
-
+                  </div>
+                </small>
+              </div>
+              <div class="field col">
+                <label for="numero_dom">Número</label>
+                <input
+                  type="text"
+                  pInputText
+                  id="numero_dom"
+                  formControlName="numero_dom"
+                />
+                <small *ngIf="isValid('numero_dom')" class="p-error">
+                  <div *ngFor="let validation of user_validation_messages.numero_dom">
+                    <div
+                      *ngIf="
+                        formaCentroMediacion.get('numero_dom')?.hasError(
+                          validation.type
+                        )
+                      "
+                    >
+                      {{ validation.message }}
                     </div>
-                    <div class="formgrid grid">
-                        <div class="field col">
-                            <label for="calle_direccion">Calle/dirección</label>
-                            <input type="text" pInputText id="calle_direccion" formControlName="calle_direccion" />
-                            <small *ngIf="isValid('calle_direccion')" class="p-error">
-                                <div *ngFor="let validation of user_validation_messages.calle_direccion" >
-                                    <div  *ngIf="formaCentroMediacion.get('calle_direccion')?.hasError(validation.type)">
-                                        {{validation.message}}
-                                    </div>
-                                </div>
-                            </small>
-                        </div>
-                        <div class="field col">
-                            <label for="numero_dom">Número</label>
-                            <input type="text" pInputText id="numero_dom" formControlName="numero_dom" />
-                            <small *ngIf="isValid('numero_dom')" class="p-error">
-                                <div *ngFor="let validation of user_validation_messages.numero_dom" >
-                                    <div  *ngIf="formaCentroMediacion.get('numero_dom')?.hasError(validation.type)">
-                                        {{validation.message}}
-                                    </div>
-                                </div>
-                            </small>
-                        </div>
+                  </div>
+                </small>
+              </div>
+            </div>
+
+            <div class="formgrid grid">
+              <div class="field col">
+                <label for="telefono">Teléfono</label>
+                <input
+                  type="text"
+                  pInputText
+                  id="telefono"
+                  formControlName="telefono"
+                />
+                <small *ngIf="isValid('telefono')" class="p-error">
+                  <div *ngFor="let validation of user_validation_messages.telefono">
+                    <div
+                      *ngIf="
+                        formaCentroMediacion.get('telefono')?.hasError(
+                          validation.type
+                        )
+                      "
+                    >
+                      {{ validation.message }}
                     </div>
-
-                    <div class="formgrid grid">
-
-                        <div class="field col">
-                            <label for="telefono">Teléfono</label>
-                            <input type="text" pInputText id="telefono" formControlName="telefono" />
-                            <small *ngIf="isValid('telefono')" class="p-error">
-                                <div *ngFor="let validation of user_validation_messages.telefono" >
-                                    <div  *ngIf="formaCentroMediacion.get('telefono')?.hasError(validation.type)">
-                                        {{validation.message}}
-                                    </div>
-                                </div>
-                            </small>
-                        </div>
+                  </div>
+                </small>
+              </div>
+            </div>
+            <div class="formgrid grid">
+              <div class="field col">
+                <label for="email">Correo electrónico</label>
+                <input
+                  type="text"
+                  pInputText
+                  id="email"
+                  formControlName="email"
+                />
+                <small *ngIf="isValid('email')" class="p-error">
+                  <div *ngFor="let validation of user_validation_messages.email">
+                    <div
+                      *ngIf="
+                        formaCentroMediacion.get('email')?.hasError(
+                          validation.type
+                        )
+                      "
+                    >
+                      {{ validation.message }}
                     </div>
-                    <div class="formgrid grid">
-                        <div class="field col">
-                            <label for="email">Correo electrónico</label>
-                            <input type="text" pInputText id="email" formControlName="email" />
-                            <small *ngIf="isValid('email')" class="p-error">
-                                <div *ngFor="let validation of user_validation_messages.email" >
-                                    <div  *ngIf="formaCentroMediacion.get('email')?.hasError(validation.type)">
-                                        {{validation.message}}
-                                    </div>
-                                </div>
-                            </small>
-                        </div>
-                    </div>
-                    
-                </form>
-                <!--  FIN FORMULARIO CENTRO MEDIACION -->
-            </ng-template>
+                  </div>
+                </small>
+              </div>
+            </div>
+          </form>
+          <!--  FIN FORMULARIO CENTRO MEDIACION -->
+        </ng-template>
 
-            <ng-template pTemplate="footer">
-                <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormUsuario()"></button>
-                <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogCentroMediacion()"></button>
-
-            </ng-template>
-        </p-dialog>
-        <!-- FIN DIALOG FORMULARIO  CENTRO MEDIACION -->
-
+        <ng-template pTemplate="footer">
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Guardar"
+            class="p-button-outlined p-button-success mr-2 mb-2"
+            (click)="submitFormUsuario()"
+          ></button>
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Cancelar"
+            class="p-button-outlined p-button-danger mr-2 mb-2"
+            (click)="hideDialogCentroMediacion()"
+          ></button>
+        </ng-template>
+      </p-dialog>
+      <!-- FIN DIALOG FORMULARIO  CENTRO MEDIACION -->
     </div>
+  </div>
 </div>

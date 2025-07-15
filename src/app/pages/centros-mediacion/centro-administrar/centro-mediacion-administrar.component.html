@@ -1,215 +1,129 @@
-<!-- Card Datos Principales -->
 <div class="card p-fluid">
-    <p-toolbar styleClass="mb-3 bg-cyan-500">
-        <h5 class="block text-white font-bold font-medium mb-1 ">
-            Centro de mediacion: {{dataCentroMediacion.centro_mediacion}}
-        </h5>
-    </p-toolbar>
+  <p-toolbar styleClass="mb-3 bg-cyan-500">
+    <h5 class="block text-white font-bold font-medium mb-1">
+      Centro de mediación: {{ dataCentroMediacion.centro_mediacion }}
+    </h5>
+  </p-toolbar>
 
-    <div class="col-12 border-bottom-1 surface-border mt-4">
-        <div class="grid">
-            <div class="col-12 lg:col-4 xl:col-4">
-                <span class="text font-medium text-1xl">Id Centro de Mediacion:<span class="text ml-2 font-medium"> {{dataCentroMediacion.id_centro_mediacion}} </span></span>
-            </div>
+  <div class="col-12 border-bottom-line">
+    <div class="grid">
+      <div class="col-12 lg:col-4 xl:col-4">
+        <span class="text-label">Id Centro de Mediación:</span>
+        <span class="text-value">{{ dataCentroMediacion.id_centro_mediacion }}</span>
+      </div>
+    </div>
+  </div>
 
-        </div>
+  <div class="col-12 border-bottom-line">
+    <div class="grid">
+      <div class="col-12 lg:col-6 xl:col-6 py-2">
+        <span class="text-label">Dirección:</span>
+        <span class="text-value">{{ dataCentroMediacion.calle_direccion }} Nº {{ dataCentroMediacion.numero_dom }}</span>
+      </div>
+      <div class="col-12 lg:col-3 xl:col-3 py-2">
+        <span class="text-label">Barrio:</span>
+        <span class="text-value">{{ dataCentroMediacion.localidad_barrio }}</span>
+      </div>
     </div>
-    <div class="col-12 border-bottom-1 surface-border">
-        <div class="grid">
-            <div class="col-12 lg:col-6 xl:col-6 py-2">
-                <span class="text font-medium text-1xl">Dirección:<span class="text ml-1 font-medium"> {{dataCentroMediacion.calle_direccion}} N° {{dataCentroMediacion.numero_dom}}</span></span>
-            </div>
-            <div class="col-12 lg:col-3 xl:col-3 py-2">
-                <span class="text font-medium text-1xl">Barrio:<span class="text ml-1 font-medium"> {{dataCentroMediacion.localidad_barrio}}</span></span>
-            </div>
+  </div>
 
-        </div>
+  <div class="col-12 border-bottom-line">
+    <div class="grid">
+      <div class="col-12 lg:col-6 xl:col-6 py-2">
+        <span class="text-label">Municipio:</span>
+        <span class="text-value">{{ dataCentroMediacion.municipio.municipio }}</span>
+      </div>
+      <div class="col-12 lg:col-6 xl:col-6">
+        <span class="text-label">Departamento:</span>
+        <span class="text-value">{{ dataCentroMediacion.departamento.departamento }}</span>
+      </div>
     </div>
-    <div class="col-12 border-bottom-1 surface-border">
-        <div class="grid">
-            <div class="col-12 lg:col-6 xl:col-6 py-2">
-                <span class="text font-medium text-1xl">Municipio:<span class="text ml-1 font-medium"> {{dataCentroMediacion.municipio.municipio}}</span></span>
-            </div>
-            <div class="col-12 lg:col-6 xl:col-6">
-                <span class="text font-medium text-1xl">Departamento:<span class="text ml-1 font-medium"> {{dataCentroMediacion.departamento.departamento}}</span></span>
-            </div>
-        </div>
-    </div>
-    <div class="col-12 border-bottom-1 surface-border">
-        <div class="grid">
-            <div class="col-12 lg:col-6 xl:col-6">
-                <span class="text font-medium text-1xl">E-mail:<span class="text ml-1 font-medium"> {{dataCentroMediacion.email}}</span></span>
-            </div>
-            <div class="col-12 lg:col-4 xl:col-4">
-                <span class="text font-medium text-1xl">Telefono:<span class="text ml-1 font-medium"> {{dataCentroMediacion.telefono}}</span></span>
-            </div>
+  </div>
 
-        </div>
+  <div class="col-12 border-bottom-line">
+    <div class="grid">
+      <div class="col-12 lg:col-6 xl:col-6">
+        <span class="text-label">E-mail:</span>
+        <span class="text-value">{{ dataCentroMediacion.email }}</span>
+      </div>
+      <div class="col-12 lg:col-4 xl:col-4">
+        <span class="text-label">Teléfono:</span>
+        <span class="text-value">{{ dataCentroMediacion.telefono }}</span>
+      </div>
     </div>
+  </div>
 </div>
-<!-- FIN Card Datos Principales -->
-
-<!-- Card Usuarios -->
 
 <div class="card mt-0">
-    <p-toolbar styleClass="bg-cyan-500">
-        <h5 class="block text-white font-bold font-medium mb-1 ">
-            Usuarios asignados
-        </h5>
+  <p-toolbar styleClass="bg-cyan-500">
+    <h5 class="block text-white font-bold font-medium mb-1">
+      Usuarios asignados
+    </h5>
+  </p-toolbar>
+
+  <div class="col-12 mt-1">
+    <p-toolbar styleClass="mb-4">
+      <ng-template pTemplate="left">
+        <div class="my-2">
+          <button pButton pRipple label="Asignar usuario" icon="pi pi-plus" class="p-button-success mr-2" (click)="openDialogUsuarioCentro()"></button>
+        </div>
+      </ng-template>
     </p-toolbar>
 
-    <div class="col-12 mt-1">
-        <p-toolbar styleClass="mb-4">
-            <ng-template pTemplate="left">
-                <div class="my-2">
-                    <button pButton pRipple label="Asignar usuario" icon="pi pi-plus" class="p-button-success mr-2" (click)="openDialogUsuarioCentro()"></button>
-                </div>
-            </ng-template>
+    <p-table #dt1 [value]="listUsuariosCentro" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['usuario.dni','usuario.apellido','usuario.nombre','usuario.telefono','objeto.objeto','expediente']" responsiveLayout="scroll">
+      <ng-template pTemplate="caption">
+        <div class="flex justify-content-between flex-column sm:flex-row">
+          <button pButton label="Limpiar" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
 
-        </p-toolbar>
-        <!-- TABLA DE CENTROS MEDIACION -->
-        <p-table #dt1 [value]="listUsuariosCentro" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['usuario.dni','usuario.apellido','usuario.nombre','usuario.telefono','objeto.objeto','expediente']"
-            responsiveLayout="scroll">
-            <ng-template pTemplate="caption">
-                <div class="flex justify-content-between flex-column sm:flex-row">
-                    <button pButton label="Limpiar" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+          <span class="p-input-icon-left mb-2">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full" />
+          </span>
+        </div>
+      </ng-template>
 
-                    <span class="p-input-icon-left mb-2">
-                        <i class="pi pi-search"></i>
-                        <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
-                    </span>
-                </div>
-            </ng-template>
-            <ng-template pTemplate="header">
-                <tr>
-                    <th style="width: 3rem"></th>
-                    <th>
-                        <div class="flex justify-content-between align-items-center">
-                            DNI
-                        </div>
-                    </th>
-                    <th pSortableColumn="usuario.apellido">
-                        <div class="flex justify-content-between align-items-center">
-                            Apellido
-                            <p-sortIcon field="usuario.apellido"></p-sortIcon>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="flex justify-content-between align-items-center">
-                            Nombre
-                        </div>
-                    </th>
-                    <th>
-                        <div class="flex justify-content-between align-items-center">
-                            Sexo
-                        </div>
-                    </th>
-                    <th>
-                        <div class="flex justify-content-between align-items-center">
-                            Fecha Desig
-                        </div>
-                    </th>
-                    <th>
-                        <div class="flex justify-content-between align-items-center">
-                            Detalles
-                        </div>
-                    </th>
-                    <th>
-                        <div class="flex justify-content-between align-items-center">
-                            Activo
-                        </div>
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-usuariocentro>
-                <tr>
-                    <td>
-                        <button type="button" pButton pRipple class="p-button-danger p-button-rounded mr-2 mb-2" icon="pi pi-times" (click)="confirmarDeshabilitarUsuario(usuariocentro)"></button>
-                    </td>
-                    <td style="min-width: 10rem;">
-                        {{usuariocentro.usuario.dni}}
-                    </td>
-                    <td style="min-width: 15rem;">
-                        {{usuariocentro.usuario.apellido}}
-                    </td>
-                    <td style="min-width: 15rem;">
-                        {{usuariocentro.usuario.nombre}}
-                    </td>
-                    <td style="min-width: 7rem;">
-                        {{usuariocentro.usuario.sexo.sexo}}
-                    </td>
-                    <td style="min-width: 10rem;">
-                        {{usuariocentro.fecha_designacion}}
-                    </td>
-                    <td style="min-width: 15rem;">
-                        {{usuariocentro.detalles}}
-                    </td>
-                    <td style="min-width: 5rem;">
-                        {{usuariocentro.activo}}
-                    </td>
-                </tr>
-            </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="w-3rem"></th>
+          <th>DNI</th>
+          <th pSortableColumn="usuario.apellido">
+            Apellido
+            <p-sortIcon field="usuario.apellido"></p-sortIcon>
+          </th>
+          <th>Nombre</th>
+          <th>Sexo</th>
+          <th>Fecha Desig</th>
+          <th>Detalles</th>
+          <th>Activo</th>
+        </tr>
+      </ng-template>
 
-            <ng-template pTemplate="emptymessage">
-                <tr>
-                    <td colspan="8">No se encontraron usuarios asignados.</td>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="loadingbody">
-                <tr>
-                    <td colspan="8">Cargando usuarios... .</td>
-                </tr>
-            </ng-template>
-        </p-table>
-        <!-- FIN TABLA DE CENTROS MEDIACION -->
-    </div>
-    <!-- DIALOG FORMULARIO USUARIOS -->
-    <p-dialog id="usuarioCentroDialog" [(visible)]="usuarioCentroDialog" [style]="{width: '600px'}" header="Asignar Usuario" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}">
-        <!-- MENSAJE DE ERROR -->
-        <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
-        <ng-template pTemplate="content">
-            <!-- FORMULARIO USUARIO-CENTRO -->
-            <div class="col-12 p-fluid mt-0">
-                <form [formGroup]="formaUsuarioCentroMediacion">
-                    <div class="formgrid grid">
-                        <div class="field col-12">
-                            <label for="usuario_id" class="text font-medium">Seleccionar un usuario</label>
-                            <p-dropdown id="usuario_id" [options]="elementosUsuarios" filter="true" optionLabel="value" optionValue="clave" formControlName="usuario_id">
-                            </p-dropdown>
-                            <small *ngIf="isValid('usuario_id')" class="p-error">
-                                <div *ngFor="let validation of user_validation_messages.usuario_id" >
-                                    <div  *ngIf="formaUsuarioCentroMediacion.get('usuario_id')?.hasError(validation.type)">
-                                        {{validation.message}}
-                                    </div>
-                                </div>
-                            </small>
-                        </div>
-                    </div>
-                    <div class="formgrid grid">
-                        <div class="field col-12">
-                            <label for="detalles" class="text font-medium">Detalles</label>
-                            <input type="text" pInputText id="detalles" formControlName="detalles" />
-                            <small *ngIf="isValid('detalles')" class="p-error">
-                                <div *ngFor="let validation of user_validation_messages.detalles" >
-                                    <div  *ngIf="formaUsuarioCentroMediacion.get('detalles')?.hasError(validation.type)">
-                                        {{validation.message}}
-                                    </div>
-                                </div>
-                            </small>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <!--  FIN FORMULARIO USUARIO CENTRO -->
-        </ng-template>
+      <ng-template pTemplate="body" let-usuariocentro>
+        <tr>
+          <td>
+            <button type="button" pButton pRipple class="p-button-danger p-button-rounded mr-2 mb-2" icon="pi pi-times" (click)="confirmarDeshabilitarUsuario(usuariocentro)"></button>
+          </td>
+          <td class="min-w-10rem">{{ usuariocentro.usuario.dni }}</td>
+          <td class="min-w-15rem">{{ usuariocentro.usuario.apellido }}</td>
+          <td class="min-w-15rem">{{ usuariocentro.usuario.nombre }}</td>
+          <td class="min-w-7rem">{{ usuariocentro.usuario.sexo.sexo }}</td>
+          <td class="min-w-10rem">{{ usuariocentro.fecha_designacion }}</td>
+          <td class="min-w-15rem">{{ usuariocentro.detalles }}</td>
+          <td class="min-w-5rem">{{ usuariocentro.activo }}</td>
+        </tr>
+      </ng-template>
 
-        <ng-template pTemplate="footer" class="mt-1">
-            <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormUsuarioCentro()"></button>
-            <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogUsuarioCentro()"></button>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8">No se encontraron usuarios asignados.</td>
+        </tr>
+      </ng-template>
 
-        </ng-template>
-    </p-dialog>
-    <!-- FIN DIALOG FORMULARIO  USUARIOS -->
+      <ng-template pTemplate="loadingbody">
+        <tr>
+          <td colspan="8">Cargando usuarios...</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
 </div>
-
-<!-- FIN Card Usuarios -->
