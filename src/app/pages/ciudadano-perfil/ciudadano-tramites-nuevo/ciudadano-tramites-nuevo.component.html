@@ -193,7 +193,7 @@
                             <div class="formgrid grid">
                                 <div class="field col-12">
                                     <label for="centro_mediacion_id">Centro Mediación</label>
-                                    <p-listbox [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" formControlName="centro_mediacion_id" styleClass="listbox1" [listStyle]="{'max-height':'250px'}"></p-listbox>
+                                    <p-listbox [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" formControlName="centro_mediacion_id" styleClass="listbox1" listStyleClass="max-height-250"></p-listbox>
                                     <small *ngIf="isValid('centro_mediacion_id')" class="p-error">
                                         <div *ngFor="let validation of user_validation_messages.centro_mediacion_id" >
                                             <div  *ngIf="formaTramite.get('centro_mediacion_id')?.hasError(validation.type)">
@@ -307,9 +307,9 @@
                                 <p-table #dt1 [value]="listConvocadosAux" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
                                     <ng-template pTemplate="header">
                                         <tr>
-                                            <th style="width: 3rem"></th>
+                                            <th class="min-w-3rem"></th>
                                             <th>
-                                                <div style="width: 6rem" class="flex justify-content-between align-items-left">
+                                                <div class="flex justify-content-between align-items-left">
                                                     Apellido
                                                 </div>
                                             </th>
@@ -331,13 +331,13 @@
                                                 <p-button icon="pi pi-search-plus" styleClass="p-button-rounded  mr-2 mb-1" (click)="openDialogVerConvocado(convocado)"></p-button>
                                                 <!-- <button pButton pRipple type="button" icon="pi pi-folder-open text-purple-100" class="p-button-secondary p-button-rounded bg-purple-500 mr-1 mb-1" (click)="quitarConvocado(convocado)"></button>     -->
                                             </td>
-                                            <td style="min-width: 12rem;">
+                                            <td class="min-w-12rem">
                                                 {{convocado.apellido}}
                                             </td>
-                                            <td style="min-width: 12rem;">
+                                            <td class="min-w-12rem">
                                                 {{convocado.nombre}}
                                             </td>
-                                            <td style="min-width: 5rem;">
+                                            <td class="min-w-5rem">
                                                 {{convocado.dni}}
                                             </td>
                                             
@@ -358,7 +358,7 @@
                                 <!-- FIN TABLA DE CONVOCADOS SALTA -->
 
                                 <!-- DIALOG CONVOCADOS SALTA-->
-                                <p-dialog id="convocadoDialog" [(visible)]="convocadoSaltaDialog" [style]="{width: '500px','min-height':'400px'}" class="p-fluid" header="Datos de convocado" [closable]="false" [modal]="true">
+                                <p-dialog id="convocadoDialog" [(visible)]="convocadoSaltaDialog" styleClass="custom-dialog" class="p-fluid" header="Datos de convocado" [closable]="false" [modal]="true">
 
                                     <ng-template pTemplate="content">
                                         <div class="col-12 border-bottom-1 surface-border">
@@ -428,7 +428,7 @@
                                 <!-- FIN DIALOG CONVOCADOS SALTA -->
 
                                 <!-- DIALOG CONVOCADOS NO SALTA-->
-                                <p-dialog id="convocadoNoSaltaDialog" [(visible)]="convocadoNoSaltaDialog" [style]="{width: '500px','min-height':'400px'}" class="p-fluid" header="Datos de convocado" [closable]="false" [modal]="true">
+                                <p-dialog id="convocadoNoSaltaDialog" [(visible)]="convocadoNoSaltaDialog" styleClass="custom-dialog" class="p-fluid" header="Datos de convocado" [closable]="false" [modal]="true">
 
                                     <ng-template pTemplate="content">
                                         <div class="col-12 border-bottom-1 surface-border">
@@ -486,8 +486,7 @@
                             </div>
 
                             <!-- DIALOG FORMULARIO CONVOCADOS -->
-                            <!-- <p-dialog id="usuarioTramiteDialog" [(visible)]="convocadoTramiteDialog" [style]="{width: '500px'}"  class="p-fluid" header="Nuevo Convocado" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}"> -->
-                            <p-dialog id="convocadoTramiteDialog" [(visible)]="convocadoTramiteDialog" [style]="{width: '500px','min-height':'400px'}" [position]="posicion" class="p-fluid"  [closable]="false" [modal]="true">
+                            <p-dialog id="convocadoTramiteDialog" [(visible)]="convocadoTramiteDialog" styleClass="custom-dialog" [position]="posicion" class="p-fluid"  [closable]="false" [modal]="true">
                                 <!-- MENSAJE DE ERROR -->
                                 <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
                                 <ng-template pTemplate="content">
@@ -784,7 +783,7 @@
                                 <p-table #dt1 [value]="listVinculadosAux" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
                                     <ng-template pTemplate="header">
                                         <tr>
-                                            <th style="width: 3rem"></th>
+                                            <th class="min-w-3rem"></th>
                                             <th>
                                                 <div class="flex justify-content-between align-items-left">
                                                     Apellido y nombre
@@ -809,13 +808,13 @@
                                             <td>
                                                 <p-button icon="pi pi-times" styleClass="p-button-rounded p-button-danger mb-1" (click)="quitarVinculado(vinculado)"></p-button>
                                             </td>
-                                            <td style="min-width: 25rem;">
+                                            <td class="min-w-25rem">
                                                 {{vinculado.apellido}} {{vinculado.nombre}}
                                             </td>
-                                            <td style="min-width: 10rem;">
+                                            <td class="min-w-10rem">
                                                 {{vinculado.dni}}
                                             </td>
-                                            <td style="min-width: 10rem;">
+                                            <td class="min-w-10rem">
                                                 {{vinculado.sexo}}
                                             </td>
                                             
@@ -838,7 +837,7 @@
                             </div>
 
                             <!-- DIALOG FORMULARIO VINCULADOS -->
-                            <p-dialog id="vinculadoTramiteDialog" [(visible)]="vinculadoTramiteDialog" [style]="{width: '500px','min-height':'400px'}" [position]="posicion" class="p-fluid" header="Nuevo Vinculado" [closable]="false" [modal]="true">
+                            <p-dialog id="vinculadoTramiteDialog" [(visible)]="vinculadoTramiteDialog" styleClass="custom-dialog" [position]="posicion" class="p-fluid" header="Nuevo Vinculado" [closable]="false" [modal]="true">
                                 <!-- MENSAJE DE ERROR -->
                                 <p-messages [(value)]="msgsVinculado" [enableService]="false"></p-messages>
                                 <ng-template pTemplate="content">
@@ -945,8 +944,8 @@
                 </div>
                 <!--  FIN FORMULARIO TRAMITES -->
                 <div *ngIf="estaAsesorado" class="col-12 grid justify-content-center">                    
-                    <button pButton pRipple type="button" label="Guardar" class="p-button-success" style="width: 47%;" (click)="submitFormTramite()" ></button>
-                    <button pButton pRipple type="button" label="Cancelar" class="p-button-danger ml-2" style="width: 47%;" (click)="irAPrincipal()"></button>
+                    <button pButton pRipple type="button" label="Guardar" class="p-button-success btn-half"  (click)="submitFormTramite()" ></button>
+                    <button pButton pRipple type="button" label="Cancelar" class="p-button-danger ml-2 btn-half" (click)="irAPrincipal()"></button>
                 </div>
             </div>
         </div>

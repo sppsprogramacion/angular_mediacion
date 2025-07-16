@@ -16,7 +16,7 @@
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th style="width: 3rem"></th>
+                        <th class="min-w-3rem"></th>
                         <th>
                             <div class="flex justify-content-between align-items-center">
                                 Nº Tramite
@@ -61,25 +61,25 @@
                             <button *ngIf="tramite.estado_tramite_id==1" pButton pRipple type="button" icon="pi pi-folder-open text-purple-100" class="p-button-secondary p-button-rounded bg-purple-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
                             <button *ngIf="tramite.estado_tramite_id==2" pButton pRipple type="button" icon="pi pi-folder-open text-orange-100" class="p-button-secondary p-button-rounded bg-orange-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
                         </td>
-                        <td style="min-width: 10rem;">
+                        <td class="min-w-10rem">
                             {{tramite.numero_tramite}}
                         </td>
-                        <td style="min-width: 10rem;">
+                        <td class="min-w-10rem">
                             {{tramite.ciudadano.dni}}
                         </td>
-                        <td style="min-width: 15rem;">
+                        <td class="min-w-15rem">
                             {{tramite.objeto.objeto}}
                         </td>
-                        <td style="min-width: 8rem;">
+                        <td class="min-w-8rem">
                             {{tramite.fecha_tramite| date: 'dd/MM/yyyy'}}
                         </td>
-                        <td style="min-width: 10rem;">
+                        <td class="min-w-10rem">
                             {{tramite.expediente}}
                         </td>
-                        <td style="min-width: 8rem;">
+                        <td class="min-w-8rem">
                             {{tramite.fecha_expediente| date: 'dd/MM/yyyy'}}
                         </td>
-                        <td style="min-width: 15rem;">
+                        <td class="min-w-15rem">
                             {{tramite.centro_mediacion.centro_mediacion}}
                         </td>
                     </tr>
@@ -98,7 +98,7 @@
             </p-table>
             <!-- FIN TABLA DE TRAMITES -->
             <!-- DIALOG CONFIRMAR DATOS PERSONALES-->
-            <p-dialog id="datosPersonalesDialog" [(visible)]="datosPersonalesDialog" [style]="{width: '500px','min-height':'350px'}" class="p-fluid" header="Verificar datos personales" [closable]="false" [modal]="true">
+            <p-dialog id="datosPersonalesDialog" [(visible)]="datosPersonalesDialog" styleClass="custom-dialog" class="p-fluid" header="Verificar datos personales" [closable]="false" [modal]="true">
                 
 
                 <ng-template pTemplate="content">
