@@ -415,7 +415,13 @@ export class UsuariosAdministrarComponent implements OnInit {
         this.router.navigateByUrl("admin/tramites/administrar-finalizado");
       }
       else{
-        this.router.navigateByUrl("admin/tramites/administrar");
+        if(this.authService.currentUserLogin.rol_id === "administrador"){
+          this.router.navigateByUrl("admin/tramites/administrar");
+        }
+
+        if(this.authService.currentUserLogin.rol_id === "supervisor" ){
+          this.router.navigateByUrl("admin/tramites/administrar-visor");
+        }
   
       }
       

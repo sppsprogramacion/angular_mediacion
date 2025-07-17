@@ -193,7 +193,7 @@
                             <div class="formgrid grid">
                                 <div class="field col-12">
                                     <label for="centro_mediacion_id">Centro Mediación</label>
-                                    <p-listbox [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" formControlName="centro_mediacion_id" styleClass="listbox1" listStyleClass="max-height-250"></p-listbox>
+                                    <p-listbox [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" formControlName="centro_mediacion_id" styleClass="listbox1 max-height-250" ></p-listbox>
                                     <small *ngIf="isValid('centro_mediacion_id')" class="p-error">
                                         <div *ngFor="let validation of user_validation_messages.centro_mediacion_id" >
                                             <div  *ngIf="formaTramite.get('centro_mediacion_id')?.hasError(validation.type)">

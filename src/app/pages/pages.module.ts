@@ -16,15 +16,12 @@ import { TramitesNuevoComponent } from './tramites-administrador/tramites-nuevo/
 import { TramitesAsignadosComponent } from './tramites-administrador/tramites-asignados/tramites-asignados.component';
 import { TramitesNuevoslisComponent } from './tramites-administrador/tramites-nuevoslis/tramites-nuevoslis.component';
 import { DropdownModule } from 'primeng/dropdown';
-import { TramitesUsuarioAsignadosComponent } from './tramites-usuario/tramites-usuario-asignados/tramites-usuario-asignados.component';
-import { TramitesUsuarioFinalizadosComponent } from './tramites-usuario/tramites-usuario-finalizados/tramites-usuario-finalizados.component';
 import { TramitesAdministrarComponent } from './tramites-administrador/tramites-administrar/tramites-administrar.component';
 import { UsuariosListaComponent } from './usuarios/usuarios-lista/usuarios-lista.component';
 //import { UsuariosAdministrarComponent } from './usuarios/usuarios-administrar/usuarios-administrar.component';
 import { CalendarModule } from 'primeng/calendar';
 import { PasswordModule } from 'primeng/password';
 import { BrowserModule } from '@angular/platform-browser';
-import { TramitesUsuarioAdministrarComponent } from './tramites-usuario/tramites-usuario-administrar/tramites-usuario-administrar.component';
 import { CiudadanosAdministrarComponent } from './ciudadanos/ciudadanos-administrar/ciudadanos-administrar.component';
 import { CentroAdministrarComponent } from './centros-mediacion/centro-administrar/centro-mediacion-administrar.component';
 import { CentrosMediacionListaComponent } from './centros-mediacion/centros-lista/centros-mediacion-lista.component';
@@ -100,13 +97,10 @@ PdfMakeWrapper.setFonts(pdfFonts);
     TramitesFinalizadosComponent,
     TramitesNuevoComponent,
     TramitesAsignadosComponent,
-    TramitesNuevoslisComponent,
-    TramitesUsuarioAsignadosComponent,
-    TramitesUsuarioFinalizadosComponent,
+    TramitesNuevoslisComponent,    
     TramitesAdministrarComponent,
     UsuariosListaComponent,
-    UsuariosAdministrarComponent,
-    TramitesUsuarioAdministrarComponent,
+    UsuariosAdministrarComponent,    
     CiudadanosAdministrarComponent,
     CentroAdministrarComponent,
     CentrosMediacionListaComponent,

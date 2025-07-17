@@ -19,8 +19,6 @@ import { TramitesAdministrarComponent } from './pages/tramites-administrador/tra
 import { UsuariosListaComponent } from './pages/usuarios/usuarios-lista/usuarios-lista.component';
 import { CiudadanosAdministrarComponent } from './pages/ciudadanos/ciudadanos-administrar/ciudadanos-administrar.component';
 import { UsuariosAdministrarComponent } from './pages/usuarios/usuarios-administrar/usuarios-administrar.component';
-import { TramitesUsuarioAsignadosComponent } from './pages/tramites-usuario/tramites-usuario-asignados/tramites-usuario-asignados.component';
-import { TramitesUsuarioFinalizadosComponent } from './pages/tramites-usuario/tramites-usuario-finalizados/tramites-usuario-finalizados.component';
 
 import { CentroAdministrarComponent } from './pages/centros-mediacion/centro-administrar/centro-mediacion-administrar.component';
 import { CentrosMediacionListaComponent } from './pages/centros-mediacion/centros-lista/centros-mediacion-lista.component';
@@ -108,11 +106,7 @@ import { DescargasTramitesAsignadosComponent } from './pages/descargas/descargas
                     {path: 'tramites/finalizados', component: CiudadanoTramitesFinalizadosComponent},
                     {path: 'tramites/nuevo', component: CiudadanoTramitesNuevoComponent},
                     {path: 'tramites/nuevos', component: CiudadanoTramitesNuevoslistaComponent},
-                    
-                    {path: 'usuario/tramites/administrar', component: TramitesAdministrarComponent},
-                    {path: 'usuario/tramites/asignados', component: TramitesUsuarioAsignadosComponent},
-                    {path: 'usuario/tramites/finalizados', component: TramitesUsuarioFinalizadosComponent},
-                                        
+                                                 
                 ],
                 
             },

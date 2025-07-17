@@ -22,7 +22,7 @@
                             <div class="formgrid grid">
                                 <div class="field col-12 md:col-6 lg:col-6">
                                     <label for="clave1">Contraseña nueva</label>
-                                    <p-password id="clave1" formControlName="clave1" [feedback]="false" [toggleMask]="true" [inputStyle]="{'width':'100%'}" styleClass="w-full p-input-icon-right"></p-password>
+                                    <p-password id="clave1" formControlName="clave1" [feedback]="false" [toggleMask]="true" styleClass="w-full p-input-icon-right"></p-password>
                                     <small *ngIf="isValid('clave1')" class="p-error">
                                         <div *ngFor="let validation of user_validation_messages.clave1" >
                                             <div  *ngIf="formaContrasenia.get('clave1')?.hasError(validation.type)">
@@ -33,7 +33,7 @@
                                 </div>
                                 <div class="field col-12 md:col-6 lg:col-6">
                                     <label for="clave2">confirmar contraseña</label>
-                                    <p-password formControlName="clave2" [feedback]="false" [toggleMask]="true" [inputStyle]="{'width':'100%'}" styleClass="w-full p-input-icon-right"></p-password>
+                                    <p-password formControlName="clave2" [feedback]="false" [toggleMask]="true"  styleClass="w-full p-input-icon-right"></p-password>
                                     <small *ngIf="isValid('clave2')" class="p-error">
                                         <div *ngFor="let validation of user_validation_messages.clave2" >
                                             <div  *ngIf="formaContrasenia.get('clave2')?.hasError(validation.type)">
@@ -51,9 +51,8 @@
                 </div>
                 <!--  FIN FORMULARIO CIUDADANO -->
                 <div  class="col-12 grid justify-content-center">
-                    <button pButton pRipple type="button" label="Guardar" class="p-button-success" style="width: 47%;" (click)="submitFormUsuario()" ></button>
-                    <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger ml-2" style="width: 47%;" (click)="irAPrincipal()"></button>
-                    
+                    <button pButton pRipple type="button" label="Guardar" class="p-button-success w-47"  (click)="submitFormUsuario()" ></button>
+                    <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger ml-2 w-47" (click)="irAPrincipal()"></button>
                 </div>
             </div>
         </div>
