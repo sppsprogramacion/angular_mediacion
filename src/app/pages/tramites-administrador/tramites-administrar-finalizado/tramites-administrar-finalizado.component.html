@@ -179,7 +179,7 @@
         <p-table #dt1 [value]="dataTramite.convocados" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
             <ng-template pTemplate="header">
                 <tr>
-                    <th style="width: 3rem"></th>
+                    <th class="min-w-3rem"></th>
                     <th>
                         <div class="flex justify-content-between align-items-left">
                             Apellido y nombre
@@ -208,16 +208,16 @@
                     <td>
                         <p-button icon="pi pi-search-plus" styleClass="p-button-rounded mb-1" (click)="openDialogConvocado(convocado)"></p-button>
                     </td>
-                    <td style="min-width: 20rem;">
+                    <td class="min-w-20rem">
                         {{convocado.apellido}} {{convocado.nombre}}
                     </td>
-                    <td style="min-width: 10rem;">
+                    <td class="min-w-10rem">
                         {{convocado.dni}}
                     </td>
-                    <td style="min-width: 10rem;">
+                    <td class="min-w-10rem">
                         {{convocado.sexo.sexo}}
                     </td>
-                    <td style="min-width: 15rem;">
+                    <td class="min-w-15rem">
                         {{convocado.provincia.provincia}}
                     </td>
                 </tr>
@@ -237,7 +237,7 @@
         <!-- FIN TABLA DE CONVOCADOS -->
 
         <!-- DIALOG CONVOCADOS -->
-        <p-dialog id="convocadoDialog" [(visible)]="convocadoDialog" [style]="{width: '500px','min-height':'400px'}" class="p-fluid" header="Datos de convocado" [closable]="false" [modal]="true">
+        <p-dialog id="convocadoDialog" [(visible)]="convocadoDialog"  class="p-fluid custom-dialog" header="Datos de convocado" [closable]="false" [modal]="true">
 
             <ng-template pTemplate="content">
                 <div class="col-12 border-bottom-1 surface-border">
@@ -319,7 +319,7 @@
         <p-table #dt1 [value]="dataTramite.vinculados" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
             <ng-template pTemplate="header">
                 <tr>
-                    <th style="width: 3rem"></th>
+                    <th class="min-w-3rem"></th>
                     <th>
                         <div class="flex justify-content-between align-items-left">
                             Apellido y nombre
@@ -347,16 +347,16 @@
                     <td>
                         <p-button icon="pi pi-search-plus" styleClass="p-button-rounded mb-1" (click)="openDialogVinculado(vinculado)"></p-button>
                     </td>
-                    <td style="min-width: 20rem;">
+                    <td class="min-w-20rem">
                         {{vinculado.apellido}} {{vinculado.nombre}}
                     </td>
-                    <td style="min-width: 10rem;">
+                    <td class="min-w-10rem">
                         {{vinculado.dni}}
                     </td>
-                    <td style="min-width: 10rem;">
+                    <td class="min-w-10rem">
                         {{vinculado.sexo.sexo}}
                     </td>
-                    <td style="min-width: 15rem;">
+                    <td class="min-w-15rem">
                         {{vinculado.categoria.categoria}}
                     </td>
                 </tr>
@@ -376,7 +376,7 @@
         <!-- FIN TABLA DE VINCULADOS -->
 
         <!-- DIALOG VINCULADOS -->
-        <p-dialog id="vinculadoDialog" [(visible)]="vinculadoDialog" [style]="{width: '500px','min-height':'350px'}" class="p-fluid" header="Datos de vinculado" [closable]="false" [modal]="true">
+        <p-dialog id="vinculadoDialog" [(visible)]="vinculadoDialog" class="p-fluid custom-dialog" header="Datos de vinculado" [closable]="false" [modal]="true">
 
             <ng-template pTemplate="content">
                 <div class="col-12 border-bottom-1 surface-border">
@@ -483,7 +483,7 @@
 
             <ng-template pTemplate="header">
                 <tr>
-                    <th style="width: 3rem"></th>
+                    <th class="min-w-3rem"></th>
                     <th>
                         <div class="flex justify-content-between align-items-center">
                             NUM-AUDIENCIA
@@ -527,26 +527,26 @@
                     <td>
                         <button *ngIf="audiencia.esta_cerrada" type="button" pButton pRipple class="p-button-secondary p-button-rounded mr-2 mb-2" icon="pi pi-search-plus" (click)="openDialogAudienciaFinalizada(audiencia)"></button>
                     </td>
-                    <td style="min-width: 10rem;">
+                    <td class="min-w-10rem">
                         {{audiencia.num_audiencia}}
                     </td>
-                    <td style="min-width: 10rem;">
+                    <td class="min-w-10rem">
                         {{audiencia.fecha_inicio | date: 'dd/MM/yyyy'}}
                     </td>
-                    <td style="min-width: 10rem;">
+                    <td class="min-w-10rem">
                         {{audiencia.hora_inicio}}
                     </td>
-                    <td style="min-width: 10rem;">
+                    <td class="min-w-10rem">
                         {{audiencia.hora_fin}}
                     </td>
 
-                    <td style="min-width: 7rem;">
+                    <td class="min-w-7rem">
                         {{audiencia.centro_mediacion.centro_mediacion}}
                     </td>
-                    <td style="min-width: 15rem;">
+                    <td class="min-w-15rem">
                         {{audiencia.tipo_audiencia.tipo_audiencia}}
                     </td>
-                    <td style="min-width: 5rem;">
+                    <td class="min-w-5rem">
                         {{audiencia.modalidad.modalidad}}
                     </td>
                 </tr>
@@ -567,7 +567,7 @@
     </div>
 
     <!-- DIALOG VER AUDIENCIA FINALIZADA-->
-    <p-dialog id="audienciaFinalizadaDialog" [(visible)]="audienciaFinalizadaDialog" [style]="{width: '500px','min-height':'350px'}" class="p-fluid" header="Datos de la audiencia" [closable]="false" [modal]="true">
+    <p-dialog id="audienciaFinalizadaDialog" [(visible)]="audienciaFinalizadaDialog" class="p-fluid custom-dialog" header="Datos de la audiencia" [closable]="false" [modal]="true">
          
         <ng-template pTemplate="content">
             <div class="col-12 border-bottom-2 surface-border">

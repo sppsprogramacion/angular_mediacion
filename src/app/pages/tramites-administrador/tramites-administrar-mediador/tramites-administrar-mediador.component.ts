@@ -32,6 +32,7 @@ import { AuthService } from 'src/app/service/auth.service';
 import { DataMokeadaService } from '../../../service/data-mokeada.service';
 import { Canvas, Cell, Img, PdfMakeWrapper, Rect, Txt } from 'pdfmake-wrapper';
 import { PdfsService } from 'src/app/service/pdfs.service';
+import { SexoModel } from 'src/app/models/sexo.model';
 
 @Component({
   selector: 'app-tramites-administrar-mediador',
@@ -63,6 +64,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   listFuncionTramite: FuncionTtramiteModel[] = [];
   listModalidad: ModalidadModel[] = [];
   listResultadosAudiencia: ResultadoAudienciaModel[]=[];
+  listaSexo: SexoModel[] = [];
   listTipoAudiencia: TipoAudienciaModel[] = [];
   listUsuarios: UsuarioModel[]=[];
   listUsuariosCentro: UsuarioCentroModel[]=[];
@@ -433,11 +435,8 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
       this.msgs = [];                
       this.msgs.push({ severity: 'warning', summary: 'Datos invalidos', detail: 'Revise los datos personales. ' });
       Object.values(this.formaConvocado.controls).forEach(control => control.markAsTouched());
-    }
-       
+    }       
     //FIN VAIDACIONES DE FORMULARIOS
-
-    
   }
   //FIN GUARDAR MODIFICAR CONVOCADO...................................................
 
@@ -622,6 +621,11 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
 
   //MANEJO DE FORMULARIO DIALOG MODIFICAR CONVOCADO
   openDialogModificarConvocado(convocado: ConvocadoModel) {
+    //CARGA DE LISTADOS DESDE DATA MOKEADA 
+    this.dataMokeadaService.listarSexo().subscribe(sexos => {
+      this.listaSexo = sexos;
+    });
+    
     this.formaConvocado.get('apellido')?.setValue(this.dataConvocado.apellido);
     this.formaConvocado.get('nombre')?.setValue(this.dataConvocado.nombre);
     this.formaConvocado.get('dni')?.setValue(this.dataConvocado.dni);

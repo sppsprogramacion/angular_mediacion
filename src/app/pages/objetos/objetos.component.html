@@ -25,7 +25,7 @@
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th style="width: 3rem"></th>
+                        <th class="min-w-3rem"></th>
                         <th>
                             <div class="flex justify-content-between align-items-center">
                                 ID
@@ -45,13 +45,13 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-objeto>
                     <tr>
-                        <td style="min-width: 10rem;">
+                        <td class="min-w-10rem">
                             <button type="button" pButton pRipple class="p-button-rounded p-button-warning mr-2 mb-2" icon="pi pi-pencil" (click)="editDialogObjeto(objeto)"></button>
                         </td>
-                        <td style="min-width: 8rem;">
+                        <td class="min-w-8rem">
                             {{objeto.id_objeto}}
                         </td>
-                        <td style="min-width: 15rem;">
+                        <td class="min-w-15rem">
                             {{objeto.objeto}}
                         </td>
                         
@@ -72,10 +72,10 @@
             <!-- FIN TABLA DE OBJETOS -->
         </div>
         <!-- DIALOG FORMULARIO OBJETO -->
-        <p-dialog id="formObjetoDialog" [(visible)]="objetoDialog" [style]="{width: '600px'}" header="Nuevo objeto" [closable]="false" [modal]="true" class="p-fluid">
+        <p-dialog id="formObjetoDialog" [(visible)]="objetoDialog" styleClass="custom-dialog" header="Nuevo objeto" [closable]="false" [modal]="true" class="p-fluid">
             <ng-template pTemplate="header">
                 <div class="formgrid grid">
-                    <h5 class="mb-1" style="width: 100%;">{{tituloDialog}}</h5>
+                    <h5 class="mb-1 w-full">{{tituloDialog}}</h5>
                     <!-- MENSAJE DE ERROR -->
                     <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
                 </div>

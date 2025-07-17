@@ -38,16 +38,14 @@
 
                             <!-- boton buscar -->
                             <div  class="col-12 grid justify-content-between">
-                                <button pButton pRipple type="button" label="Buscar" class="p-button-primary" style="width: 47%;" (click)="buscarTramites()" ></button>
+                                <button pButton pRipple type="button" label="Buscar" class="p-button-primary w-47"  (click)="buscarTramites()" ></button>
                                 
                             </div>
                         </div>
                         <!-- FIN CARD DATOS BUSQUEDA -->
-                        
                     </form>
                 </div>
                 <!--  FIN FORMULARIO BUSCAR -->
-                
             </div>
         </div>
     </div>
@@ -76,7 +74,7 @@
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th style="width: 3rem"></th>
+                        <th class="min-w-3rem"></th>
                         
                         <th>
                             <div class="flex justify-content-between align-items-center">
@@ -155,39 +153,39 @@
                             <button *ngIf="asignacion.tramite.estado_tramite_id==3" pButton pRipple type="button" icon="pi pi-folder-open text-bluegray-100" class="p-button-secondary p-button-rounded bg-bluegray-500 mr-1 mb-1" ></button> -->
                         </td>
                         
-                        <td style="min-width: 10rem;">
+                        <td class="min-w-10rem">
                             {{audiencia.tramite.numero_tramite}}
                         </td>
 
-                        <td style="min-width: 10rem;">
+                        <td class="min-w-10rem">
                             {{audiencia.id_audiencia}}
                         </td>
 
-                        <td style="min-width: 15rem;">
+                        <td class="min-w-15rem">
                             {{audiencia.tramite.ciudadano.apellido}}
                         </td>
-                        <td style="min-width: 15rem;">
+                        <td class="min-w-15rem">
                             {{audiencia.tramite.ciudadano.nombre}}
                         </td>
-                        <td style="min-width: 10rem;">
+                        <td class="min-w-10rem">
                             {{audiencia.tramite.ciudadano.dni }}
                         </td>
-                        <td style="min-width: 15rem;">
+                        <td class="min-w-15rem">
                             {{audiencia.tramite.objeto.objeto}}
                         </td>
-                        <td style="min-width: 10rem;">
+                        <td class="min-w-10rem">
                             {{audiencia.tramite.fecha_tramite| date: 'dd/MM/yyyy'}}
                         </td>
-                        <td style="min-width: 10rem;">
+                        <td class="min-w-10rem">
                             {{audiencia.tramite.expediente}}
                         </td>
-                        <td style="min-width: 10rem;">
+                        <td class="min-w-10rem">
                             {{audiencia.tramite.fecha_expediente| date: 'dd/MM/yyyy'}}
                         </td>
-                        <td style="min-width: 10rem;">
+                        <td class="min-w-10rem">
                             {{audiencia.fecha_inicio| date: 'dd/MM/yyyy'}}
                         </td>
-                        <td style="min-width: 15rem;">
+                        <td class="min-w-15rem">
                             {{audiencia.usuario.apellido}} {{audiencia.usuario.nombre}}
                         </td>
                         

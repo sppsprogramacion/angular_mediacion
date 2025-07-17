@@ -38,7 +38,7 @@
 
                             <!-- boton buscar -->
                             <div  class="col-12 grid justify-content-between">
-                                <button pButton pRipple type="button" label="Buscar" class="p-button-primary" style="width: 47%;" (click)="buscarTramites()" ></button>
+                                <button pButton pRipple type="button" label="Buscar" class="p-button-primary w-47" (click)="buscarTramites()" ></button>
                                 
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th style="width: 3rem"></th>
+                        <th class="min-w-3rem"></th>
                         <th>
                             <div class="flex justify-content-between align-items-center">
                                 Nº Tramite
@@ -149,38 +149,38 @@
                             <button *ngIf="asignacion.tramite.estado_tramite_id==2" pButton pRipple type="button" icon="pi pi-folder-open text-orange-100" class="p-button-secondary p-button-rounded bg-orange-500 mr-1 mb-1" ></button>
                             <button *ngIf="asignacion.tramite.estado_tramite_id==3" pButton pRipple type="button" icon="pi pi-folder-open text-bluegray-100" class="p-button-secondary p-button-rounded bg-bluegray-500 mr-1 mb-1" ></button>
                         </td>
-                        <td style="min-width: 10rem;">
+                        <td class="min-w-10rem">
                             {{asignacion.tramite.numero_tramite}}
                         </td>
 
-                        <td style="min-width: 15rem;">
+                        <td class="min-w-15rem">
                             {{asignacion.tramite.ciudadano.apellido}}
                         </td>
-                        <td style="min-width: 15rem;">
+                        <td class="min-w-15rem">
                             {{asignacion.tramite.ciudadano.nombre}}
                         </td>
-                        <td style="min-width: 10rem;">
+                        <td class="min-w-10rem">
                             {{asignacion.tramite.ciudadano.dni }}
                         </td>
-                        <td style="min-width: 15rem;">
+                        <td class="min-w-15rem">
                             {{asignacion.tramite.objeto.objeto}}
                         </td>
-                        <td style="min-width: 10rem;">
+                        <td class="min-w-10rem">
                             {{asignacion.tramite.fecha_tramite| date: 'dd/MM/yyyy'}}
                         </td>
-                        <td style="min-width: 10rem;">
+                        <td class="min-w-10rem">
                             {{asignacion.tramite.expediente}}
                         </td>
-                        <td style="min-width: 10rem;">
+                        <td class="min-w-10rem">
                             {{asignacion.tramite.fecha_expediente| date: 'dd/MM/yyyy'}}
                         </td>
-                        <td style="min-width: 10rem;">
+                        <td class="min-w-10rem">
                             {{asignacion.fecha_asignacion| date: 'dd/MM/yyyy'}}
                         </td>
-                        <td style="min-width: 15rem;">
+                        <td class="min-w-15rem">
                             {{asignacion.usuario.apellido}} {{asignacion.usuario.nombre}}
                         </td>
-                        <td style="min-width: 10rem;">
+                        <td class="min-w-10rem">
                             {{asignacion.funcion_tramite.funcion_tramite}}
                         </td>
                     </tr>
