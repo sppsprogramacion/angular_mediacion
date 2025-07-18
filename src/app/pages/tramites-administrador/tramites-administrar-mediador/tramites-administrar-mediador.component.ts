@@ -251,8 +251,6 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   //FIN MENSAJES DE VALIDACIONES...............................................................
 
   //VALIDACIONES DE FORMULARIO
-  
-
   isValidAudiencia(campo: string): boolean{     
     
     return this.formaAudiencia.get(campo)?.invalid && this.formaAudiencia.get(campo)?.touched;      

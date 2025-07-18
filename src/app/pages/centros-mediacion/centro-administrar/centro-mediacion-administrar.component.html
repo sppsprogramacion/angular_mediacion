@@ -126,4 +126,51 @@
       </ng-template>
     </p-table>
   </div>
+  <!-- DIALOG FORMULARIO USUARIOS -->
+    <p-dialog id="usuarioCentroDialog" [(visible)]="usuarioCentroDialog" styleClass="custom-dialog" header="Asignar Usuario pedro" [closable]="false" [modal]="true">
+        <!-- MENSAJE DE ERROR -->
+        <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
+        <ng-template pTemplate="content">
+            <!-- FORMULARIO USUARIO-CENTRO -->
+            <div class="col-12 p-fluid mt-0">
+                <form [formGroup]="formaUsuarioCentroMediacion">
+                    <div class="formgrid grid">
+                        <div class="field col-12">
+                            <label for="usuario_id" class="text font-medium">Seleccionar un usuario</label>
+                            <p-dropdown id="usuario_id" [options]="elementosUsuarios" filter="true" optionLabel="value" optionValue="clave" formControlName="usuario_id">
+                            </p-dropdown>
+                            <small *ngIf="isValid('usuario_id')" class="p-error">
+                                <div *ngFor="let validation of user_validation_messages.usuario_id" >
+                                    <div  *ngIf="formaUsuarioCentroMediacion.get('usuario_id')?.hasError(validation.type)">
+                                        {{validation.message}}
+                                    </div>
+                                </div>
+                            </small>
+                        </div>
+                    </div>
+                    <div class="formgrid grid">
+                        <div class="field col-12">
+                            <label for="detalles" class="text font-medium">Detalles</label>
+                            <input type="text" pInputText id="detalles" formControlName="detalles" />
+                            <small *ngIf="isValid('detalles')" class="p-error">
+                                <div *ngFor="let validation of user_validation_messages.detalles" >
+                                    <div  *ngIf="formaUsuarioCentroMediacion.get('detalles')?.hasError(validation.type)">
+                                        {{validation.message}}
+                                    </div>
+                                </div>
+                            </small>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--  FIN FORMULARIO USUARIO CENTRO -->
+        </ng-template>
+
+        <ng-template pTemplate="footer" class="mt-1">
+            <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormUsuarioCentro()"></button>
+            <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogUsuarioCentro()"></button>
+
+        </ng-template>
+    </p-dialog>
+    <!-- FIN DIALOG FORMULARIO  USUARIOS -->
 </div>
