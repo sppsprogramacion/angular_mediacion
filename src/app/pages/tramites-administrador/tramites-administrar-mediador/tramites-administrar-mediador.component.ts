@@ -33,6 +33,7 @@ import { DataMokeadaService } from '../../../service/data-mokeada.service';
 import { Canvas, Cell, Img, PdfMakeWrapper, Rect, Txt } from 'pdfmake-wrapper';
 import { PdfsService } from 'src/app/service/pdfs.service';
 import { SexoModel } from 'src/app/models/sexo.model';
+import { ConvocadosService } from '../../../service/convocados.service';
 
 @Component({
   selector: 'app-tramites-administrar-mediador',
@@ -109,6 +110,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     private router: Router,
     public dataService: DataService,
     private audienciaService: AudienciasService,
+    private convocadosService: ConvocadosService,
     private dataMokeadaService: DataMokeadaService,
     private funcionTramiteService: FuncionTramiteService,
     private pdfsService: PdfsService,
@@ -141,7 +143,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     this.formaConvocado = this.fb.group({
       apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-zñÑ0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
       nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-zñÑ0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
-      dni: ['',[Validators.pattern(/^[0-9]*$/), Validators.minLength(5)]],
+      dni: ['',[Validators.pattern(/^[0-9]*$/)]],
       sexo_id: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],   
     });
     
@@ -374,7 +376,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
                   
     }; 
 
-    //GUARDAR NUEVO AUDIENCIA
+    //GUARDAR CERRAR AUDIENCIA
     this.audienciaService.guardarAudienciaCerrar(this.dataAudiencia.id_audiencia, dataAudienciaAux)
       .subscribe({
         next: (resultado) => {
@@ -388,7 +390,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
           this.msgs.push({ severity: 'error', summary: 'Error al guardar', detail: ` ${err.error.message}` });
         }
       });         
-    //FIN GUARDAR NUEVO AUDIENCIA
+    //FIN GUARDAR CERRAR AUDIENCIA
 
   }
   //GUARDAR CERRAR AUDIENCIA...............................................................
@@ -432,9 +434,35 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     if(this.formaConvocado.invalid){        
       this.msgs = [];                
       this.msgs.push({ severity: 'warning', summary: 'Datos invalidos', detail: 'Revise los datos personales. ' });
-      Object.values(this.formaConvocado.controls).forEach(control => control.markAsTouched());
+      return Object.values(this.formaConvocado.controls).forEach(control => control.markAsTouched());
     }       
     //FIN VAIDACIONES DE FORMULARIOS
+
+    let dataConvocadoAux: Partial<ConvocadoModel>;
+    dataConvocadoAux = {      
+      apellido: this.formaConvocado.get('apellido')?.value,
+      nombre: this.formaConvocado.get('nombre')?.value,
+      dni: parseInt(this.formaConvocado.get('dni')?.value),
+      sexo_id: parseInt(this.formaConvocado.get('sexo_id')?.value),
+    }; 
+
+    //GUARDAR MODIFICACION
+    this.convocadosService.guardarEdicionConvocado(this.dataConvocado.id_convocado, dataConvocadoAux)
+      .subscribe({
+        next: (resultado) => {
+          let convocadoRes: ConvocadoModel = resultado;
+          this.hideDialogModificarConvocado();
+          this.hideDialogConvocado();          
+          Swal.fire('Exito',`El convocado se modifico correctamente`,"success");
+          this.router.navigateByUrl("admin/tramites/asignados");
+        },
+        error: (err) => {
+          this.msgs = [];
+          this.msgs.push({ severity: 'error', summary: 'Error al guardar', detail: ` ${err.error.message}` });
+        }
+      });         
+    //FIN GUARDAR MODIFICACION
+
   }
   //FIN GUARDAR MODIFICAR CONVOCADO...................................................
 

@@ -10,7 +10,7 @@ import { AuthService } from './service/auth.service';
         <div class="layout-menu-container">
             <h5 class="block text-blue-600 mb-4">
                 <span>
-                    <img src="assets/imagenes/iconos/user-icon.png" height="30" style="vertical-align: middle;"/>
+                    <img src="assets/imagenes/iconos/user-icon.png" height="30" class="img-middle"/>
                     {{ nombre_completo }}
                 </span>
             </h5>
@@ -26,7 +26,8 @@ import { AuthService } from './service/auth.service';
                 </div>
             </ul>
         </div>
-    `
+    `,
+    styleUrls: ['./app.menu.component.scss']
 })
 export class AppMenuComponent implements OnInit {
 

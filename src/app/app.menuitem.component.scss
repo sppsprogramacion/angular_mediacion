@@ -1,0 +1,13 @@
+ul {
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  max-height: 0;
+}
+
+.menu-visible {
+  max-height: 500px; // suficiente para el contenido (ajustá según necesidad)
+}
+
+.menu-hidden {
+  max-height: 0;
+}

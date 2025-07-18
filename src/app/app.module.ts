@@ -125,7 +125,6 @@ import { AppMenuitemComponent } from './app.menuitem.component';
 // import { ConfirmationComponent } from './components/menus/confirmation.component';
 // import { PersonalComponent } from './components/menus/personal.component';
 // import { SeatComponent } from './components/menus/seat.component';
-import { LandingComponent } from './components/landing/landing.component';
 
 import { CountryService } from './service/countryservice';
 import { CustomerService } from './service/customerservice';
@@ -139,7 +138,6 @@ import { ConfigService } from './service/app.config.service';
 // import { LoginComponent } from './components/login/login.component';
 import { ErrorComponent } from './components/error/error.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
-import { AccessComponent } from './components/access/access.component';
 import { PagesModule } from './pages/pages.module';
 import { AuthModule } from './auth/auth.module';
 
@@ -287,11 +285,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
         // ConfirmationComponent,
         // PersonalComponent,
         //SeatComponent,
-        LandingComponent,
         //LoginComponent,
         ErrorComponent,
         NotfoundComponent,
-        AccessComponent,
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
