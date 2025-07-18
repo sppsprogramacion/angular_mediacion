@@ -9,3 +9,30 @@
 @import "assets/sass/layout/_variables";
 @import "assets/sass/layout/_layout";
 @import "assets/sass/overrides/_overrides";
+
+/* Selector específico del overlay que genera el diálogo */
+body .custom-dialog.p-dialog {
+  width: 500px !important;
+  min-height: 350px !important;
+}
+
+/* También afecta al contenedor interior */
+body .custom-dialog .p-dialog-content {
+  min-height: 250px !important;
+}
+
+/* Si querés que el contenedor padre no lo limite */
+body .p-dialog-mask .p-dialog {
+  max-width: 90vw;
+}
+
+/* Selector específico del overlay que genera el diálogo */
+body .custom-dialog-650.p-dialog {
+  width: 650px !important;
+  min-height: 350px !important;
+}
+
+/* También afecta al contenedor interior */
+body .custom-dialog-650 .p-dialog-content {
+  min-height: 250px !important;
+}

@@ -37,4 +37,19 @@ export class AppTopBarComponent {
     
   }
   //FIN IR A REGISTRARME
+
+  //CERRAR SESION
+  cerrarSesion(){
+    if(this.authService.currentCiudadanoLogin){
+        this.authService.logoutCiudadano();
+        this.router.navigateByUrl("login");
+    }
+
+    if(this.authService.currentUserLogin){
+        this.authService.logoutUsuario();
+        this.router.navigateByUrl("login-admin-mediacion");
+    }
+    
+  }
+  //FIN CERRAR SESION
 }

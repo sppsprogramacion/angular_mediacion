@@ -19,7 +19,7 @@
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th style="width: 3rem"></th>
+                        <th class="min-w-3rem"></th>
                         <th>
                             <div class="flex justify-content-between align-items-center">
                                 DNI
@@ -107,23 +107,23 @@
                             <button *ngIf="usuario.activo" type="button" pButton pRipple class="p-button-rounded p-button-info mr-2 mb-2" icon="pi pi-eye" (click)="administrarUsuario(usuario)"></button>
                             <button *ngIf="!usuario.activo" type="button" pButton pRipple class="p-button-rounded p-button-danger mr-2 mb-2" icon="pi pi-eye" (click)="administrarUsuario(usuario)"></button>
                             
-                        <td style="min-width: 10rem;">
+                        <td class="min-w-10rem">
                             {{usuario.dni}}
                         </td>
 
-                        <td style="min-width: 15rem;">
+                        <td class="min-w-15rem">
                             {{usuario.apellido}}
                         </td>
-                        <td style="min-width: 15rem;">
+                        <td class="min-w-15rem">
                             {{usuario.nombre}}
                         </td>
-                        <td style="min-width: 10rem;">
+                        <td class="min-w-10rem">
                             {{usuario.sexo.sexo}}
                         </td>
-                        <td style="min-width: 10rem;">
+                        <td class="min-w-10rem">
                             {{usuario.rol.rol}}
                         </td>
-                        <td style="min-width: 3rem;">
+                        <td class="min-w-3rem">
                             {{usuario.activo? "SI": "NO"}}
                         </td>
                     </tr>
@@ -143,7 +143,7 @@
             <!-- FIN TABLA DE USUARIOS -->
 
             <!-- DIALOG FORMULARIO USUARIOS -->
-            <p-dialog id="formUsuarioDialog" [(visible)]="usuarioDialog" [style]="{width: '500px'}" header="Nuevo Usuario" [closable]="false" [modal]="true" class="p-fluid">
+            <p-dialog id="formUsuarioDialog" [(visible)]="usuarioDialog" styleClass="custom-dialog" header="Nuevo Usuario" [closable]="false" [modal]="true" class="p-fluid">
                 <ng-template pTemplate="content">
                     <!-- FORMULARIO USUARIO -->
                     <form [formGroup]="formaUsuario">

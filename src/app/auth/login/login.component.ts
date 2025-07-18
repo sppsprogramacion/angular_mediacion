@@ -3,34 +3,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 import { LoginModel } from '../../models/login.model';
-import { UsuarioModel } from '../../models/usuario.model';
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { DataService } from 'src/app/service/data.service';
-import { globalConstants } from 'src/app/common/global-constants';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styles:[`
-    /* :host ::ng-deep .p-password input {
-    width: 100%;
-    padding:1rem;
-    }
-
-    :host ::ng-deep .pi-eye{
-      transform:scale(1.6);
-      margin-right: 1rem;
-      color: var(--primary-color) !important;
-    }
-
-    :host ::ng-deep .pi-eye-slash{
-      transform:scale(1.6);
-      margin-right: 1rem;
-      color: var(--primary-color) !important;
-    } */
-  `]
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
@@ -52,6 +33,22 @@ export class LoginComponent implements OnInit {
       password: ['',[Validators.required]],
           
     });
+
+    //CONTROL SESION INICIADA
+    const token = localStorage.getItem('token-usuario');
+    if (token) {
+      // Redirige automáticamente si ya hay una sesión activa
+      this.authService.checkAutenticationCiudadano()
+      .subscribe({
+        next: (resultado) => {          
+          this.dataCiudadano = this.authService.currentCiudadanoLogin;            
+          if(this.dataCiudadano){
+            this.router.navigateByUrl("ciudadano/tramites/nuevos");
+          }
+        }
+      });
+    }
+    //FIN CONTROL SESION INICIADA........................................
   }
   //FIN CONSTRUCTOR...................
 

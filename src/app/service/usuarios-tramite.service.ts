@@ -75,6 +75,13 @@ export class UsuariosTramiteService {
     return this.http.get<[tramite:UsuarioTramiteModel[], total: number]>(`${base_url}/usuarios-tramite/buscar-xusuario-finalizados-xanio?id_usuario=${id_usuariox}&anio=${anio}`, { headers })
   }
 
+  listarTramitesTodosFechaExcel(fecha_ini: string, fecha_fin: string){
+  
+    const token = this.dataService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<[tramite:UsuarioTramiteModel[], total: number]>(`${base_url}/usuarios-tramite/todos-xfecha-excel?fecha_ini=${fecha_ini}&fecha_fin=${fecha_fin}`, { headers })
+  }
+
   listarFinalizadosXUsuarioAdministrado(id_usuariox: number){
 
     const token = this.dataService.getToken();

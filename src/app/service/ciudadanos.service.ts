@@ -11,6 +11,7 @@ const base_url = environment.URL_BASE
 })
 export class CiudadanosService {
   ciudadano: CiudadanoModel = new CiudadanoModel();
+  
   constructor(
     private readonly dataService: DataService,
     private readonly http: HttpClient
@@ -70,7 +71,4 @@ export class CiudadanosService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get<CiudadanoModel>(`${base_url}/ciudadanos/${id}`, { headers })
   }
-
-  
-
 }

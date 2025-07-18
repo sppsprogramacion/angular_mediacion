@@ -117,7 +117,7 @@
                                                 </div>
                                             </div>    
                                             <div  class="col-12 grid">
-                                                <button pButton pRipple type="button" label="Resetear contraseña" class="p-button-warning" style="width: 47%;" (click)="submitFormResetPass()" ></button>
+                                                <button pButton pRipple type="button" label="Resetear contraseña" class="p-button-warning w-47"  (click)="submitFormResetPass()" ></button>
                                                 
                                                 
                                             </div>
@@ -146,7 +146,7 @@
 >>>>>>> pedro-rama
                         <ng-template pTemplate="header">
                             <tr>
-                                <th style="width: 3rem"></th>
+                                <th class="min-w-3rem"></th>
                                 <th>
                                     <div class="flex justify-content-between align-items-center">
                                         Nº Tramite                                        
@@ -191,35 +191,35 @@
                                     <button *ngIf="tramite.estado_tramite_id==1 && isAdmin()" pButton pRipple type="button" icon="pi pi-folder-open text-purple-100" class="p-button-secondary p-button-rounded bg-purple-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
                                     <button *ngIf="tramite.estado_tramite_id==2 && isAdmin()" pButton pRipple type="button" icon="pi pi-folder-open text-orange-100" class="p-button-secondary p-button-rounded bg-orange-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
                                     <button *ngIf="tramite.estado_tramite_id==3 && isAdmin()" pButton pRipple type="button" icon="pi pi-folder-open text-bluegray-100" class="p-button-secondary p-button-rounded bg-bluegray-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
-                                    <div *ngIf="tramite.estado_tramite_id==1 && !isAdmin()" class="flex align-items-center justify-content-center bg-purple-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                                    <div *ngIf="tramite.estado_tramite_id==1 && !isAdmin()" class="flex align-items-center justify-content-center bg-purple-100 border-round caja-2-5">
                                         <i class="pi pi-fw pi-bookmark text-purple-500 text-xl"></i>
                                     </div>
-                                    <div *ngIf="tramite.estado_tramite_id==2 && !isAdmin()" class="flex align-items-center justify-content-center bg-orange-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                                    <div *ngIf="tramite.estado_tramite_id==2 && !isAdmin()" class="flex align-items-center justify-content-center bg-orange-100 border-round caja-2-5">
                                         <i class="pi pi-fw pi-send  text-orange-500 text-xl"></i>
                                     </div>  
-                                    <div *ngIf="tramite.estado_tramite_id==3 && !isAdmin()" class="flex align-items-center justify-content-center bg-bluegray-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                                    <div *ngIf="tramite.estado_tramite_id==3 && !isAdmin()" class="flex align-items-center justify-content-center bg-bluegray-100 border-round caja-2-5">
                                         <i class="pi pi-fw pi-check-square  text-bluegray-500 text-xl"></i>
                                     </div>               
                                 </td>
-                                <td style="min-width: 10rem;">
+                                <td class="min-w-10rem">
                                     {{tramite.numero_tramite}}
                                 </td>
-                                <td style="min-width: 10rem;">
+                                <td class="min-w-10rem">
                                     {{tramite.ciudadano.dni}}
                                 </td>
-                                <td style="min-width: 20rem;">
+                                <td class="min-w-20rem">
                                     {{tramite.objeto.objeto}}
                                 </td>
-                                <td style="min-width: 5rem;">
+                                <td class="min-w-5rem">
                                     {{tramite.fecha_tramite| date: 'dd/MM/yyyy'}}
                                 </td>
-                                <td style="min-width: 12rem;">
+                                <td class="min-w-12rem">
                                     {{tramite.expediente}}
                                 </td>
-                                <td style="min-width: 5rem;">
+                                <td class="min-w-5rem">
                                     {{tramite.fecha_expediente| date: 'dd/MM/yyyy'}}
                                 </td>
-                                <td style="min-width: 15rem;">
+                                <td class="min-w-20rem">
                                     {{tramite.centro_mediacion.centro_mediacion}}
                                 </td>
                             </tr>

@@ -25,7 +25,7 @@
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th style="width: 3rem"></th>
+                        <th class="w-3rem"></th>
                         <th>
                             <div class="flex justify-content-between align-items-center">
                                 ID
@@ -62,20 +62,19 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-departamento>
                     <tr>
-                        <td style="min-width: 10rem;">
+                        <td class="min-w-10rem">
                             <button *ngIf="departamento.tiene_centro_mediacion" type="button" pButton pRipple class="p-button-rounded p-button mr-2 mb-2" icon="pi pi-building" (click)="openDialogCentrosMediacion(departamento)"></button>
                             <button *ngIf="!departamento.tiene_centro_mediacion" type="button" pButton pRipple class="p-button-rounded p-button-warning mr-2 mb-2" icon="pi pi-building" (click)="openDialogCentrosMediacion(departamento)"></button>
                         </td>
-                        <td style="min-width: 3rem;">
+                        <td class="min-w-3rem">
                             {{departamento.id_departamento}}
                         </td>
-                        <td style="min-width: 20rem;">
+                        <td class="min-w-20rem">
                             {{departamento.departamento}}
                         </td>
-                        <td style="min-width: 5rem;">
+                        <td class="min-w-5rem">
                             {{departamento.tiene_centro_mediacion? "SI": "NO"}}
                         </td>
-                        
                     </tr>
                 </ng-template>
 
@@ -94,10 +93,10 @@
         </div>
 
         <!-- DIALOG CENTROS -->
-        <p-dialog id="centrosDialog" [(visible)]="centrosDialog" [style]="{width: '650px'}" header="Centros de mediación" [closable]="false" [modal]="true" class="p-fluid">
+        <p-dialog id="centrosDialog" [(visible)]="centrosDialog" styleClass="custom-dialog-650" header="Centros de mediación" [closable]="false" [modal]="true" class="p-fluid">
             <ng-template pTemplate="header">
                 <div class="formgrid grid">
-                    <h5 class="mb-1" style="width: 100%;">{{tituloDialog}}</h5>                    
+                    <h5 class="mb-1 w-full" >{{tituloDialog}}</h5>                    
                 </div>
             </ng-template>
 
@@ -152,33 +151,33 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-centro>
                         <tr>                            
-                            <td style="min-width: 5rem;">
-                                <div *ngIf="centro.activo" class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                            <td class="min-w-10rem">
+                                <div *ngIf="centro.activo" class="flex align-items-center justify-content-center bg-blue-100 border-round caja-2-5" >
                                     <i class="pi pi-fw text-blue-500 text-xl">SI</i>
                                 </div>
-                                <div *ngIf="!centro.activo" class="flex align-items-center justify-content-center bg-orange-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                                <div *ngIf="!centro.activo" class="flex align-items-center justify-content-center bg-orange-100 border-round caja-2-5" >
                                     <i class="pi pi-fw text-orange-500 text-xl">NO</i>
                                 </div>
                             </td>
-                            <td style="min-width: 15rem;">
+                            <td class="min-w-15rem">
                                 {{centro.centro_mediacion}}
                             </td>
-                            <td style="min-width: 20rem;">
+                            <td class="min-w-20rem">
                                 Barrio: {{centro.localidad_barrio}} - Calle/Dirección:{{centro.calle_direccion}} - N° {{centro.numero_dom}}
                             </td>
-                            <td style="min-width: 15rem;">
+                            <td class="min-w-15rem">
                                 {{centro.departamento.departamento}}
                             </td>
-                            <td style="min-width: 10rem;">
+                            <td class="min-w-10rem">
                                 {{centro.municipio.municipio}}
                             </td>
-                            <td style="min-width: 10rem;">
+                            <td class="min-w-10rem">
                                 {{centro.telefono}}
                             </td>
-                            <td style="min-width: 5rem;">
+                            <td class="min-w-5rem">
                                 {{centro.email}}
                             </td>
-                            <td style="min-width: 3rem;">
+                            <td class="min-w-3rem">
                                 {{centro.admin_es_responsable? "SI": "NO"}}
                             </td>
                         </tr>

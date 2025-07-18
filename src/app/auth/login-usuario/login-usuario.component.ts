@@ -34,6 +34,33 @@ export class LoginUsuarioComponent implements OnInit {
       password: ['',[Validators.required]],
           
     });
+
+    //CONTROL SESION INICIADA
+    const token = localStorage.getItem('token-usuario');
+    if (token) {
+      // Redirige automáticamente si ya hay una sesión activa
+      this.authService.checkAutenticationUsuario()
+      .subscribe({
+        next: (resultado) => {
+          
+          this.dataUsuario = this.authService.currentUserLogin;            
+          if(this.dataUsuario.rol_id == "administrador"){
+            this.router.navigateByUrl("admin/principal");
+          }
+          if(this.dataUsuario.rol_id == "admincuentas" || this.dataUsuario.rol_id == "superadmincuentas"){
+            this.router.navigateByUrl("admin/usuarios/lista");
+          }
+          if(this.dataUsuario.rol_id == "supervisor"){
+            this.router.navigateByUrl("admin/principal");
+          }
+          if(this.dataUsuario.rol_id == "mediador"){
+            this.router.navigateByUrl("admin/tramites/nuevoslis");
+          }
+        }
+      });
+    }
+    //FIN CONTROL SESION INICIADA........................................
+    
   }
   //FIN CONSTRUCTOR...................
 
@@ -59,6 +86,7 @@ export class LoginUsuarioComponent implements OnInit {
   //FIN VALIDACIONES DE FORMULARIO......................................................
 
   ngOnInit(): void {
+    
     
   }
   //FIN ONINIT........................

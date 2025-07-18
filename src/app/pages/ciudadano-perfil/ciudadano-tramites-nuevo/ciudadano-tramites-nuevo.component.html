@@ -25,6 +25,21 @@
                                 
                             </div>
 
+                            <!-- recomendacion asesoramiento -->
+                            <p-messages severity="info">
+                                <ng-template pTemplate>                                    
+                                    <div class="ml-1">
+                                        La asesoría previa a una mediación es obligatoria para asegurar que las partes entiendan si 
+                                        su conflicto puede ser mediado y qué deben solicitar para resolverlo. Garantizando que el 
+                                        objeto de la mediación esté claramente definido, evitando acuerdos incorrectos y protegiendo 
+                                        los derechos de todos los involucrados.
+                                        <br>
+                                        “Esta Dirección cuenta con Abogados que brindan Asesoramiento Jurídico Gratuito”
+                                    </div>
+                                </ng-template>
+                            </p-messages>
+                            <!-- fin recomendacion asesoramiento -->
+
                             <div class="formgrid grid">                                    
                                 <div class="field col-12 sm:col-6 md:col-6">
                                     <label for="esta_asesorado">¿Está asesorado?</label>
@@ -37,6 +52,20 @@
                             </div>
                         </div>
                         <!-- FIN CARD ASESORADO-->
+
+                        <!-- Inicio -->
+                        <p-messages severity="info">
+                            <ng-template pTemplate>                                    
+                                <div class="ml-1">
+                                    Luego de completar toda la información en el formulario y enviar la solicitud de mediacion, 
+                                    los administradores le asignarán una fecha y hora de audiencia.
+                                    <br>
+                                    Usted puede consultar en todo momento 
+                                    
+                                </div>
+                            </ng-template>
+                        </p-messages>
+                        <!-- fin inicio -->
 
                         <!-- CARD MENSAJE -->
                         <div *ngIf="estaAsesorado" class="card p-fluid">  
@@ -134,6 +163,19 @@
                             <div class="bg-cyan-600">
 
                             </div>
+
+                            <!-- elegor centro -->
+                            <p-messages severity="info">
+                                <ng-template pTemplate>                                    
+                                    <div class="ml-1">
+                                        Elija el centro de mediación mas cercano a su domicilio o que sea mas comodo para 
+                                        que pueda realizar la audiencia de mediación.
+                                         
+                                    </div>
+                                </ng-template>
+                            </p-messages>
+                            <!-- fin elegir centro -->
+
                             <div class="formgrid grid">
                                 <div class="field col-12 md:col-8 lg:col-6">
                                     <label for="departamento_id_centro">Departamento</label>
@@ -151,7 +193,7 @@
                             <div class="formgrid grid">
                                 <div class="field col-12">
                                     <label for="centro_mediacion_id">Centro Mediación</label>
-                                    <p-listbox [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" formControlName="centro_mediacion_id" styleClass="listbox1" [listStyle]="{'max-height':'250px'}"></p-listbox>
+                                    <p-listbox [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" formControlName="centro_mediacion_id" styleClass="listbox1 max-height-250" ></p-listbox>
                                     <small *ngIf="isValid('centro_mediacion_id')" class="p-error">
                                         <div *ngFor="let validation of user_validation_messages.centro_mediacion_id" >
                                             <div  *ngIf="formaTramite.get('centro_mediacion_id')?.hasError(validation.type)">
@@ -239,6 +281,19 @@
 
                             </div>
 
+                            <!-- agregar convocado -->
+                            <p-messages severity="info">
+                                <ng-template pTemplate>                                    
+                                    <div class="ml-1">
+                                        Ingrese los datos de la persona con la que desea realizar la  mediacion. Puede elegir mas de una persona.
+                                        <br>
+                                        Recuerde comlpletar correctamente los datos, ya que con ellos se realizara la correspondiente notificacion
+                                        al convocado.
+                                    </div>
+                                </ng-template>
+                            </p-messages>
+                            <!-- fin agregar convocado -->
+
                             <div class="col-12 border-bottom-1 surface-border">
                                 <p-toolbar styleClass="mb-4">
                                     <ng-template pTemplate="left">
@@ -252,9 +307,9 @@
                                 <p-table #dt1 [value]="listConvocadosAux" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
                                     <ng-template pTemplate="header">
                                         <tr>
-                                            <th style="width: 3rem"></th>
+                                            <th class="min-w-3rem"></th>
                                             <th>
-                                                <div style="width: 6rem" class="flex justify-content-between align-items-left">
+                                                <div class="flex justify-content-between align-items-left">
                                                     Apellido
                                                 </div>
                                             </th>
@@ -276,13 +331,13 @@
                                                 <p-button icon="pi pi-search-plus" styleClass="p-button-rounded  mr-2 mb-1" (click)="openDialogVerConvocado(convocado)"></p-button>
                                                 <!-- <button pButton pRipple type="button" icon="pi pi-folder-open text-purple-100" class="p-button-secondary p-button-rounded bg-purple-500 mr-1 mb-1" (click)="quitarConvocado(convocado)"></button>     -->
                                             </td>
-                                            <td style="min-width: 12rem;">
+                                            <td class="min-w-12rem">
                                                 {{convocado.apellido}}
                                             </td>
-                                            <td style="min-width: 12rem;">
+                                            <td class="min-w-12rem">
                                                 {{convocado.nombre}}
                                             </td>
-                                            <td style="min-width: 5rem;">
+                                            <td class="min-w-5rem">
                                                 {{convocado.dni}}
                                             </td>
                                             
@@ -303,7 +358,7 @@
                                 <!-- FIN TABLA DE CONVOCADOS SALTA -->
 
                                 <!-- DIALOG CONVOCADOS SALTA-->
-                                <p-dialog id="convocadoDialog" [(visible)]="convocadoSaltaDialog" [style]="{width: '500px','min-height':'400px'}" class="p-fluid" header="Datos de convocado" [closable]="false" [modal]="true">
+                                <p-dialog id="convocadoDialog" [(visible)]="convocadoSaltaDialog" styleClass="custom-dialog" class="p-fluid" header="Datos de convocado" [closable]="false" [modal]="true">
 
                                     <ng-template pTemplate="content">
                                         <div class="col-12 border-bottom-1 surface-border">
@@ -373,7 +428,7 @@
                                 <!-- FIN DIALOG CONVOCADOS SALTA -->
 
                                 <!-- DIALOG CONVOCADOS NO SALTA-->
-                                <p-dialog id="convocadoNoSaltaDialog" [(visible)]="convocadoNoSaltaDialog" [style]="{width: '500px','min-height':'400px'}" class="p-fluid" header="Datos de convocado" [closable]="false" [modal]="true">
+                                <p-dialog id="convocadoNoSaltaDialog" [(visible)]="convocadoNoSaltaDialog" styleClass="custom-dialog" class="p-fluid" header="Datos de convocado" [closable]="false" [modal]="true">
 
                                     <ng-template pTemplate="content">
                                         <div class="col-12 border-bottom-1 surface-border">
@@ -431,8 +486,7 @@
                             </div>
 
                             <!-- DIALOG FORMULARIO CONVOCADOS -->
-                            <!-- <p-dialog id="usuarioTramiteDialog" [(visible)]="convocadoTramiteDialog" [style]="{width: '500px'}"  class="p-fluid" header="Nuevo Convocado" [closable]="false" [modal]="true" [contentStyle]="{'overflow':'visible'}"> -->
-                            <p-dialog id="convocadoTramiteDialog" [(visible)]="convocadoTramiteDialog" [style]="{width: '500px','min-height':'400px'}" [position]="posicion" class="p-fluid"  [closable]="false" [modal]="true">
+                            <p-dialog id="convocadoTramiteDialog" [(visible)]="convocadoTramiteDialog" styleClass="custom-dialog" [position]="posicion" class="p-fluid"  [closable]="false" [modal]="true">
                                 <!-- MENSAJE DE ERROR -->
                                 <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
                                 <ng-template pTemplate="content">
@@ -706,6 +760,17 @@
 
                             </div>
 
+                            <!-- agregar vinculado -->
+                            <p-messages severity="info">
+                                <ng-template pTemplate>                                    
+                                    <div class="ml-1">
+                                        Ingrese los datos de la persona que necesite que este presente y/o acompañe en la audiencia.
+                                        
+                                    </div>
+                                </ng-template>
+                            </p-messages>
+                            <!-- fin agregar vinculado -->
+
                             <div class="col-12 border-bottom-1 surface-border">
                                 <p-toolbar styleClass="mb-4">
                                     <ng-template pTemplate="left">
@@ -718,7 +783,7 @@
                                 <p-table #dt1 [value]="listVinculadosAux" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
                                     <ng-template pTemplate="header">
                                         <tr>
-                                            <th style="width: 3rem"></th>
+                                            <th class="min-w-3rem"></th>
                                             <th>
                                                 <div class="flex justify-content-between align-items-left">
                                                     Apellido y nombre
@@ -743,13 +808,13 @@
                                             <td>
                                                 <p-button icon="pi pi-times" styleClass="p-button-rounded p-button-danger mb-1" (click)="quitarVinculado(vinculado)"></p-button>
                                             </td>
-                                            <td style="min-width: 25rem;">
+                                            <td class="min-w-25rem">
                                                 {{vinculado.apellido}} {{vinculado.nombre}}
                                             </td>
-                                            <td style="min-width: 10rem;">
+                                            <td class="min-w-10rem">
                                                 {{vinculado.dni}}
                                             </td>
-                                            <td style="min-width: 10rem;">
+                                            <td class="min-w-10rem">
                                                 {{vinculado.sexo}}
                                             </td>
                                             
@@ -772,7 +837,7 @@
                             </div>
 
                             <!-- DIALOG FORMULARIO VINCULADOS -->
-                            <p-dialog id="vinculadoTramiteDialog" [(visible)]="vinculadoTramiteDialog" [style]="{width: '500px','min-height':'400px'}" [position]="posicion" class="p-fluid" header="Nuevo Vinculado" [closable]="false" [modal]="true">
+                            <p-dialog id="vinculadoTramiteDialog" [(visible)]="vinculadoTramiteDialog" styleClass="custom-dialog" [position]="posicion" class="p-fluid" header="Nuevo Vinculado" [closable]="false" [modal]="true">
                                 <!-- MENSAJE DE ERROR -->
                                 <p-messages [(value)]="msgsVinculado" [enableService]="false"></p-messages>
                                 <ng-template pTemplate="content">
@@ -879,8 +944,8 @@
                 </div>
                 <!--  FIN FORMULARIO TRAMITES -->
                 <div *ngIf="estaAsesorado" class="col-12 grid justify-content-center">                    
-                    <button pButton pRipple type="button" label="Guardar" class="p-button-success" style="width: 47%;" (click)="submitFormTramite()" ></button>
-                    <button pButton pRipple type="button" label="Cancelar" class="p-button-danger ml-2" style="width: 47%;" (click)="irAPrincipal()"></button>
+                    <button pButton pRipple type="button" label="Guardar" class="p-button-success btn-half"  (click)="submitFormTramite()" ></button>
+                    <button pButton pRipple type="button" label="Cancelar" class="p-button-danger ml-2 btn-half" (click)="irAPrincipal()"></button>
                 </div>
             </div>
         </div>

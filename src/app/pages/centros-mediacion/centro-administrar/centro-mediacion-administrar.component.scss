@@ -1,0 +1,33 @@
+dialog-width-600 {
+    width: 600px !important;
+  }
+
+  .text-label {
+    font-weight: 500;
+    font-size: 1.125rem;
+  }
+
+  .text-value {
+    margin-left: 0.5rem;
+    font-weight: 500;
+  }
+
+  .toolbar-header {
+    background-color: #06b6d4; /* cyan-500 */
+    padding: 1rem;
+    color: white;
+    font-weight: bold;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .border-bottom-line {
+    border-bottom: 1px solid var(--surface-border);
+    margin-top: 1rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .min-w-10rem { min-width: 10rem; }
+  .min-w-15rem { min-width: 15rem; }
+  .min-w-7rem  { min-width: 7rem; }
+  .min-w-5rem  { min-width: 5rem; }

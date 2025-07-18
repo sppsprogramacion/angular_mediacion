@@ -1,0 +1,23 @@
+.min-w-80 {
+  min-width: 80%;
+}
+
+.rounded-56 {
+  border-radius: 56px;
+}
+
+.rounded-53 {
+  border-radius: 53px;
+}
+
+.p-03 {
+  padding: 0.3rem;
+}
+
+.bg-blue-gradient {
+  background: linear-gradient(180deg, rgba(33, 150, 243, 0.4) 10%, rgba(33, 150, 243, 0) 30%);
+}
+
+.bg-surface-gradient {
+  background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));
+}

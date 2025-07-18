@@ -27,3 +27,21 @@ p-dialog .ui-dialog {
     overflow: inherit;
     max-height: 100%;
 }
+
+.max-height-250 {
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+/* Asegura que el botón ocupe el 47% con prioridad */
+.btn-half {
+  width: 47% !important;
+}
+
+/* En móviles (menos de 768px), que ocupen 100% uno debajo del otro */
+@media screen and (max-width: 768px) {
+  .btn-half {
+    width: 100% !important;
+    margin-bottom: 0.5rem;
+  }
+}

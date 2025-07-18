@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import { CentroMediacionModel } from '../../../models/centro_mediacion.model';
 import { UsuarioCentroModel } from '../../../models/usuario_centro.model ';
 import { UsuariosCentroService } from '../../../service/usuarios-centro.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-centro-administrar',
@@ -47,8 +48,10 @@ export class CentroAdministrarComponent implements OnInit {
   formaUsuarioCentroMediacion: FormGroup;
   
   constructor(
+    private router: Router,
     private fb: FormBuilder,
     private readonly datePipe: DatePipe,
+    
     public dataService: DataService,
     private usuariosCentrosService: UsuariosCentroService,
     private usuarioService: UsuariosService   
@@ -63,9 +66,6 @@ export class CentroAdministrarComponent implements OnInit {
       
     });
     //FIN FORMULARIOS.................
-
-    //OBTENER EL TRAMITE
-    this.dataCentroMediacion= dataService.centroMediacionData;
 
   }
 
@@ -96,8 +96,20 @@ export class CentroAdministrarComponent implements OnInit {
   //FIN VALIDACIONES DE FORMULARIO.......................................
 
   ngOnInit(): void {
-    this.listarMediadores();
-    this.listarUsuariosActivosCentroMediacion();
+    //OBTENER EL TRAMITE
+    this.dataCentroMediacion= this.dataService.centroMediacionData;
+    if(this.dataCentroMediacion.id_centro_mediacion){  
+      this.listarMediadores();
+      this.listarUsuariosActivosCentroMediacion();
+       
+    }  
+    else{
+
+      this.router.navigateByUrl("admin/centro-mediacion/lista");
+    }  
+    //fin obtener tramite
+
+    
   }
   //FIN ONINIT................................................
 

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AppMainComponent } from './app.main.component';
-import { globalConstants } from './common/global-constants';
 import { CiudadanoModel } from './models/ciudadano.model';
 import { DataService } from './service/data.service';
 import { AuthService } from './service/auth.service';
@@ -11,7 +10,7 @@ import { AuthService } from './service/auth.service';
         <div class="layout-menu-container">
             <h5 class="block text-blue-600 mb-4">
                 <span>
-                    <img src="assets/imagenes/iconos/user-icon.png" height="30" style="vertical-align: middle;"/>
+                    <img src="assets/imagenes/iconos/user-icon.png" height="30" class="img-middle"/>
                     {{ nombre_completo }}
                 </span>
             </h5>
@@ -27,7 +26,8 @@ import { AuthService } from './service/auth.service';
                 </div>
             </ul>
         </div>
-    `
+    `,
+    styleUrls: ['./app.menu.component.scss']
 })
 export class AppMenuComponent implements OnInit {
 
@@ -62,13 +62,7 @@ export class AppMenuComponent implements OnInit {
                         
                     ]
                 },
-                {
-                    label: 'Salir',
-                    items: [
-                        {label: 'Cerrar sesión', icon: 'pi pi-sign-out', routerLink: ['/login'] },
-                        
-                    ]
-                },
+                
             ]
         }
         //FIN MENU CIUDADANO.........................................................
@@ -99,14 +93,7 @@ export class AppMenuComponent implements OnInit {
                         {label: 'Cambiar contraseña', icon: 'pi pi-circle', routerLink: ['/admin/miperfil/cambiarcontrasenia']},
                         
                     ]
-                },
-                {
-                    label: 'Salir',
-                    items: [
-                        {label: 'Cerrar sesión', icon: 'pi pi-sign-out', routerLink: ['/login-admin-mediacion']},
-                            
-                    ]
-                },
+                },                
             ]
         }
         //FIN MENU MEDIADOR..........................................................
@@ -165,13 +152,7 @@ export class AppMenuComponent implements OnInit {
                         {label: 'Ver objetos', icon: 'pi pi-fw pi-star', routerLink: ['/admin/objetos']}
                     ]
                 },  
-                {
-                    label: 'Salir',
-                    items: [
-                        {label: 'Cerrar sesión', icon: 'pi pi-sign-out', routerLink: ['/login-admin-mediacion']},
-                    ]
-                },
-                                
+                                                
             ];
 
         }
@@ -199,12 +180,14 @@ export class AppMenuComponent implements OnInit {
                     ]
                 },
                 {
-                    label: 'Salir',
+                    label: 'Descargas',
                     items: [
-                        {label: 'Cerrar sesión', icon: 'pi pi-sign-out', routerLink: ['/login-admin-mediacion']},
+                        {label: 'Tramites', icon: 'pi pi-circle', routerLink: ['/admin/descargas/tramites']},
+                        {label: 'Audiencias', icon: 'pi pi-circle', routerLink: ['/admin/descargas/audiencias']},
+                        {label: 'Asignaciones de tramites a usuarios', icon: 'pi pi-circle', routerLink: ['/admin/descargas/tramites-asignacion']},                        
                     ]
                 },
-                
+                               
             ];
 
         }

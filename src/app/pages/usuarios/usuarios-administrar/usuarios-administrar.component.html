@@ -109,8 +109,8 @@
                                 </div>
                                 <!--  FIN FORMULARIO CIUDADANO -->
                                 <div  class="col-12 grid justify-content-center">
-                                    <button pButton pRipple type="button" label="Guardar" class="p-button-success" style="width: 47%;" (click)="submitFormUsuario()" ></button>
-                                    <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger ml-2" style="width: 47%;" (click)="cancelarModificacionUsuario()"></button>
+                                    <button pButton pRipple type="button" label="Guardar" class="p-button-success w-47"  (click)="submitFormUsuario()" ></button>
+                                    <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger ml-2 w-47"  (click)="cancelarModificacionUsuario()"></button>
                                     
                                 </div>
                             </div>
@@ -133,7 +133,7 @@
                                         <div class="formgrid grid">
                                             <div class="field col-12">
                                                 <label for="centro_mediacion_id">Centro Mediación</label>
-                                                <p-listbox [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" styleClass="listbox1" [listStyle]="{'max-height':'250px'}" ></p-listbox>
+                                                <p-listbox [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" styleClass="listbox1 max-height-250" ></p-listbox>
                                                 
                                             </div>
                                         </div>
@@ -176,7 +176,7 @@
                                             </div>
                                             
                                             <div  class="col-12 grid mt-2">
-                                                <button pButton pRipple type="button" label="Guardar" class="p-button-success" style="width: 47%;" (click)="submitFormModificarEstadoUsuario()" ></button>
+                                                <button pButton pRipple type="button" label="Guardar" class="p-button-success w-47" (click)="submitFormModificarEstadoUsuario()" ></button>
                                                 
                                             </div>
                                         </form>
@@ -205,7 +205,7 @@
                                                 </div>
                                             </div>    
                                             <div  class="col-12 grid">
-                                                <button pButton pRipple type="button" label="Resetear contraseña" class="p-button-warning" style="width: 47%;" (click)="submitFormResetPass()" ></button>
+                                                <button pButton pRipple type="button" label="Resetear contraseña" class="p-button-warning w-47"  (click)="submitFormResetPass()" ></button>
                                                 
                                                 
                                             </div>
@@ -315,7 +315,7 @@
                                         <div class="formgrid grid">
                                             <div class="field col-12">
                                                 <label for="centro_mediacion_id">Centro Mediación</label>
-                                                <p-listbox [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" styleClass="listbox1" [listStyle]="{'max-height':'250px'}" ></p-listbox>
+                                                <p-listbox [options]="elementosCentroMediacion" optionLabel="value" optionValue="clave" styleClass="listbox1 max-height-250"  ></p-listbox>
                                                 
                                             </div>
                                         </div>
@@ -371,7 +371,7 @@
                         </ng-template>
                         <ng-template pTemplate="header">
                             <tr>
-                                <th style="width: 3rem"></th>
+                                <th class="min-w-3rem"></th>
                                 <th>
                                     <div class="flex justify-content-between align-items-center">
                                         Nº Tramite
@@ -427,29 +427,29 @@
                                 <td>
                                     <button *ngIf="tramiteAsignado.tramite.estado_tramite_id==2" pButton pRipple type="button" icon="pi pi-folder-open text-orange-100" class="p-button-secondary p-button-rounded bg-orange-500 mr-1 mb-1" (click)="administrarTramite(tramiteAsignado.tramite)"></button>
                                 </td>
-                                <td style="min-width: 10rem;">
+                                <td class="min-w-10rem">
                                     {{tramiteAsignado.tramite.numero_tramite}}
                                 </td>
 
-                                <td style="min-width: 15rem;">
+                                <td class="min-w-15rem">
                                     {{tramiteAsignado.tramite.ciudadano.apellido}}
                                 </td>
-                                <td style="min-width: 15rem;">
+                                <td class="min-w-15rem">
                                     {{tramiteAsignado.tramite.ciudadano.nombre}}
                                 </td>
-                                <td style="min-width: 10rem;">
+                                <td class="min-w-10rem">
                                     {{tramiteAsignado.tramite.ciudadano.dni}}
                                 </td>
-                                <td style="min-width: 15rem;">
+                                <td class="min-w-15rem">
                                     {{tramiteAsignado.tramite.objeto.objeto}}
                                 </td>
-                                <td style="min-width: 10rem;">
+                                <td class="min-w-10rem">
                                     {{tramiteAsignado.tramite.fecha_tramite| date: 'dd/MM/yyyy'}}
                                 </td>
-                                <td style="min-width: 10rem;">
+                                <td class="min-w-10rem">
                                     {{tramiteAsignado.tramite.expediente}}
                                 </td>
-                                <td style="min-width: 10rem;">
+                                <td class="min-w-10rem">
                                     {{tramiteAsignado.tramite.fecha_expediente| date: 'dd/MM/yyyy'}}
                                 </td>
                             </tr>
@@ -522,7 +522,7 @@
                         </ng-template>
                         <ng-template pTemplate="header">
                             <tr>
-                                <th style="width: 3rem"></th>
+                                <th class="min-w-3rem"></th>
                                 <th>
                                     <div class="flex justify-content-between align-items-center">
                                         Nº Tramite
@@ -578,29 +578,29 @@
                                 <td>
                                     <button *ngIf="tramiteFinalizado.tramite.estado_tramite_id==3" pButton pRipple type="button" icon="pi pi-folder-open" class="p-button-secondary p-button-rounded mr-1 mb-1" (click)="administrarTramite(tramiteFinalizado.tramite)"></button>
                                 </td>
-                                <td style="min-width: 10rem;">
+                                <td class="min-w-10rem">
                                     {{tramiteFinalizado.tramite.numero_tramite}}
                                 </td>
 
-                                <td style="min-width: 15rem;">
+                                <td class="min-w-15rem">
                                     {{tramiteFinalizado.tramite.ciudadano.apellido}}
                                 </td>
-                                <td style="min-width: 15rem;">
+                                <td class="min-w-15rem">
                                     {{tramiteFinalizado.tramite.ciudadano.nombre}}
                                 </td>
-                                <td style="min-width: 10rem;">
+                                <td class="min-w-10rem">
                                     {{tramiteFinalizado.tramite.ciudadano.dni}}
                                 </td>
-                                <td style="min-width: 15rem;">
+                                <td class="min-w-15rem">
                                     {{tramiteFinalizado.tramite.objeto.objeto}}
                                 </td>
-                                <td style="min-width: 10rem;">
+                                <td class="min-w-10rem">
                                     {{tramiteFinalizado.tramite.fecha_tramite| date: 'dd/MM/yyyy'}}
                                 </td>
-                                <td style="min-width: 10rem;">
+                                <td class="min-w-10rem">
                                     {{tramiteFinalizado.tramite.expediente}}
                                 </td>
-                                <td style="min-width: 10rem;">
+                                <td class="min-w-10rem">
                                     {{tramiteFinalizado.tramite.fecha_expediente| date: 'dd/MM/yyyy'}}
                                 </td>
                             </tr>

@@ -8,7 +8,8 @@ import { ConfigService } from './service/app.config.service';
 
 @Component({
     selector: 'app-config',
-    templateUrl: './app.config.component.html'
+    templateUrl: './app.config.component.html',
+    styleUrls: ['./app.config.component.scss']
 })
 export class AppConfigComponent implements OnInit, OnDestroy {
 
