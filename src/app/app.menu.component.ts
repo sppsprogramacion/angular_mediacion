@@ -21,9 +21,9 @@ import { AuthService } from './service/auth.service';
                         <li app-menuitem *ngFor="let child of item.items" [item]="child" [index]="i" role="none"></li>
                     </ul>
                 </li>
-                <div>
-                    <img src="assets/imagenes/general/logo-gobierno-salta.png" alt="Prime Blocks" class="w-full mt-5"/>
-                </div>
+                <!-- <div>
+                    <img src="assets/imagenes/general/logo-mediacion-secretaria2024.png" alt="Prime Blocks" class="w-full mt-5"/>
+                </div> -->
             </ul>
         </div>
     `,

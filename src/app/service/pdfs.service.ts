@@ -33,23 +33,26 @@ export class PdfsService {
     fecha_completa = "Salta, " + dia + " de " + meses_texto[mes] + " de " +  anio;
     
     const pdf = new PdfMakeWrapper();
-    pdf.pageMargins([45,40])
+    pdf.pageMargins([45,30])
 
     //Rectangulos
     pdf.add(
       new Canvas([
         // Bottom
-        new Rect([35, 170], [510, 600]).lineColor('#000000').end,
-        new Rect([40, 195], [500, 25]).lineColor('#000000').end,
-        new Rect([40, 245], [500, 55]).lineColor('#000000').end,
-        new Rect([40, 330], [500, 55]).lineColor('#000000').end,
-        new Rect([40, 415], [500, 120]).lineColor('#000000').end,
+        new Rect([35, 120], [510, 600]).lineColor('#000000').end,
+        new Rect([40, 150], [500, 25]).lineColor('#000000').end,
+        new Rect([40, 205], [500, 55]).lineColor('#000000').end,
+        new Rect([40, 285], [500, 55]).lineColor('#000000').end,
+        new Rect([40, 370], [500, 120]).lineColor('#000000').end,
       ]).absolutePosition(0, 0).end
     );
     
     
     //agrega imagen
-    pdf.add( await new Img('../../../assets/imagenes/general/logo-gobierno-salta.png').fit([120,120]).alignment('left').build());
+    pdf.add( await new Img('../../../assets/imagenes/general/logo-mediacion-secretaria2024.png').fit([250,250]).alignment('center').build());
+    
+    pdf.add(' ');
+    
     pdf.add(
       new Txt(fecha_completa).fontSize(11).alignment('right').end      
     );
