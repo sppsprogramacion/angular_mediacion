@@ -1122,7 +1122,8 @@
                 <!-- FORMULARIO CERRAR AUDIENCIA -->
                 <div class="col-12">
                     <form [formGroup]="formaAudienciaCerrar">
-                         
+                        
+                        <h6 class="block font-bold font-medium mt-2">Cerrar audiencia</h6> 
                         <div class="formgrid grid">
                             <div class="field col-12">
                                 <label for="resultado_audiencia_id" class="text font-medium">Resultado de la audiencia</label>
@@ -1158,6 +1159,7 @@
         </ng-template>
 
         <ng-template pTemplate="footer" class="mt-1">
+            <button pButton pRipple type="button" label="Imprimir" class="p-button-outlined p-button-info mr-2 mb-2" (click)="submitFormAudienciaCerrar()"></button>
             <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormAudienciaCerrar()"></button>
             <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogAudienciaCerrar()"></button>
         </ng-template>
