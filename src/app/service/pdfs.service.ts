@@ -20,7 +20,7 @@ export class PdfsService {
   }
 
   //CREAR PDF solicitud DEL TRAMITE
-  async generarPdfSolicitudTramite(dataTramite: TramiteModel, listAudienciasActivas: AudienciaModel[]) {
+  async generarPdfSolicitudTramite(dataTramite: TramiteModel, audienciaActiva: AudienciaModel) {
     let meses_texto=["Enero", "Febrero","Marzo","Abril","Mayo","Junio", "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
     
     //fecha completa
@@ -169,16 +169,16 @@ export class PdfsService {
 
     pdf.add(' ');
     
-    if(listAudienciasActivas.length > 0){
+    if(audienciaActiva){
 
       pdf.add({
         columns: [
           new Cell (new Txt( 'N° audiencia: ').bold().fontSize(11).end).width(70).end,
-          new Cell (new Txt( listAudienciasActivas[0].num_audiencia.toString() ).fontSize(11).end).width(80).end,
+          new Cell (new Txt( audienciaActiva.num_audiencia.toString() ).fontSize(11).end).width(80).end,
           new Cell (new Txt( 'Fecha: ').bold().fontSize(11).end).width(35).end,
-          new Cell (new Txt( this.datePipe.transform(listAudienciasActivas[0].fecha_inicio, "dd/MM/yyyy") ).fontSize(11).end).width(80).end,
+          new Cell (new Txt( this.datePipe.transform(audienciaActiva.fecha_inicio, "dd/MM/yyyy") ).fontSize(11).end).width(80).end,
           new Cell (new Txt( 'Hora: ').bold().fontSize(11).end).width(35).end,
-          new Cell (new Txt( listAudienciasActivas[0].hora_inicio.toString() ).fontSize(11).end).width(80).end        
+          new Cell (new Txt( audienciaActiva.hora_inicio.toString() ).fontSize(11).end).width(80).end        
         ]
       });    
 
@@ -187,7 +187,7 @@ export class PdfsService {
       pdf.add({
         columns: [
           new Cell (new Txt('Centro de mediación: ').bold().fontSize(11).end).width(110).end,
-          new Cell (new Txt( listAudienciasActivas[0].centro_mediacion.centro_mediacion ).fontSize(11).end).width(200).end,    
+          new Cell (new Txt( audienciaActiva.centro_mediacion.centro_mediacion ).fontSize(11).end).width(200).end,    
           
         ]
       });    
@@ -197,9 +197,9 @@ export class PdfsService {
       pdf.add({
         columns: [
           new Cell (new Txt('Departamento: ').bold().fontSize(11).end).width(75).end,
-          new Cell (new Txt( listAudienciasActivas[0].centro_mediacion.departamento.departamento ).fontSize(11).end).width(170).end,    
+          new Cell (new Txt( audienciaActiva.centro_mediacion.departamento.departamento ).fontSize(11).end).width(170).end,    
           new Cell (new Txt('Municipio: ').bold().fontSize(11).end).width(55).end,
-          new Cell (new Txt( listAudienciasActivas[0].centro_mediacion.municipio.municipio ).fontSize(11).end).width(150).end    
+          new Cell (new Txt( audienciaActiva.centro_mediacion.municipio.municipio ).fontSize(11).end).width(150).end    
         ]
       });  
       pdf.add(' ');
@@ -208,9 +208,9 @@ export class PdfsService {
         columns: [
           new Cell (new Txt('Domicilio: ').bold().fontSize(11).end).width(55).end,
           new Cell (new Txt( 
-            'Barrio: ' + listAudienciasActivas[0].centro_mediacion.localidad_barrio +
-            ' - Calle/Direccion: ' + listAudienciasActivas[0].centro_mediacion.calle_direccion +
-            ' - N°: ' + listAudienciasActivas[0].centro_mediacion.numero_dom 
+            'Barrio: ' + audienciaActiva.centro_mediacion.localidad_barrio +
+            ' - Calle/Direccion: ' + audienciaActiva.centro_mediacion.calle_direccion +
+            ' - N°: ' + audienciaActiva.centro_mediacion.numero_dom 
           
           ).fontSize(11).end).width(400).end    
         ]
@@ -263,7 +263,7 @@ export class PdfsService {
   //FIN CREAR PDF solicitud del tramite................................................
 
   //CREAR PDF Formulario de audiencia
-  async generarPdfFormularioAudiencia(dataTramite: TramiteModel, listAudienciasActivas: AudienciaModel[]) {
+  async generarPdfFormularioAudiencia(dataTramite: TramiteModel, audienciaActiva: AudienciaModel) {
     const pdf = new PdfMakeWrapper();
     pdf.pageMargins([45,40,110,0])
     
@@ -271,7 +271,7 @@ export class PdfsService {
     
     //fecha completa
     let fecha_completa: string;
-    let fechaAudiencia: Date = new Date(listAudienciasActivas[0].fecha_inicio);
+    let fechaAudiencia: Date = new Date(audienciaActiva.fecha_inicio);
 
     let anio:number= fechaAudiencia.getFullYear(); 
     let mes: number= fechaAudiencia.getMonth();
@@ -290,7 +290,7 @@ export class PdfsService {
     );
 
     pdf.add(
-      new Txt(listAudienciasActivas[0].centro_mediacion.centro_mediacion.toString()).fontSize(11).relativePosition(145,110).end      
+      new Txt(audienciaActiva.centro_mediacion.centro_mediacion.toString()).fontSize(11).relativePosition(145,110).end      
     );
 
     pdf.add(
@@ -302,11 +302,11 @@ export class PdfsService {
     ); 
     
     pdf.add(
-      new Txt(listAudienciasActivas[0].num_audiencia.toString()).fontSize(11).relativePosition(75,208).end      
+      new Txt(audienciaActiva.num_audiencia.toString()).fontSize(11).relativePosition(75,208).end      
     );
 
     pdf.add(
-      new Txt(listAudienciasActivas[0].hora_inicio.toString()).fontSize(11).relativePosition(135,208).end      
+      new Txt(audienciaActiva.hora_inicio.toString()).fontSize(11).relativePosition(135,208).end      
     );
     
     pdf.add(

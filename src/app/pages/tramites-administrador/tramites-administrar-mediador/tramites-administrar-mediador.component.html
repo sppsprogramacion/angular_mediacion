@@ -1159,10 +1159,16 @@
         </ng-template>
 
         <ng-template pTemplate="footer" class="mt-1">
-            <button pButton pRipple type="button" label="Imprimir" class="p-button-outlined p-button-info mr-2 mb-2" (click)="submitFormAudienciaCerrar()"></button>
-            <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormAudienciaCerrar()"></button>
-            <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogAudienciaCerrar()"></button>
+            <div>
+                <button pButton pRipple type="button" label="Imprimir tramite" class="p-button-outlined p-button-info mr-2 mb-2" (click)="generarPdfTramite()"></button>
+                <button pButton pRipple type="button" label="Formulario Audiencia" class="p-button-outlined p-button-info mr-2 mb-2" (click)="generarPdfFormularioAudiencia()"></button>
+            </div>
+            <div>
+                <button pButton pRipple type="button" label="Guardar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="submitFormAudienciaCerrar()"></button>
+                <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogAudienciaCerrar()"></button>
+            </div>
         </ng-template>
+        
     </p-dialog>
     <!-- FIN DIALOG CERRAR AUDIENCIA -->
 

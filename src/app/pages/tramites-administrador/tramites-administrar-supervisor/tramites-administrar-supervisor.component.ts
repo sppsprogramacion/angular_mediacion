@@ -199,7 +199,7 @@ export class TramitesAdministrarSupervisorComponent implements OnInit {
 
   //CREAR PDF SOLICITUD
   async generarPdfTramite(){
-    this.pdfsService.generarPdfSolicitudTramite(this.dataTramite, this.listAudienciasActivas);
+    this.pdfsService.generarPdfSolicitudTramite(this.dataTramite, this.dataAudiencia);
   }
   //FIN CREAR PDF SOLICITUD...................................................................
 

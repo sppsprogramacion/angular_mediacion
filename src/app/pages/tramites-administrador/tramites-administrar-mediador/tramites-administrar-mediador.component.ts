@@ -782,7 +782,8 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
 
   //CREAR PDF SOLICITUD
   async generarPdfTramite(){
-    this.pdfsService.generarPdfSolicitudTramite(this.dataTramite, this.listAudienciasActivas);
+    //envio del tramite y audiencia abierta en dialog
+    this.pdfsService.generarPdfSolicitudTramite(this.dataTramite, this.dataAudiencia);
   }
   //FIN CREAR PDF SOLICITUD....................................................................
 
@@ -793,7 +794,8 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
       return
     }
 
-    this.pdfsService.generarPdfFormularioAudiencia(this.dataTramite, this.listAudienciasActivas);
+    //envio del tramite y audiencia abierta en dialog
+    this.pdfsService.generarPdfFormularioAudiencia(this.dataTramite, this.dataAudiencia);
   }
   //FIN CREAR PDF Formulario audiencia....................................................................
 
