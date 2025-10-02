@@ -1116,8 +1116,8 @@
                         <span class="text font-medium text-1xl">Modalidad:<span class="text ml-1 font-medium"> {{dataAudiencia.modalidad?.modalidad}} </span></span>
                     </div>
                 </div>
-            </div>            
-
+            </div>        
+                   
             <div class="p-formgrid grid mt-2">
                 <!-- FORMULARIO CERRAR AUDIENCIA -->
                 <div class="col-12">
@@ -1181,7 +1181,7 @@
     <div class="col-12 border-bottom-1 surface-border">
         <div class="p-formgrid grid">            
             <div class="col-6">
-                <button pButton pRipple type="button" label="Imprimir tramite" class="p-button mr-2 mb-2" (click)="generarPdfTramite()"></button>
+                <button pButton pRipple type="button" label="Imprimir tramite" class="p-button mr-2 mb-2" (click)="generarPdfTramiteTodasAudiencias()"></button>
             </div>
             <div class="col-6">
                 <button pButton pRipple type="button" label="Formulario Audiencia" class="p-button mr-2 mb-2" (click)="generarPdfFormularioAudiencia()"></button>

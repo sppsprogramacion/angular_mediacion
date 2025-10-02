@@ -262,6 +262,208 @@ export class PdfsService {
   }
   //FIN CREAR PDF solicitud del tramite................................................
 
+  //CREAR PDF solicitud DEL TRAMITE
+  async generarPdfSolicitudTramiteTodasAudiencias(dataTramite: TramiteModel, listAudiencias: AudienciaModel[]) {
+    let meses_texto=["Enero", "Febrero","Marzo","Abril","Mayo","Junio", "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+    
+    //fecha completa
+    let fecha_hoy: Date = new Date();
+    let fecha_completa: string;
+    let fecha: string;
+    let anio:number= fecha_hoy.getFullYear(); 
+    let mes: number= fecha_hoy.getMonth();
+    let dia: number= fecha_hoy.getDate();
+    fecha_completa = "Salta, " + dia + " de " + meses_texto[mes] + " de " +  anio;
+    
+    const pdf = new PdfMakeWrapper();
+    pdf.pageMargins([45,30])
+
+    //Rectangulos
+    pdf.add(
+      new Canvas([
+        // Bottom
+        new Rect([35, 120], [510, 600]).lineColor('#000000').end,
+        new Rect([40, 150], [500, 25]).lineColor('#000000').end,
+        new Rect([40, 205], [500, 55]).lineColor('#000000').end,
+        new Rect([40, 285], [500, 55]).lineColor('#000000').end,
+        //new Rect([40, 370], [500, 120]).lineColor('#000000').end,
+      ]).absolutePosition(0, 0).end
+    );
+    
+    
+    //agrega imagen
+    pdf.add( await new Img('../../../assets/imagenes/general/logo-mediacion-secretaria2024.png').fit([250,250]).alignment('center').build());
+    
+    pdf.add(' ');
+    
+    pdf.add(
+      new Txt(fecha_completa).fontSize(11).alignment('right').end      
+    );
+
+    pdf.add(' ');
+
+    pdf.add(
+      new Txt('Solicitud de tramite').bold().fontSize(14).alignment('center').end
+    );
+
+    pdf.add(' ');
+    
+    pdf.add(
+      new Txt('Datos principales').bold().fontSize(12).alignment('left').end
+    );
+
+    pdf.add(' ');
+
+    pdf.add({      
+      columns: [
+        new Cell (new Txt( 'Tramite N°: ').bold().fontSize(11).end).width(60).end,
+        new Cell (new Txt( dataTramite.numero_tramite.toString() ).fontSize(11).end).width(90).end,
+        new Cell (new Txt('Fecha inicia: ').bold().fontSize(11).end).width(65).end,
+        new Cell (new Txt( this.datePipe.transform(dataTramite.fecha_tramite, "dd/MM/yyyy") ).fontSize(11).end).width(90).end,
+        new Cell (new Txt('Expediente: ').bold().fontSize(11).end).width(60).end,
+        new Cell (new Txt( dataTramite.expediente ).fontSize(11).end).width(150).end
+      ]
+    });    
+
+    pdf.add(' ');
+
+    //solicitante
+    pdf.add(
+      new Txt('Solicitante').bold().fontSize(12).alignment('left').end
+    );
+
+    pdf.add(' ');
+
+    pdf.add({
+      columns: [
+        new Cell (new Txt('Nombre: ').bold().fontSize(11).end).width(45).end,
+        new Cell (new Txt(dataTramite.ciudadano.apellido + ' ' + dataTramite.ciudadano.nombre).fontSize(11).end).width(310).end,
+        new Cell (new Txt('DNI: ').bold().fontSize(11).end).width(25).end,
+        new Cell (new Txt( dataTramite.ciudadano.dni.toString()).fontSize(11).end).width(85).end
+      ]
+    });    
+
+    pdf.add(' ');
+    
+    pdf.add({      
+      columns: [
+        new Cell (new Txt('Sexo: ').bold().fontSize(11).end).width(30).end,
+        new Cell (new Txt( dataTramite.ciudadano.sexo.sexo ).fontSize(11).end).width(80).end,
+        new Cell (new Txt('Teléfono: ').bold().fontSize(11).end).width(50).end,
+        new Cell (new Txt( dataTramite.ciudadano.telefono.toString() ).fontSize(11).end).width(90).end,
+        new Cell (new Txt('Email: ').bold().fontSize(11).end).width(35).end,
+        new Cell (new Txt( dataTramite.ciudadano.email.toString() ).fontSize(11).end).border([true]).width(210).end
+      ]
+    });    
+
+    pdf.add(' ');
+
+    //motivo
+    pdf.add(
+      new Txt('Motivo de la solicitud').bold().fontSize(12).alignment('left').end
+    );
+
+    pdf.add(' ');
+
+    let existe_violencia: string = "NO";
+    let existe_violencia_genero: string = "NO";
+    let existe_denuncia: string = "NO";
+    let existe_cautelar: string = "NO";
+    if (dataTramite.violencia_partes){
+      existe_violencia = "SI";
+    }
+    if (dataTramite.violencia_genero){
+      existe_violencia_genero = "SI";
+    }
+    if (dataTramite.existe_denuncia){
+      existe_denuncia = "SI";
+    }
+    if (dataTramite.medida_cautelar){
+      existe_cautelar = "SI";
+    }
+      
+    pdf.add({
+      columns: [
+        new Cell (new Txt('Motivo: ').bold().fontSize(11).end).width(40).end,
+        new Cell (new Txt(dataTramite.objeto.objeto ).fontSize(11).end).width(300).end,    
+        new Cell (new Txt('Existe violencia: ').bold().fontSize(11).end).width(85).end,
+        new Cell (new Txt( existe_violencia ).fontSize(11).end).width(30).end    
+      ]
+    });    
+    pdf.add(' ');
+
+    pdf.add({
+      columns: [
+        new Cell (new Txt( 'Existe violencia de género: ').bold().fontSize(11).end).width(135).end,
+        new Cell (new Txt( existe_violencia_genero ).fontSize(11).end).width(50).end,
+        new Cell (new Txt( 'Existe denuncia: ').bold().fontSize(11).end).width(85).end,
+        new Cell (new Txt( existe_denuncia ).fontSize(11).end).width(50).end,
+        new Cell (new Txt( 'Existe cautelar: ').bold().fontSize(11).end).width(80).end,
+        new Cell (new Txt( existe_cautelar ).fontSize(11).end).width(50).end        
+      ]
+    });    
+
+    pdf.add(' ');    
+
+    //audiencia
+    pdf.add(
+      new Txt('Audiencias').bold().fontSize(12).alignment('left').end
+    );
+
+    pdf.add(' ');
+        
+    let misAudiencias: string[] = [];
+    let miAudiencia: string;
+    listAudiencias.forEach(audiencia => {
+      miAudiencia = "N° audiencia: " + audiencia.num_audiencia + " - Fecha: " + this.datePipe.transform(audiencia.fecha_inicio, "dd/MM/yyyy") 
+          + " - Hora: " + audiencia.hora_inicio + " - Centro de mediación: " + audiencia.centro_mediacion.centro_mediacion 
+          + " - Departamento: " + audiencia.centro_mediacion.departamento.departamento + " - Municipio: " + audiencia.centro_mediacion.municipio.municipio 
+          + " - Resultado: " + audiencia.resultado_audiencia.resultado_audiencia + " - Observaciones: " + audiencia.observacion_resultado;
+          
+      misAudiencias.push(miAudiencia);
+    });
+
+    pdf.add(
+      {
+        ul: misAudiencias
+      }
+    );
+    
+    pdf.add(' ');
+
+
+
+    
+    //convocados
+    pdf.add(
+      new Txt('Convocados').bold().fontSize(12).alignment('left').end
+    );
+    
+    let misConvocados: string[] = [];
+    let miConvocado: string;
+    dataTramite.convocados.forEach(convocado => {
+      miConvocado = "Apellido y nombre: " + convocado.apellido + " " + convocado.nombre;
+      misConvocados.push(miConvocado);
+    });
+
+    pdf.add(
+      {
+        ul: misConvocados
+      }
+    );
+
+    pdf.add(' ');
+    pdf.add(' ');
+
+
+    pdf.add(' ');
+     
+    pdf.create().open();
+                             
+  }
+  //FIN CREAR PDF solicitud del tramite................................................
+
+
   //CREAR PDF Formulario de audiencia
   async generarPdfFormularioAudiencia(dataTramite: TramiteModel, audienciaActiva: AudienciaModel) {
     const pdf = new PdfMakeWrapper();
@@ -298,7 +500,7 @@ export class PdfsService {
     );   
 
     pdf.add(
-      new Txt(caratula + " " + caratula + " " + caratula).fontSize(11).relativePosition(60,147).end      
+      new Txt(caratula).fontSize(11).relativePosition(60,147).end      
     ); 
     
     pdf.add(
@@ -322,7 +524,7 @@ export class PdfsService {
   }
   //Fin CREAR PDF Formulario de audiencia
 
-  //CREAR PDF solicitud DEL TRAMITE
+  //CREAR PDF solicitud DEL TRAMITE FINALIZAD
   async generarPdfTramiteFinalizado(dataTramite: TramiteModel, listAudiencias: AudienciaModel[]) {
     let meses_texto=["Enero", "Febrero","Marzo","Abril","Mayo","Junio", "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
     
@@ -503,7 +705,7 @@ export class PdfsService {
 
       const tableData = [
         headers,
-        ...listAudiencias.map(audiencia => [audiencia.num_audiencia, this.datePipe.transform(audiencia.fecha_inicio, "dd/MM/yyyy"), audiencia.resultado_audiencia.resultado_audiencia, audiencia.observacion_resultado+audiencia.observacion_resultado+audiencia.observacion_resultado])
+        ...listAudiencias.map(audiencia => [audiencia.num_audiencia, this.datePipe.transform(audiencia.fecha_inicio, "dd/MM/yyyy"), audiencia.resultado_audiencia.resultado_audiencia, audiencia.observacion_resultado])
       ];
 
       pdf.add(
@@ -546,5 +748,5 @@ export class PdfsService {
     pdf.create().open();
                              
   }
-  //FIN CREAR PDF solicitud del tramite................................................
+  //FIN CREAR PDF solicitud del tramite FINALIZADO................................................
 }

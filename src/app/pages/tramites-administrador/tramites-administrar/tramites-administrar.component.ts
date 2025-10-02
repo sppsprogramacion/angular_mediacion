@@ -631,4 +631,12 @@ export class TramitesAdministrarComponent implements OnInit {
     this.pdfsService.generarPdfSolicitudTramite(this.dataTramite, this.dataAudiencia);
   }
   //FIN CREAR PDF SOLICITUD....................................................................
+  
+  //CREAR PDF SOLICITUD CON TODAS LAS AUDIENCIAS
+  async generarPdfTramiteTodasAudiencias(){
+    //envio del tramite y audiencia abierta en dialog
+    this.pdfsService.generarPdfSolicitudTramiteTodasAudiencias(this.dataTramite, this.listAudiencias);
+  }
+  //FIN CREAR PDF SOLICITUD CON TODAS LAS AUDIENCIAS....................................................................
+
 }

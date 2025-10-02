@@ -787,6 +787,14 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   }
   //FIN CREAR PDF SOLICITUD....................................................................
 
+
+  //CREAR PDF SOLICITUD CON TODAS LAS AUDIENCIAS
+  async generarPdfTramiteTodasAudiencias(){
+    //envio del tramite y audiencia abierta en dialog
+    this.pdfsService.generarPdfSolicitudTramiteTodasAudiencias(this.dataTramite, this.listAudiencias);
+  }
+  //FIN CREAR PDF SOLICITUD CON TODAS LAS AUDIENCIAS....................................................................
+
   //CREAR PDF Formulario audiencia
   async generarPdfFormularioAudiencia(){
     if(this.listAudienciasActivas.length == 0){

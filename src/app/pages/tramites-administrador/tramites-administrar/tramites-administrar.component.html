@@ -1063,7 +1063,9 @@
                     </div>
                 </div>
             </div>
+            
             <div class="col-12 border-bottom-2 surface-border">
+                <h6 class="block font-bold font-medium mt-2">Resultado</h6> 
                 <div class="grid">
                     <div class="col-12">
                         <span class="text font-medium text-1xl">Resultado de la audiencia:<span class="text ml-1 font-medium"> {{dataAudiencia.resultado_audiencia?.resultado_audiencia}} </span></span>
@@ -1096,7 +1098,7 @@
     <div class="col-12 border-bottom-1 surface-border">
         <div class="p-formgrid grid">            
             <div class="col-6">
-                <button pButton pRipple type="button" label="Imprimir tramite" class="p-button mr-2 mb-2" (click)="generarPdfTramite()"></button>
+                <button pButton pRipple type="button" label="Imprimir tramite" class="p-button mr-2 mb-2" (click)="generarPdfTramiteTodasAudiencias()"></button>
             </div>
         </div>
     </div>
