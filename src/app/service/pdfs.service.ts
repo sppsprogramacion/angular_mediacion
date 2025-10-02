@@ -60,7 +60,7 @@ export class PdfsService {
     pdf.add(' ');
 
     pdf.add(
-      new Txt('Solicitud de mediación').bold().fontSize(14).alignment('center').end
+      new Txt('Solicitud de tramite').bold().fontSize(14).alignment('center').end
     );
 
     pdf.add(' ');
