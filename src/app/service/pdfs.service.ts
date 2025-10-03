@@ -409,31 +409,33 @@ export class PdfsService {
     pdf.add(
       new Txt('Audiencias').bold().fontSize(12).alignment('left').end
     );
-
-    pdf.add(' ');
+    
+    if(listAudiencias.length > 0){
+      let miAudiencia: string;
+      listAudiencias.forEach(audiencia => {
+        miAudiencia = "N° AUDIENCIA: " + audiencia.num_audiencia + " - FECHA: " + this.datePipe.transform(audiencia.fecha_inicio, "dd/MM/yyyy") 
+            + " - DETALLE AUDIENCIA: " + (audiencia.detalles? audiencia.detalles : "") 
+            + " - HORA: " + audiencia.hora_inicio + " - CENTRO MEDIACION: " + audiencia.centro_mediacion.centro_mediacion 
+            + " - DEPARTAMENTO: " + audiencia.centro_mediacion.departamento.departamento + " - MUNICIPIO: " + audiencia.centro_mediacion.municipio.municipio 
+            + " - RESULTADO: " + audiencia.resultado_audiencia.resultado_audiencia + " - OBSERVACIONES: " + (audiencia.observacion_resultado ? audiencia.observacion_resultado : "");
         
-    let misAudiencias: string[] = [];
-    let miAudiencia: string;
-    listAudiencias.forEach(audiencia => {
-      miAudiencia = "N° audiencia: " + audiencia.num_audiencia + " - Fecha: " + this.datePipe.transform(audiencia.fecha_inicio, "dd/MM/yyyy") 
-          + " - Hora: " + audiencia.hora_inicio + " - Centro de mediación: " + audiencia.centro_mediacion.centro_mediacion 
-          + " - Departamento: " + audiencia.centro_mediacion.departamento.departamento + " - Municipio: " + audiencia.centro_mediacion.municipio.municipio 
-          + " - Resultado: " + audiencia.resultado_audiencia.resultado_audiencia + " - Observaciones: " + audiencia.observacion_resultado;
-          
-      misAudiencias.push(miAudiencia);
-    });
+      pdf.add(
+        new Txt('- ' + miAudiencia).fontSize(11).alignment('left').end
+      );
+      
+      pdf.add(' ');
+  
+      });
+    }
+    else{
+      pdf.add(
+        new Txt('No tiene audiencias.').fontSize(11).alignment('left').end
+      );
+      pdf.add(' ');
+    }
 
-    pdf.add(
-      {
-        ul: misAudiencias
-      }
-    );
-    
     pdf.add(' ');
 
-
-
-    
     //convocados
     pdf.add(
       new Txt('Convocados').bold().fontSize(12).alignment('left').end
