@@ -54,7 +54,7 @@ export class CategoriasListaComponent implements OnInit {
   ) { 
 
     this.formaCategoria = this.fb.group({
-      categoria: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      categoria: ['',[Validators.required, Validators.pattern(/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9.,/\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
     
     });
 

@@ -124,8 +124,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     });
 
     this.formaConvocado = this.fb.group({
-      apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-zñÑ0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
-      nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-zñÑ0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9.,/\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9.,/\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
       dni: ['',[Validators.pattern(/^[0-9]*$/), Validators.minLength(1)]],
       sexo_id: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],   
     });
@@ -153,8 +153,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     });
 
     this.formaVinculado = this.fb.group({
-      apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
-      nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9.,/\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9.,/\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
       dni: ['',[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.minLength(1)]],
       sexo_id: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],   
       telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]], 
@@ -171,7 +171,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   user_validation_messages = {
     'apellido': [
       { type: 'required', message: 'El apellido es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
+      { type: 'pattern', message: 'No puede ingresar caracteres especiales como @, #, ?, etc.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
     ],

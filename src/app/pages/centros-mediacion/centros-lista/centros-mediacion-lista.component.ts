@@ -63,7 +63,7 @@ export class CentrosMediacionListaComponent implements OnInit {
     private centrosMediacionService: CentrosMediacionService,
   ) {
     this.formaCentroMediacion = this.fb.group({
-      centro_mediacion: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      centro_mediacion: ['',[Validators.required, Validators.pattern(/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9.,/\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
       departamento_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       municipio_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       localidad_barrio: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
