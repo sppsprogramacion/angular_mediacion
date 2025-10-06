@@ -152,6 +152,14 @@ export class AppMenuComponent implements OnInit {
                         {label: 'Ver objetos', icon: 'pi pi-fw pi-star', routerLink: ['/admin/objetos']}
                     ]
                 },  
+                {
+                    label: 'Mi perfil',
+                    items: [
+                        {label: 'Datos Personales', icon: 'pi pi-id-card', routerLink: ['/admin/miperfil/datospersonales']},
+                        {label: 'Cambiar contraseña', icon: 'pi pi-circle', routerLink: ['/admin/miperfil/cambiarcontrasenia']},
+                        
+                    ]
+                },  
                                                 
             ];
 

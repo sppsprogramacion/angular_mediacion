@@ -11,6 +11,7 @@ import { globalConstants } from '../../../common/global-constants';
 import { UsuariosTramiteService } from '../../../service/usuarios-tramite.service';
 import { AuthService } from 'src/app/service/auth.service';
 import { Table } from 'primeng/table';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-tramites-nuevoslis',
@@ -41,13 +42,27 @@ export class TramitesNuevoslisComponent implements OnInit {
   listMunicipios: MunicipioModel[]= [];
   listSexo: SexoModel[]=[];
 
+  //FORMULARIOS
+    formaBuscar: FormGroup;
+
   constructor(
+    private fb: FormBuilder,
+    
     private authService: AuthService,
     private tramitesService: TramitesService,
     private usuariosTramitesService: UsuariosTramiteService,
     public dataService: DataService,
     private router: Router
-  ) { }
+  ) { 
+
+    this.formaBuscar = this.fb.group({
+      id_tipo_busqueda: ['anioActual',[Validators.required]],
+      buscar: ['',[Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.required]],
+      fecha_ini: ['',[Validators.required]],
+      fecha_fin: ['',[Validators.required]],
+
+    });
+  }
 
   ngOnInit(): void {
     

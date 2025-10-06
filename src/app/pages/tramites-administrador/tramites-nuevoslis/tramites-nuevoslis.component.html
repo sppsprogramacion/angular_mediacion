@@ -17,8 +17,78 @@
                                 <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
                             </span>
                         </div>
+
                     </div>
+                    
                 </ng-template>
+                <div class="p-formgrid grid">                
+                        <!-- FORMULARIO BUSCAR -->
+                        <div class="col-12">  
+                            <form [formGroup]="">
+                                <!-- CARD DATOS BUSQUEDA-->
+                                <div class="card p-fluid">                            
+                                    <div class="formgrid grid">
+                                        
+
+                                        <div  class="field col-12 md:col-6 lg:col-6">
+                                            <label for="buscar">Buscar</label>
+                                            <input type="text" pInputText id="buscar" formControlName="buscar" />
+                                            <!-- <small *ngIf="isValid('buscar')" class="p-error">
+                                                <div *ngFor="let validation of user_validation_messages.buscar" >
+                                                    <div  *ngIf="formaBuscar.get('buscar')?.hasError(validation.type)">
+                                                        {{validation.message}}
+                                                    </div>
+                                                </div>
+                                            </small> -->
+                                        </div>
+                                        
+                                    </div>
+
+                                    <div  class="formgrid grid">
+                                        <div class="field col-12 md:col-6 lg:col-6">
+                                            <label for="fecha_ini">Fecha inicio</label>
+                                            <!-- <p-calendar p-inputtext formControlName="fecha_ini" dateFormat="dd/mm/yy" view="" styleClass="" [locale]="es"></p-calendar> -->
+                                            <p-calendar p-inputtext formControlName="fecha_ini" dateFormat="dd/mm/yy" view="" styleClass="" ></p-calendar>
+                                            <!-- <small *ngIf="isValid('fecha_ini')" class="p-error">
+                                                <div *ngFor="let validation of user_validation_messages.fecha_ini" >
+                                                    <div  *ngIf="formaBuscar.get('fecha_ini')?.hasError(validation.type)">
+                                                        {{validation.message}}
+                                                    </div>
+                                                </div>
+                                            </small> -->
+                                        </div>
+
+
+
+                                        <div class="field col-12 md:col-6 lg:col-6">
+                                            <label for="fecha_fin">Fecha fin</label>
+                                            <!-- <p-calendar p-inputtext formControlName="fecha_fin" dateFormat="dd/mm/yy" view="" styleClass="" [locale]="es"></p-calendar> -->
+                                            <p-calendar p-inputtext formControlName="fecha_fin" dateFormat="dd/mm/yy" view="" styleClass="" ></p-calendar>
+                                            <!-- <small *ngIf="isValid('fecha_fin')" class="p-error">
+                                                <div *ngFor="let validation of user_validation_messages.fecha_fin" >
+                                                    <div  *ngIf="formaBuscar.get('fecha_fin')?.hasError(validation.type)">
+                                                        {{validation.message}}
+                                                    </div>
+                                                </div>
+                                            </small> -->
+                                        </div>
+                                        
+                                    </div>
+
+                                    <!-- boton buscar -->
+                                    <div  class="col-12 grid justify-content-between">
+                                        <!-- <button pButton pRipple type="button" label="Buscar" class="p-button-primary w-47" (click)="buscarTramites()" ></button> -->
+                                        <button pButton pRipple type="button" label="Buscar" class="p-button-primary w-47"  ></button>
+                                        
+                                    </div>
+                                </div>
+                                <!-- FIN CARD DATOS BUSQUEDA -->
+                                
+                            </form>
+                        </div>
+                        <!--  FIN FORMULARIO BUSCAR -->
+                        
+                    </div>
                 <ng-template pTemplate="header">
                     <tr>
                         <th class="min-w-3rem"></th>
