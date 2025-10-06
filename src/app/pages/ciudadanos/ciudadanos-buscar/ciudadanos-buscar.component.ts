@@ -59,7 +59,7 @@ export class CiudadanosBuscarComponent implements OnInit {
   ) { 
     this.formaBuscar = this.fb.group({
       id_tipo_busqueda: [,[Validators.required]],
-      buscar: ['',[Validators.required]],
+      buscar: ['',[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u)]],
 
     });
   }
@@ -73,6 +73,7 @@ export class CiudadanosBuscarComponent implements OnInit {
     ],
     'buscar': [
       { type: 'required', message: 'El dato a buscar es requerido ' },
+      { type: 'pattern', message: 'No se pueden ingresar caracteres especiales como @, #, !, ?, : etc.' }
     ],
   }
   //FIN MENSAJES DE VALIDACIONES...............................................................

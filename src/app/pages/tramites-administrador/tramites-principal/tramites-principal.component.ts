@@ -74,7 +74,7 @@ export class TramitesPrincipalComponent implements OnInit {
   ) { 
     this.formaBuscar = this.fb.group({
       id_tipo_busqueda: ['anioActual',[Validators.required]],
-      buscar: ['',[Validators.required]],
+      buscar: ['',[Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.required]],
       fecha_ini: ['',[Validators.required]],
       fecha_fin: ['',[Validators.required]],
 
@@ -118,6 +118,7 @@ export class TramitesPrincipalComponent implements OnInit {
     ],
     'buscar': [
       { type: 'required', message: 'El dato a buscar es requerido' },
+      { type: 'pattern', message: 'No se pueden ingresar caracteres especiales como @, #, !, ?, : etc.' },
     ],
     'fecha_ini': [
       { type: 'required', message: 'La fecha inicio es requerida' },

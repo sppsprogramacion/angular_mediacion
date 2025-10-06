@@ -112,8 +112,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       municipio_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(2)]],
       departamento_id_centro: [,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(2)]],
       centro_mediacion_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(1)]],
-      localidad_barrio: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
-      calle_direccion: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],        
+      localidad_barrio: [,[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(1), Validators.maxLength(100)]],
+      calle_direccion: [,[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(1), Validators.maxLength(100)]],        
       numero_dom: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       objeto_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
       violencia_genero: [false,[Validators.required]],
@@ -124,8 +124,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     });
 
     this.formaConvocado = this.fb.group({
-      apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9.,/\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
-      nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9.,/\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      apellido: ['',[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(2), Validators.maxLength(100)]],
+      nombre:   ['',[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(2), Validators.maxLength(100)]],
       dni: ['',[Validators.pattern(/^[0-9]*$/), Validators.minLength(1)]],
       sexo_id: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],   
     });
@@ -134,10 +134,10 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       departamento_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(2)]],      
       municipio_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(2)]],
       codigo_postal: [,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(1)]],
-      localidad_barrio: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
-      calle_direccion: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],        
+      localidad_barrio: [,[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(1), Validators.maxLength(100)]],
+      calle_direccion: [,[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(1), Validators.maxLength(100)]],        
       numero_dom: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-      punto_referencia: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],       
+      punto_referencia: ['',[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(2), Validators.maxLength(100)]],       
       telefono: [,[Validators.minLength(1), Validators.maxLength(100)]],
       email: ['',[Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
     });
@@ -153,8 +153,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     });
 
     this.formaVinculado = this.fb.group({
-      apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9.,/\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
-      nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9.,/\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      apellido: ['',[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(2), Validators.maxLength(100)]],
+      nombre:   ['',[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(2), Validators.maxLength(100)]],
       dni: ['',[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.minLength(1)]],
       sexo_id: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],   
       telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]], 
@@ -177,6 +177,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     ],
     'calle_direccion': [
       { type: 'required', message: 'La calle/direccion es requerida' },
+      { type: 'pattern', message: 'No puede ingresar caracteres especiales como @, #, ?, etc.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
     ],
@@ -214,6 +215,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     ],  
     'localidad_barrio': [
       { type: 'required', message: 'La localidad/barrio es requerido.' },
+      { type: 'pattern', message: 'No puede ingresar caracteres especiales como @, #, ?, etc.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
     ],
@@ -231,7 +233,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     ],        
     'nombre': [
       { type: 'required', message: 'El nombre es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
+      { type: 'pattern', message: 'No puede ingresar caracteres especiales como @, #, ?, etc.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
     ],
@@ -251,7 +253,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     ],
     'punto_referencia': [
       { type: 'required', message: 'El punto de referencia es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
+      { type: 'pattern', message: 'No puede ingresar caracteres especiales como @, #, ?, etc.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
     ],

@@ -104,7 +104,7 @@ export class TramitesAdministrarComponent implements OnInit {
     
     //FORMULARIO 
     this.formaMediadorAsignado = this.fb.group({
-      detalles: ['',[Validators.maxLength(300)]],     
+      detalles: ['',[Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.maxLength(300)]],     
       centro_mediacion_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]],         
       departamento_id_centro: [1,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(2)]],     
       funcion_tramite_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
@@ -133,6 +133,7 @@ export class TramitesAdministrarComponent implements OnInit {
     ],    
     'detalles': [
       { type: 'required', message: 'El detalle es requerido.' },
+      { type: 'pattern', message: 'No se pueden ingresar caracteres especiales como @, #, !, ?, : etc.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 300.' }
     ],  
     'departamento_id_centro': [

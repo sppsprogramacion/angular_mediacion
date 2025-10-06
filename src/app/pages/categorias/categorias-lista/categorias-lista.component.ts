@@ -54,7 +54,7 @@ export class CategoriasListaComponent implements OnInit {
   ) { 
 
     this.formaCategoria = this.fb.group({
-      categoria: ['',[Validators.required, Validators.pattern(/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9.,/\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      categoria: ['',[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(2), Validators.maxLength(100)]],
     
     });
 
@@ -65,7 +65,7 @@ export class CategoriasListaComponent implements OnInit {
     
     'categoria': [
       { type: 'required', message: 'La categoría es requerida' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
+      { type: 'pattern', message: 'No se pueden ingresar caracteres especiales como @, #, !, ?, : etc.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
 

@@ -69,9 +69,9 @@ export class TramitesNuevoComponent implements OnInit {
       departamento_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],      
       municipio_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       departamento_id_centro: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-      centro_mediacion_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-      localidad_barrio: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
-      calle_direccion: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],        
+      centro_mediacion_id: [1,[Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      localidad_barrio: [,[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(1), Validators.maxLength(100)]],
+      calle_direccion: [,[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(1), Validators.maxLength(100)]],        
       numero_dom: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       objeto_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       violencia_genero: [false,[Validators.required]],
@@ -104,11 +104,13 @@ export class TramitesNuevoComponent implements OnInit {
     ],
     'localidad_barrio': [
         { type: 'required', message: 'La localidad/barrio es requerido.' },
+        { type: 'pattern', message: 'No se pueden ingresar caracteres especiales como @, #, !, ?, : etc.' },
         { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
         { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
     ],
     'calle_direccion': [
         { type: 'required', message: 'La calle/direccion es requerida' },
+        { type: 'pattern', message: 'No se pueden ingresar caracteres especiales como @, #, !, ?, : etc.' },
         { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
         { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
     ],
