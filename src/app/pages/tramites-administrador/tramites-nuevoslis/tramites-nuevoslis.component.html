@@ -1,49 +1,12 @@
 <div class="grid">
 
-    <div class="col-12">
-        <div class="card">
-
-            <h5>Tramites nuevos</h5>
-
-            <!-- TABLA DE TRAMITES -->
-            <p-table #dt1 [value]="listTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['numero_tramite','ciudadano.apellido','ciudadano.nombre','ciudadano.dni']" responsiveLayout="scroll">
-                <ng-template pTemplate="caption">
-                    <div class="flex justify-content-between flex-column sm:flex-row">
-                        <button *ngIf="isCiudadano" pButton label="Solicitar tramite" icon="pi pi-plus" class="p-button-success mr-2" (click)="abrirNuevoTramite()"></button>
-                        <div>
-                            <button pButton label="Limpiar" icon="pi pi-filter-slash" class="p-button-outlined mr-1" (click)="clear(dt1)"></button>
-                            <span class="p-input-icon-left">
-                                <i class="pi pi-search"></i>
-                                <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
-                            </span>
-                        </div>
-
-                    </div>
-                    
-                </ng-template>
-                <div class="p-formgrid grid">                
+    <div class="p-formgrid grid">                
                         <!-- FORMULARIO BUSCAR -->
                         <div class="col-12">  
-                            <form [formGroup]="">
+                            <form [formGroup]="formaBuscar">
                                 <!-- CARD DATOS BUSQUEDA-->
                                 <div class="card p-fluid">                            
-                                    <div class="formgrid grid">
-                                        
-
-                                        <div  class="field col-12 md:col-6 lg:col-6">
-                                            <label for="buscar">Buscar</label>
-                                            <input type="text" pInputText id="buscar" formControlName="buscar" />
-                                            <!-- <small *ngIf="isValid('buscar')" class="p-error">
-                                                <div *ngFor="let validation of user_validation_messages.buscar" >
-                                                    <div  *ngIf="formaBuscar.get('buscar')?.hasError(validation.type)">
-                                                        {{validation.message}}
-                                                    </div>
-                                                </div>
-                                            </small> -->
-                                        </div>
-                                        
-                                    </div>
-
+                                    
                                     <div  class="formgrid grid">
                                         <div class="field col-12 md:col-6 lg:col-6">
                                             <label for="fecha_ini">Fecha inicio</label>
@@ -89,6 +52,28 @@
                         <!--  FIN FORMULARIO BUSCAR -->
                         
                     </div>
+    <div class="col-12">
+        <div class="card">
+
+            <h5>Tramites nuevos</h5>
+
+            <!-- TABLA DE TRAMITES -->
+            <p-table #dt1 [value]="listTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['numero_tramite','ciudadano.apellido','ciudadano.nombre','ciudadano.dni']" responsiveLayout="scroll">
+                <ng-template pTemplate="caption">
+                    <div class="flex justify-content-between flex-column sm:flex-row">
+                        <button *ngIf="isCiudadano" pButton label="Solicitar tramite" icon="pi pi-plus" class="p-button-success mr-2" (click)="abrirNuevoTramite()"></button>
+                        <div>
+                            <button pButton label="Limpiar" icon="pi pi-filter-slash" class="p-button-outlined mr-1" (click)="clear(dt1)"></button>
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
+                            </span>
+                        </div>
+pedro
+                    </div>
+                    
+                </ng-template>
+                
                 <ng-template pTemplate="header">
                     <tr>
                         <th class="min-w-3rem"></th>
