@@ -1,57 +1,6 @@
 <div class="grid">
 
-    <div class="p-formgrid grid">                
-                        <!-- FORMULARIO BUSCAR -->
-                        <div class="col-12">  
-                            <form [formGroup]="formaBuscar">
-                                <!-- CARD DATOS BUSQUEDA-->
-                                <div class="card p-fluid">                            
-                                    
-                                    <div  class="formgrid grid">
-                                        <div class="field col-12 md:col-6 lg:col-6">
-                                            <label for="fecha_ini">Fecha inicio</label>
-                                            <!-- <p-calendar p-inputtext formControlName="fecha_ini" dateFormat="dd/mm/yy" view="" styleClass="" [locale]="es"></p-calendar> -->
-                                            <p-calendar p-inputtext formControlName="fecha_ini" dateFormat="dd/mm/yy" view="" styleClass="" ></p-calendar>
-                                            <!-- <small *ngIf="isValid('fecha_ini')" class="p-error">
-                                                <div *ngFor="let validation of user_validation_messages.fecha_ini" >
-                                                    <div  *ngIf="formaBuscar.get('fecha_ini')?.hasError(validation.type)">
-                                                        {{validation.message}}
-                                                    </div>
-                                                </div>
-                                            </small> -->
-                                        </div>
-
-
-
-                                        <div class="field col-12 md:col-6 lg:col-6">
-                                            <label for="fecha_fin">Fecha fin</label>
-                                            <!-- <p-calendar p-inputtext formControlName="fecha_fin" dateFormat="dd/mm/yy" view="" styleClass="" [locale]="es"></p-calendar> -->
-                                            <p-calendar p-inputtext formControlName="fecha_fin" dateFormat="dd/mm/yy" view="" styleClass="" ></p-calendar>
-                                            <!-- <small *ngIf="isValid('fecha_fin')" class="p-error">
-                                                <div *ngFor="let validation of user_validation_messages.fecha_fin" >
-                                                    <div  *ngIf="formaBuscar.get('fecha_fin')?.hasError(validation.type)">
-                                                        {{validation.message}}
-                                                    </div>
-                                                </div>
-                                            </small> -->
-                                        </div>
-                                        
-                                    </div>
-
-                                    <!-- boton buscar -->
-                                    <div  class="col-12 grid justify-content-between">
-                                        <!-- <button pButton pRipple type="button" label="Buscar" class="p-button-primary w-47" (click)="buscarTramites()" ></button> -->
-                                        <button pButton pRipple type="button" label="Buscar" class="p-button-primary w-47"  ></button>
-                                        
-                                    </div>
-                                </div>
-                                <!-- FIN CARD DATOS BUSQUEDA -->
-                                
-                            </form>
-                        </div>
-                        <!--  FIN FORMULARIO BUSCAR -->
-                        
-                    </div>
+    
     <div class="col-12">
         <div class="card">
 
@@ -62,14 +11,62 @@
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-between flex-column sm:flex-row">
                         <button *ngIf="isCiudadano" pButton label="Solicitar tramite" icon="pi pi-plus" class="p-button-success mr-2" (click)="abrirNuevoTramite()"></button>
-                        <div>
-                            <button pButton label="Limpiar" icon="pi pi-filter-slash" class="p-button-outlined mr-1" (click)="clear(dt1)"></button>
-                            <span class="p-input-icon-left">
-                                <i class="pi pi-search"></i>
-                                <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
-                            </span>
+                        <div class="grid">
+                            <!-- FILTRO DE TRAMITES NUEVOS -->
+                            <div class="field col-12 md:col-6 lg:col-6">
+                                <button pButton label="Limpiar" icon="pi pi-filter-slash" class="p-button-outlined mr-1" (click)="clear(dt1)"></button>
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
+                                </span>                                
+                            </div>
+                            <div class="field col-12 md:col-6 lg:col-6">                                
+                                <button pButton label="Controlar" icon="" class="p-button-outlined  p-button-help mr-1" (click)="clear(dt1)"></button>
+                                
+                            </div>
+                            <!-- FIN FILTRO DE TRAMITES NUEVOS -->
+
+                            <!-- CONTROLAR VENCIMIENTO DE TRAMITES NUEVOS -->
+                            <div class="field col-12">
+                                <div class="p-formgrid grid">                
+                                    <!-- FORMULARIO BUSCAR -->
+                                    <div class="col-12">  
+                                        <form [formGroup]="formaBuscar">
+                                            <!-- CARD DATOS BUSQUEDA-->
+                                            <div class="card p-fluid">   
+                                                <div  class="formgrid grid">
+                                                    <div class="grid field col-12">
+                                                        <div class="field col-6 md:col-4 lg:col-4">
+                                                            <label for="anio">Dias</label>
+                                                            <input type="text" pInputText id="buscar" formControlName="buscar" />
+                                        
+                                                        </div>  
+
+                                                        <div class="field col-6 md:col-4 lg:col-4">
+                                                            <button pButton pRipple type="button" label="Buscar" class="p-button-primary mt-4" (click)="buscarFinalizadosXAnio()" ></button>
+                                                            
+                                                        </div>  
+                                                    </div>
+                                                    <div class="grid field col-12">
+                                                        <div class="field col-6 md:col-4 lg:col-4">
+                                                            <button pButton pRipple type="button" label="Aplicar control" class="p-button-danger mt-4" (click)="buscarFinalizadosXAnio()" ></button>
+                                                            
+                                                        </div>
+                                                        <div class="field col-6 md:col-4 lg:col-4">
+                                                            <button pButton pRipple type="button" label="Finalizar" class="p-button-secondary mt-4" (click)="buscarFinalizadosXAnio()" ></button>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>                                                
+                                            </div>
+                                            <!-- FIN CARD DATOS BUSQUEDA -->                                            
+                                        </form>
+                                    </div>
+                                    <!--  FIN FORMULARIO BUSCAR -->
+                                </div>                                
+                            </div>
+                            <!-- FIN CONTROLAR VENCIMIENTO DE TRAMITES NUEVOS -->
                         </div>
-pedro
                     </div>
                     
                 </ng-template>
