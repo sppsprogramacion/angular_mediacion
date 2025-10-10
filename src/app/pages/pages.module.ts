@@ -57,6 +57,7 @@ import { DepartamentosListaComponent } from './departamentos/departamentos-lista
 import { DescargasAudienciasComponent } from './descargas/descargas-audiencias/descargas-audiencias.component';
 import { DescargasTramitesComponent } from './descargas/descargas-tramites/descargas-tramites.component';
 import { DescargasTramitesAsignadosComponent } from './descargas/descargas-tramites-asignados/descargas-tramites-asignados.component';
+import { TramitesVencidosComponent } from './tramites-administrador/tramites-vencidos/tramites-vencidos.component';
 
 // fonts provided for pdfmake
 
@@ -125,6 +126,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
     DescargasAudienciasComponent,
     DescargasTramitesComponent,
     DescargasTramitesAsignadosComponent,
+    TramitesVencidosComponent,
     
   ],
   

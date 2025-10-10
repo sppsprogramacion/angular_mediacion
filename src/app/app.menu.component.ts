@@ -113,7 +113,8 @@ export class AppMenuComponent implements OnInit {
                     items: [
                         {label: 'Nuevos', icon: 'pi pi-fw pi-bookmark', routerLink: ['/admin/tramites/nuevoslis']},
                         {label: 'Asignados mediador', icon: 'pi pi-fw pi-send', routerLink: ['/admin/tramites/asignados']},
-                        {label: 'Finalizados', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/tramites/finalizados']},                    
+                        {label: 'Finalizados', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/tramites/finalizados']},        
+                        {label: 'Vencidos', icon: 'pi pi-clock', routerLink: ['/admin/tramites/vencidos']},                   
                     ]
                 },
                 {

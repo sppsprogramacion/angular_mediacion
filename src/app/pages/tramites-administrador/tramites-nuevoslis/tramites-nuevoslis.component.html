@@ -21,7 +21,7 @@
                                 </span>                                
                             </div>
                             <div class="field col-12 md:col-6 lg:col-6">                                
-                                <button pButton label="Controlar" icon="" class="p-button-outlined  p-button-help mr-1" (click)="clear(dt1)"></button>
+                                <button pButton label="Controlar vencimiento" icon="" class="p-button-outlined p-button-help mr-1" (click)="controlarVencimientoTramite(true)"></button>
                                 
                             </div>
                             <!-- FIN FILTRO DE TRAMITES NUEVOS -->
@@ -49,11 +49,11 @@
                                                     </div>
                                                     <div class="grid field col-12">
                                                         <div class="field col-6 md:col-4 lg:col-4">
-                                                            <button pButton pRipple type="button" label="Aplicar control" class="p-button-danger mt-4" (click)="buscarFinalizadosXAnio()" ></button>
+                                                            <button pButton pRipple type="button" label="Aplicar control" class="p-button-outlined p-button-warning" (click)="buscarFinalizadosXAnio()" ></button>
                                                             
                                                         </div>
                                                         <div class="field col-6 md:col-4 lg:col-4">
-                                                            <button pButton pRipple type="button" label="Finalizar" class="p-button-secondary mt-4" (click)="buscarFinalizadosXAnio()" ></button>
+                                                            <button pButton pRipple type="button" label="Finalizar" class="p-button-outlined p-button-secondary" (click)="controlarVencimientoTramite(false)" ></button>
                                                             
                                                         </div>
                                                     </div>

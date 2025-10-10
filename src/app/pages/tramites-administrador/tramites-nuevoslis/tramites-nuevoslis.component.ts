@@ -32,6 +32,7 @@ export class TramitesNuevoslisComponent implements OnInit {
   //VARIABLES TRAMITE    
   tramiteDialog: boolean;
   nuevoTramite: boolean;
+  controlVencimientoTramite: boolean = false;
   submitted: boolean;
   tituloPagina: string ="Usuario: Administrador";
 
@@ -121,6 +122,13 @@ export class TramitesNuevoslisComponent implements OnInit {
     this.router.navigateByUrl("admin/tramites/nuevo");
   }
   //FIN ABRIR NUEVO TRAMITE
+
+  //CONTROLAR VENCIMIENTO TRAMITE
+  controlarVencimientoTramite(estadoControlar: boolean){
+    this.controlVencimientoTramite = estadoControlar;
+
+  }
+  //FIN CONTROLAR VENCIMIENTO TRAMITE
 
   //LIMPIAR FILTROS
   clear(table: Table) {
