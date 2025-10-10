@@ -38,37 +38,26 @@
             
             <!-- TABLA DE TRAMITES -->
             <p-table #dt1 [value]="listUsuariosTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['tramite.numero_tramite','tramite.ciudadano.apellido','tramite.ciudadano.nombre','tramite.ciudadano.dni','tramite.expediente']" responsiveLayout="scroll">
-                <ng-template pTemplate="caption">
-                    <div class="flex justify-content-between flex-column sm:flex-row">                        
-                        <div>
-                            <button pButton label="Limpiar" icon="pi pi-filter-slash" class="p-button-outlined mr-1" (click)="clear(dt1)"></button>
-                            <span class="p-input-icon-left">
-                                <i class="pi pi-search"></i>
-                                <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
-                            </span>
-                        </div>
-                    </div>
-                </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
                         <th class="min-w-3rem"></th>
                         <th>
                             <div class="flex justify-content-between align-items-center">
                                 Nº Tramite
-                                <p-columnFilter type="text" field="tramite.numero_tramite" display="menu" placeholder="Buscar por tramite"></p-columnFilter>
+                                <p-columnFilter type="text" field="numero_tramite" display="menu" placeholder="Buscar por tramite"></p-columnFilter>
                             </div>
                         </th>
                         <th>
                             <div class="flex justify-content-between align-items-center">
                                 Apellido
-                                <p-columnFilter type="text" field="tramite.ciudadano.apellido" display="menu" placeholder="Buscar por apellido"></p-columnFilter>
+                                <p-columnFilter type="text" field="ciudadano.apellido" display="menu" placeholder="Buscar por apellido"></p-columnFilter>
 
                             </div>
                         </th>
                         <th>
                             <div class="flex justify-content-between align-items-center">
                                 Nombre
-                                <p-columnFilter type="text" field="tramite.ciudadano.nombre" display="menu" placeholder="Buscar por nombre"></p-columnFilter>
+                                <p-columnFilter type="text" field="ciudadano.nombre" display="menu" placeholder="Buscar por nombre"></p-columnFilter>
 
                             </div>
                         </th>
@@ -90,72 +79,38 @@
                         </th>
                         <th>
                             <div class="flex justify-content-between align-items-center">
-                                Expediente
-                                <p-columnFilter type="text" field="tramite.expediente" display="menu" placeholder="Buscar por expediente"></p-columnFilter>
-
-                            </div>
-                        </th>
-                        <th>
-                            <div class="flex justify-content-between align-items-center">
-                                Fecha expediente
-                            </div>
-                        </th>
-                        <th>
-                            <div class="flex justify-content-between align-items-center">
-                                Fecha asignacion
-                            </div>
-                        </th>
-                        <th>
-                            <div class="flex justify-content-between align-items-center">
-                                Usuario
-                            </div>
-                        </th>
-                        <th>
-                            <div class="flex justify-content-between align-items-center">
-                                Funcion
+                                Centro Mediacion
                             </div>
                         </th>
 
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-asignacion>
+                <ng-template pTemplate="body" let-tramite>
                     <tr>
                         <td>
-                            <button *ngIf="asignacion.tramite.estado_tramite_id==3" pButton pRipple type="button" icon="pi pi-folder-open" class="p-button-secondary p-button-rounded mr-1 mb-1" (click)="administrarTramite(asignacion)"></button>
+                            <button *ngIf="tramite.estado_tramite_id==1" pButton pRipple type="button" icon="pi pi-folder-open text-purple-100" class="p-button-secondary p-button-rounded bg-purple-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
                         </td>
                         <td class="min-w-10rem">
-                            {{asignacion.tramite.numero_tramite}}
+                            {{tramite.numero_tramite}}
                         </td>
 
                         <td class="min-w-15rem">
-                            {{asignacion.tramite.ciudadano.apellido}}
+                            {{tramite.ciudadano.apellido}}
                         </td>
                         <td class="min-w-15rem">
-                            {{asignacion.tramite.ciudadano.nombre}}
+                            {{tramite.ciudadano.nombre}}
                         </td>
                         <td class="min-w-10rem">
-                            {{asignacion.tramite.ciudadano.dni}}
+                            {{tramite.ciudadano.dni}}
                         </td>
                         <td class="min-w-15rem">
-                            {{asignacion.tramite.objeto.objeto}}
+                            {{tramite.objeto.objeto}}
                         </td>
-                        <td class="min-w-10rem">
-                            {{asignacion.tramite.fecha_tramite| date: 'dd/MM/yyyy'}}
-                        </td>
-                        <td class="min-w-10rem">
-                            {{asignacion.tramite.expediente}}
-                        </td>
-                        <td class="min-w-10rem">
-                            {{asignacion.tramite.fecha_expediente| date: 'dd/MM/yyyy'}}
-                        </td>
-                        <td class="min-w-10rem">
-                            {{asignacion.fecha_asignacion| date: 'dd/MM/yyyy'}}
-                        </td>
+                        <td class="min-w-5rem">
+                            {{tramite.fecha_tramite| date: 'dd/MM/yyyy'}}
+                        </td>                        
                         <td class="min-w-15rem">
-                            {{asignacion.usuario.apellido}} {{asignacion.usuario.nombre}}
-                        </td>
-                        <td class="min-w-10rem">
-                            {{asignacion.funcion_tramite.funcion_tramite}}
+                            {{tramite.centro_mediacion.centro_mediacion}}
                         </td>
                     </tr>
                 </ng-template>
