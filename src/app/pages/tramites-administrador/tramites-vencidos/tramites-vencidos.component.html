@@ -37,7 +37,7 @@
             </div>
             
             <!-- TABLA DE TRAMITES -->
-            <p-table #dt1 [value]="listUsuariosTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['tramite.numero_tramite','tramite.ciudadano.apellido','tramite.ciudadano.nombre','tramite.ciudadano.dni','tramite.expediente']" responsiveLayout="scroll">
+            <p-table #dt1 [value]="listTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['tramite.numero_tramite','tramite.ciudadano.apellido','tramite.ciudadano.nombre','tramite.ciudadano.dni','tramite.expediente']" responsiveLayout="scroll">
                 <ng-template pTemplate="header">
                     <tr>
                         <th class="min-w-3rem"></th>
@@ -88,7 +88,7 @@
                 <ng-template pTemplate="body" let-tramite>
                     <tr>
                         <td>
-                            <button *ngIf="tramite.estado_tramite_id==1" pButton pRipple type="button" icon="pi pi-folder-open text-purple-100" class="p-button-secondary p-button-rounded bg-purple-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
+                            <button *ngIf="tramite.estado_tramite_id==4" pButton pRipple type="button" icon="pi pi-folder-open" class="p-button-secondary p-button-rounded mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
                         </td>
                         <td class="min-w-10rem">
                             {{tramite.numero_tramite}}

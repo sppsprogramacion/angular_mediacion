@@ -125,6 +125,20 @@ export class TramitesService {
     return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/finalizados`, { headers })
   }
 
+  listarTramitesVencidosUsuarioXAnio(id_usuariox: number, anio: number){
+
+    const token = this.dataService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/buscar-vencidos-xanio?id_usuario=${id_usuariox}&anio=${anio}`, { headers })
+  }
+
+  listarTramitesAVencerXDias(dias: number){
+
+    const token = this.dataService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<[tramite:TramiteModel[], total: number]>(`${base_url}/tramites/buscar-avencer-xdias?dias=${dias}`, { headers })
+  }  
+
   contarTotalesTramitesXEstado(){
 
     const token = this.dataService.getToken();

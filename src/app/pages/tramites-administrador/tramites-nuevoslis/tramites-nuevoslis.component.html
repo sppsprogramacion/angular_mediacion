@@ -1,17 +1,13 @@
 <div class="grid">
-
-    
     <div class="col-12">
         <div class="card">
-
             <h5>Tramites nuevos</h5>
-
             <!-- TABLA DE TRAMITES -->
             <p-table #dt1 [value]="listTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['numero_tramite','ciudadano.apellido','ciudadano.nombre','ciudadano.dni']" responsiveLayout="scroll">
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-between flex-column sm:flex-row">
                         <button *ngIf="isCiudadano" pButton label="Solicitar tramite" icon="pi pi-plus" class="p-button-success mr-2" (click)="abrirNuevoTramite()"></button>
-                        <div class="grid">
+                        <div *ngIf="!controlVencimientoTramite"  class="grid col-12 ">
                             <!-- FILTRO DE TRAMITES NUEVOS -->
                             <div class="field col-12 md:col-6 lg:col-6">
                                 <button pButton label="Limpiar" icon="pi pi-filter-slash" class="p-button-outlined mr-1" (click)="clear(dt1)"></button>
@@ -20,53 +16,44 @@
                                     <input pInputText type="text" #filter (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Buscar palabra" class="w-full"/>
                                 </span>                                
                             </div>
+                            <!-- FIN FILTRO DE TRAMITES NUEVOS -->
                             <div class="field col-12 md:col-6 lg:col-6">                                
                                 <button pButton label="Controlar vencimiento" icon="" class="p-button-outlined p-button-help mr-1" (click)="controlarVencimientoTramite(true)"></button>
                                 
                             </div>
-                            <!-- FIN FILTRO DE TRAMITES NUEVOS -->
-
-                            <!-- CONTROLAR VENCIMIENTO DE TRAMITES NUEVOS -->
-                            <div class="field col-12">
-                                <div class="p-formgrid grid">                
-                                    <!-- FORMULARIO BUSCAR -->
-                                    <div class="col-12">  
-                                        <form [formGroup]="formaBuscar">
-                                            <!-- CARD DATOS BUSQUEDA-->
-                                            <div class="card p-fluid">   
-                                                <div  class="formgrid grid">
-                                                    <div class="grid field col-12">
-                                                        <div class="field col-6 md:col-4 lg:col-4">
-                                                            <label for="anio">Dias</label>
-                                                            <input type="text" pInputText id="buscar" formControlName="buscar" />
-                                        
-                                                        </div>  
-
-                                                        <div class="field col-6 md:col-4 lg:col-4">
-                                                            <button pButton pRipple type="button" label="Buscar" class="p-button-primary mt-4" (click)="buscarFinalizadosXAnio()" ></button>
-                                                            
-                                                        </div>  
-                                                    </div>
-                                                    <div class="grid field col-12">
-                                                        <div class="field col-6 md:col-4 lg:col-4">
-                                                            <button pButton pRipple type="button" label="Aplicar control" class="p-button-outlined p-button-warning" (click)="buscarFinalizadosXAnio()" ></button>
-                                                            
-                                                        </div>
-                                                        <div class="field col-6 md:col-4 lg:col-4">
-                                                            <button pButton pRipple type="button" label="Finalizar" class="p-button-outlined p-button-secondary" (click)="controlarVencimientoTramite(false)" ></button>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </div>                                                
-                                            </div>
-                                            <!-- FIN CARD DATOS BUSQUEDA -->                                            
-                                        </form>
-                                    </div>
-                                    <!--  FIN FORMULARIO BUSCAR -->
-                                </div>                                
-                            </div>
-                            <!-- FIN CONTROLAR VENCIMIENTO DE TRAMITES NUEVOS -->
                         </div>
+                        <!-- CONTROLAR VENCIMIENTO DE TRAMITES NUEVOS -->   
+                        <div *ngIf="controlVencimientoTramite && !isCiudadano" class="grid col-12">
+                            <div class="card p-fluid col-12">
+                               <form [formGroup]="formaBuscar">
+                                    <div  class="formgrid grid">
+                                        <div class="grid field col-12">
+                                            <div class="field col-6 md:col-4 lg:col-4">
+                                                <label for="anio">Dias</label>
+                                                <p-dropdown id="dias" [options]="listDiasDropdown" optionLabel="label" optionValue="value" formControlName="dias" placeholder="Seleccinar...">
+                                                </p-dropdown>                            
+                                            </div>  
+
+                                            <div class="field col-6 md:col-4 lg:col-4">
+                                                <button pButton pRipple type="button" label="Buscar" class="p-button-primary mt-4" (click)="buscarAVencer()" ></button>
+                                                
+                                            </div>  
+                                        </div>
+                                        <div class="grid field col-12">
+                                            <div class="field col-6 md:col-4 lg:col-4">
+                                                <button pButton pRipple type="button" label="Aplicar control" class="p-button-outlined p-button-warning" (click)="buscarFinalizadosXAnio()" ></button>
+                                                
+                                            </div>
+                                            <div class="field col-6 md:col-4 lg:col-4">
+                                                <button pButton pRipple type="button" label="Finalizar" class="p-button-outlined p-button-secondary" (click)="controlarVencimientoTramite(false)" ></button>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                               </form>
+                            </div>
+                        </div>
+                        <!-- FIN CONTROLAR VENCIMIENTO DE TRAMITES NUEVOS -->
                     </div>
                     
                 </ng-template>

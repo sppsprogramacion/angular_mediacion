@@ -37,6 +37,7 @@ export class TramitesNuevoslisComponent implements OnInit {
   tituloPagina: string ="Usuario: Administrador";
 
   //LISTAS    
+  listDiasDropdown: { label: string, value: number }[] = [];
   listTramites: TramiteModel[]=[];
   listUsuariosTramites: UsuarioTramiteModel[]=[];
   listDepartamentos: DepartamentoModel[]=[];
@@ -57,10 +58,7 @@ export class TramitesNuevoslisComponent implements OnInit {
   ) { 
 
     this.formaBuscar = this.fb.group({
-      id_tipo_busqueda: ['anioActual',[Validators.required]],
-      buscar: ['',[Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.required]],
-      fecha_ini: ['',[Validators.required]],
-      fecha_fin: ['',[Validators.required]],
+      dias: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
 
     });
   }
@@ -76,6 +74,17 @@ export class TramitesNuevoslisComponent implements OnInit {
       this.tituloPagina ="Usuario: " + this.authService.currentUserLogin.apellido + " " + this.authService.currentUserLogin.nombre;
       this.listarTramitesAdministrador();
     }
+
+    //cargar lista de años
+    let listDias: number[] = [];
+    for (let diasAux = 7; diasAux <= 30; diasAux++) {
+      listDias.push(diasAux);
+    }
+    this.listDiasDropdown = listDias.map(dia => ({
+      label: dia.toString(),
+      value: dia
+    }));
+    this.formaBuscar.get('dias')?.setValue(7);
     
   }
 
@@ -116,6 +125,25 @@ export class TramitesNuevoslisComponent implements OnInit {
     });
   }
   //FIN LISTADO DE TRAMITES USUARIO.......................................................
+
+  //TRAMITES A VENCER EN DIAS
+  buscarAVencer(){
+    let diasAux = parseInt(this.formaBuscar.get('dias')?.value);
+    this.listarTramitesAVencer(diasAux);
+  }
+  //FIN TRAMITES A VENCER EN DIAS
+
+  //LISTADO DE TRAMITES A VENCER
+  listarTramitesAVencer(dias: number){        
+    this.tramitesService.listarTramitesAVencerXDias(dias).
+        subscribe(respuesta => {
+        this.listTramites= respuesta[0];
+        
+        this.loading = false;  
+    
+    });
+  }
+  //FIN LISTADO DE TRAMITES A VENCER.......................................................
 
  //ABRIR NUEVO TRAMITE
   abrirNuevoTramite(){

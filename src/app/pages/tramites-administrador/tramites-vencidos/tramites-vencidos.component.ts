@@ -33,7 +33,6 @@ export class TramitesVencidosComponent implements OnInit {
   listDepartamentos: DepartamentoModel[]=[];
   listMunicipios: MunicipioModel[]= [];
   listSexo: SexoModel[]=[];
-  listUsuariosTramites: UsuarioTramiteModel[]=[];
 
    //FORMULARIOS
    formaBusqueda: FormGroup;
@@ -82,9 +81,9 @@ export class TramitesVencidosComponent implements OnInit {
     let id_usuario: number = this.authService.currentUserLogin.id_usuario;    
 
     //REVISAR PARA LISTAR TRAMITES FINALIZADOS
-    this.usuariosTramitesService.listarTramitesVencidosUsuarioXAnio(id_usuario, anio).
+    this.tramitesService.listarTramitesVencidosUsuarioXAnio(id_usuario, anio).
       subscribe(respuesta => {
-        this.listUsuariosTramites= respuesta[0];
+        this.listTramites= respuesta[0];
         this.loading = false;  
       });
   }
@@ -98,9 +97,9 @@ export class TramitesVencidosComponent implements OnInit {
   //FIN TRAMITES FINALIZADOS POR AÑO
   
   //ACCEDER A DATA SERVICE
-  administrarTramite(data: UsuarioTramiteModel){
-    this.dataService.tramiteData = data.tramite;    
-    this.router.navigateByUrl("admin/tramites/administrar-finalizado");
+  administrarTramite(data: TramiteModel){
+    this.dataService.tramiteData = data;    
+    this.router.navigateByUrl("admin/tramites/administrar-vencido");
   }
   //FIN ACCEDER A DATA SERVICE
 
