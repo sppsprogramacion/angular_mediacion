@@ -34,6 +34,19 @@ export class TramitesService {
     return this.http.patch(`${base_url}/tramites/finalizar?numero_tramite=${num_tramite}`, this.tramite, { headers });
   }
 
+  updateAplicarControlVencidos(diasControl: number){    
+
+    let dataTramiteAux: any;
+    dataTramiteAux = {     
+      
+      dias: diasControl                  
+    }; 
+
+    const token = this.dataService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.patch(`${base_url}/tramites/aplicar-control-vencidos?dias=${diasControl}`, null, { headers });
+  }
+
   buscarTramiteNumTram(num_tramite: number){
     
     const token = this.dataService.getToken();

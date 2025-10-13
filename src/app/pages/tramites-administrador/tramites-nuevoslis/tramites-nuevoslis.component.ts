@@ -12,6 +12,7 @@ import { UsuariosTramiteService } from '../../../service/usuarios-tramite.servic
 import { AuthService } from 'src/app/service/auth.service';
 import { Table } from 'primeng/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tramites-nuevoslis',
@@ -145,6 +146,35 @@ export class TramitesNuevoslisComponent implements OnInit {
   }
   //FIN LISTADO DE TRAMITES A VENCER.......................................................
 
+  //TRAMITES FINALIZADOS POR AÑO
+  aplicarControlVencidos(){
+    let dias = parseInt(this.formaBuscar.get('dias')?.value);
+
+    if(this.formaBuscar.invalid){
+      Swal.fire('No se finalizó el control', "Error: complete correctamente los campos del formulario" ,"warning");
+      return Object.values(this.formaBuscar.controls).forEach(control => control.markAsTouched());
+    }
+    
+
+    //GUARDAR FINALIZAR TRAMITE
+    this.tramitesService.updateAplicarControlVencidos(dias)
+      .subscribe({
+        next: (resultado) => {
+          //let tramite: TramiteModel = resultado;
+          
+          Swal.fire('Exito',`El control se realizó con exito`,"success");
+          this.buscarAVencer();
+        },
+        error: (err) => {
+
+          Swal.fire('No se finalizó el tramite', `Error: ${err.error.message}`,"error");
+        }
+      });         
+    //FIN GUARDAR FINALIZAR TRAMITE
+    
+  }
+  //FIN TRAMITES FINALIZADOS POR AÑO
+
  //ABRIR NUEVO TRAMITE
   abrirNuevoTramite(){
     this.router.navigateByUrl("admin/tramites/nuevo");
@@ -154,6 +184,12 @@ export class TramitesNuevoslisComponent implements OnInit {
   //CONTROLAR VENCIMIENTO TRAMITE
   controlarVencimientoTramite(estadoControlar: boolean){
     this.controlVencimientoTramite = estadoControlar;
+    if(!estadoControlar){
+      if (this.authService.currentUserLogin) {
+      
+        this.listarTramitesAdministrador();
+      }
+    }
 
   }
   //FIN CONTROLAR VENCIMIENTO TRAMITE
