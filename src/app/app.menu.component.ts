@@ -52,6 +52,7 @@ export class AppMenuComponent implements OnInit {
                     items: [
                         {label: 'Nuevos', icon: 'pi pi-fw pi-bookmark', routerLink: ['/ciudadano/tramites/nuevos']},                        
                         {label: 'Finalizados', icon: 'pi pi-fw pi-check-square', routerLink: ['/ciudadano/tramites/finalizados']},                    
+                        {label: 'Vencidos', icon: 'pi pi-clock', routerLink: ['/ciudadano/tramites/vencidos']},                 
                     ]
                 },
                 {

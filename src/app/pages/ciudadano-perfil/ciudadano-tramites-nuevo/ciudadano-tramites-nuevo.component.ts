@@ -89,6 +89,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   formaDomicilioSalta: FormGroup;
   formaDomicilioNoSalta: FormGroup;
   formaProvincia: FormGroup;
+  formaPersonaJuridica: FormGroup;
 
   posicion: string = "top";
 
@@ -128,6 +129,10 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       nombre:   ['',[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(2), Validators.maxLength(100)]],
       dni: ['',[Validators.pattern(/^[0-9]*$/), Validators.minLength(1)]],
       sexo_id: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],   
+    });
+
+    this.formaPersonaJuridica = this.fb.group({
+      razon_social: ['',[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(2), Validators.maxLength(100)]],
     });
 
     this.formaDomicilioSalta = this.fb.group({      
@@ -261,6 +266,12 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       { type: 'required', message: 'El sexo es requerido' },
       { type: 'pattern', message: 'Solo se pueden ingresar números.' }
     ],
+    'razon_social': [
+      { type: 'required', message: 'La razon social es requerida' },
+      { type: 'pattern', message: 'No puede ingresar caracteres especiales como @, #, ?, etc.' },
+      { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
+      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
+    ],
     'telefono': [
       { type: 'required', message: 'El télefono es requerido.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
@@ -288,6 +299,11 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   }
 
   isValidConvocado(campo: string): boolean{     
+    
+    return this.formaConvocado.get(campo)?.invalid && this.formaConvocado.get(campo)?.touched;      
+  }
+
+  isValidRazonSocial(campo: string): boolean{     
     
     return this.formaConvocado.get(campo)?.invalid && this.formaConvocado.get(campo)?.touched;      
   }

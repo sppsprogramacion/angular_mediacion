@@ -57,10 +57,10 @@
                         <p-messages severity="info">
                             <ng-template pTemplate>                                    
                                 <div class="ml-1">
-                                    Luego de completar toda la información en el formulario y enviar la solicitud de mediacion, 
-                                    los administradores le asignarán una fecha y hora de audiencia.
+                                    Luego de completar toda la información en el formulario y enviar la solicitud de tramite, 
+                                    usted tendrá un maximo de 7 dias para presentarse personalmente para que se le asigne una fecha y hora de audiencia.
                                     <br>
-                                    Usted puede consultar en todo momento 
+                                    Usted puede consultar en todo momento el estado de su tramite.
                                     
                                 </div>
                             </ng-template>
@@ -943,7 +943,17 @@
                     </form>
                 </div>
                 <!--  FIN FORMULARIO TRAMITES -->
-                <div *ngIf="estaAsesorado" class="col-12 grid justify-content-center">                    
+                <div *ngIf="estaAsesorado" class="col-12 grid justify-content-center">   
+                    <!-- Inicio -->
+                    <p-messages severity="warn">
+                        <ng-template pTemplate>                                    
+                            <div class="ml-1">
+                                Recuerde que usted tendrá un maximo de 7 dias para presentarse personalmente para que se le asigne una fecha y hora de audiencia.
+                                <br>                                
+                            </div>
+                        </ng-template>
+                    </p-messages>
+                    <!-- fin inicio -->                 
                     <button pButton pRipple type="button" label="Guardar" class="p-button-success btn-half"  (click)="submitFormTramite()" ></button>
                     <button pButton pRipple type="button" label="Cancelar" class="p-button-danger ml-2 btn-half" (click)="irAPrincipal()"></button>
                 </div>

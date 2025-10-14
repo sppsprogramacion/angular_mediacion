@@ -46,6 +46,7 @@ import { DescargasTramitesComponent } from './pages/descargas/descargas-tramites
 import { DescargasTramitesAsignadosComponent } from './pages/descargas/descargas-tramites-asignados/descargas-tramites-asignados.component';
 import { TramitesVencidosComponent } from './pages/tramites-administrador/tramites-vencidos/tramites-vencidos.component';
 import { TramitesAdministrarVencidoComponent } from './pages/tramites-administrador/tramites-administrar-vencido/tramites-administrar-vencido.component';
+import { CiudadanoTramitesVencidosComponent } from './pages/ciudadano-perfil/ciudadano-tramites-vencidos/ciudadano-tramites-vencidos.component';
 
 @NgModule({
     imports: [
@@ -108,7 +109,7 @@ import { TramitesAdministrarVencidoComponent } from './pages/tramites-administra
                     {path: 'tramites/finalizados', component: CiudadanoTramitesFinalizadosComponent},
                     {path: 'tramites/nuevo', component: CiudadanoTramitesNuevoComponent},
                     {path: 'tramites/nuevos', component: CiudadanoTramitesNuevoslistaComponent},
-                                                 
+                    {path: 'tramites/vencidos', component: CiudadanoTramitesVencidosComponent},                            
                 ],
                 
             },
