@@ -7,7 +7,7 @@ import { AppConfig } from 'src/app/api/appconfig';
 import Swal from 'sweetalert2';
 
 //import { categorias, departamentos, municipios, objetos, opcionSiNo, provincias, sexo } from 'src/app/common/data-mokeada';
-import { opcionSiNo } from 'src/app/common/data-mokeada';
+import { opcionSiNo, tipoPersoneria } from 'src/app/common/data-mokeada';
 import { CentroMediacionModel } from 'src/app/models/centro_mediacion.model';
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { ProvinciaModel } from '../../../models/provincia.model';
@@ -55,8 +55,10 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   listCiudadano: CiudadanoModel[]=[]; 
   listConvocados: any[]=[]; 
   listConvocadosNoSalta: any[]=[];
+  listConvocadosPersonaJuridica: any[]=[];
   listConvocadosAux: any[]=[];   
   listObjetos: ObjetoModel[] = [];
+  listPersoneriaJuridica: any[] = [];
   listSexo: SexoModel[] = [];
   listSiNo: any[] = [];
   listVinculados: any[]=[];
@@ -81,6 +83,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   isDatosPersonales: boolean = false;
   isSalta: boolean = false;
   isNoSalta: boolean = false;
+  isPersonaJuridica: boolean = false;
 
   //FORMULARIOS
   formaTramite: FormGroup;
@@ -121,7 +124,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       violencia_partes: [false,[Validators.required]],
       existe_denuncia: [false,[Validators.required]],
       medida_cautelar: [false,[Validators.required]],      
-    
+      es_persona_juridica: ["pf",[Validators.required]],
+      
     });
 
     this.formaConvocado = this.fb.group({
@@ -305,7 +309,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
 
   isValidRazonSocial(campo: string): boolean{     
     
-    return this.formaConvocado.get(campo)?.invalid && this.formaConvocado.get(campo)?.touched;      
+    return this.formaPersonaJuridica.get(campo)?.invalid && this.formaPersonaJuridica.get(campo)?.touched;      
   }
 
   isValidDomicilioSalta(campo: string): boolean{     
@@ -353,7 +357,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
 
     });
     
-    this.listSiNo = opcionSiNo;  
+    this.listSiNo = opcionSiNo; 
+    this.listPersoneriaJuridica = tipoPersoneria;
            
   }
   //FIN ONINIT................................................................
@@ -367,7 +372,31 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
         
         return Object.values(this.formaTramite.controls).forEach(control => control.markAsTouched());
     }
+
+    if(this.formaPersonaJuridica.invalid){                        
+        Swal.fire('Formulario incompleto',`Complete correctamente todos los campos del formulario`,"warning");
+        
+        return Object.values(this.formaPersonaJuridica.controls).forEach(control => control.markAsTouched());
+    }
     
+    //CARGAR CONVOCADO PERSONA JURIDICA
+    if(this.formaTramite.get('es_persona_juridica')?.value == "pj"){
+      Object.values(this.formaPersonaJuridica.controls).forEach(control => control.markAsUntouched());
+      
+      this.convocado = {
+        razon_social: this.formaPersonaJuridica.get('razon_social')?.value,
+        
+      }  
+
+      this.listConvocadosPersonaJuridica.push(this.convocado);
+      this.convocado = {};
+    }
+    else{
+      this.listConvocadosPersonaJuridica=[];
+    }
+    //CARGAR CONVOCADO PERSONA JURIDICA
+  
+
     let data:any;
     data ={
       dataTramite : {
@@ -592,12 +621,14 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   reiniciarformularios(){
     this.msgsVinculado = [];
     this.formaConvocado.reset();  
+    this.formaPersonaJuridica.reset(); 
     this.formaDomicilioSalta.reset();   
     this.formaDomicilioNoSalta.reset(); 
     //Variables de convocados
     this.isSalta = false;
     this.isNoSalta = false;
     this.isDatosPersonales = false;
+    this.isPersonaJuridica = false;
     //Fin Variables de convocados
   }
 
@@ -790,6 +821,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     }
   }
 
+  
   //MANEJO DE FORMULARIO DIALOG CONVOCADO
   openDialogVerConvocado(convocado: any) {
         
@@ -836,6 +868,28 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.convocadoNoSaltaDialog = false;
   }
   //FIN QUITAR CONVOCADO
+
+
+  onChangePersonaJuridica(){
+    this.formaConvocado.reset();  
+    this.formaPersonaJuridica.reset(); 
+    this.formaDomicilioSalta.reset();   
+    this.formaDomicilioNoSalta.reset(); 
+    this.listConvocados = [];
+    this.listConvocadosNoSalta = [];
+    this.listConvocadosAux = [];
+
+    if(this.formaTramite.get('es_persona_juridica')?.value == "pj"){
+      Object.values(this.formaTramite.controls).forEach(control => control.markAsUntouched());
+      
+      this.isPersonaJuridica = true;
+      
+    }
+    else{
+      this.isPersonaJuridica = false;
+      
+    }
+  }
 
   //QUITAR CONVOCADO
   quitarVinculado(vinculadoQuitar: any){
