@@ -772,7 +772,7 @@
                                 <p-toolbar styleClass="mb-3 bg-orange-500">
                                     <h5 class="block text-white  font-bold font-medium mb-1">Agregar Convocado - Persona Juridica</h5>
                                 </p-toolbar>       
-                                <!-- agregar vinculado -->
+                                <!-- agregar persona juridica -->
                                 <p-messages severity="info">
                                     <ng-template pTemplate>                                    
                                         <div class="ml-1">
@@ -781,20 +781,22 @@
                                         </div>
                                     </ng-template>
                                 </p-messages>
-                                <!-- fin agregar vinculado -->
-                                <div class="formgrid grid">
-                                    <div class="field col-12 md:col-6">
-                                        <label for="razon_social">Razon Social</label>
-                                        <input type="text" pInputText id="razon_social" formControlName="razon_social" />
-                                        <small *ngIf="isValidRazonSocial('razon_social')" class="p-error">
-                                            <div *ngFor="let validation of user_validation_messages.razon_social" >
-                                                <div  *ngIf="formaPersonaJuridica.get('razon_social')?.hasError(validation.type)">
-                                                    {{validation.message}}
+                                <form [formGroup]="formaPersonaJuridica">
+                                    <div class="formgrid grid">
+                                        <div class="field col-12 md:col-6">
+                                            <label for="razon_social">Razon Social</label>
+                                            <input type="text" pInputText id="razon_social" formControlName="razon_social" />
+                                            <small *ngIf="isValidRazonSocial('razon_social')" class="p-error">
+                                                <div *ngFor="let validation of user_validation_messages.razon_social" >
+                                                    <div  *ngIf="formaPersonaJuridica.get('razon_social')?.hasError(validation.type)">
+                                                        {{validation.message}}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </small>
-                                    </div>                                
-                                </div>
+                                            </small>
+                                        </div>                                
+                                    </div>
+                                </form>
+                                <!-- fin agregar persona juridica -->
                                 
                                 
                             </div>

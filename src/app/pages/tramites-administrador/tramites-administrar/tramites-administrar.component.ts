@@ -6,11 +6,9 @@ import Swal from 'sweetalert2';
 
 import { DataService } from 'src/app/service/data.service';
 import { TramiteModel } from '../../../models/tramite.model';
-import { UsuariosService } from '../../../service/usuarios.service';
 import { UsuarioModel } from '../../../models/usuario.model';
 import { UsuarioTramiteModel } from '../../../models/usuario_tramite.model';
 import { UsuariosTramiteService } from '../../../service/usuarios-tramite.service';
-import { FuncionTramiteService } from '../../../service/funcion-tramite.service';
 import { FuncionTtramiteModel } from 'src/app/models/funcion_tramite.model';
 import { ElementoModel } from '../../../models/elemento.model';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
@@ -21,7 +19,6 @@ import { UsuarioCentroModel } from '../../../models/usuario_centro.model ';
 import { TramitesService } from 'src/app/service/tramites.service';
 import { ModalidadModel } from 'src/app/models/modalidad.model';
 import { TipoAudienciaModel } from 'src/app/models/tipo_audiencia.model';
-import { TiposAudienciaService } from 'src/app/service/tipos-audiencia.service';
 import { AudienciaModel } from 'src/app/models/audiencia.model';
 import { AudienciasService } from '../../../service/audiencias.service';
 import { ConvocadoModel } from 'src/app/models/convocado.model';
@@ -61,7 +58,10 @@ export class TramitesAdministrarComponent implements OnInit {
   listTipoAudiencia: TipoAudienciaModel[] = [];
   listUsuarios: UsuarioModel[]=[];
   listUsuariosCentro: UsuarioCentroModel[]=[];
-  listUsuariosTramite: UsuarioTramiteModel[]=[];
+  listUsuariosTramite: UsuarioTramiteModel[]=[];  
+  listaConvocadosPersonasFisicas: UsuarioTramiteModel[]=[];
+  listaConvocadosPersonasJuridicas: UsuarioTramiteModel[]=[];
+
   elementosCentroMediacion: ElementoModel[]=[];  
   elementosModalidad: ModalidadModel[] = [];
   elementosTipoAudiencia: TipoAudienciaModel[] = [];
@@ -331,7 +331,10 @@ export class TramitesAdministrarComponent implements OnInit {
       .subscribe({
         next: (resultado) => {          
           this.dataTramite = {};
-          this.dataTramite = resultado;     
+          this.dataTramite = resultado;   
+          this.listaConvocadosPersonasFisicas = this.dataTramite.convocados.filter(c => !c.isPersonaJuridica);
+          this.listaConvocadosPersonasJuridicas = this.dataTramite.convocados.filter(c => c.isPersonaJuridica);
+            
           if(this.dataTramite.estado_tramite_id === 2) {
             this.buscarMediadorByNumTramiteActivo();
           }

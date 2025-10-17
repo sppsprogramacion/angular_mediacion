@@ -266,15 +266,15 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
     ],
-    'sexo_id': [
-      { type: 'required', message: 'El sexo es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
-    ],
     'razon_social': [
       { type: 'required', message: 'La razon social es requerida' },
       { type: 'pattern', message: 'No puede ingresar caracteres especiales como @, #, ?, etc.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
+    ],
+    'sexo_id': [
+      { type: 'required', message: 'El sexo es requerido' },
+      { type: 'pattern', message: 'Solo se pueden ingresar números.' }
     ],
     'telefono': [
       { type: 'required', message: 'El télefono es requerido.' },
@@ -419,6 +419,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       },
       createConvocadoSaltaDto: this.listConvocados,
       createConvocadoNoSaltaDto: this.listConvocadosNoSalta,
+      createConvocadoPersonaJuridicaDto: this.listConvocadosPersonaJuridica,
       createVinculadoTramiteDto: this.listVinculados      
     }
     

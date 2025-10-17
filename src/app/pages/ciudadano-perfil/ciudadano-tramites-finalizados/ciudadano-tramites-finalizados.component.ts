@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { TramiteModel } from 'src/app/models/tramite.model';
+import { UsuarioTramiteModel } from 'src/app/models/usuario_tramite.model';
 import { AuthService } from 'src/app/service/auth.service';
 import { DataService } from 'src/app/service/data.service';
 import { TramitesService } from 'src/app/service/tramites.service';
@@ -21,6 +22,9 @@ export class CiudadanoTramitesFinalizadosComponent implements OnInit {
   //LISTAS    
   listTramites: TramiteModel[]=[];
   listTramitesFinalizados: TramiteModel[]=[];
+  
+  listaConvocadosPersonasFisicas: UsuarioTramiteModel[]=[];
+  listaConvocadosPersonasJuridicas: UsuarioTramiteModel[]=[];
 
   constructor(
     private authService: AuthService,

@@ -28,6 +28,7 @@ export class ConvocadoModel{
         public punto_referencia?: string,
         public telefono?: string,
         public email?: string,
+        public isPersonaJuridica?: boolean
 
     ){}
 }

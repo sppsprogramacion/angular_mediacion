@@ -36,6 +36,8 @@ export class TramitesAdministrarFinalizadoComponent implements OnInit {
   listResultadosAudiencia: ResultadoAudienciaModel[]=[];
   listUsuarios: UsuarioModel[]=[];
   listUsuariosTramite: UsuarioTramiteModel[]=[];
+  listaConvocadosPersonasFisicas: UsuarioTramiteModel[]=[];
+  listaConvocadosPersonasJuridicas: UsuarioTramiteModel[]=[];
 
   //booleans
   loadingAudiencia: boolean = true;
@@ -45,8 +47,6 @@ export class TramitesAdministrarFinalizadoComponent implements OnInit {
   audienciaFinalizadaDialog: boolean = false;
   convocadoDialog: boolean = false;  
   vinculadoDialog: boolean = false;
-
-
 
   constructor(
     private router: Router,
@@ -124,6 +124,8 @@ export class TramitesAdministrarFinalizadoComponent implements OnInit {
         next: (resultado) => {          
           this.dataTramite = {};
           this.dataTramite = resultado; 
+          this.listaConvocadosPersonasFisicas = this.dataTramite.convocados.filter(c => !c.isPersonaJuridica);
+          this.listaConvocadosPersonasJuridicas = this.dataTramite.convocados.filter(c => c.isPersonaJuridica);
           
           if(this.dataTramite.estado_tramite_id === 3) {
             this.buscarMediadorByNumTramiteActivo();

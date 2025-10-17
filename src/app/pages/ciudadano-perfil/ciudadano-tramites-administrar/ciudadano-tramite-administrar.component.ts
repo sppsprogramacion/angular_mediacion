@@ -41,6 +41,8 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
   listAudiencias: AudienciaModel[] = [];
   listAudienciasActivas: AudienciaModel[] = [];
   listUsuariosTramite: UsuarioTramiteModel[]=[];
+  listaConvocadosPersonasFisicas: UsuarioTramiteModel[]=[];
+  listaConvocadosPersonasJuridicas: UsuarioTramiteModel[]=[];
 
   //variables booleanas
   audienciaFinalizadaDialog: boolean = false;
@@ -115,7 +117,9 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
         next: (resultado) => {          
           this.dataTramite = {};
           this.dataTramite = resultado;  
-
+          this.listaConvocadosPersonasFisicas = this.dataTramite.convocados.filter(c => !c.isPersonaJuridica);
+          this.listaConvocadosPersonasJuridicas = this.dataTramite.convocados.filter(c => c.isPersonaJuridica);
+          
           this.msgsEstadoTramite = [];           
           
           if(this.dataTramite.estado_tramite_id === 2 ) {            
