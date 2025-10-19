@@ -745,7 +745,7 @@ export class PdfsService {
     let misConvocados: string[] = [];
     let miConvocado: string;
     dataTramite.convocados.forEach(convocado => {
-      miConvocado = "Apellido y nombre: " + convocado.apellido + " " + convocado.nombre;
+      miConvocado = `Apellido y nombre / Razon social: ${convocado.apellido ?? ''} ${convocado.nombre ?? ''} ${convocado.razon_social ?? ''}`;
       misConvocados.push(miConvocado);
     });
 
