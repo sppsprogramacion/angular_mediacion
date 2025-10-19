@@ -36,8 +36,8 @@ export class TramitesAdministrarFinalizadoComponent implements OnInit {
   listResultadosAudiencia: ResultadoAudienciaModel[]=[];
   listUsuarios: UsuarioModel[]=[];
   listUsuariosTramite: UsuarioTramiteModel[]=[];
-  listaConvocadosPersonasFisicas: UsuarioTramiteModel[]=[];
-  listaConvocadosPersonasJuridicas: UsuarioTramiteModel[]=[];
+  listaConvocadosPersonasFisicas: ConvocadoModel[]=[];
+  listaConvocadosPersonasJuridicas: ConvocadoModel[]=[];
 
   //booleans
   loadingAudiencia: boolean = true;

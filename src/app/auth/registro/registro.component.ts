@@ -29,7 +29,6 @@ export class RegistroComponent implements OnInit {
   subscription: Subscription;
   selectedState:any;
   
-
   msgs: Message[] = []; 
   
   //iidiomas
@@ -64,9 +63,9 @@ export class RegistroComponent implements OnInit {
       sexo_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       fecha_nac: [,[Validators.required]],  
-      email: ['',[Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],    
+      email: ['',[ Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],    
       clave1: ['',[Validators.required,  Validators.minLength(8),Validators.maxLength(16),Validators.pattern(/[^'"`=+\s]+$/)]],
-      clave2: ['',[Validators.required,  Validators.minLength(8)]]
+      clave2: ['',[Validators.required]]
     
     });
     
@@ -106,7 +105,6 @@ export class RegistroComponent implements OnInit {
       { type: 'required', message: 'La fecha de nacimiento es requerida.' },
     ],
     'email': [
-      { type: 'required', message: 'El e-mail es requerido' },
       { type: 'pattern', message: 'El formato del e-mail no es correcto.' }
     ],
     'clave1': [
@@ -118,8 +116,7 @@ export class RegistroComponent implements OnInit {
     
     ],
     'clave2': [
-      { type: 'required', message: 'La contraseña es requerida' },
-      { type: 'minlength', message: 'La contraseña debe tener al menos 8 caracteres.' },        
+      { type: 'required', message: 'La contraseña es requerida' },     
     ],
     
   }

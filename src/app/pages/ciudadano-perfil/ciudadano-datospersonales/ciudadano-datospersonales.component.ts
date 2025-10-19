@@ -49,7 +49,7 @@ export class CiudadanoDatospersonalesComponent implements OnInit {
       sexo_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       fecha_nac: [,[Validators.required]],  
-      email: ['',[Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],    
+      email: ['',[Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],    
       
     });
   }
@@ -88,7 +88,6 @@ export class CiudadanoDatospersonalesComponent implements OnInit {
       { type: 'required', message: 'La fecha de nacimiento es requerida.' },
     ],
     'email': [
-      { type: 'required', message: 'El e-mail es requerido' },
       { type: 'pattern', message: 'El formato del e-mail no es correcto.' }
     ],
     

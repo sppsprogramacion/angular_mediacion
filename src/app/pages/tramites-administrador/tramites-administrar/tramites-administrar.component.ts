@@ -59,8 +59,8 @@ export class TramitesAdministrarComponent implements OnInit {
   listUsuarios: UsuarioModel[]=[];
   listUsuariosCentro: UsuarioCentroModel[]=[];
   listUsuariosTramite: UsuarioTramiteModel[]=[];  
-  listaConvocadosPersonasFisicas: UsuarioTramiteModel[]=[];
-  listaConvocadosPersonasJuridicas: UsuarioTramiteModel[]=[];
+  listaConvocadosPersonasFisicas: ConvocadoModel[]=[];
+  listaConvocadosPersonasJuridicas: ConvocadoModel[]=[];
 
   elementosCentroMediacion: ElementoModel[]=[];  
   elementosModalidad: ModalidadModel[] = [];

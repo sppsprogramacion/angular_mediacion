@@ -39,11 +39,11 @@ export class PdfsService {
     pdf.add(
       new Canvas([
         // Bottom
-        new Rect([35, 120], [510, 600]).lineColor('#000000').end,
+        new Rect([35, 120], [510, 650]).lineColor('#000000').end,
         new Rect([40, 150], [500, 25]).lineColor('#000000').end,
         new Rect([40, 205], [500, 55]).lineColor('#000000').end,
         new Rect([40, 285], [500, 55]).lineColor('#000000').end,
-        new Rect([40, 370], [500, 120]).lineColor('#000000').end,
+        new Rect([40, 370], [500, 145]).lineColor('#000000').end,
       ]).absolutePosition(0, 0).end
     );
     
@@ -202,8 +202,9 @@ export class PdfsService {
           new Cell (new Txt( audienciaActiva.centro_mediacion.municipio.municipio ).fontSize(11).end).width(150).end    
         ]
       });  
+
       pdf.add(' ');
-  
+
       pdf.add({
         columns: [
           new Cell (new Txt('Domicilio: ').bold().fontSize(11).end).width(55).end,
@@ -213,6 +214,15 @@ export class PdfsService {
             ' - N°: ' + audienciaActiva.centro_mediacion.numero_dom 
           
           ).fontSize(11).end).width(400).end    
+        ]
+      });    
+
+      pdf.add(' ');
+
+      pdf.add({
+        columns: [
+          new Cell (new Txt('Detalles: ').bold().fontSize(11).end).width(55).end,
+          new Cell (new Txt( audienciaActiva.detalles ).fontSize(11).end).width(400).end    
         ]
       });    
   
@@ -241,7 +251,7 @@ export class PdfsService {
     let misConvocados: string[] = [];
     let miConvocado: string;
     dataTramite.convocados.forEach(convocado => {
-      miConvocado = "Apellido y nombre: " + convocado.apellido + " " + convocado.nombre;
+      miConvocado = `Apellido y nombre / Razon social: ${convocado.apellido ?? ''} ${convocado.nombre ?? ''} ${convocado.razon_social ?? ''}`;
       misConvocados.push(miConvocado);
     });
 
@@ -262,7 +272,7 @@ export class PdfsService {
   }
   //FIN CREAR PDF solicitud del tramite................................................
 
-  //CREAR PDF solicitud DEL TRAMITE
+  //CREAR PDF solicitud DEL TRAMITE CON TODAS LAS AUDIENCIAS
   async generarPdfSolicitudTramiteTodasAudiencias(dataTramite: TramiteModel, listAudiencias: AudienciaModel[]) {
     let meses_texto=["Enero", "Febrero","Marzo","Abril","Mayo","Junio", "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
     
@@ -282,7 +292,7 @@ export class PdfsService {
     pdf.add(
       new Canvas([
         // Bottom
-        new Rect([35, 120], [510, 600]).lineColor('#000000').end,
+        new Rect([35, 120], [510, 650]).lineColor('#000000').end,
         new Rect([40, 150], [500, 25]).lineColor('#000000').end,
         new Rect([40, 205], [500, 55]).lineColor('#000000').end,
         new Rect([40, 285], [500, 55]).lineColor('#000000').end,
@@ -413,11 +423,11 @@ export class PdfsService {
     if(listAudiencias.length > 0){
       let miAudiencia: string;
       listAudiencias.forEach(audiencia => {
-        miAudiencia = "N° AUDIENCIA: " + audiencia.num_audiencia + " - FECHA: " + this.datePipe.transform(audiencia.fecha_inicio, "dd/MM/yyyy") 
+        miAudiencia = "N° audiencia: " + audiencia.num_audiencia + " - Fecha: " + this.datePipe.transform(audiencia.fecha_inicio, "dd/MM/yyyy") 
+            + " - Hora: " + audiencia.hora_inicio + " - Centro mediacion: " + audiencia.centro_mediacion.centro_mediacion 
+            + " - Departamento: " + audiencia.centro_mediacion.departamento.departamento + " - Municipio: " + audiencia.centro_mediacion.municipio.municipio 
             + " - DETALLE AUDIENCIA: " + (audiencia.detalles? audiencia.detalles : "") 
-            + " - HORA: " + audiencia.hora_inicio + " - CENTRO MEDIACION: " + audiencia.centro_mediacion.centro_mediacion 
-            + " - DEPARTAMENTO: " + audiencia.centro_mediacion.departamento.departamento + " - MUNICIPIO: " + audiencia.centro_mediacion.municipio.municipio 
-            + " - RESULTADO: " + audiencia.resultado_audiencia.resultado_audiencia + " - OBSERVACIONES: " + (audiencia.observacion_resultado ? audiencia.observacion_resultado : "");
+            + " - RESULTADO: " + audiencia.resultado_audiencia.resultado_audiencia + " - Observaciones: " + (audiencia.observacion_resultado ? audiencia.observacion_resultado : "");
         
       pdf.add(
         new Txt('- ' + miAudiencia).fontSize(11).alignment('left').end
@@ -444,7 +454,7 @@ export class PdfsService {
     let misConvocados: string[] = [];
     let miConvocado: string;
     dataTramite.convocados.forEach(convocado => {
-      miConvocado = "Apellido y nombre: " + convocado.apellido + " " + convocado.nombre;
+      miConvocado = `Apellido y nombre / Razon social: ${convocado.apellido ?? ''} ${convocado.nombre ?? ''} ${convocado.razon_social ?? ''}`;
       misConvocados.push(miConvocado);
     });
 

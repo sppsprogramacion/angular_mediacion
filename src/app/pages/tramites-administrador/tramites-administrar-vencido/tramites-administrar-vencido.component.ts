@@ -1,18 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AudienciaModel } from 'src/app/models/audiencia.model';
 import { ConvocadoModel } from 'src/app/models/convocado.model';
-import { ResultadoAudienciaModel } from 'src/app/models/resultadoAudiencia.model';
 import { TramiteModel } from 'src/app/models/tramite.model';
-import { UsuarioModel } from 'src/app/models/usuario.model';
-import { UsuarioTramiteModel } from 'src/app/models/usuario_tramite.model';
 import { VinculadoModel } from 'src/app/models/vinculado.model';
-import { AudienciasService } from 'src/app/service/audiencias.service';
 import { DataService } from 'src/app/service/data.service';
 import { TramitesService } from 'src/app/service/tramites.service';
-import { UsuariosTramiteService } from 'src/app/service/usuarios-tramite.service';
-import { AuthService } from '../../../service/auth.service';
-import { PdfsService } from 'src/app/service/pdfs.service';
 
 @Component({
   selector: 'app-tramites-administrar-vencido',
@@ -29,6 +21,9 @@ export class TramitesAdministrarVencidoComponent implements OnInit {
     
     //booleans
     loadingUsuariosTramite: boolean = true;
+
+    listaConvocadosPersonasFisicas: ConvocadoModel[]=[];
+    listaConvocadosPersonasJuridicas: ConvocadoModel[]=[];
     
     convocadoDialog: boolean = false;  
     vinculadoDialog: boolean = false;
@@ -67,6 +62,9 @@ export class TramitesAdministrarVencidoComponent implements OnInit {
           next: (resultado) => {          
             this.dataTramite = {};
             this.dataTramite = resultado; 
+            this.listaConvocadosPersonasFisicas = this.dataTramite.convocados.filter(c => !c.isPersonaJuridica);
+            this.listaConvocadosPersonasJuridicas = this.dataTramite.convocados.filter(c => c.isPersonaJuridica);
+            
           }
         });    
     }

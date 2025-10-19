@@ -33,6 +33,7 @@ export class TramitesNuevoslisComponent implements OnInit {
   //VARIABLES TRAMITE    
   tramiteDialog: boolean;
   nuevoTramite: boolean;
+  isAdmin:boolean=false;
   controlVencimientoTramite: boolean = false;
   submitted: boolean;
   tituloPagina: string ="Usuario: Administrador";
@@ -67,7 +68,7 @@ export class TramitesNuevoslisComponent implements OnInit {
   ngOnInit(): void {
     
     if (this.authService.currentUserLogin.rol_id == "administrador") {
-      
+      this.isAdmin = true;
     }
     
     if (this.authService.currentUserLogin) {

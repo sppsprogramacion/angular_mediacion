@@ -319,7 +319,9 @@
         <p-table #dt1 [value]="listaConvocadosPersonasJuridicas" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
             <ng-template pTemplate="header">
                 <tr>
-                    <th class="min-w-3rem"></th>
+                    <th class="w-3rem">
+                        
+                    </th>
                     <th>
                         <div class="flex justify-content-between align-items-left">
                             Razon social
@@ -337,7 +339,9 @@
             <ng-template pTemplate="body" let-convocado>
                 <tr>
                     <td>
-                        
+                        <div class="flex align-items-center justify-content-center bg-blue-100 border-round caja-2-5">
+                            <i class="pi pi-fw pi-circle text-blue-500 text-xl"></i>
+                        </div>
                     </td>
                     <td class="min-w-20rem">
                         {{convocado.razon_social}}
@@ -926,7 +930,7 @@
     <!-- FIN DIALOG FORMULARIO  GENERAR AUDIENCIA -->
 
     <!-- DIALOG TABLA AUDIENCIAS DEL USUARIO-->
-    <p-dialog id="audienciaUsuarioDialog" [(visible)]="audienciaUsuarioDialog" styleClass="custom-dialog" header="Audiencias del usuario" [closable]="false" [modal]="true">
+    <p-dialog id="audienciaUsuarioDialog" [(visible)]="audienciaUsuarioDialog"  header="Audiencias del usuario" [closable]="false" [modal]="true">
 
         <ng-template pTemplate="content">
             <!-- TABLA DE AUDIENCIA -->

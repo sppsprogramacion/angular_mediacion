@@ -66,20 +66,7 @@
                             </ng-template>
                         </p-messages>
                         <!-- fin inicio -->
-
-                        <!-- CARD MENSAJE -->
-                        <div *ngIf="estaAsesorado" class="card p-fluid">  
-                            <p-messages severity="info">
-                                <ng-template pTemplate>                                    
-                                    <div class="ml-1">
-                                        En el día asignado de la mediación deberá traer DNI y RECIBO DE SUELDO.
-                                    </div>
-                                </ng-template>
-                            </p-messages>
-                            
-                        </div>
-                        <!-- FIN CARD MENSAJE -->
-
+                        
                         <!-- CARD MI DOMICILIO -->
                         <div *ngIf="estaAsesorado" class="card p-fluid">
                             <p-toolbar styleClass="mb-3 bg-orange-500">
@@ -264,7 +251,7 @@
                             <p-messages severity="info">
                                 <ng-template pTemplate>                                    
                                     <div class="ml-1">
-                                        En caso de tener RESTRICCION CON EL CONVOCADO, el día asignado de la mediación deberá traer la documentación que lo acredita (DENUNCIA – CAUTELAR).
+                                        En caso de tener RESTRICCION CON EL CONVOCADO, deberá traer la documentación que lo acredita (DENUNCIA – CAUTELAR).
                                     </div>
                                 </ng-template>
                             </p-messages>
@@ -997,8 +984,9 @@
                     </form>
                 </div>
                 <!--  FIN FORMULARIO TRAMITES -->
-                <div *ngIf="estaAsesorado" class="col-12 grid justify-content-center">   
-                    <!-- Inicio -->
+                <!-- CARD MENSAJE -->
+                <div *ngIf="estaAsesorado" class="card p-fluid">  
+                    
                     <p-messages severity="warn">
                         <ng-template pTemplate>                                    
                             <div class="ml-1">
@@ -1007,7 +995,36 @@
                             </div>
                         </ng-template>
                     </p-messages>
-                    <!-- fin inicio -->                 
+
+                     <p-messages severity="info">
+                        <ng-template pTemplate>                                    
+                            <div class="ml-1">
+                                Deberá presentarse con:
+                                <br>
+                                <ul>
+                                    <li>
+                                        DNI y fotocopia del mismo.
+                                    </li>
+                                    <li>
+                                        Y/o negativa de anses, constancia de monotributo (clase a), 
+                                        recibo de sueldo que no supere los 2 salarios mínimos vital y móvil.
+                                    </li>
+                                    <li>
+                                        Copia de denuncia, prohibición de acercamiento si la hubiere.
+                                    </li>
+                                    <li>
+                                        Estar debidamente asesorado/a (tema a mediar)
+                                    </li>
+                                </ul>
+                                 
+                            </div>
+                        </ng-template>
+                    </p-messages>    
+                    
+                </div>
+                <!-- FIN CARD MENSAJE -->
+                <div *ngIf="estaAsesorado" class="col-12 grid justify-content-center">   
+                                
                     <button pButton pRipple type="button" label="Guardar" class="p-button-success btn-half"  (click)="submitFormTramite()" ></button>
                     <button pButton pRipple type="button" label="Cancelar" class="p-button-danger ml-2 btn-half" (click)="irAPrincipal()"></button>
                 </div>

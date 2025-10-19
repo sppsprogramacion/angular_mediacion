@@ -309,7 +309,12 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
 
   isValidRazonSocial(campo: string): boolean{     
     
-    return this.formaPersonaJuridica.get(campo)?.invalid && this.formaPersonaJuridica.get(campo)?.touched;      
+    if(this.isPersonaJuridica == true){
+
+      return this.formaPersonaJuridica.get(campo)?.invalid && this.formaPersonaJuridica.get(campo)?.touched;      
+    }
+
+    return false;
   }
 
   isValidDomicilioSalta(campo: string): boolean{     
@@ -373,8 +378,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
         return Object.values(this.formaTramite.controls).forEach(control => control.markAsTouched());
     }
 
-    if(this.formaPersonaJuridica.invalid){                        
-        Swal.fire('Formulario incompleto',`Complete correctamente todos los campos del formulario`,"warning");
+    if(this.isPersonaJuridica && this.formaPersonaJuridica.invalid){                        
+        Swal.fire('Formulario juridico incompleto',`Complete correctamente todos los campos del formulario`,"warning");
         
         return Object.values(this.formaPersonaJuridica.controls).forEach(control => control.markAsTouched());
     }

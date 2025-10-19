@@ -70,7 +70,9 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   listUsuarios: UsuarioModel[]=[];
   listUsuariosCentro: UsuarioCentroModel[]=[];
   listUsuarioCentrosMediacion: UsuarioCentroModel[]=[];
-  listUsuariosTramite: UsuarioTramiteModel[]=[];
+  listUsuariosTramite: UsuarioTramiteModel[]=[];  
+  listaConvocadosPersonasFisicas: ConvocadoModel[]=[];
+  listaConvocadosPersonasJuridicas: ConvocadoModel[]=[];
 
   elementosCentroMediacion: ElementoModel[]=[];    
   elementosUsuarios: ElementoModel[]=[];
@@ -477,6 +479,9 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
         next: (resultado) => {          
           this.dataTramite = {};
           this.dataTramite = resultado;  
+          this.listaConvocadosPersonasFisicas = this.dataTramite.convocados.filter(c => !c.isPersonaJuridica);
+          this.listaConvocadosPersonasJuridicas = this.dataTramite.convocados.filter(c => c.isPersonaJuridica);
+          
           if(this.dataTramite.estado_tramite_id === 1){
       
             this.isNuevo = true;
@@ -759,7 +764,8 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     this.listarResultadosAudiencia();
     this.dataAudiencia = audiencia;
     this.audienciaCerrarDialog = true;
-    this.formaAudienciaCerrar.reset();    
+    this.formaAudienciaCerrar.reset(); 
+    this.formaAudienciaCerrar.get('resultado_audiencia_id')?.setValue(1);    
 
     return Object.values(this.formaAudienciaCerrar.controls).forEach(control => control.markAsUntouched());    
   }
