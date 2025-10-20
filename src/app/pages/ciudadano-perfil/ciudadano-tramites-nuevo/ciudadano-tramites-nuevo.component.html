@@ -57,29 +57,16 @@
                         <p-messages severity="info">
                             <ng-template pTemplate>                                    
                                 <div class="ml-1">
-                                    Luego de completar toda la información en el formulario y enviar la solicitud de mediacion, 
-                                    los administradores le asignarán una fecha y hora de audiencia.
+                                    Luego de completar toda la información en el formulario y enviar la solicitud de tramite, 
+                                    usted tendrá un maximo de 7 dias para presentarse personalmente para que se le asigne una fecha y hora de audiencia.
                                     <br>
-                                    Usted puede consultar en todo momento 
+                                    Usted puede consultar en todo momento el estado de su tramite.
                                     
                                 </div>
                             </ng-template>
                         </p-messages>
                         <!-- fin inicio -->
-
-                        <!-- CARD MENSAJE -->
-                        <div *ngIf="estaAsesorado" class="card p-fluid">  
-                            <p-messages severity="info">
-                                <ng-template pTemplate>                                    
-                                    <div class="ml-1">
-                                        En el día asignado de la mediación deberá traer DNI y RECIBO DE SUELDO.
-                                    </div>
-                                </ng-template>
-                            </p-messages>
-                            
-                        </div>
-                        <!-- FIN CARD MENSAJE -->
-
+                        
                         <!-- CARD MI DOMICILIO -->
                         <div *ngIf="estaAsesorado" class="card p-fluid">
                             <p-toolbar styleClass="mb-3 bg-orange-500">
@@ -264,7 +251,7 @@
                             <p-messages severity="info">
                                 <ng-template pTemplate>                                    
                                     <div class="ml-1">
-                                        En caso de tener RESTRICCION CON EL CONVOCADO, el día asignado de la mediación deberá traer la documentación que lo acredita (DENUNCIA – CAUTELAR).
+                                        En caso de tener RESTRICCION CON EL CONVOCADO, deberá traer la documentación que lo acredita (DENUNCIA – CAUTELAR).
                                     </div>
                                 </ng-template>
                             </p-messages>
@@ -280,476 +267,530 @@
                             <div class="bg-cyan-600">
 
                             </div>
-
-                            <!-- agregar convocado -->
-                            <p-messages severity="info">
-                                <ng-template pTemplate>                                    
-                                    <div class="ml-1">
-                                        Ingrese los datos de la persona con la que desea realizar la  mediacion. Puede elegir mas de una persona.
-                                        <br>
-                                        Recuerde comlpletar correctamente los datos, ya que con ellos se realizara la correspondiente notificacion
-                                        al convocado.
-                                    </div>
-                                </ng-template>
-                            </p-messages>
-                            <!-- fin agregar convocado -->
-
-                            <div class="col-12 border-bottom-1 surface-border">
-                                <p-toolbar styleClass="mb-4">
-                                    <ng-template pTemplate="left">
-                                        <div class="my-2">
-                                            <button pButton pRipple label="Ingresar convocado" icon="pi pi-plus" class="p-button-info mr-2" (click)="openDialogConvocado()"></button>
-                                        </div>
-                                    </ng-template>
-                                </p-toolbar>
-
-                                <!-- TABLA DE CONVOCADOS SALTA-->
-                                <p-table #dt1 [value]="listConvocadosAux" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
-                                    <ng-template pTemplate="header">
-                                        <tr>
-                                            <th class="min-w-3rem"></th>
-                                            <th>
-                                                <div class="flex justify-content-between align-items-left">
-                                                    Apellido
-                                                </div>
-                                            </th>
-                                            <th>
-                                                <div class="flex justify-content-between align-items-center">
-                                                    Nombre
-                                                </div>
-                                            </th>
-                                            <th>
-                                                <div class="flex justify-content-between align-items-center">
-                                                    DNI
-                                                </div>
-                                            </th>                                            
-                                        </tr>
-                                    </ng-template>
-                                    <ng-template pTemplate="body" let-convocado>
-                                        <tr>
-                                            <td>
-                                                <p-button icon="pi pi-search-plus" styleClass="p-button-rounded  mr-2 mb-1" (click)="openDialogVerConvocado(convocado)"></p-button>
-                                                <!-- <button pButton pRipple type="button" icon="pi pi-folder-open text-purple-100" class="p-button-secondary p-button-rounded bg-purple-500 mr-1 mb-1" (click)="quitarConvocado(convocado)"></button>     -->
-                                            </td>
-                                            <td class="min-w-12rem">
-                                                {{convocado.apellido}}
-                                            </td>
-                                            <td class="min-w-12rem">
-                                                {{convocado.nombre}}
-                                            </td>
-                                            <td class="min-w-5rem">
-                                                {{convocado.dni}}
-                                            </td>
-                                            
-                                        </tr>
-                                    </ng-template>
-
-                                    <ng-template pTemplate="emptymessage">
-                                        <tr>
-                                            <td colspan="8">No se encontraron convocados agregados.</td>
-                                        </tr>
-                                    </ng-template>
-                                    <ng-template pTemplate="loadingbody">
-                                        <tr>
-                                            <td colspan="8">Cargando convocados... .</td>
-                                        </tr>
-                                    </ng-template>
-                                </p-table>
-                                <!-- FIN TABLA DE CONVOCADOS SALTA -->
-
-                                <!-- DIALOG CONVOCADOS SALTA-->
-                                <p-dialog id="convocadoDialog" [(visible)]="convocadoSaltaDialog" styleClass="custom-dialog" class="p-fluid" header="Datos de convocado" [closable]="false" [modal]="true">
-
-                                    <ng-template pTemplate="content">
-                                        <div class="col-12 border-bottom-1 surface-border">
-                                            <h6 class="block font-bold font-medium">Datos personales</h6>
-                                            <div class="grid">
-                                                <div class="col-12 lg:col-12 xl:col-12">
-                                                    <span class="text font-medium text-1xl">Nombre:<span class="text ml-1 font-medium"> {{convocadoAux.apellido}} {{convocadoAux.nombre}}</span></span>
-                                                </div>
-                                            </div>
-                                            <div class="grid">
-                                                <div class="col-12 lg:col-6 xl:col-6">
-                                                    <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{convocadoAux.dni}}</span></span>
-                                                </div>
-                                                <div class="col-12 lg:col-6 xl:col-6">
-                                                    <span class="text font-medium text-1xl">Sexo:<span class="text ml-1 font-medium"> {{convocadoAux.sexo}}</span></span>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-12 border-bottom-1 surface-border">
-                                            <h6 class="block font-bold font-medium">Domicilio</h6>
-                                            <div class="grid">
-                                                <div class="col-12 lg:col-6 xl:col-6">
-                                                    <span class="text font-medium text-1xl">Provincia:<span class="text ml-1 font-medium"> {{convocadoAux.provincia}} </span></span>
-                                                </div>
-                                                <div class="col-12 lg:col-6 xl:col-6">
-                                                    <span class="text font-medium text-1xl">Departamento:<span class="text ml-1 font-medium"> {{convocadoAux.departamento}}</span></span>
-                                                </div>
-                                            </div>
-                                            <div class="grid">
-                                                <div class="col-12 lg:col-6 xl:col-6">
-                                                    <span class="text font-medium text-1xl">Municipio:<span class="text ml-1 font-medium"> {{convocadoAux.municipio}}</span></span>
-                                                </div>
-                                                <div class="col-12 lg:col-6 xl:col-6">
-                                                    <span class="text font-medium text-1xl">Codigo Postal:<span class="text ml-1 font-medium"> {{convocadoAux.codigo_postal}}</span></span>
-                                                </div>
-                                            </div>
-                                            <div class="grid">
-                                                <div class="col-12 lg:col-12 xl:col-12">
-                                                    <span class="text font-medium text-1xl">B°:<span class="text ml-1 font-medium"> {{convocadoAux.localidad_barrio}} - Direccion: {{convocadoAux.calle_direccion}} - N° {{convocadoAux.numero_dom}}</span></span>
-                                                </div>
-                                                <div class="col-12 lg:col-12 xl:col-12">
-                                                    <span class="text font-medium text-1xl">Punto de Referencia:<span class="text ml-1 font-medium"> {{convocadoAux.punto_referencia}}</span></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 border-bottom-1 surface-border">
-                                            <h6 class="block font-bold font-medium">Contacto</h6>
-                                            <div class="grid">
-                                                <div class="col-12 lg:col-12 xl:col-12">
-                                                    <span class="text font-medium text-1xl">Telefono:<span class="text ml-1 font-medium"> {{convocadoAux.telefono}}</span></span>
-                                                </div>
-                                            </div>
-                                            <div class="grid">
-                                                <div class="col-12 lg:col-12 xl:col-12">
-                                                    <span class="text font-medium text-1xl">Correo Electronico:<span class="text ml-1 font-medium"> {{convocadoAux.email}}</span></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </ng-template>
-
-                                    <ng-template pTemplate="footer" class="mt-1">
-                                        <button pButton pRipple type="button" label="Quitar convocado" class="p-button-outlined p-button-warning mr-2 mb-2" (click)="quitarConvocado()"></button>
-                                        <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogVerConvocado()"></button>
-                                    </ng-template>
-                                </p-dialog>
-                                <!-- FIN DIALOG CONVOCADOS SALTA -->
-
-                                <!-- DIALOG CONVOCADOS NO SALTA-->
-                                <p-dialog id="convocadoNoSaltaDialog" [(visible)]="convocadoNoSaltaDialog" styleClass="custom-dialog" class="p-fluid" header="Datos de convocado" [closable]="false" [modal]="true">
-
-                                    <ng-template pTemplate="content">
-                                        <div class="col-12 border-bottom-1 surface-border">
-                                            <h6 class="block font-bold font-medium">Datos personales</h6>
-                                            <div class="grid">
-                                                <div class="col-12 lg:col-12 xl:col-12">
-                                                    <span class="text font-medium text-1xl">Nombre:<span class="text ml-1 font-medium"> {{convocadoAux.apellido}} {{convocadoAux.nombre}}</span></span>
-                                                </div>
-                                            </div>
-                                            <div class="grid">
-                                                <div class="col-12 lg:col-6 xl:col-6">
-                                                    <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{convocadoAux.dni}}</span></span>
-                                                </div>
-                                                <div class="col-12 lg:col-6 xl:col-6">
-                                                    <span class="text font-medium text-1xl">Sexo:<span class="text ml-1 font-medium"> {{convocadoAux.sexo}}</span></span>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-12 border-bottom-1 surface-border">
-                                            <h6 class="block font-bold font-medium">Domicilio</h6>
-                                            <div class="grid">
-                                                <div class="col-12 lg:col-6 xl:col-6">
-                                                    <span class="text font-medium text-1xl">Provincia:<span class="text ml-1 font-medium"> {{convocadoAux.provincia}} </span></span>
-                                                </div>                                                
-                                            </div>
-                                            <div class="grid">
-                                                <div class="col-12 lg:col-6 xl:col-6">
-                                                    <span class="text font-medium text-1xl">Codigo Postal:<span class="text ml-1 font-medium"> {{convocadoAux.codigo_postal}}</span></span>
-                                                </div>
-                                            </div>                                            
-                                        </div>
-                                        <div class="col-12 border-bottom-1 surface-border">
-                                            <h6 class="block font-bold font-medium">Contacto</h6>
-                                            <div class="grid">
-                                                <div class="col-12 lg:col-12 xl:col-12">
-                                                    <span class="text font-medium text-1xl">Telefono:<span class="text ml-1 font-medium"> {{convocadoAux.telefono}}</span></span>
-                                                </div>
-                                            </div>
-                                            <div class="grid">
-                                                <div class="col-12 lg:col-12 xl:col-12">
-                                                    <span class="text font-medium text-1xl">Correo Electronico:<span class="text ml-1 font-medium"> {{convocadoAux.email}}</span></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </ng-template>
-
-                                    <ng-template pTemplate="footer" class="mt-1">
-                                        <button pButton pRipple type="button" label="Quitar convocado" class="p-button-outlined p-button-warning mr-2 mb-2" (click)="quitarConvocado()"></button>
-                                        <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogVerConvocado()"></button>
-                                    </ng-template>
-                                </p-dialog>
-                                <!-- FIN DIALOG CONVOCADOS NO SALTA -->
-
+                            <div class="formgrid grid">                                    
+                                <div class="field col-12 sm:col-6 md:col-6">
+                                    <label for="esta_asesorado">¿Es persona fisica o persona juridica?</label>
+                                    <p-dropdown id="es_persona_juridica" [options]="listPersoneriaJuridica" optionLabel="tipo_personeria" optionValue="id_tipo_personeria" formControlName="es_persona_juridica" (onChange)="onChangePersonaJuridica()">
+                                    </p-dropdown>
+                                    
+                                </div>
                             </div>
+                            <!-- CARD PERSONA FISICA -->
+                            <div *ngIf="!isPersonaJuridica" class="card p-fluid">
+                                <p-toolbar styleClass="mb-3 bg-orange-500">
+                                    <h5 class="block text-white  font-bold font-medium mb-1">Agregar Convocados - Persona Fisica</h5>
+                                </p-toolbar>
+                                <div class="bg-cyan-600">
 
-                            <!-- DIALOG FORMULARIO CONVOCADOS -->
-                            <p-dialog id="convocadoTramiteDialog" [(visible)]="convocadoTramiteDialog" styleClass="custom-dialog" [position]="posicion" class="p-fluid"  [closable]="false" [modal]="true">
-                                <!-- MENSAJE DE ERROR -->
-                                <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
-                                <ng-template pTemplate="content">
-                                    <div class="p-formgrid grid">
-                                        <!-- FORMULARIO PROVINCIA -->
-                                        <div class="col-12">
-                                            <form [formGroup]="formaProvincia">
-                                                <div class="formgrid grid">
-                                                    <div class="field col-12">
-                                                        <label for="provincia_id">Provincia</label>
-                                                        <p-dropdown id="provincia_id" [options]="listaProvincias" optionLabel="provincia" optionValue="id_provincia" formControlName="provincia_id" placeholder="Seleccionar..." (onChange)="onChangeProvincia()">
-                                                        </p-dropdown>
-                                                        <small *ngIf="isValidProvincia('provincia_id')" class="p-error">
-                                                            <div *ngFor="let validation of user_validation_messages.provincia_id" >
-                                                                <div  *ngIf="formaProvincia.get('provincia_id')?.hasError(validation.type)">
-                                                                    {{validation.message}}
-                                                                </div>
-                                                            </div>
-                                                        </small>
-                                                    </div>
-                                                </div>
-                                            </form>
+                                </div>
+
+                                <!-- agregar convocado -->
+                                <p-messages severity="info">
+                                    <ng-template pTemplate>                                    
+                                        <div class="ml-1">
+                                            Ingrese los datos de la persona con la que desea realizar la  mediacion. Puede elegir mas de una persona.
+                                            <br>
+                                            Recuerde completar correctamente los datos, ya que con ellos se realizara la correspondiente notificacion
+                                            al convocado.
                                         </div>
-                                        <!--  FIN FORMULARIO PROVINCIA -->
+                                    </ng-template>
+                                </p-messages>
+                                <!-- fin agregar convocado -->
 
-                                        <!-- FORMULARIO CONVOCADOS -->
-                                        <div class="col-12 " *ngIf="isDatosPersonales">
-                                            <form [formGroup]="formaConvocado">
+                                <div class="col-12 border-bottom-1 surface-border">
+                                    <p-toolbar styleClass="mb-4">
+                                        <ng-template pTemplate="left">
+                                            <div class="my-2">
+                                                <button pButton pRipple label="Ingresar convocado" icon="pi pi-plus" class="p-button-info mr-2" (click)="openDialogConvocado()"></button>
+                                            </div>
+                                        </ng-template>
+                                    </p-toolbar>
+
+                                    <!-- TABLA DE CONVOCADOS SALTA-->
+                                    <p-table #dt1 [value]="listConvocadosAux" [rows]="10" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th class="min-w-3rem"></th>
+                                                <th>
+                                                    <div class="flex justify-content-between align-items-left">
+                                                        Apellido
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="flex justify-content-between align-items-center">
+                                                        Nombre
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="flex justify-content-between align-items-center">
+                                                        DNI
+                                                    </div>
+                                                </th>                                            
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-convocado>
+                                            <tr>
+                                                <td>
+                                                    <p-button icon="pi pi-search-plus" styleClass="p-button-rounded  mr-2 mb-1" (click)="openDialogVerConvocado(convocado)"></p-button>
+                                                    <!-- <button pButton pRipple type="button" icon="pi pi-folder-open text-purple-100" class="p-button-secondary p-button-rounded bg-purple-500 mr-1 mb-1" (click)="quitarConvocado(convocado)"></button>     -->
+                                                </td>
+                                                <td class="min-w-12rem">
+                                                    {{convocado.apellido}}
+                                                </td>
+                                                <td class="min-w-12rem">
+                                                    {{convocado.nombre}}
+                                                </td>
+                                                <td class="min-w-5rem">
+                                                    {{convocado.dni}}
+                                                </td>
+                                                
+                                            </tr>
+                                        </ng-template>
+
+                                        <ng-template pTemplate="emptymessage">
+                                            <tr>
+                                                <td colspan="8">No se encontraron convocados agregados.</td>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="loadingbody">
+                                            <tr>
+                                                <td colspan="8">Cargando convocados... .</td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                    <!-- FIN TABLA DE CONVOCADOS SALTA -->
+
+                                    <!-- DIALOG CONVOCADOS SALTA-->
+                                    <p-dialog id="convocadoDialog" [(visible)]="convocadoSaltaDialog" styleClass="custom-dialog" class="p-fluid" header="Datos de convocado" [closable]="false" [modal]="true">
+
+                                        <ng-template pTemplate="content">
+                                            <div class="col-12 border-bottom-1 surface-border">
                                                 <h6 class="block font-bold font-medium">Datos personales</h6>
-
-                                                <div class="formgrid grid">
-                                                    <div class="field col-12 md:col-6 lg:col-6">
-                                                        <label for="apellido">Apellido</label>
-                                                        <input type="text" pInputText id="apellido" formControlName="apellido" />
-                                                        <small *ngIf="isValidConvocado('apellido')" class="p-error">
-                                                            <div *ngFor="let validation of user_validation_messages.apellido" >
-                                                                <div  *ngIf="formaConvocado.get('apellido')?.hasError(validation.type)">
-                                                                    {{validation.message}}
-                                                                </div>
-                                                            </div>
-                                                        </small>
-                                                    </div>
-                                                    <div class="field col-12 md:col-6 lg:col-6">
-                                                        <label for="nombre">Nombre</label>
-                                                        <input type="text" pInputText id="nombre" formControlName="nombre" />
-                                                        <small *ngIf="isValidConvocado('nombre')" class="p-error">
-                                                            <div *ngFor="let validation of user_validation_messages.nombre" >
-                                                                <div  *ngIf="formaConvocado.get('nombre')?.hasError(validation.type)">
-                                                                    {{validation.message}}
-                                                                </div>
-                                                            </div>
-                                                        </small>
+                                                <div class="grid">
+                                                    <div class="col-12 lg:col-12 xl:col-12">
+                                                        <span class="text font-medium text-1xl">Nombre:<span class="text ml-1 font-medium"> {{convocadoAux.apellido}} {{convocadoAux.nombre}}</span></span>
                                                     </div>
                                                 </div>
+                                                <div class="grid">
+                                                    <div class="col-12 lg:col-6 xl:col-6">
+                                                        <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{convocadoAux.dni}}</span></span>
+                                                    </div>
+                                                    <div class="col-12 lg:col-6 xl:col-6">
+                                                        <span class="text font-medium text-1xl">Sexo:<span class="text ml-1 font-medium"> {{convocadoAux.sexo}}</span></span>
+                                                    </div>
 
-                                                <div class="formgrid grid">
-                                                    <div class="field col-12 md:col-6 lg:col-6">
-                                                        <label for="sexo_id">Sexo</label>
-                                                        <p-dropdown id="sexo_id" [options]="listSexo" optionLabel="sexo" optionValue="id_sexo" formControlName="sexo_id" placeholder="Seleccionar...">
-                                                        </p-dropdown>
-                                                        <small *ngIf="isValidConvocado('sexo_id')" class="p-error">
-                                                            <div *ngFor="let validation of user_validation_messages.sexo_id" >
-                                                                <div  *ngIf="formaConvocado.get('sexo_id')?.hasError(validation.type)">
-                                                                    {{validation.message}}
-                                                                </div>
-                                                            </div>
-                                                        </small>
-                                                    </div>
-                                                    <div class="field col-12 md:col-6 lg:col-6">
-                                                        <label for="dni">DNI</label>
-                                                        <input type="text" pInputText id="dni" formControlName="dni" />
-                                                        <small *ngIf="isValidConvocado('dni')" class="p-error">
-                                                            <div *ngFor="let validation of user_validation_messages.dni" >
-                                                                <div  *ngIf="formaConvocado.get('dni')?.hasError(validation.type)">
-                                                                    {{validation.message}}
-                                                                </div>
-                                                            </div>
-                                                        </small>
-                                                    </div>
                                                 </div>
-
-
-                                            </form>
-                                        </div>
-                                        <!--  FIN FORMULARIO CONVOCADOS -->
-
-                                        <!-- FORMULARIO DOMICILIO CONVOCADOS -->
-                                        <div class="col-12" *ngIf="isSalta">
-                                            <form [formGroup]="formaDomicilioSalta">
+                                            </div>
+                                            <div class="col-12 border-bottom-1 surface-border">
                                                 <h6 class="block font-bold font-medium">Domicilio</h6>
-                                                <div class="formgrid grid">
-                                                    <div class="field col-12 md:col-6">
-                                                        <label for="departamento_id">Departamento</label>
-                                                        <p-dropdown id="departamento_id" [options]="listaDepartamentos" optionLabel="departamento" optionValue="id_departamento" formControlName="departamento_id" placeholder="Seleccionar..." (onChange)="onChangeDepartamentoConvocado()">
-                                                        </p-dropdown>
-                                                        <small *ngIf="isValidDomicilioSalta('departamento_id')" class="p-error">
-                                                            <div *ngFor="let validation of user_validation_messages.departamento_id" >
-                                                                <div  *ngIf="formaDomicilioSalta.get('departamento_id')?.hasError(validation.type)">
-                                                                    {{validation.message}}
-                                                                </div>
-                                                            </div>
-                                                        </small>
+                                                <div class="grid">
+                                                    <div class="col-12 lg:col-6 xl:col-6">
+                                                        <span class="text font-medium text-1xl">Provincia:<span class="text ml-1 font-medium"> {{convocadoAux.provincia}} </span></span>
                                                     </div>
-                                                    <div class="field col-12 md:col-6">
-                                                        <label for="municipio_id">Municipio</label>
-                                                        <p-dropdown id="municipio_id" [options]="listaMunicipiosConvocado" optionLabel="municipio" optionValue="id_municipio" formControlName="municipio_id" placeholder="Seleccionar...">
-                                                        </p-dropdown>
-                                                        <small *ngIf="isValidDomicilioSalta('municipio_id')" class="p-error">
-                                                            <div *ngFor="let validation of user_validation_messages.municipio_id" >
-                                                                <div  *ngIf="formaDomicilioSalta.get('municipio_id')?.hasError(validation.type)">
-                                                                    {{validation.message}}
-                                                                </div>
-                                                            </div>
-                                                        </small>
+                                                    <div class="col-12 lg:col-6 xl:col-6">
+                                                        <span class="text font-medium text-1xl">Departamento:<span class="text ml-1 font-medium"> {{convocadoAux.departamento}}</span></span>
                                                     </div>
                                                 </div>
-                                                <div class="formgrid grid">
-                                                    <div class="field col-12 md:col-6">
-                                                        <label for="codigo_postal">Codigo Postal</label>
-                                                        <input type="text" pInputText id="codigo_postal" formControlName="codigo_postal" />
-                                                        <small *ngIf="isValidDomicilioSalta('codigo_postal')" class="p-error">
-                                                            <div *ngFor="let validation of user_validation_messages.codigo_postal" >
-                                                                <div  *ngIf="formaDomicilioSalta.get('codigo_postal')?.hasError(validation.type)">
-                                                                    {{validation.message}}
-                                                                </div>
-                                                            </div>
-                                                        </small>
+                                                <div class="grid">
+                                                    <div class="col-12 lg:col-6 xl:col-6">
+                                                        <span class="text font-medium text-1xl">Municipio:<span class="text ml-1 font-medium"> {{convocadoAux.municipio}}</span></span>
                                                     </div>
-
-                                                </div>
-
-                                                <div class="formgrid grid">
-                                                    <div class="field col-12 md:col-6">
-                                                        <label for="localidad_barrio">Barrio</label>
-                                                        <input type="text" pInputText id="localidad_barrio" formControlName="localidad_barrio" />
-                                                        <small *ngIf="isValidDomicilioSalta('localidad_barrio')" class="p-error">
-                                                            <div *ngFor="let validation of user_validation_messages.localidad_barrio" >
-                                                                <div  *ngIf="formaDomicilioSalta.get('localidad_barrio')?.hasError(validation.type)">
-                                                                    {{validation.message}}
-                                                                </div>
-                                                            </div>
-                                                        </small>
-                                                    </div>
-                                                    <div class="field col-12 md:col-6">
-                                                        <label for="calle_direccion">Calle/dirección</label>
-                                                        <input type="text" pInputText id="calle_direccion" formControlName="calle_direccion" />
-                                                        <small *ngIf="isValidDomicilioSalta('calle_direccion')" class="p-error">
-                                                        <div *ngFor="let validation of user_validation_messages.calle_direccion" >
-                                                            <div  *ngIf="formaDomicilioSalta.get('calle_direccion')?.hasError(validation.type)">
-                                                                {{validation.message}}
-                                                            </div>
-                                                        </div>
-                                                    </small>
+                                                    <div class="col-12 lg:col-6 xl:col-6">
+                                                        <span class="text font-medium text-1xl">Codigo Postal:<span class="text ml-1 font-medium"> {{convocadoAux.codigo_postal}}</span></span>
                                                     </div>
                                                 </div>
-                                                <div class="formgrid grid">
-                                                    <div class="field col-12 md:col-6">
-                                                        <label for="numero_dom">Número</label>
-                                                        <input type="text" pInputText id="numero_dom" formControlName="numero_dom" />
-                                                        <small *ngIf="isValidDomicilioSalta('numero_dom')" class="p-error">
-                                                            <div *ngFor="let validation of user_validation_messages.numero_dom" >
-                                                                <div  *ngIf="formaDomicilioSalta.get('numero_dom')?.hasError(validation.type)">
-                                                                    {{validation.message}}
-                                                                </div>
-                                                            </div>
-                                                        </small>
+                                                <div class="grid">
+                                                    <div class="col-12 lg:col-12 xl:col-12">
+                                                        <span class="text font-medium text-1xl">B°:<span class="text ml-1 font-medium"> {{convocadoAux.localidad_barrio}} - Direccion: {{convocadoAux.calle_direccion}} - N° {{convocadoAux.numero_dom}}</span></span>
                                                     </div>
-                                                    <div class="field col-12 md:col-6">
-                                                        <label for="punto_referencia">Punto de Referencia</label>
-                                                        <input type="text" pInputText id="punto_referencia" formControlName="punto_referencia" />
-                                                        <small *ngIf="isValidDomicilioSalta('punto_referencia')" class="p-error">
-                                                            <div *ngFor="let validation of user_validation_messages.punto_referencia" >
-                                                                <div  *ngIf="formaDomicilioSalta.get('punto_referencia')?.hasError(validation.type)">
-                                                                    {{validation.message}}
-                                                                </div>
-                                                            </div>
-                                                        </small>
+                                                    <div class="col-12 lg:col-12 xl:col-12">
+                                                        <span class="text font-medium text-1xl">Punto de Referencia:<span class="text ml-1 font-medium"> {{convocadoAux.punto_referencia}}</span></span>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="col-12 border-bottom-1 surface-border">
                                                 <h6 class="block font-bold font-medium">Contacto</h6>
-                                                <div class="formgrid grid">
-                                                    <div class="field col-12 md:col-6">
-                                                        <label for="telefono">Télefono</label>
-                                                        <input type="text" pInputText id="telefono" formControlName="telefono" />
-                                                        <small *ngIf="isValidDomicilioSalta('telefono')" class="p-error">
-                                                            <div *ngFor="let validation of user_validation_messages.telefono" >
-                                                                <div  *ngIf="formaDomicilioSalta.get('telefono')?.hasError(validation.type)">
-                                                                    {{validation.message}}
-                                                                </div>
-                                                            </div>
-                                                        </small>
-                                                    </div>
-                                                    <div class="field col-12 md:col-6">
-                                                        <label for="email">Correo electrónico</label>
-                                                        <input type="text" pInputText id="email" formControlName="email" />
-                                                        <small *ngIf="isValidDomicilioSalta('email')" class="p-error">
-                                                        <div *ngFor="let validation of user_validation_messages.email" >
-                                                            <div  *ngIf="formaDomicilioSalta.get('email')?.hasError(validation.type)">
-                                                                {{validation.message}}
-                                                            </div>
-                                                        </div>
-                                                    </small>
+                                                <div class="grid">
+                                                    <div class="col-12 lg:col-12 xl:col-12">
+                                                        <span class="text font-medium text-1xl">Telefono:<span class="text ml-1 font-medium"> {{convocadoAux.telefono}}</span></span>
                                                     </div>
                                                 </div>
-                                            </form>
-                                        </div>
-                                        <!-- FIN FORMULARIO DOMICILIO CONVOCADOS -->
+                                                <div class="grid">
+                                                    <div class="col-12 lg:col-12 xl:col-12">
+                                                        <span class="text font-medium text-1xl">Correo Electronico:<span class="text ml-1 font-medium"> {{convocadoAux.email}}</span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
 
-                                        <!-- FORMULARIO DOMICILIO CONVOCADOS NO SALTA-->
-                                        <div class="col-12" *ngIf="isNoSalta">
-                                            <form [formGroup]="formaDomicilioNoSalta">
+                                        <ng-template pTemplate="footer" class="mt-1">
+                                            <button pButton pRipple type="button" label="Quitar convocado" class="p-button-outlined p-button-warning mr-2 mb-2" (click)="quitarConvocado()"></button>
+                                            <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogVerConvocado()"></button>
+                                        </ng-template>
+                                    </p-dialog>
+                                    <!-- FIN DIALOG CONVOCADOS SALTA -->
+
+                                    <!-- DIALOG CONVOCADOS NO SALTA-->
+                                    <p-dialog id="convocadoNoSaltaDialog" [(visible)]="convocadoNoSaltaDialog" styleClass="custom-dialog" class="p-fluid" header="Datos de convocado" [closable]="false" [modal]="true">
+
+                                        <ng-template pTemplate="content">
+                                            <div class="col-12 border-bottom-1 surface-border">
+                                                <h6 class="block font-bold font-medium">Datos personales</h6>
+                                                <div class="grid">
+                                                    <div class="col-12 lg:col-12 xl:col-12">
+                                                        <span class="text font-medium text-1xl">Nombre:<span class="text ml-1 font-medium"> {{convocadoAux.apellido}} {{convocadoAux.nombre}}</span></span>
+                                                    </div>
+                                                </div>
+                                                <div class="grid">
+                                                    <div class="col-12 lg:col-6 xl:col-6">
+                                                        <span class="text font-medium text-1xl">DNI:<span class="text ml-1 font-medium"> {{convocadoAux.dni}}</span></span>
+                                                    </div>
+                                                    <div class="col-12 lg:col-6 xl:col-6">
+                                                        <span class="text font-medium text-1xl">Sexo:<span class="text ml-1 font-medium"> {{convocadoAux.sexo}}</span></span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-12 border-bottom-1 surface-border">
+                                                <h6 class="block font-bold font-medium">Domicilio</h6>
+                                                <div class="grid">
+                                                    <div class="col-12 lg:col-6 xl:col-6">
+                                                        <span class="text font-medium text-1xl">Provincia:<span class="text ml-1 font-medium"> {{convocadoAux.provincia}} </span></span>
+                                                    </div>                                                
+                                                </div>
+                                                <div class="grid">
+                                                    <div class="col-12 lg:col-6 xl:col-6">
+                                                        <span class="text font-medium text-1xl">Codigo Postal:<span class="text ml-1 font-medium"> {{convocadoAux.codigo_postal}}</span></span>
+                                                    </div>
+                                                </div>                                            
+                                            </div>
+                                            <div class="col-12 border-bottom-1 surface-border">
                                                 <h6 class="block font-bold font-medium">Contacto</h6>
-                                                <div class="formgrid grid">
-                                                    <div class="field col-12 md:col-6">
-                                                        <label for="codigo_postal">Codigo Postal</label>
-                                                        <input type="text" pInputText id="codigo_postal" formControlName="codigo_postal" />
-                                                        <small *ngIf="isValidDomicilioNoSalta('codigo_postal')" class="p-error">
-                                                            <div *ngFor="let validation of user_validation_messages.codigo_postal" >
-                                                                <div  *ngIf="formaDomicilioNoSalta.get('codigo_postal')?.hasError(validation.type)">
-                                                                    {{validation.message}}
-                                                                </div>
-                                                            </div>
-                                                        </small>
+                                                <div class="grid">
+                                                    <div class="col-12 lg:col-12 xl:col-12">
+                                                        <span class="text font-medium text-1xl">Telefono:<span class="text ml-1 font-medium"> {{convocadoAux.telefono}}</span></span>
                                                     </div>
                                                 </div>
-                                                <div class="formgrid grid">
-                                                    <div class="field col-12 md:col-6">
-                                                        <label for="telefono">Télefono</label>
-                                                        <input type="text" pInputText id="telefono" formControlName="telefono" />
-                                                        <small *ngIf="isValidDomicilioNoSalta('telefono')" class="p-error">
-                                                            <div *ngFor="let validation of user_validation_messages.telefono" >
-                                                                <div  *ngIf="formaDomicilioNoSalta.get('telefono')?.hasError(validation.type)">
-                                                                    {{validation.message}}
-                                                                </div>
-                                                            </div>
-                                                        </small>
+                                                <div class="grid">
+                                                    <div class="col-12 lg:col-12 xl:col-12">
+                                                        <span class="text font-medium text-1xl">Correo Electronico:<span class="text ml-1 font-medium"> {{convocadoAux.email}}</span></span>
                                                     </div>
-                                                    <div class="field col-12 md:col-6">
-                                                        <label for="email">Correo electrónico</label>
-                                                        <input type="text" pInputText id="email" formControlName="email" />
-                                                        <small *ngIf="isValidDomicilioNoSalta('email')" class="p-error">
-                                                        <div *ngFor="let validation of user_validation_messages.email" >
-                                                            <div  *ngIf="formaDomicilioNoSalta.get('email')?.hasError(validation.type)">
-                                                                {{validation.message}}
-                                                            </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+
+                                        <ng-template pTemplate="footer" class="mt-1">
+                                            <button pButton pRipple type="button" label="Quitar convocado" class="p-button-outlined p-button-warning mr-2 mb-2" (click)="quitarConvocado()"></button>
+                                            <button pButton pRipple type="button" label="Cerrar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogVerConvocado()"></button>
+                                        </ng-template>
+                                    </p-dialog>
+                                    <!-- FIN DIALOG CONVOCADOS NO SALTA -->
+
+                                </div>
+
+                                <!-- DIALOG FORMULARIO CONVOCADOS -->
+                                <p-dialog id="convocadoTramiteDialog" [(visible)]="convocadoTramiteDialog" styleClass="custom-dialog" [position]="posicion" class="p-fluid"  [closable]="false" [modal]="true">
+                                    <!-- MENSAJE DE ERROR -->
+                                    <p-messages [(value)]="msgs" [enableService]="false"></p-messages>
+                                    <ng-template pTemplate="content">
+                                        <div class="p-formgrid grid">
+                                            <!-- FORMULARIO PROVINCIA -->
+                                            <div class="col-12">
+                                                <form [formGroup]="formaProvincia">
+                                                    <div class="formgrid grid">
+                                                        <div class="field col-12">
+                                                            <label for="provincia_id">Provincia</label>
+                                                            <p-dropdown id="provincia_id" [options]="listaProvincias" optionLabel="provincia" optionValue="id_provincia" formControlName="provincia_id" placeholder="Seleccionar..." (onChange)="onChangeProvincia()">
+                                                            </p-dropdown>
+                                                            <small *ngIf="isValidProvincia('provincia_id')" class="p-error">
+                                                                <div *ngFor="let validation of user_validation_messages.provincia_id" >
+                                                                    <div  *ngIf="formaProvincia.get('provincia_id')?.hasError(validation.type)">
+                                                                        {{validation.message}}
+                                                                    </div>
+                                                                </div>
+                                                            </small>
                                                         </div>
-                                                    </small>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!--  FIN FORMULARIO PROVINCIA -->
+
+                                            <!-- FORMULARIO CONVOCADOS -->
+                                            <div class="col-12 " *ngIf="isDatosPersonales">
+                                                <form [formGroup]="formaConvocado">
+                                                    <h6 class="block font-bold font-medium">Datos personales</h6>
+
+                                                    <div class="formgrid grid">
+                                                        <div class="field col-12 md:col-6 lg:col-6">
+                                                            <label for="apellido">Apellido</label>
+                                                            <input type="text" pInputText id="apellido" formControlName="apellido" />
+                                                            <small *ngIf="isValidConvocado('apellido')" class="p-error">
+                                                                <div *ngFor="let validation of user_validation_messages.apellido" >
+                                                                    <div  *ngIf="formaConvocado.get('apellido')?.hasError(validation.type)">
+                                                                        {{validation.message}}
+                                                                    </div>
+                                                                </div>
+                                                            </small>
+                                                        </div>
+                                                        <div class="field col-12 md:col-6 lg:col-6">
+                                                            <label for="nombre">Nombre</label>
+                                                            <input type="text" pInputText id="nombre" formControlName="nombre" />
+                                                            <small *ngIf="isValidConvocado('nombre')" class="p-error">
+                                                                <div *ngFor="let validation of user_validation_messages.nombre" >
+                                                                    <div  *ngIf="formaConvocado.get('nombre')?.hasError(validation.type)">
+                                                                        {{validation.message}}
+                                                                    </div>
+                                                                </div>
+                                                            </small>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="formgrid grid">
+                                                        <div class="field col-12 md:col-6 lg:col-6">
+                                                            <label for="sexo_id">Sexo</label>
+                                                            <p-dropdown id="sexo_id" [options]="listSexo" optionLabel="sexo" optionValue="id_sexo" formControlName="sexo_id" placeholder="Seleccionar...">
+                                                            </p-dropdown>
+                                                            <small *ngIf="isValidConvocado('sexo_id')" class="p-error">
+                                                                <div *ngFor="let validation of user_validation_messages.sexo_id" >
+                                                                    <div  *ngIf="formaConvocado.get('sexo_id')?.hasError(validation.type)">
+                                                                        {{validation.message}}
+                                                                    </div>
+                                                                </div>
+                                                            </small>
+                                                        </div>
+                                                        <div class="field col-12 md:col-6 lg:col-6">
+                                                            <label for="dni">DNI</label>
+                                                            <input type="text" pInputText id="dni" formControlName="dni" />
+                                                            <small *ngIf="isValidConvocado('dni')" class="p-error">
+                                                                <div *ngFor="let validation of user_validation_messages.dni" >
+                                                                    <div  *ngIf="formaConvocado.get('dni')?.hasError(validation.type)">
+                                                                        {{validation.message}}
+                                                                    </div>
+                                                                </div>
+                                                            </small>
+                                                        </div>
+                                                    </div>
+
+
+                                                </form>
+                                            </div>
+                                            <!--  FIN FORMULARIO CONVOCADOS -->
+
+                                            <!-- FORMULARIO DOMICILIO CONVOCADOS -->
+                                            <div class="col-12" *ngIf="isSalta">
+                                                <form [formGroup]="formaDomicilioSalta">
+                                                    <h6 class="block font-bold font-medium">Domicilio</h6>
+                                                    <div class="formgrid grid">
+                                                        <div class="field col-12 md:col-6">
+                                                            <label for="departamento_id">Departamento</label>
+                                                            <p-dropdown id="departamento_id" [options]="listaDepartamentos" optionLabel="departamento" optionValue="id_departamento" formControlName="departamento_id" placeholder="Seleccionar..." (onChange)="onChangeDepartamentoConvocado()">
+                                                            </p-dropdown>
+                                                            <small *ngIf="isValidDomicilioSalta('departamento_id')" class="p-error">
+                                                                <div *ngFor="let validation of user_validation_messages.departamento_id" >
+                                                                    <div  *ngIf="formaDomicilioSalta.get('departamento_id')?.hasError(validation.type)">
+                                                                        {{validation.message}}
+                                                                    </div>
+                                                                </div>
+                                                            </small>
+                                                        </div>
+                                                        <div class="field col-12 md:col-6">
+                                                            <label for="municipio_id">Municipio</label>
+                                                            <p-dropdown id="municipio_id" [options]="listaMunicipiosConvocado" optionLabel="municipio" optionValue="id_municipio" formControlName="municipio_id" placeholder="Seleccionar...">
+                                                            </p-dropdown>
+                                                            <small *ngIf="isValidDomicilioSalta('municipio_id')" class="p-error">
+                                                                <div *ngFor="let validation of user_validation_messages.municipio_id" >
+                                                                    <div  *ngIf="formaDomicilioSalta.get('municipio_id')?.hasError(validation.type)">
+                                                                        {{validation.message}}
+                                                                    </div>
+                                                                </div>
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="formgrid grid">
+                                                        <div class="field col-12 md:col-6">
+                                                            <label for="codigo_postal">Codigo Postal</label>
+                                                            <input type="text" pInputText id="codigo_postal" formControlName="codigo_postal" />
+                                                            <small *ngIf="isValidDomicilioSalta('codigo_postal')" class="p-error">
+                                                                <div *ngFor="let validation of user_validation_messages.codigo_postal" >
+                                                                    <div  *ngIf="formaDomicilioSalta.get('codigo_postal')?.hasError(validation.type)">
+                                                                        {{validation.message}}
+                                                                    </div>
+                                                                </div>
+                                                            </small>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="formgrid grid">
+                                                        <div class="field col-12 md:col-6">
+                                                            <label for="localidad_barrio">Barrio</label>
+                                                            <input type="text" pInputText id="localidad_barrio" formControlName="localidad_barrio" />
+                                                            <small *ngIf="isValidDomicilioSalta('localidad_barrio')" class="p-error">
+                                                                <div *ngFor="let validation of user_validation_messages.localidad_barrio" >
+                                                                    <div  *ngIf="formaDomicilioSalta.get('localidad_barrio')?.hasError(validation.type)">
+                                                                        {{validation.message}}
+                                                                    </div>
+                                                                </div>
+                                                            </small>
+                                                        </div>
+                                                        <div class="field col-12 md:col-6">
+                                                            <label for="calle_direccion">Calle/dirección</label>
+                                                            <input type="text" pInputText id="calle_direccion" formControlName="calle_direccion" />
+                                                            <small *ngIf="isValidDomicilioSalta('calle_direccion')" class="p-error">
+                                                            <div *ngFor="let validation of user_validation_messages.calle_direccion" >
+                                                                <div  *ngIf="formaDomicilioSalta.get('calle_direccion')?.hasError(validation.type)">
+                                                                    {{validation.message}}
+                                                                </div>
+                                                            </div>
+                                                        </small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="formgrid grid">
+                                                        <div class="field col-12 md:col-6">
+                                                            <label for="numero_dom">Número</label>
+                                                            <input type="text" pInputText id="numero_dom" formControlName="numero_dom" />
+                                                            <small *ngIf="isValidDomicilioSalta('numero_dom')" class="p-error">
+                                                                <div *ngFor="let validation of user_validation_messages.numero_dom" >
+                                                                    <div  *ngIf="formaDomicilioSalta.get('numero_dom')?.hasError(validation.type)">
+                                                                        {{validation.message}}
+                                                                    </div>
+                                                                </div>
+                                                            </small>
+                                                        </div>
+                                                        <div class="field col-12 md:col-6">
+                                                            <label for="punto_referencia">Punto de Referencia</label>
+                                                            <input type="text" pInputText id="punto_referencia" formControlName="punto_referencia" />
+                                                            <small *ngIf="isValidDomicilioSalta('punto_referencia')" class="p-error">
+                                                                <div *ngFor="let validation of user_validation_messages.punto_referencia" >
+                                                                    <div  *ngIf="formaDomicilioSalta.get('punto_referencia')?.hasError(validation.type)">
+                                                                        {{validation.message}}
+                                                                    </div>
+                                                                </div>
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                    <h6 class="block font-bold font-medium">Contacto</h6>
+                                                    <div class="formgrid grid">
+                                                        <div class="field col-12 md:col-6">
+                                                            <label for="telefono">Télefono</label>
+                                                            <input type="text" pInputText id="telefono" formControlName="telefono" />
+                                                            <small *ngIf="isValidDomicilioSalta('telefono')" class="p-error">
+                                                                <div *ngFor="let validation of user_validation_messages.telefono" >
+                                                                    <div  *ngIf="formaDomicilioSalta.get('telefono')?.hasError(validation.type)">
+                                                                        {{validation.message}}
+                                                                    </div>
+                                                                </div>
+                                                            </small>
+                                                        </div>
+                                                        <div class="field col-12 md:col-6">
+                                                            <label for="email">Correo electrónico</label>
+                                                            <input type="text" pInputText id="email" formControlName="email" />
+                                                            <small *ngIf="isValidDomicilioSalta('email')" class="p-error">
+                                                            <div *ngFor="let validation of user_validation_messages.email" >
+                                                                <div  *ngIf="formaDomicilioSalta.get('email')?.hasError(validation.type)">
+                                                                    {{validation.message}}
+                                                                </div>
+                                                            </div>
+                                                        </small>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- FIN FORMULARIO DOMICILIO CONVOCADOS -->
+
+                                            <!-- FORMULARIO DOMICILIO CONVOCADOS NO SALTA-->
+                                            <div class="col-12" *ngIf="isNoSalta">
+                                                <form [formGroup]="formaDomicilioNoSalta">
+                                                    <h6 class="block font-bold font-medium">Contacto</h6>
+                                                    <div class="formgrid grid">
+                                                        <div class="field col-12 md:col-6">
+                                                            <label for="codigo_postal">Codigo Postal</label>
+                                                            <input type="text" pInputText id="codigo_postal" formControlName="codigo_postal" />
+                                                            <small *ngIf="isValidDomicilioNoSalta('codigo_postal')" class="p-error">
+                                                                <div *ngFor="let validation of user_validation_messages.codigo_postal" >
+                                                                    <div  *ngIf="formaDomicilioNoSalta.get('codigo_postal')?.hasError(validation.type)">
+                                                                        {{validation.message}}
+                                                                    </div>
+                                                                </div>
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="formgrid grid">
+                                                        <div class="field col-12 md:col-6">
+                                                            <label for="telefono">Télefono</label>
+                                                            <input type="text" pInputText id="telefono" formControlName="telefono" />
+                                                            <small *ngIf="isValidDomicilioNoSalta('telefono')" class="p-error">
+                                                                <div *ngFor="let validation of user_validation_messages.telefono" >
+                                                                    <div  *ngIf="formaDomicilioNoSalta.get('telefono')?.hasError(validation.type)">
+                                                                        {{validation.message}}
+                                                                    </div>
+                                                                </div>
+                                                            </small>
+                                                        </div>
+                                                        <div class="field col-12 md:col-6">
+                                                            <label for="email">Correo electrónico</label>
+                                                            <input type="text" pInputText id="email" formControlName="email" />
+                                                            <small *ngIf="isValidDomicilioNoSalta('email')" class="p-error">
+                                                            <div *ngFor="let validation of user_validation_messages.email" >
+                                                                <div  *ngIf="formaDomicilioNoSalta.get('email')?.hasError(validation.type)">
+                                                                    {{validation.message}}
+                                                                </div>
+                                                            </div>
+                                                        </small>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- FIN FORMULARIO DOMICILIO CONVOCADOS NO SALTA-->
+                                        </div>
+                                    </ng-template>
+
+                                    <ng-template pTemplate="footer" class="mt-1">
+                                        <button pButton pRipple type="button" label="Agregar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="agregarConvocado()"></button>
+                                        <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogConvocado()"></button>
+                                    </ng-template>
+                                </p-dialog>
+                                <!-- FIN DIALOG FORMULARIO  CONVOCADOS -->
+                            </div>
+                            <!-- FIN CARD  PERSONA FISICA -->
+
+                            <!-- CARD PERSONA JURIDICA -->
+                            <div *ngIf="isPersonaJuridica" class="card p-fluid">
+                                <p-toolbar styleClass="mb-3 bg-orange-500">
+                                    <h5 class="block text-white  font-bold font-medium mb-1">Agregar Convocado - Persona Juridica</h5>
+                                </p-toolbar>       
+                                <!-- agregar persona juridica -->
+                                <p-messages severity="info">
+                                    <ng-template pTemplate>                                    
+                                        <div class="ml-1">
+                                            En caso de ser una empresa.
+                                            
+                                        </div>
+                                    </ng-template>
+                                </p-messages>
+                                <form [formGroup]="formaPersonaJuridica">
+                                    <div class="formgrid grid">
+                                        <div class="field col-12 md:col-6">
+                                            <label for="razon_social">Razon Social</label>
+                                            <input type="text" pInputText id="razon_social" formControlName="razon_social" />
+                                            <small *ngIf="isValidRazonSocial('razon_social')" class="p-error">
+                                                <div *ngFor="let validation of user_validation_messages.razon_social" >
+                                                    <div  *ngIf="formaPersonaJuridica.get('razon_social')?.hasError(validation.type)">
+                                                        {{validation.message}}
                                                     </div>
                                                 </div>
-                                            </form>
-                                        </div>
-                                        <!-- FIN FORMULARIO DOMICILIO CONVOCADOS NO SALTA-->
+                                            </small>
+                                        </div>                                
                                     </div>
-                                </ng-template>
-
-                                <ng-template pTemplate="footer" class="mt-1">
-                                    <button pButton pRipple type="button" label="Agregar" class="p-button-outlined p-button-success mr-2 mb-2" (click)="agregarConvocado()"></button>
-                                    <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-danger mr-2 mb-2" (click)="hideDialogConvocado()"></button>
-                                </ng-template>
-                            </p-dialog>
-                            <!-- FIN DIALOG FORMULARIO  CONVOCADOS -->
+                                </form>
+                                <!-- fin agregar persona juridica -->
+                                
+                                
+                            </div>
+                            <!-- FIN CARD PERSONA JURIDICA -->
                         </div>
                         <!-- FIN CARD CONVOCADOS -->
+
 
                         <!-- CARD VINCULADOS -->
                         <div *ngIf="estaAsesorado" class="card p-fluid">
@@ -943,7 +984,47 @@
                     </form>
                 </div>
                 <!--  FIN FORMULARIO TRAMITES -->
-                <div *ngIf="estaAsesorado" class="col-12 grid justify-content-center">                    
+                <!-- CARD MENSAJE -->
+                <div *ngIf="estaAsesorado" class="card p-fluid">  
+                    
+                    <p-messages severity="warn">
+                        <ng-template pTemplate>                                    
+                            <div class="ml-1">
+                                Recuerde que usted tendrá un maximo de 7 dias para presentarse personalmente para que se le asigne una fecha y hora de audiencia.
+                                <br>                                
+                            </div>
+                        </ng-template>
+                    </p-messages>
+
+                     <p-messages severity="info">
+                        <ng-template pTemplate>                                    
+                            <div class="ml-1">
+                                Deberá presentarse con:
+                                <br>
+                                <ul>
+                                    <li>
+                                        DNI y fotocopia del mismo.
+                                    </li>
+                                    <li>
+                                        Y/o negativa de anses, constancia de monotributo (clase a), 
+                                        recibo de sueldo que no supere los 2 salarios mínimos vital y móvil.
+                                    </li>
+                                    <li>
+                                        Copia de denuncia, prohibición de acercamiento si la hubiere.
+                                    </li>
+                                    <li>
+                                        Estar debidamente asesorado/a (tema a mediar)
+                                    </li>
+                                </ul>
+                                 
+                            </div>
+                        </ng-template>
+                    </p-messages>    
+                    
+                </div>
+                <!-- FIN CARD MENSAJE -->
+                <div *ngIf="estaAsesorado" class="col-12 grid justify-content-center">   
+                                
                     <button pButton pRipple type="button" label="Guardar" class="p-button-success btn-half"  (click)="submitFormTramite()" ></button>
                     <button pButton pRipple type="button" label="Cancelar" class="p-button-danger ml-2 btn-half" (click)="irAPrincipal()"></button>
                 </div>

@@ -18,6 +18,17 @@ export const opcionSiNo = [
     },
 ];
 
+export const tipoPersoneria = [
+    {
+        "id_tipo_personeria": "pf",
+        "tipo_personeria": "Persona Fisica"
+    },
+    {
+        "id_tipo_personeria": "pj",
+        "tipo_personeria": "Persona Juridica"
+    },
+];
+
 export const tiposBusquedaCiudadano = [
     {
         "id_tipo_busqueda_ciudadano": "dni",

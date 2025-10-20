@@ -1,30 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Message } from 'primeng/api';
+
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
-import { TramiteModel } from 'src/app/models/tramite.model';
-import { UsuarioTramiteModel } from 'src/app/models/usuario_tramite.model';
-import { AuthService } from 'src/app/service/auth.service';
 import { DataService } from 'src/app/service/data.service';
+import { TramiteModel } from 'src/app/models/tramite.model';
 import { TramitesService } from 'src/app/service/tramites.service';
+import { AuthService } from 'src/app/service/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-ciudadano-tramites-finalizados',
-  templateUrl: './ciudadano-tramites-finalizados.component.html',
-  styleUrls: ['./ciudadano-tramites-finalizados.component.scss']
+  selector: 'app-ciudadano-tramites-vencidos',
+  templateUrl: './ciudadano-tramites-vencidos.component.html',
+  styleUrls: ['./ciudadano-tramites-vencidos.component.scss']
 })
-export class CiudadanoTramitesFinalizadosComponent implements OnInit {
+export class CiudadanoTramitesVencidosComponent implements OnInit {
 
-  loading:boolean = true;
-
+  msgsDatosPersonales: Message[] = []; 
+    
   //MODELOS
   dataCiudadano: CiudadanoModel = new CiudadanoModel;
 
+  //BOOLEANAS
+  loading:boolean = true;
+
   //LISTAS    
   listTramites: TramiteModel[]=[];
-  listTramitesFinalizados: TramiteModel[]=[];
-  
-  listaConvocadosPersonasFisicas: UsuarioTramiteModel[]=[];
-  listaConvocadosPersonasJuridicas: UsuarioTramiteModel[]=[];
+  listTramitesNuevos: TramiteModel[]=[];
 
   constructor(
     private authService: AuthService,
@@ -48,33 +50,25 @@ export class CiudadanoTramitesFinalizadosComponent implements OnInit {
           next: (respuesta) => {
             //this.listTramites= respuesta[0];
             respuesta[0].forEach((tramite) => {
-              if(tramite.estado_tramite_id == 3){
+              if(tramite.estado_tramite_id == 4){
                 this.listTramites.push(tramite);
               }
             })
             this.loading = false;  
+          },
+          error: (err) => {
+            if (err.error.statusCode == 401){
+              Swal.fire('Fallo ',`No tiene autorización para continuar `,"error");
+              this.loading = false;
+              return;
+            }
+
+            Swal.fire('Fallo ',`No se pudo obtener los tramites ` + err.error.message,"error");
+            this.loading = false; 
           }
     });
   }
   //FIN LISTADO DE TRAMITES ASIGNADOS.......................................................
+
   
-  //ABRIR NUEVO TRAMITE
-  abrirNuevoTramite(){
-    this.router.navigateByUrl("ciudadano/tramites/nuevo");
-  }
-  //FIN ABRIR NUEVO TRAMITE
-
-  //ACCEDER A DATA SERVICE
-  administrarTramite(data: TramiteModel){
-    this.dataService.tramiteData = data;
-    if (this.authService.currentCiudadanoLogin) {
-      this.router.navigateByUrl("ciudadano/tramites/administrar");
-    }
-    else{
-      this.router.navigateByUrl("admin/tramites/administrar");
-    }
-    
-  }
-  //FIN ACCEDER A DATA SERVICE
-
 }

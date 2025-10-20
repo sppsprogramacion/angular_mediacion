@@ -7,7 +7,7 @@ import { AppConfig } from 'src/app/api/appconfig';
 import Swal from 'sweetalert2';
 
 //import { categorias, departamentos, municipios, objetos, opcionSiNo, provincias, sexo } from 'src/app/common/data-mokeada';
-import { opcionSiNo } from 'src/app/common/data-mokeada';
+import { opcionSiNo, tipoPersoneria } from 'src/app/common/data-mokeada';
 import { CentroMediacionModel } from 'src/app/models/centro_mediacion.model';
 import { CiudadanoModel } from 'src/app/models/ciudadano.model';
 import { ProvinciaModel } from '../../../models/provincia.model';
@@ -55,8 +55,10 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   listCiudadano: CiudadanoModel[]=[]; 
   listConvocados: any[]=[]; 
   listConvocadosNoSalta: any[]=[];
+  listConvocadosPersonaJuridica: any[]=[];
   listConvocadosAux: any[]=[];   
   listObjetos: ObjetoModel[] = [];
+  listPersoneriaJuridica: any[] = [];
   listSexo: SexoModel[] = [];
   listSiNo: any[] = [];
   listVinculados: any[]=[];
@@ -81,6 +83,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   isDatosPersonales: boolean = false;
   isSalta: boolean = false;
   isNoSalta: boolean = false;
+  isPersonaJuridica: boolean = false;
 
   //FORMULARIOS
   formaTramite: FormGroup;
@@ -89,6 +92,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   formaDomicilioSalta: FormGroup;
   formaDomicilioNoSalta: FormGroup;
   formaProvincia: FormGroup;
+  formaPersonaJuridica: FormGroup;
 
   posicion: string = "top";
 
@@ -112,32 +116,37 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       municipio_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(2)]],
       departamento_id_centro: [,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(2)]],
       centro_mediacion_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(1)]],
-      localidad_barrio: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
-      calle_direccion: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],        
+      localidad_barrio: [,[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(1), Validators.maxLength(100)]],
+      calle_direccion: [,[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(1), Validators.maxLength(100)]],        
       numero_dom: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
       objeto_id: [0,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
       violencia_genero: [false,[Validators.required]],
       violencia_partes: [false,[Validators.required]],
       existe_denuncia: [false,[Validators.required]],
       medida_cautelar: [false,[Validators.required]],      
-    
+      es_persona_juridica: ["pf",[Validators.required]],
+      
     });
 
     this.formaConvocado = this.fb.group({
-      apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-zñÑ0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
-      nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-zñÑ0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      apellido: ['',[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(2), Validators.maxLength(100)]],
+      nombre:   ['',[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(2), Validators.maxLength(100)]],
       dni: ['',[Validators.pattern(/^[0-9]*$/), Validators.minLength(1)]],
       sexo_id: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],   
+    });
+
+    this.formaPersonaJuridica = this.fb.group({
+      razon_social: ['',[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(2), Validators.maxLength(100)]],
     });
 
     this.formaDomicilioSalta = this.fb.group({      
       departamento_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.min(2)]],      
       municipio_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(2)]],
       codigo_postal: [,[Validators.required,Validators.pattern(/^[0-9]*$/),Validators.min(1)]],
-      localidad_barrio: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
-      calle_direccion: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],        
+      localidad_barrio: [,[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(1), Validators.maxLength(100)]],
+      calle_direccion: [,[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(1), Validators.maxLength(100)]],        
       numero_dom: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
-      punto_referencia: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],       
+      punto_referencia: ['',[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(2), Validators.maxLength(100)]],       
       telefono: [,[Validators.minLength(1), Validators.maxLength(100)]],
       email: ['',[Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
     });
@@ -153,8 +162,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     });
 
     this.formaVinculado = this.fb.group({
-      apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
-      nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      apellido: ['',[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(2), Validators.maxLength(100)]],
+      nombre:   ['',[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(2), Validators.maxLength(100)]],
       dni: ['',[Validators.required,Validators.pattern(/^[0-9]*$/), Validators.minLength(1)]],
       sexo_id: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],   
       telefono: [,[Validators.required, Validators.minLength(1), Validators.maxLength(100)]], 
@@ -171,12 +180,13 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   user_validation_messages = {
     'apellido': [
       { type: 'required', message: 'El apellido es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
+      { type: 'pattern', message: 'No puede ingresar caracteres especiales como @, #, ?, etc.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
     ],
     'calle_direccion': [
       { type: 'required', message: 'La calle/direccion es requerida' },
+      { type: 'pattern', message: 'No puede ingresar caracteres especiales como @, #, ?, etc.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
     ],
@@ -214,6 +224,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     ],  
     'localidad_barrio': [
       { type: 'required', message: 'La localidad/barrio es requerido.' },
+      { type: 'pattern', message: 'No puede ingresar caracteres especiales como @, #, ?, etc.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
     ],
@@ -231,7 +242,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     ],        
     'nombre': [
       { type: 'required', message: 'El nombre es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
+      { type: 'pattern', message: 'No puede ingresar caracteres especiales como @, #, ?, etc.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
     ],
@@ -251,8 +262,14 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     ],
     'punto_referencia': [
       { type: 'required', message: 'El punto de referencia es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
+      { type: 'pattern', message: 'No puede ingresar caracteres especiales como @, #, ?, etc.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
+      { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
+    ],
+    'razon_social': [
+      { type: 'required', message: 'La razon social es requerida' },
+      { type: 'pattern', message: 'No puede ingresar caracteres especiales como @, #, ?, etc.' },
+      { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
     ],
     'sexo_id': [
@@ -288,6 +305,16 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   isValidConvocado(campo: string): boolean{     
     
     return this.formaConvocado.get(campo)?.invalid && this.formaConvocado.get(campo)?.touched;      
+  }
+
+  isValidRazonSocial(campo: string): boolean{     
+    
+    if(this.isPersonaJuridica == true){
+
+      return this.formaPersonaJuridica.get(campo)?.invalid && this.formaPersonaJuridica.get(campo)?.touched;      
+    }
+
+    return false;
   }
 
   isValidDomicilioSalta(campo: string): boolean{     
@@ -335,7 +362,8 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
 
     });
     
-    this.listSiNo = opcionSiNo;  
+    this.listSiNo = opcionSiNo; 
+    this.listPersoneriaJuridica = tipoPersoneria;
            
   }
   //FIN ONINIT................................................................
@@ -349,7 +377,31 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
         
         return Object.values(this.formaTramite.controls).forEach(control => control.markAsTouched());
     }
+
+    if(this.isPersonaJuridica && this.formaPersonaJuridica.invalid){                        
+        Swal.fire('Formulario juridico incompleto',`Complete correctamente todos los campos del formulario`,"warning");
+        
+        return Object.values(this.formaPersonaJuridica.controls).forEach(control => control.markAsTouched());
+    }
     
+    //CARGAR CONVOCADO PERSONA JURIDICA
+    if(this.formaTramite.get('es_persona_juridica')?.value == "pj"){
+      Object.values(this.formaPersonaJuridica.controls).forEach(control => control.markAsUntouched());
+      
+      this.convocado = {
+        razon_social: this.formaPersonaJuridica.get('razon_social')?.value,
+        
+      }  
+
+      this.listConvocadosPersonaJuridica.push(this.convocado);
+      this.convocado = {};
+    }
+    else{
+      this.listConvocadosPersonaJuridica=[];
+    }
+    //CARGAR CONVOCADO PERSONA JURIDICA
+  
+
     let data:any;
     data ={
       dataTramite : {
@@ -372,6 +424,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
       },
       createConvocadoSaltaDto: this.listConvocados,
       createConvocadoNoSaltaDto: this.listConvocadosNoSalta,
+      createConvocadoPersonaJuridicaDto: this.listConvocadosPersonaJuridica,
       createVinculadoTramiteDto: this.listVinculados      
     }
     
@@ -574,12 +627,14 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
   reiniciarformularios(){
     this.msgsVinculado = [];
     this.formaConvocado.reset();  
+    this.formaPersonaJuridica.reset(); 
     this.formaDomicilioSalta.reset();   
     this.formaDomicilioNoSalta.reset(); 
     //Variables de convocados
     this.isSalta = false;
     this.isNoSalta = false;
     this.isDatosPersonales = false;
+    this.isPersonaJuridica = false;
     //Fin Variables de convocados
   }
 
@@ -772,6 +827,7 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     }
   }
 
+  
   //MANEJO DE FORMULARIO DIALOG CONVOCADO
   openDialogVerConvocado(convocado: any) {
         
@@ -818,6 +874,28 @@ export class CiudadanoTramitesNuevoComponent implements OnInit {
     this.convocadoNoSaltaDialog = false;
   }
   //FIN QUITAR CONVOCADO
+
+
+  onChangePersonaJuridica(){
+    this.formaConvocado.reset();  
+    this.formaPersonaJuridica.reset(); 
+    this.formaDomicilioSalta.reset();   
+    this.formaDomicilioNoSalta.reset(); 
+    this.listConvocados = [];
+    this.listConvocadosNoSalta = [];
+    this.listConvocadosAux = [];
+
+    if(this.formaTramite.get('es_persona_juridica')?.value == "pj"){
+      Object.values(this.formaTramite.controls).forEach(control => control.markAsUntouched());
+      
+      this.isPersonaJuridica = true;
+      
+    }
+    else{
+      this.isPersonaJuridica = false;
+      
+    }
+  }
 
   //QUITAR CONVOCADO
   quitarVinculado(vinculadoQuitar: any){

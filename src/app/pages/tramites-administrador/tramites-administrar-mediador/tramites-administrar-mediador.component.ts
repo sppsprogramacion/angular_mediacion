@@ -70,7 +70,9 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
   listUsuarios: UsuarioModel[]=[];
   listUsuariosCentro: UsuarioCentroModel[]=[];
   listUsuarioCentrosMediacion: UsuarioCentroModel[]=[];
-  listUsuariosTramite: UsuarioTramiteModel[]=[];
+  listUsuariosTramite: UsuarioTramiteModel[]=[];  
+  listaConvocadosPersonasFisicas: ConvocadoModel[]=[];
+  listaConvocadosPersonasJuridicas: ConvocadoModel[]=[];
 
   elementosCentroMediacion: ElementoModel[]=[];    
   elementosUsuarios: ElementoModel[]=[];
@@ -126,7 +128,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     
     this.formaAudiencia = this.fb.group({
       centro_mediacion_id: [0,[Validators.required, Validators.pattern(/^[0-9]*$/), Validators.min(1)]],
-      detalles: ['',[Validators.maxLength(300)]], 
+      detalles: ['',[Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.maxLength(300)]], 
       fecha_inicio: [,[Validators.required]],   
       hora_inicio: [,[Validators.required, Validators.pattern(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/)]],     
       hora_fin: [,[Validators.required]],          
@@ -136,24 +138,24 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     
     this.formaAudienciaCerrar = this.fb.group({
       resultado_audiencia_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],       
-      observacion_resultado: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(1000)]],      
+      observacion_resultado: ['',[Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.required, Validators.minLength(1), Validators.maxLength(1000)]],      
       
     });
 
     this.formaConvocado = this.fb.group({
-      apellido: ['',[Validators.required, Validators.pattern(/^[A-Za-zñÑ0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
-      nombre:   ['',[Validators.required, Validators.pattern(/^[A-Za-zñÑ0-9./\s]+$/), Validators.minLength(2), Validators.maxLength(100)]],
+      apellido: ['',[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(2), Validators.maxLength(100)]],
+      nombre:   ['',[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(2), Validators.maxLength(100)]],
       dni: ['',[Validators.pattern(/^[0-9]*$/)]],
       sexo_id: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],   
     });
     
     this.formaFinalizarTramite = this.fb.group({             
-      observacion_finalizacion: ['',[Validators.required, Validators.nullValidator, Validators.minLength(1), Validators.maxLength(1000)]],      
+      observacion_finalizacion: ['',[Validators.required, Validators.nullValidator, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(1), Validators.maxLength(1000)]],      
       
     });
 
     this.formaMediadorAsignado = this.fb.group({
-      detalles: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(200)]],      
+      detalles: ['',[Validators.required, Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.minLength(1), Validators.maxLength(200)]],      
       funcion_tramite_id: [1,[Validators.required,Validators.pattern(/^[0-9]*$/)]],       
       
     });
@@ -175,8 +177,6 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
       this.router.navigateByUrl("admin/tramites/nuevoslis");
     }  
     //fin obtener tramite    
-      
-    
   }
   //FIN ONINIT......................................................................................
 
@@ -185,7 +185,7 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     //datos tramite 
     'apellido': [
       { type: 'required', message: 'El apellido es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
+      { type: 'pattern', message: 'No se pueden ingresar caracteres especiales como @, #, !, ?, : etc.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
     ],
@@ -196,11 +196,13 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     ],
     'detalles': [
       { type: 'required', message: 'El detalle es requerido.' },
+      { type: 'pattern', message: 'No se pueden ingresar caracteres especiales como @, #, !, ?, : etc.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 200.' }
     ],  
     'detalles_nueva_audiencia': [
       { type: 'required', message: 'El detalle es requerido.' },
+      { type: 'pattern', message: 'No se pueden ingresar caracteres especiales como @, #, !, ?, : etc.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 300.' }
     ],  
@@ -221,18 +223,20 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     ],
     'nombre': [
       { type: 'required', message: 'El nombre es requerido' },
-      { type: 'pattern', message: 'Solo se pueden ingresar números, letras y espacios.' },
+      { type: 'pattern', message: 'No se pueden ingresar caracteres especiales como @, #, !, ?, : etc.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 2.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 100.' }
     ],
     'observacion_resultado': [
       { type: 'required', message: 'La observacion es requerida.' },
+      { type: 'pattern', message: 'No se pueden ingresar caracteres especiales como @, #, !, ?, : etc.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 1000.' }
     ],  
     'observacion_finalizacion': [
       { type: 'required', message: 'La observacion es requerida.' },
       { type: 'nullValidator', message: 'Debe ingresar caracteres no vacios.' },
+      { type: 'pattern', message: 'No se pueden ingresar caracteres especiales como @, #, !, ?, : etc.' },
       { type: 'minlength', message: 'La cantidad mínima de caracteres es 1.' },
       { type: 'maxlength', message: 'La cantidad máxima de caracteres es 1000.' }
     ], 
@@ -475,6 +479,9 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
         next: (resultado) => {          
           this.dataTramite = {};
           this.dataTramite = resultado;  
+          this.listaConvocadosPersonasFisicas = this.dataTramite.convocados.filter(c => !c.isPersonaJuridica);
+          this.listaConvocadosPersonasJuridicas = this.dataTramite.convocados.filter(c => c.isPersonaJuridica);
+          
           if(this.dataTramite.estado_tramite_id === 1){
       
             this.isNuevo = true;
@@ -757,7 +764,8 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
     this.listarResultadosAudiencia();
     this.dataAudiencia = audiencia;
     this.audienciaCerrarDialog = true;
-    this.formaAudienciaCerrar.reset();    
+    this.formaAudienciaCerrar.reset(); 
+    this.formaAudienciaCerrar.get('resultado_audiencia_id')?.setValue(1);    
 
     return Object.values(this.formaAudienciaCerrar.controls).forEach(control => control.markAsUntouched());    
   }
@@ -782,9 +790,18 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
 
   //CREAR PDF SOLICITUD
   async generarPdfTramite(){
-    this.pdfsService.generarPdfSolicitudTramite(this.dataTramite, this.listAudienciasActivas);
+    //envio del tramite y audiencia abierta en dialog
+    this.pdfsService.generarPdfSolicitudTramite(this.dataTramite, this.dataAudiencia);
   }
   //FIN CREAR PDF SOLICITUD....................................................................
+
+
+  //CREAR PDF SOLICITUD CON TODAS LAS AUDIENCIAS
+  async generarPdfTramiteTodasAudiencias(){
+    //envio del tramite y audiencia abierta en dialog
+    this.pdfsService.generarPdfSolicitudTramiteTodasAudiencias(this.dataTramite, this.listAudiencias);
+  }
+  //FIN CREAR PDF SOLICITUD CON TODAS LAS AUDIENCIAS....................................................................
 
   //CREAR PDF Formulario audiencia
   async generarPdfFormularioAudiencia(){
@@ -793,7 +810,8 @@ export class TramitesAdministrarMediadorComponent implements OnInit {
       return
     }
 
-    this.pdfsService.generarPdfFormularioAudiencia(this.dataTramite, this.listAudienciasActivas);
+    //envio del tramite y audiencia abierta en dialog
+    this.pdfsService.generarPdfFormularioAudiencia(this.dataTramite, this.dataAudiencia);
   }
   //FIN CREAR PDF Formulario audiencia....................................................................
 

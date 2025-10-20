@@ -35,7 +35,9 @@ export class TramitesAdministrarSupervisorComponent implements OnInit {
   listAudienciasUsuario: AudienciaModel[] = [];
   listResultadosAudiencia: ResultadoAudienciaModel[]=[];
   listUsuarios: UsuarioModel[]=[];
-  listUsuariosTramite: UsuarioTramiteModel[]=[];
+  listUsuariosTramite: UsuarioTramiteModel[]=[];  
+  listaConvocadosPersonasFisicas: ConvocadoModel[]=[];
+  listaConvocadosPersonasJuridicas: ConvocadoModel[]=[];
   
   //booleans
   loadingAudiencia: boolean = true;
@@ -124,8 +126,10 @@ export class TramitesAdministrarSupervisorComponent implements OnInit {
       .subscribe({
         next: (resultado) => {          
           this.dataTramite = {};
-          this.dataTramite = resultado; 
-          
+          this.dataTramite = resultado;
+          this.listaConvocadosPersonasFisicas = this.dataTramite.convocados.filter(c => !c.isPersonaJuridica);
+          this.listaConvocadosPersonasJuridicas = this.dataTramite.convocados.filter(c => c.isPersonaJuridica);
+            
           if(this.dataTramite.estado_tramite_id === 2) {
             this.buscarMediadorByNumTramiteActivo();
           }
@@ -199,7 +203,7 @@ export class TramitesAdministrarSupervisorComponent implements OnInit {
 
   //CREAR PDF SOLICITUD
   async generarPdfTramite(){
-    this.pdfsService.generarPdfSolicitudTramite(this.dataTramite, this.listAudienciasActivas);
+    this.pdfsService.generarPdfSolicitudTramite(this.dataTramite, this.dataAudiencia);
   }
   //FIN CREAR PDF SOLICITUD...................................................................
 

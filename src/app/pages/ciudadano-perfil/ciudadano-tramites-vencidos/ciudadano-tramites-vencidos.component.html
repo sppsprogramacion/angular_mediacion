@@ -1,0 +1,106 @@
+<div class="grid">
+    <div class="col-12 xl:col-12">
+        <div class="card">
+            <p-toolbar styleClass="mb-3 bg-cyan-500 ">
+                <h5 class="block text-white font-bold font-medium mb-1 ">
+                    Trámites vencidos
+                </h5>
+            </p-toolbar>
+            <!-- TABLA DE TRAMITES -->
+            <p-table #dt1 [value]="listTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['asunto','sector.sector','expediente_nota','persona_referencia','descripcion']" responsiveLayout="scroll">
+                
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="min-w-3rem"></th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Nº Tramite
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                DNI solicitante
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Objeto
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Fecha tramite
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Expediente
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Fecha expediente
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Centro Mediacion 
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Departamento 
+                            </div>
+                        </th>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-tramite>
+                    <tr>
+                        <td>
+                            <button *ngIf="tramite.estado_tramite_id==1" pButton pRipple type="button" icon="pi pi-folder-open text-purple-100" class="p-button-secondary p-button-rounded bg-purple-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
+                            <button *ngIf="tramite.estado_tramite_id==2" pButton pRipple type="button" icon="pi pi-folder-open text-orange-100" class="p-button-secondary p-button-rounded bg-orange-500 mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
+                        </td>
+                        <td class="min-w-10rem">
+                            {{tramite.numero_tramite}}
+                        </td>
+                        <td class="min-w-10rem">
+                            {{tramite.ciudadano.dni}}
+                        </td>
+                        <td class="min-w-15rem">
+                            {{tramite.objeto.objeto}}
+                        </td>
+                        <td class="min-w-8rem">
+                            {{tramite.fecha_tramite| date: 'dd/MM/yyyy'}}
+                        </td>
+                        <td class="min-w-10rem">
+                            {{tramite.expediente}}
+                        </td>
+                        <td class="min-w-8rem">
+                            {{tramite.fecha_expediente| date: 'dd/MM/yyyy'}}
+                        </td>
+                        <td class="min-w-15rem">
+                            {{tramite.centro_mediacion.centro_mediacion}}
+                        </td>
+                        <td class="min-w-15rem">
+                            {{tramite.centro_mediacion.departamento.departamento}}
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="8">No se encontraron tramites finalizados.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="8">Cargando tramites... .</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <!-- FIN TABLA DE TRAMITES -->
+        </div>
+
+    </div>
+</div>

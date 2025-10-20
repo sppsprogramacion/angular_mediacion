@@ -12,7 +12,6 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TramitesPrincipalComponent } from './tramites-administrador/tramites-principal/tramites-principal.component';
 import { TramitesFinalizadosComponent } from './tramites-administrador/tramites-finalizados/tramites-finalizados.component';
-import { TramitesNuevoComponent } from './tramites-administrador/tramites-nuevo/tramites-nuevo.component';
 import { TramitesAsignadosComponent } from './tramites-administrador/tramites-asignados/tramites-asignados.component';
 import { TramitesNuevoslisComponent } from './tramites-administrador/tramites-nuevoslis/tramites-nuevoslis.component';
 import { DropdownModule } from 'primeng/dropdown';
@@ -30,7 +29,7 @@ import { MessagesModule } from 'primeng/messages';
 import { CardModule } from 'primeng/card';
 import { CategoriaAdministrarComponent } from './categorias/categoria-administrar/categoria-administrar.component';
 import { CategoriasListaComponent } from './categorias/categorias-lista/categorias-lista.component';
-import { CiudadanoUsuarioComponent } from './ciudadano-usuario/ciudadano-usuario.component';
+
 import { UsuariosAdministrarComponent } from './usuarios/usuarios-administrar/usuarios-administrar.component';
 import { CiudadanoTramitesNuevoComponent } from './ciudadano-perfil/ciudadano-tramites-nuevo/ciudadano-tramites-nuevo.component';
 import { CiudadanoPrincipalComponent } from './ciudadano-perfil/ciudadano-principal/ciudadano-principal.component';
@@ -57,6 +56,9 @@ import { DepartamentosListaComponent } from './departamentos/departamentos-lista
 import { DescargasAudienciasComponent } from './descargas/descargas-audiencias/descargas-audiencias.component';
 import { DescargasTramitesComponent } from './descargas/descargas-tramites/descargas-tramites.component';
 import { DescargasTramitesAsignadosComponent } from './descargas/descargas-tramites-asignados/descargas-tramites-asignados.component';
+import { TramitesVencidosComponent } from './tramites-administrador/tramites-vencidos/tramites-vencidos.component';
+import { TramitesAdministrarVencidoComponent } from './tramites-administrador/tramites-administrar-vencido/tramites-administrar-vencido.component';
+import { CiudadanoTramitesVencidosComponent } from './ciudadano-perfil/ciudadano-tramites-vencidos/ciudadano-tramites-vencidos.component';
 
 // fonts provided for pdfmake
 
@@ -95,7 +97,6 @@ PdfMakeWrapper.setFonts(pdfFonts);
     CiudadanosListaComponent,
     TramitesPrincipalComponent, 
     TramitesFinalizadosComponent,
-    TramitesNuevoComponent,
     TramitesAsignadosComponent,
     TramitesNuevoslisComponent,    
     TramitesAdministrarComponent,
@@ -106,7 +107,6 @@ PdfMakeWrapper.setFonts(pdfFonts);
     CentrosMediacionListaComponent,
     CategoriaAdministrarComponent,
     CategoriasListaComponent,
-    CiudadanoUsuarioComponent,
     CiudadanoPrincipalComponent,
     CiudadanoTramitesAdministrarComponent,
     CiudadanoTramitesNuevoComponent,
@@ -125,6 +125,9 @@ PdfMakeWrapper.setFonts(pdfFonts);
     DescargasAudienciasComponent,
     DescargasTramitesComponent,
     DescargasTramitesAsignadosComponent,
+    TramitesVencidosComponent,
+    TramitesAdministrarVencidoComponent,
+    CiudadanoTramitesVencidosComponent,
     
   ],
   

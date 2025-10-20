@@ -21,9 +21,9 @@ import { AuthService } from './service/auth.service';
                         <li app-menuitem *ngFor="let child of item.items" [item]="child" [index]="i" role="none"></li>
                     </ul>
                 </li>
-                <div>
-                    <img src="assets/imagenes/general/logo-gobierno-salta.png" alt="Prime Blocks" class="w-full mt-5"/>
-                </div>
+                <!-- <div>
+                    <img src="assets/imagenes/general/logo-mediacion-secretaria2024.png" alt="Prime Blocks" class="w-full mt-5"/>
+                </div> -->
             </ul>
         </div>
     `,
@@ -52,6 +52,7 @@ export class AppMenuComponent implements OnInit {
                     items: [
                         {label: 'Nuevos', icon: 'pi pi-fw pi-bookmark', routerLink: ['/ciudadano/tramites/nuevos']},                        
                         {label: 'Finalizados', icon: 'pi pi-fw pi-check-square', routerLink: ['/ciudadano/tramites/finalizados']},                    
+                        {label: 'Vencidos', icon: 'pi pi-clock', routerLink: ['/ciudadano/tramites/vencidos']},                 
                     ]
                 },
                 {
@@ -113,7 +114,8 @@ export class AppMenuComponent implements OnInit {
                     items: [
                         {label: 'Nuevos', icon: 'pi pi-fw pi-bookmark', routerLink: ['/admin/tramites/nuevoslis']},
                         {label: 'Asignados mediador', icon: 'pi pi-fw pi-send', routerLink: ['/admin/tramites/asignados']},
-                        {label: 'Finalizados', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/tramites/finalizados']},                    
+                        {label: 'Finalizados', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/tramites/finalizados']},        
+                        {label: 'Vencidos', icon: 'pi pi-clock', routerLink: ['/admin/tramites/vencidos']},                   
                     ]
                 },
                 {
@@ -150,6 +152,14 @@ export class AppMenuComponent implements OnInit {
                     label: 'Objetos',
                     items: [
                         {label: 'Ver objetos', icon: 'pi pi-fw pi-star', routerLink: ['/admin/objetos']}
+                    ]
+                },  
+                {
+                    label: 'Mi perfil',
+                    items: [
+                        {label: 'Datos Personales', icon: 'pi pi-id-card', routerLink: ['/admin/miperfil/datospersonales']},
+                        {label: 'Cambiar contraseña', icon: 'pi pi-circle', routerLink: ['/admin/miperfil/cambiarcontrasenia']},
+                        
                     ]
                 },  
                                                 

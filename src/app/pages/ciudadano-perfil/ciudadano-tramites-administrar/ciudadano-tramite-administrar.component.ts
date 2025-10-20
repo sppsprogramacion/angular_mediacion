@@ -41,6 +41,8 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
   listAudiencias: AudienciaModel[] = [];
   listAudienciasActivas: AudienciaModel[] = [];
   listUsuariosTramite: UsuarioTramiteModel[]=[];
+  listaConvocadosPersonasFisicas: UsuarioTramiteModel[]=[];
+  listaConvocadosPersonasJuridicas: UsuarioTramiteModel[]=[];
 
   //variables booleanas
   audienciaFinalizadaDialog: boolean = false;
@@ -115,7 +117,9 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
         next: (resultado) => {          
           this.dataTramite = {};
           this.dataTramite = resultado;  
-
+          this.listaConvocadosPersonasFisicas = this.dataTramite.convocados.filter(c => !c.isPersonaJuridica);
+          this.listaConvocadosPersonasJuridicas = this.dataTramite.convocados.filter(c => c.isPersonaJuridica);
+          
           this.msgsEstadoTramite = [];           
           
           if(this.dataTramite.estado_tramite_id === 2 ) {            
@@ -222,9 +226,17 @@ export class CiudadanoTramitesAdministrarComponent implements OnInit {
   
   //CREAR PDF SOLICITUD
   async generarPdfTramite(){
-    this.pdfsService.generarPdfSolicitudTramite(this.dataTramite, this.listAudienciasActivas);
+    this.pdfsService.generarPdfSolicitudTramite(this.dataTramite, this.dataAudiencia);
   }
   //FIN CREAR PDF SOLICITUD....................................................................
+
+  //CREAR PDF SOLICITUD CON TODAS LAS AUDIENCIAS
+  async generarPdfTramiteTodasAudiencias(){
+    //envio del tramite y audiencia abierta en dialog
+    this.pdfsService.generarPdfSolicitudTramiteTodasAudiencias(this.dataTramite, this.listAudiencias);
+  }
+  //FIN CREAR PDF SOLICITUD CON TODAS LAS AUDIENCIAS....................................................................
+
 
   //CREAR PDF TRAMITE FINALIZADO
   async generarPdfTramiteFinalizado(){

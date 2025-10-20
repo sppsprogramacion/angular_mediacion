@@ -12,6 +12,7 @@ export class ConvocadoModel{
         public tramite?: TramiteModel,
         public apellido?: string,
         public nombre?: string,
+        public razon_social?: string,        
         public dni?: number,
         public sexo_id?: number,
         public sexo?: SexoModel,    
@@ -28,6 +29,7 @@ export class ConvocadoModel{
         public punto_referencia?: string,
         public telefono?: string,
         public email?: string,
+        public isPersonaJuridica?: boolean
 
     ){}
 }

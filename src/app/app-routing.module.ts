@@ -9,7 +9,6 @@ import { CiudadanosListaComponent } from './pages/ciudadanos/ciudadanos-lista/ci
 import { LoginComponent } from './auth/login/login.component';
 import { RegistroComponent } from './auth/registro/registro.component';
 import { TramitesPrincipalComponent } from './pages/tramites-administrador/tramites-principal/tramites-principal.component';
-import { TramitesNuevoComponent } from './pages/tramites-administrador/tramites-nuevo/tramites-nuevo.component';
 import { TramitesAsignadosComponent } from './pages/tramites-administrador/tramites-asignados/tramites-asignados.component';
 import { TramitesFinalizadosComponent } from './pages/tramites-administrador/tramites-finalizados/tramites-finalizados.component';
 import { TramitesNuevoslisComponent } from './pages/tramites-administrador/tramites-nuevoslis/tramites-nuevoslis.component';
@@ -22,7 +21,7 @@ import { CentroAdministrarComponent } from './pages/centros-mediacion/centro-adm
 import { CentrosMediacionListaComponent } from './pages/centros-mediacion/centros-lista/centros-mediacion-lista.component';
 import { CategoriasListaComponent } from './pages/categorias/categorias-lista/categorias-lista.component';
 import { CategoriaAdministrarComponent } from './pages/categorias/categoria-administrar/categoria-administrar.component';
-import { CiudadanoUsuarioComponent } from './pages/ciudadano-usuario/ciudadano-usuario.component';
+
 import { LoginUsuarioComponent } from './auth/login-usuario/login-usuario.component';
 import { CiudadanoPrincipalComponent } from './pages/ciudadano-perfil/ciudadano-principal/ciudadano-principal.component';
 import { CiudadanoTramitesNuevoComponent } from './pages/ciudadano-perfil/ciudadano-tramites-nuevo/ciudadano-tramites-nuevo.component';
@@ -44,6 +43,10 @@ import { DepartamentosListaComponent } from './pages/departamentos/departamentos
 import { DescargasAudienciasComponent } from './pages/descargas/descargas-audiencias/descargas-audiencias.component';
 import { DescargasTramitesComponent } from './pages/descargas/descargas-tramites/descargas-tramites.component';
 import { DescargasTramitesAsignadosComponent } from './pages/descargas/descargas-tramites-asignados/descargas-tramites-asignados.component';
+import { TramitesVencidosComponent } from './pages/tramites-administrador/tramites-vencidos/tramites-vencidos.component';
+import { TramitesAdministrarVencidoComponent } from './pages/tramites-administrador/tramites-administrar-vencido/tramites-administrar-vencido.component';
+import { CiudadanoTramitesVencidosComponent } from './pages/ciudadano-perfil/ciudadano-tramites-vencidos/ciudadano-tramites-vencidos.component';
+import { RoleUsuarioGuard } from './auth/guards/role-usuario.guard';
 
 @NgModule({
     imports: [
@@ -53,43 +56,44 @@ import { DescargasTramitesAsignadosComponent } from './pages/descargas/descargas
                 path: 'admin', component: AppMainComponent, canActivate: [AuthUsuarioGuard],
                 children: [
                     {path: '', component: TramitesPrincipalComponent},
-                    {path: 'principal', component: TramitesPrincipalComponent},
+                    {path: 'principal', component: TramitesPrincipalComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['administrador','supervisor'] }},
 
-                    {path: 'categoria/lista', component: CategoriasListaComponent},
-                    {path: 'categoria/administrar', component: CategoriaAdministrarComponent},
+                    {path: 'categoria/lista', component: CategoriasListaComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['administrador','supervisor'] }},
+                    {path: 'categoria/administrar', component: CategoriaAdministrarComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['administrador','supervisor'] }},
                     
-                    {path: 'ciudadanos/administrar', component: CiudadanosAdministrarComponent},
-                    {path: 'ciudadanos/buscar', component: CiudadanosBuscarComponent},
-                    {path: 'ciudadanos/lista', component: CiudadanosListaComponent},
-                    {path: 'ciudadanos/tramites/nuevo', component: CiudadanoTramitesNuevoComponent},
-                    {path: 'ciudadanos-usuarios/administrar', component: CiudadanoUsuarioComponent},
+                    {path: 'ciudadanos/administrar', component: CiudadanosAdministrarComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['administrador','mediador','supervisor'] }},
+                    {path: 'ciudadanos/buscar', component: CiudadanosBuscarComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['administrador','mediador','supervisor'] }},
+                    {path: 'ciudadanos/lista', component: CiudadanosListaComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['administrador','mediador','supervisor'] }},
+                    //{path: 'ciudadanos/tramites/nuevo', component: CiudadanoTramitesNuevoComponent},
                     
-                    {path: 'centro-mediacion/lista', component: CentrosMediacionListaComponent},
-                    {path: 'centro-mediacion/administrar', component: CentroAdministrarComponent},
+                    
+                    {path: 'centro-mediacion/lista', component: CentrosMediacionListaComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['administrador','supervisor'] }},
+                    {path: 'centro-mediacion/administrar', component: CentroAdministrarComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['administrador','supervisor'] }},
 
-                    {path: 'departamentos/lista', component: DepartamentosListaComponent},
+                    {path: 'departamentos/lista', component: DepartamentosListaComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['administrador','supervisor'] }},
                     
-                    {path: 'descargas/audiencias', component: DescargasAudienciasComponent},
-                    {path: 'descargas/tramites', component: DescargasTramitesComponent},
-                    {path: 'descargas/tramites-asignacion', component: DescargasTramitesAsignadosComponent},
+                    {path: 'descargas/audiencias', component: DescargasAudienciasComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['superadmincuentas','admincuentas'] }},
+                    {path: 'descargas/tramites', component: DescargasTramitesComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['superadmincuentas','admincuentas'] }},
+                    {path: 'descargas/tramites-asignacion', component: DescargasTramitesAsignadosComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['superadmincuentas','admincuentas'] }},
 
                     {path: 'miperfil/datospersonales', component: UsuarioDatosPersonalesComponent},
                     {path: 'miperfil/cambiarcontrasenia', component: UsuarioCambiarContraseniaComponent},
 
                     //{path: 'categoria/lista', component: CategoriasListaComponent},
-                    {path: 'objetos', component: ObjetosComponent},                    
+                    {path: 'objetos', component: ObjetosComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['administrador','supervisor'] }},                    
 
-                    {path: 'usuarios/administrar', component: UsuariosAdministrarComponent},
-                    {path: 'usuarios/lista', component: UsuariosListaComponent},
+                    {path: 'usuarios/administrar', component: UsuariosAdministrarComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['superadmincuentas','admincuentas', 'administrador','supervisor'] }},
+                    {path: 'usuarios/lista', component: UsuariosListaComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['superadmincuentas','admincuentas', 'administrador','supervisor'] }},
                     
-                    {path: 'tramites/administrar', component: TramitesAdministrarComponent},
-                    {path: 'tramites/administrar-finalizado', component: TramitesAdministrarFinalizadoComponent},
-                    {path: 'tramites/administrar-med', component: TramitesAdministrarMediadorComponent},
-                    {path: 'tramites/administrar-visor', component: TramitesAdministrarSupervisorComponent},
-                    {path: 'tramites/asignados', component: TramitesAsignadosComponent},
-                    {path: 'tramites/finalizados', component: TramitesFinalizadosComponent},
-                    {path: 'tramites/nuevo', component: TramitesNuevoComponent},
-                    {path: 'tramites/nuevoslis', component: TramitesNuevoslisComponent},
+                    {path: 'tramites/administrar', component: TramitesAdministrarComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['administrador'] }},
+                    {path: 'tramites/administrar-finalizado', component: TramitesAdministrarFinalizadoComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['administrador','mediador','supervisor'] }},
+                    {path: 'tramites/administrar-med', component: TramitesAdministrarMediadorComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['mediador'] }},
+                    {path: 'tramites/administrar-vencido', component: TramitesAdministrarVencidoComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['administrador','mediador','supervisor'] }},
+                    {path: 'tramites/administrar-visor', component: TramitesAdministrarSupervisorComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['supervisor'] }},
+                    {path: 'tramites/asignados', component: TramitesAsignadosComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['administrador','mediador','supervisor'] }},
+                    {path: 'tramites/finalizados', component: TramitesFinalizadosComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['administrador','mediador','supervisor'] }},                    
+                    {path: 'tramites/nuevoslis', component: TramitesNuevoslisComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['administrador','mediador','supervisor'] }},
+                    {path: 'tramites/vencidos', component: TramitesVencidosComponent, canActivate: [RoleUsuarioGuard], data: { roles: ['administrador','mediador','supervisor'] }},
                                         
                 ],                
             },
@@ -104,7 +108,7 @@ import { DescargasTramitesAsignadosComponent } from './pages/descargas/descargas
                     {path: 'tramites/finalizados', component: CiudadanoTramitesFinalizadosComponent},
                     {path: 'tramites/nuevo', component: CiudadanoTramitesNuevoComponent},
                     {path: 'tramites/nuevos', component: CiudadanoTramitesNuevoslistaComponent},
-                                                 
+                    {path: 'tramites/vencidos', component: CiudadanoTramitesVencidosComponent},                            
                 ],
                 
             },

@@ -1,0 +1,133 @@
+<div class="grid">
+    
+    <div class="col-12">
+        <div class="card">
+
+            <h5>Tramites vencidos</h5>
+
+            <div>
+                <div class="p-formgrid grid">                
+                    <!-- FORMULARIO BUSCAR -->
+                    <div class="col-12">  
+                        <form [formGroup]="formaBusqueda">
+                            <!-- CARD DATOS BUSCAR-->
+                            <div class="card p-fluid">
+                                        
+                                <div class="formgrid grid">
+                                    <div class="field col-6 md:col-4 lg:col-4">
+                                        <label for="anio">Año</label>
+                                        <p-dropdown id="anio" [options]="listaAniosDropdown" optionLabel="label" optionValue="value" formControlName="anio" placeholder="Seleccinar...">
+                                        </p-dropdown>
+                                    </div>  
+
+                                    <div class="field col-6 md:col-4 lg:col-4">
+                                        <button pButton pRipple type="button" label="Buscar año" class="p-button-primary mt-4" (click)="buscarVencidosXAnio()" ></button>
+                                        
+                                    </div>  
+                                </div>
+                                
+                            </div>
+                            <!-- FIN CARD DATOS BUSCAR -->        
+                            
+                        </form>
+                    </div>
+                    <!--  FIN FORMULARIO BUSCAR -->
+                    
+                </div>
+            </div>
+            
+            <!-- TABLA DE TRAMITES -->
+            <p-table #dt1 [value]="listTramites" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-striped" [paginator]="true" [globalFilterFields]="['tramite.numero_tramite','tramite.ciudadano.apellido','tramite.ciudadano.nombre','tramite.ciudadano.dni','tramite.expediente']" responsiveLayout="scroll">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="min-w-3rem"></th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Nº Tramite
+                                <p-columnFilter type="text" field="numero_tramite" display="menu" placeholder="Buscar por tramite"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Apellido
+                                <p-columnFilter type="text" field="ciudadano.apellido" display="menu" placeholder="Buscar por apellido"></p-columnFilter>
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Nombre
+                                <p-columnFilter type="text" field="ciudadano.nombre" display="menu" placeholder="Buscar por nombre"></p-columnFilter>
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                DNI solicitante
+                                <p-columnFilter type="text" field="tramite.ciudadano.dni" display="menu" placeholder="Buscar por dni"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Objeto
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Fecha tramite
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                Centro Mediacion
+                            </div>
+                        </th>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-tramite>
+                    <tr>
+                        <td>
+                            <button *ngIf="tramite.estado_tramite_id==4" pButton pRipple type="button" icon="pi pi-folder-open" class="p-button-secondary p-button-rounded mr-1 mb-1" (click)="administrarTramite(tramite)"></button>
+                        </td>
+                        <td class="min-w-10rem">
+                            {{tramite.numero_tramite}}
+                        </td>
+
+                        <td class="min-w-15rem">
+                            {{tramite.ciudadano.apellido}}
+                        </td>
+                        <td class="min-w-15rem">
+                            {{tramite.ciudadano.nombre}}
+                        </td>
+                        <td class="min-w-10rem">
+                            {{tramite.ciudadano.dni}}
+                        </td>
+                        <td class="min-w-15rem">
+                            {{tramite.objeto.objeto}}
+                        </td>
+                        <td class="min-w-5rem">
+                            {{tramite.fecha_tramite| date: 'dd/MM/yyyy'}}
+                        </td>                        
+                        <td class="min-w-15rem">
+                            {{tramite.centro_mediacion.centro_mediacion}}
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="8">No se encontraron tramites vencidos.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="8">Cargando tramites... .</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <!-- FIN TABLA DE TRAMITES -->
+
+        </div>
+    </div>
+</div>

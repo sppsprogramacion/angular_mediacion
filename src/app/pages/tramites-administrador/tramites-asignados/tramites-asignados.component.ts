@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { globalConstants } from 'src/app/common/global-constants';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
 import { MunicipioModel } from 'src/app/models/municipio.model';
 import { SexoModel } from 'src/app/models/sexo.model';

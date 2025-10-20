@@ -12,11 +12,11 @@ import { AuthService } from '../../../service/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-tramites-finalizados',
-  templateUrl: './tramites-finalizados.component.html',
-  styleUrls: ['./tramites-finalizados.component.scss']
+  selector: 'app-tramites-vencidos',
+  templateUrl: './tramites-vencidos.component.html',
+  styleUrls: ['./tramites-vencidos.component.scss']
 })
-export class TramitesFinalizadosComponent implements OnInit {
+export class TramitesVencidosComponent implements OnInit {
 
   loading:boolean = true;
 
@@ -33,7 +33,6 @@ export class TramitesFinalizadosComponent implements OnInit {
   listDepartamentos: DepartamentoModel[]=[];
   listMunicipios: MunicipioModel[]= [];
   listSexo: SexoModel[]=[];
-  listUsuariosTramites: UsuarioTramiteModel[]=[];
 
    //FORMULARIOS
    formaBusqueda: FormGroup;
@@ -62,7 +61,7 @@ export class TramitesFinalizadosComponent implements OnInit {
 
     //obtener anio actual para buscar por defecto los tramites del usuario de ese anio
     this.anioActual = new Date().getFullYear();
-    this.listarTramitesUsuarioFinalizadosXAnio(this.anioActual);
+    this.listarTramitesUsuarioVencidosXAnio(this.anioActual);
 
     //cargar lista de años
     for (let anio = 2023; anio <= this.anioActual; anio++) {
@@ -75,59 +74,32 @@ export class TramitesFinalizadosComponent implements OnInit {
     this.formaBusqueda.get('anio')?.setValue(this.anioActual);
     
   }
-
-
-  //LISTADO DE TRAMITES FINALIZADOS
-  listarTramites(){    
-    this.tramitesService.listarTramitesFinalizados().
-        subscribe(respuesta => {
-        this.listTramites= respuesta[0];
-        this.loading = false;  
-    
-    });
-  }
-  //FIN LISTADO DE TRAMITES FINALIZADOS.......................................................
-
-  //LISTADO DE TRANITES FINALIZADOS USUARIO
-  listarTramitesUsuarioFinalizados(){
-    this.loading = true; 
-    let id_usuario: number = this.authService.currentUserLogin.id_usuario;
-
-    //REVISAR PARA LISTAR TRAMITES FINALIZADOS
-    this.usuariosTramitesService.listarTramitesFinalizadosXUsuario(id_usuario).
-      subscribe(respuesta => {
-        this.listUsuariosTramites= respuesta[0];
-        this.loading = false;  
-    
-      });
-  }
-  //FIN LISTADO DE TRAMITES FINALIZADOS USUARIO.......................................................
-
+  
   //LISTADO DE TRANITES USUARIO
-  listarTramitesUsuarioFinalizadosXAnio(anio: number){
+  listarTramitesUsuarioVencidosXAnio(anio: number){
     this.loading = true;
     let id_usuario: number = this.authService.currentUserLogin.id_usuario;    
 
     //REVISAR PARA LISTAR TRAMITES FINALIZADOS
-    this.usuariosTramitesService.listarTramitesFinalizadosXUsuarioXAnio(id_usuario, anio).
+    this.tramitesService.listarTramitesVencidosUsuarioXAnio(id_usuario, anio).
       subscribe(respuesta => {
-        this.listUsuariosTramites= respuesta[0];
+        this.listTramites= respuesta[0];
         this.loading = false;  
       });
   }
   //FIN LISTADO DE TRAMITES USUARIO.......................................................
 
   //TRAMITES FINALIZADOS POR AÑO
-  buscarFinalizadosXAnio(){
+  buscarVencidosXAnio(){
     let anio = parseInt(this.formaBusqueda.get('anio')?.value);
-    this.listarTramitesUsuarioFinalizadosXAnio(anio);
+    this.listarTramitesUsuarioVencidosXAnio(anio);
   }
   //FIN TRAMITES FINALIZADOS POR AÑO
   
   //ACCEDER A DATA SERVICE
-  administrarTramite(data: UsuarioTramiteModel){
-    this.dataService.tramiteData = data.tramite;    
-    this.router.navigateByUrl("admin/tramites/administrar-finalizado");
+  administrarTramite(data: TramiteModel){
+    this.dataService.tramiteData = data;    
+    this.router.navigateByUrl("admin/tramites/administrar-vencido");
   }
   //FIN ACCEDER A DATA SERVICE
 

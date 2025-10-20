@@ -74,7 +74,7 @@ export class TramitesPrincipalComponent implements OnInit {
   ) { 
     this.formaBuscar = this.fb.group({
       id_tipo_busqueda: ['anioActual',[Validators.required]],
-      buscar: ['',[Validators.required]],
+      buscar: ['',[Validators.pattern(/^[\p{L}0-9.,/\s]+$/u), Validators.required]],
       fecha_ini: ['',[Validators.required]],
       fecha_fin: ['',[Validators.required]],
 
@@ -118,6 +118,7 @@ export class TramitesPrincipalComponent implements OnInit {
     ],
     'buscar': [
       { type: 'required', message: 'El dato a buscar es requerido' },
+      { type: 'pattern', message: 'No se pueden ingresar caracteres especiales como @, #, !, ?, : etc.' },
     ],
     'fecha_ini': [
       { type: 'required', message: 'La fecha inicio es requerida' },
@@ -198,7 +199,6 @@ export class TramitesPrincipalComponent implements OnInit {
     this.tramitesService.listarTramitesTodos().
       subscribe(respuesta => {
         this.listTramites= respuesta[0];
-        this.totalTramite = respuesta[1];
         this.loading=false;
     
       });
@@ -250,7 +250,6 @@ export class TramitesPrincipalComponent implements OnInit {
     this.tramitesService.listarTramitesTodosApellidoCiudadano(apellido).
       subscribe(respuesta => {
         this.listTramites= respuesta[0];
-        this.totalTramite = respuesta[1];
         this.contarTramitesArrayXEstado(this.listTramites);
         this.loading=false;
     
@@ -263,7 +262,6 @@ export class TramitesPrincipalComponent implements OnInit {
     this.tramitesService.listarTramitesTodosDniCiudadano(dni).
       subscribe(respuesta => {
         this.listTramites= respuesta[0];
-        this.totalTramite = respuesta[1];
         this.contarTramitesArrayXEstado(this.listTramites);
         this.loading=false;
     
@@ -276,7 +274,6 @@ export class TramitesPrincipalComponent implements OnInit {
     this.tramitesService.listarTramitesTodosExpediente(expediente).
       subscribe(respuesta => {
         this.listTramites= respuesta[0];
-        this.totalTramite = respuesta[1];
         this.contarTramitesArrayXEstado(this.listTramites);
         this.loading=false;
     
@@ -296,7 +293,6 @@ export class TramitesPrincipalComponent implements OnInit {
     this.tramitesService.listarTramitesTodosFecha(fechaInicio, this.datePipe.transform(fechaActual, "yyyy-MM-dd")).
       subscribe(respuesta => {
         this.listTramites= respuesta[0];
-        this.totalTramite = respuesta[1];
         this.contarTramitesArrayXEstado(this.listTramites);
         this.loading=false;
     
@@ -309,7 +305,6 @@ export class TramitesPrincipalComponent implements OnInit {
     this.tramitesService.listarTramitesTodosFecha(fecha_ini, fecha_fin).
       subscribe(respuesta => {
         this.listTramites= respuesta[0];
-        this.totalTramite = respuesta[1];
         this.contarTramitesArrayXEstado(this.listTramites);
         this.loading=false;
     
@@ -322,7 +317,6 @@ export class TramitesPrincipalComponent implements OnInit {
     this.tramitesService.listarTramitesTodosNumeroTramite(numeroTramite).
       subscribe(respuesta => {
         this.listTramites= respuesta[0];
-        this.totalTramite = respuesta[1];
         this.contarTramitesArrayXEstado(this.listTramites);
         this.loading=false;
     
@@ -356,19 +350,11 @@ export class TramitesPrincipalComponent implements OnInit {
   //FIN LISTADO DE TRAMITES CIUDADANOS.......................................................
 
   //CONTAR TRAMITES
-  contarTramitesXEstado(){    
-    this.tramitesService.contarTotalesTramitesXEstado().
-        subscribe(respuesta => {
-        this.totalesTramites = respuesta;    
-    });
-  }
-  //FIN CONTAR TRAMITES............................
-
-  //CONTAR TRAMITES
   contarTramitesArrayXEstado(tramitesx: TramiteModel[]){    
     this.cantidadNuevos = tramitesx.filter(tramitex => tramitex.estado_tramite_id === 1).length;
     this.cantidadAsignados = tramitesx.filter(tramitex => tramitex.estado_tramite_id === 2).length;
     this.cantidadFinalizados = tramitesx.filter(tramitex => tramitex.estado_tramite_id === 3).length;
+    this.totalTramite = this.cantidadAsignados + this.cantidadNuevos + this.cantidadFinalizados;
   }
   //FIN CONTAR TRAMITES............................
 

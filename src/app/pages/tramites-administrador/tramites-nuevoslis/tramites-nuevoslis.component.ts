@@ -11,6 +11,8 @@ import { globalConstants } from '../../../common/global-constants';
 import { UsuariosTramiteService } from '../../../service/usuarios-tramite.service';
 import { AuthService } from 'src/app/service/auth.service';
 import { Table } from 'primeng/table';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tramites-nuevoslis',
@@ -31,28 +33,42 @@ export class TramitesNuevoslisComponent implements OnInit {
   //VARIABLES TRAMITE    
   tramiteDialog: boolean;
   nuevoTramite: boolean;
+  isAdmin:boolean=false;
+  controlVencimientoTramite: boolean = false;
   submitted: boolean;
   tituloPagina: string ="Usuario: Administrador";
 
   //LISTAS    
+  listDiasDropdown: { label: string, value: number }[] = [];
   listTramites: TramiteModel[]=[];
   listUsuariosTramites: UsuarioTramiteModel[]=[];
   listDepartamentos: DepartamentoModel[]=[];
   listMunicipios: MunicipioModel[]= [];
   listSexo: SexoModel[]=[];
 
+  //FORMULARIOS
+    formaBuscar: FormGroup;
+
   constructor(
+    private fb: FormBuilder,
+    
     private authService: AuthService,
     private tramitesService: TramitesService,
     private usuariosTramitesService: UsuariosTramiteService,
     public dataService: DataService,
     private router: Router
-  ) { }
+  ) { 
+
+    this.formaBuscar = this.fb.group({
+      dias: [,[Validators.required,Validators.pattern(/^[0-9]*$/)]],
+
+    });
+  }
 
   ngOnInit(): void {
     
     if (this.authService.currentUserLogin.rol_id == "administrador") {
-      
+      this.isAdmin = true;
     }
     
     if (this.authService.currentUserLogin) {
@@ -60,6 +76,17 @@ export class TramitesNuevoslisComponent implements OnInit {
       this.tituloPagina ="Usuario: " + this.authService.currentUserLogin.apellido + " " + this.authService.currentUserLogin.nombre;
       this.listarTramitesAdministrador();
     }
+
+    //cargar lista de años
+    let listDias: number[] = [];
+    for (let diasAux = 7; diasAux <= 30; diasAux++) {
+      listDias.push(diasAux);
+    }
+    this.listDiasDropdown = listDias.map(dia => ({
+      label: dia.toString(),
+      value: dia
+    }));
+    this.formaBuscar.get('dias')?.setValue(7);
     
   }
 
@@ -101,11 +128,72 @@ export class TramitesNuevoslisComponent implements OnInit {
   }
   //FIN LISTADO DE TRAMITES USUARIO.......................................................
 
+  //TRAMITES A VENCER EN DIAS
+  buscarAVencer(){
+    let diasAux = parseInt(this.formaBuscar.get('dias')?.value);
+    this.listarTramitesAVencer(diasAux);
+  }
+  //FIN TRAMITES A VENCER EN DIAS
+
+  //LISTADO DE TRAMITES A VENCER
+  listarTramitesAVencer(dias: number){        
+    this.tramitesService.listarTramitesAVencerXDias(dias).
+        subscribe(respuesta => {
+        this.listTramites= respuesta[0];
+        
+        this.loading = false;  
+    
+    });
+  }
+  //FIN LISTADO DE TRAMITES A VENCER.......................................................
+
+  //TRAMITES FINALIZADOS POR AÑO
+  aplicarControlVencidos(){
+    let dias = parseInt(this.formaBuscar.get('dias')?.value);
+
+    if(this.formaBuscar.invalid){
+      Swal.fire('No se finalizó el control', "Error: complete correctamente los campos del formulario" ,"warning");
+      return Object.values(this.formaBuscar.controls).forEach(control => control.markAsTouched());
+    }
+    
+
+    //GUARDAR FINALIZAR TRAMITE
+    this.tramitesService.updateAplicarControlVencidos(dias)
+      .subscribe({
+        next: (resultado) => {
+          //let tramite: TramiteModel = resultado;
+          
+          Swal.fire('Exito',`El control se realizó con exito`,"success");
+          this.buscarAVencer();
+        },
+        error: (err) => {
+
+          Swal.fire('No se finalizó el tramite', `Error: ${err.error.message}`,"error");
+        }
+      });         
+    //FIN GUARDAR FINALIZAR TRAMITE
+    
+  }
+  //FIN TRAMITES FINALIZADOS POR AÑO
+
  //ABRIR NUEVO TRAMITE
   abrirNuevoTramite(){
     this.router.navigateByUrl("admin/tramites/nuevo");
   }
   //FIN ABRIR NUEVO TRAMITE
+
+  //CONTROLAR VENCIMIENTO TRAMITE
+  controlarVencimientoTramite(estadoControlar: boolean){
+    this.controlVencimientoTramite = estadoControlar;
+    if(!estadoControlar){
+      if (this.authService.currentUserLogin) {
+      
+        this.listarTramitesAdministrador();
+      }
+    }
+
+  }
+  //FIN CONTROLAR VENCIMIENTO TRAMITE
 
   //LIMPIAR FILTROS
   clear(table: Table) {

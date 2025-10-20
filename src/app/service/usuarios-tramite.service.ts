@@ -75,6 +75,7 @@ export class UsuariosTramiteService {
     return this.http.get<[tramite:UsuarioTramiteModel[], total: number]>(`${base_url}/usuarios-tramite/buscar-xusuario-finalizados-xanio?id_usuario=${id_usuariox}&anio=${anio}`, { headers })
   }
 
+
   listarTramitesTodosFechaExcel(fecha_ini: string, fecha_fin: string){
   
     const token = this.dataService.getToken();
