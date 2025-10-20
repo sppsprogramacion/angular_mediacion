@@ -495,8 +495,29 @@ export class PdfsService {
 
     // Cargar la imagen en base64 o desde assets
     const imgBase64 = await new Img('../assets/imagenes/general/formulario-audiencia2.jpg').fit([540,750]).absolutePosition(40,30).build(); // O usa una imagen en base64
-    const caratula: string = dataTramite.ciudadano.apellido + " " + dataTramite.ciudadano.nombre + " c/ " + dataTramite.convocados[0].apellido + " " 
-                            + dataTramite.convocados[0].nombre + " por " + dataTramite.objeto.objeto
+    
+    let misConvocados: string[] = [];
+    let miConvocado: string;
+    
+    let caratula: string = "";
+    dataTramite.convocados.forEach(convocado => {
+      caratula = caratula + ", " + `${convocado.apellido ?? ''} ${convocado.nombre ?? ''} ${convocado.razon_social ?? ''}`;
+      miConvocado = `Apellido y nombre / Razon social: ${convocado.apellido ?? ''} ${convocado.nombre ?? ''} ${convocado.razon_social ?? ''}`;
+      misConvocados.push(miConvocado);
+    });
+
+    caratula = dataTramite.ciudadano.apellido + " " + dataTramite.ciudadano.nombre 
+              + " c/ " + caratula 
+              + " por " + dataTramite.objeto.objeto
+
+    // pdf.add(
+    //   {
+    //     ul: misConvocados
+    //   }
+    // );
+    
+    // caratula: string = dataTramite.ciudadano.apellido + " " + dataTramite.ciudadano.nombre + " c/ " + dataTramite.convocados[0].apellido + " " 
+    //                         + dataTramite.convocados[0].nombre + " por " + dataTramite.objeto.objeto
   
     // Utilizamos un canvas para el fondo
     pdf.add(

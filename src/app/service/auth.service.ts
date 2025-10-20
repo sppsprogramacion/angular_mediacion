@@ -63,10 +63,15 @@ export class AuthService {
             this.usuarioLoginResponse = usuario;
           }),
         tap(usuario => localStorage.setItem('token-usuario', this.usuarioLoginResponse.token)),
+        tap(usuario => localStorage.setItem('rol-usuario', this.usuarioLoggedIn.rol_id)),
         tap(usuario => this.ciudadanoLoggedIn = null)
       ); 
   }
   //FIN LOGUEO DE USUARIO................................
+
+  getRolUsuario(): string | null {
+    return localStorage.getItem('rol-usuario');
+  }
 
   //OBTENER USUARIO LOGUEADO
   get currentUserLogin(): UsuarioModel | undefined{
@@ -140,6 +145,7 @@ export class AuthService {
   logoutUsuario(){
     this.usuarioLoggedIn = undefined;
     localStorage.removeItem('token-usuario');
+    localStorage.removeItem('rol-usuario');
   }
   //FIN CERRAR SESION CIUDADANO................................................
 
