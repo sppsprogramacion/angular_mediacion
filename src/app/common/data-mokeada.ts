@@ -21,7 +21,7 @@ export const opcionSiNo = [
 export const tipoPersoneria = [
     {
         "id_tipo_personeria": "pf",
-        "tipo_personeria": "Persona Fisica"
+        "tipo_personeria": "Persona Humana"
     },
     {
         "id_tipo_personeria": "pj",
