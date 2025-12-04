@@ -37,13 +37,12 @@ export class PdfsService {
 
     //Rectangulos
     pdf.add(
-      new Canvas([
-        // Bottom
-        new Rect([35, 120], [510, 650]).lineColor('#000000').end,
-        new Rect([40, 150], [500, 25]).lineColor('#000000').end,
-        new Rect([40, 205], [500, 55]).lineColor('#000000').end,
-        new Rect([40, 285], [500, 55]).lineColor('#000000').end,
-        new Rect([40, 370], [500, 145]).lineColor('#000000').end,
+      new Canvas([        
+        new Rect([35, 130], [510, 650]).lineColor('#000000').end,
+        new Rect([40, 160], [500, 25]).lineColor('#000000').end,
+        new Rect([40, 215], [500, 55]).lineColor('#000000').end,
+        new Rect([40, 295], [500, 55]).lineColor('#000000').end,
+        new Rect([40, 380], [500, 145]).lineColor('#000000').end,
       ]).absolutePosition(0, 0).end
     );
     
@@ -292,10 +291,10 @@ export class PdfsService {
     pdf.add(
       new Canvas([
         // Bottom
-        new Rect([35, 120], [510, 650]).lineColor('#000000').end,
-        new Rect([40, 150], [500, 25]).lineColor('#000000').end,
-        new Rect([40, 205], [500, 55]).lineColor('#000000').end,
-        new Rect([40, 285], [500, 55]).lineColor('#000000').end,
+        new Rect([35, 130], [510, 650]).lineColor('#000000').end,
+        new Rect([40, 160], [500, 25]).lineColor('#000000').end,
+        new Rect([40, 215], [500, 55]).lineColor('#000000').end,
+        new Rect([40, 295], [500, 55]).lineColor('#000000').end,
         //new Rect([40, 370], [500, 120]).lineColor('#000000').end,
       ]).absolutePosition(0, 0).end
     );
@@ -476,87 +475,6 @@ export class PdfsService {
   //FIN CREAR PDF solicitud del tramite................................................
 
 
-  //CREAR PDF Formulario de audiencia
-  async generarPdfFormularioAudiencia(dataTramite: TramiteModel, audienciaActiva: AudienciaModel) {
-    const pdf = new PdfMakeWrapper();
-    pdf.pageMargins([45,40,110,0])
-    
-    let meses_texto=["Enero", "Febrero","Marzo","Abril","Mayo","Junio", "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-    
-    //fecha completa
-    let fecha_completa: string;
-    let fechaAudiencia: Date = new Date(audienciaActiva.fecha_inicio);
-
-    let anio:number= fechaAudiencia.getFullYear(); 
-    let mes: number= fechaAudiencia.getMonth();
-    let dia: number= fechaAudiencia.getDate();
-
-    fecha_completa = "Salta, " + dia + " de " + meses_texto[mes] + " de " +  anio;
-
-    // Cargar la imagen en base64 o desde assets
-    const imgBase64 = await new Img('../assets/imagenes/general/formulario-audiencia2.jpg').fit([540,750]).absolutePosition(40,30).build(); // O usa una imagen en base64
-    
-    let misConvocados: string[] = [];
-    let miConvocado: string;
-    
-    let caratula: string = "";
-    dataTramite.convocados.forEach(convocado => {
-      caratula = caratula + ", " + `${convocado.apellido ?? ''} ${convocado.nombre ?? ''} ${convocado.razon_social ?? ''}`;
-      miConvocado = `Apellido y nombre / Razon social: ${convocado.apellido ?? ''} ${convocado.nombre ?? ''} ${convocado.razon_social ?? ''}`;
-      misConvocados.push(miConvocado);
-    });
-
-    caratula = dataTramite.ciudadano.apellido + " " + dataTramite.ciudadano.nombre 
-              + " c/ " + caratula 
-              + " por " + dataTramite.objeto.objeto
-
-    // pdf.add(
-    //   {
-    //     ul: misConvocados
-    //   }
-    // );
-    
-    // caratula: string = dataTramite.ciudadano.apellido + " " + dataTramite.ciudadano.nombre + " c/ " + dataTramite.convocados[0].apellido + " " 
-    //                         + dataTramite.convocados[0].nombre + " por " + dataTramite.objeto.objeto
-  
-    // Utilizamos un canvas para el fondo
-    pdf.add(
-      imgBase64
-    );
-
-    pdf.add(
-      new Txt(audienciaActiva.centro_mediacion.centro_mediacion.toString()).fontSize(11).relativePosition(145,110).end      
-    );
-
-    pdf.add(
-      new Txt(dataTramite.expediente).fontSize(11).relativePosition(165,125).end      
-    );   
-
-    pdf.add(
-      new Txt(caratula).fontSize(11).relativePosition(60,147).end      
-    ); 
-    
-    pdf.add(
-      new Txt(audienciaActiva.num_audiencia.toString()).fontSize(11).relativePosition(75,208).end      
-    );
-
-    pdf.add(
-      new Txt(audienciaActiva.hora_inicio.toString()).fontSize(11).relativePosition(135,208).end      
-    );
-    
-    pdf.add(
-      new Txt(fecha_completa).fontSize(11).relativePosition(135,228).end      
-    );
-
-    
-    
-    pdf.add(' ');
-     
-    pdf.create().open();
-                             
-  }
-  //Fin CREAR PDF Formulario de audiencia
-
   //CREAR PDF solicitud DEL TRAMITE FINALIZAD
   async generarPdfTramiteFinalizado(dataTramite: TramiteModel, listAudiencias: AudienciaModel[]) {
     let meses_texto=["Enero", "Febrero","Marzo","Abril","Mayo","Junio", "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
@@ -571,23 +489,23 @@ export class PdfsService {
     fecha_completa = "Salta, " + dia + " de " + meses_texto[mes] + " de " +  anio;
     
     const pdf = new PdfMakeWrapper();
-    pdf.pageMargins([45,40])
+    pdf.pageMargins([45,30])
 
     //Rectangulos
     pdf.add(
       new Canvas([
         // Bottom
-        new Rect([35, 170], [510, 600]).lineColor('#000000').end,
-        new Rect([40, 195], [500, 25]).lineColor('#000000').end,
-        new Rect([40, 245], [500, 55]).lineColor('#000000').end,
-        new Rect([40, 330], [500, 55]).lineColor('#000000').end,
-        new Rect([40, 415], [500, 80]).lineColor('#000000').end,
+        new Rect([35, 130], [510, 650]).lineColor('#000000').end,
+        new Rect([40, 160], [500, 25]).lineColor('#000000').end,
+        new Rect([40, 215], [500, 55]).lineColor('#000000').end,
+        new Rect([40, 295], [500, 55]).lineColor('#000000').end,
       ]).absolutePosition(0, 0).end
     );
     
     
     //agrega imagen
-    pdf.add( await new Img('../../../assets/imagenes/general/logo-gobierno-salta.png').fit([120,120]).alignment('left').build());
+    pdf.add( await new Img('../../../assets/imagenes/general/logo-mediacion-secretaria2024.png').fit([250,250]).alignment('center').build());
+    pdf.add(' ');
     pdf.add(
       new Txt(fecha_completa).fontSize(11).alignment('right').end      
     );
@@ -782,4 +700,85 @@ export class PdfsService {
                              
   }
   //FIN CREAR PDF solicitud del tramite FINALIZADO................................................
+
+  //CREAR PDF Formulario de audiencia
+  async generarPdfFormularioAudiencia(dataTramite: TramiteModel, audienciaActiva: AudienciaModel) {
+    const pdf = new PdfMakeWrapper();
+    pdf.pageMargins([45,40,110,0])
+    
+    let meses_texto=["Enero", "Febrero","Marzo","Abril","Mayo","Junio", "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+    
+    //fecha completa
+    let fecha_completa: string;
+    let fechaAudiencia: Date = new Date(audienciaActiva.fecha_inicio);
+
+    let anio:number= fechaAudiencia.getFullYear(); 
+    let mes: number= fechaAudiencia.getMonth();
+    let dia: number= fechaAudiencia.getDate();
+
+    fecha_completa = "Salta, " + dia + " de " + meses_texto[mes] + " de " +  anio;
+
+    // Cargar la imagen en base64 o desde assets
+    const imgBase64 = await new Img('../assets/imagenes/general/formulario-audiencia3.jpg').fit([540,750]).absolutePosition(40,30).build(); // O usa una imagen en base64
+    
+    let misConvocados: string[] = [];
+    let miConvocado: string;
+    
+    let caratula: string = "";
+    dataTramite.convocados.forEach(convocado => {
+      caratula = caratula + ", " + `${convocado.apellido ?? ''} ${convocado.nombre ?? ''} ${convocado.razon_social ?? ''}`;
+      miConvocado = `Apellido y nombre / Razon social: ${convocado.apellido ?? ''} ${convocado.nombre ?? ''} ${convocado.razon_social ?? ''}`;
+      misConvocados.push(miConvocado);
+    });
+
+    caratula = dataTramite.ciudadano.apellido + " " + dataTramite.ciudadano.nombre 
+              + " c/ " + caratula 
+              + " por " + dataTramite.objeto.objeto
+
+    // pdf.add(
+    //   {
+    //     ul: misConvocados
+    //   }
+    // );
+    
+    // caratula: string = dataTramite.ciudadano.apellido + " " + dataTramite.ciudadano.nombre + " c/ " + dataTramite.convocados[0].apellido + " " 
+    //                         + dataTramite.convocados[0].nombre + " por " + dataTramite.objeto.objeto
+  
+    // Utilizamos un canvas para el fondo
+    pdf.add(
+      imgBase64
+    );
+
+    pdf.add(
+      new Txt(audienciaActiva.centro_mediacion.centro_mediacion.toString()).fontSize(11).relativePosition(145,110).end      
+    );
+
+    pdf.add(
+      new Txt(dataTramite.expediente).fontSize(11).relativePosition(165,125).end      
+    );   
+
+    pdf.add(
+      new Txt(caratula).fontSize(11).relativePosition(60,147).end      
+    ); 
+    
+    pdf.add(
+      new Txt(audienciaActiva.num_audiencia.toString()).fontSize(11).relativePosition(75,208).end      
+    );
+
+    pdf.add(
+      new Txt(audienciaActiva.hora_inicio.toString()).fontSize(11).relativePosition(135,208).end      
+    );
+    
+    pdf.add(
+      new Txt(fecha_completa).fontSize(11).relativePosition(135,228).end      
+    );
+
+    
+    
+    pdf.add(' ');
+     
+    pdf.create().open();
+                             
+  }
+  //Fin CREAR PDF Formulario de audiencia
 }
